@@ -29,14 +29,14 @@ class WorkOutController extends ControllerMVC {
 
   Future<void> startListening() async {
     _pedometer = new Pedometer();
-//    offset = await _pedometer.pedometerStream.first;
+    offset = await _pedometer.pedometerStream.first;
     print("start from = $offset");
-    // _subscription = _pedometer.pedometerStream.listen(_onData,
-    //     onError: _onError, onDone: _onDone, cancelOnError: true);
+    _subscription = _pedometer.pedometerStream.listen(_onData,
+        onError: _onError, onDone: _onDone, cancelOnError: true);
     setState(() {
       _WorkoutModel.startWorkout();
     });
-    mock();
+   // mock();
   }
 
   Future<void> mock() async {

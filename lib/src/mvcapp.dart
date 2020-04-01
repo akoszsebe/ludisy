@@ -1,0 +1,33 @@
+import 'package:easy_localization/easy_localization_delegate.dart';
+import 'package:easy_localization/easy_localization_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:stairstepsport/src/ui/start/start_screen.dart';
+import 'package:stairstepsport/src/util/style/app_theme.dart';
+import 'package:flutter/services.dart';
+
+class MVCApp extends AppMVC {
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.red.withOpacity(0.7), //or set color with: Color(0xFF0000FF)
+    ));
+    var data = EasyLocalizationProvider.of(context).data;
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'stairstepsport',
+        theme: AppTheme.appTheme,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          //app-specific localization
+          EasylocaLizationDelegate(
+            locale: data.locale,
+            path: 'lib/resources/langs',
+          ),
+        ],
+        supportedLocales: [Locale('en', 'US')],
+        locale: data.savedLocale,
+        home: StartScreen());
+  }
+}

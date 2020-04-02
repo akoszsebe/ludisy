@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -27,6 +28,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
   @override
   void initState() {
     super.initState();
+    con.initPlatformState();
   }
 
   @override
@@ -38,7 +40,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                 image: AssetImage("lib/resources/images/stairs1.jpg"),
                 fit: BoxFit.fill)),
         child: Scaffold(
-            backgroundColor: Colors.red.withOpacity(0.7),
+            backgroundColor: Color.fromRGBO(127, 161, 246, 0.5),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -49,30 +51,64 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Center(
-                    child: CircularPercentIndicator(
-                  radius: 220.0,
-                  backgroundColor: Colors.white,
-                  lineWidth: 13.0,
-                  animation: false,
-                  percent: con.percentageValue,
-                  center: Text(
-                    "${con.stepCountValue} steps",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                  circularStrokeCap: CircularStrokeCap.round,
-                  progressColor: Colors.red[800],
+                    child: Column(
+                  children: <Widget>[
+                    CircularPercentIndicator(
+                      radius: 180.0,
+                      backgroundColor: Colors.white,
+                      lineWidth: 10.0,
+                      animation: false,
+                      percent: con.percentageValue,
+                      center: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage("lib/resources/images/step.png"),
+                            height: 64,
+                          ),
+                          Padding(padding: EdgeInsets.only(top: 9)),
+                          Text(
+                            "${con.stepCountValue}",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.bold, fontSize: 26.0),
+                          )
+                        ],
+                      ),
+                      circularStrokeCap: CircularStrokeCap.round,
+                      progressColor: Color(0xff7FA1F6),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 6),
+                    ),
+                    Text(
+                      "${con.workoutDuration.toString().split('.').first.substring(2, 7)}",
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, fontSize: 20.0)
+                    ),
+                  ],
                 )),
                 Padding(
-                  padding: EdgeInsets.only(top: 60),
+                  padding: EdgeInsets.only(top: 70),
                 ),
-                buildWorkoutButton(),
-                RoundedButton(AppLocalizations.of(context).tr('replan_button'),
-                    () {
-                  con.replanWorkOut();
-                }, backgroundColor: Colors.grey[900]),
+                Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      buildWorkoutButton(),
+                      Padding(padding: EdgeInsets.only(left: 64)),
+                      FloatingActionButton(
+                        heroTag: "stop",
+                        backgroundColor: Colors.white,
+                        child: Image(
+                          image: AssetImage("lib/resources/images/stop.png"),
+                        ),
+                        onPressed: () {
+                          con.replanWorkOut();
+                        },
+                      ),
+                    ]),
                 Padding(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(top: 80),
                 ),
               ],
             )));
@@ -80,14 +116,26 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
 
   buildWorkoutButton() {
     if (con.isWorkoutStarted)
-      return RoundedButton(AppLocalizations.of(context).tr('stop_counting'),
-          () {
-        con.stopListening();
-      }, backgroundColor: Theme.of(context).primaryColorDark);
+      return FloatingActionButton(
+        heroTag: "pause",
+        backgroundColor: Colors.white,
+        child: Image(
+          image: AssetImage("lib/resources/images/pause.png"),
+        ),
+        onPressed: () {
+          con.stopListening();
+        },
+      );
     else
-      return RoundedButton(AppLocalizations.of(context).tr('start_counting'),
-          () {
-        con.initPlatformState();
-      }, backgroundColor: Theme.of(context).primaryColor);
+      return FloatingActionButton(
+        heroTag: "start",
+        backgroundColor: Colors.white,
+        child: Image(
+          image: AssetImage("lib/resources/images/start.png"),
+        ),
+        onPressed: () {
+          con.startListening();
+        },
+      );
   }
 }

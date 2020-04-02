@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 class MVCApp extends AppMVC {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.red.withOpacity(0.7), //or set color with: Color(0xFF0000FF)
+      statusBarColor: Color.fromRGBO(127, 161, 246, 0.5), //or set color with: Color(0xFF0000FF)
     ));
     var data = EasyLocalizationProvider.of(context).data;
     return MaterialApp(

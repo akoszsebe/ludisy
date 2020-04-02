@@ -6,7 +6,7 @@ class AppTheme {
     final primaryTextTheme = ThemeData.light().primaryTextTheme;
     final accentIconTheme = ThemeData.dark().accentIconTheme;
     return ThemeData.dark().copyWith(
-      primaryColor: Colors.red[800],
+      primaryColor: Color(0xff7FA1F6),
       primaryColorLight: Colors.white,
       primaryColorDark: Colors.grey[800],
       accentColor: Colors.cyan[300],

@@ -14,12 +14,18 @@ class WorkOutController extends ControllerMVC {
       _WorkoutModel.stepCountValue / _WorkoutModel.targetSteps;
   bool get isWorkoutStarted => _WorkoutModel.isWorkoutStared;
   int get targetSteps => _WorkoutModel.targetSteps;
+  Duration get workoutDuration => _WorkoutModel.workoutDuration;
 
   Pedometer _pedometer;
   StreamSubscription<int> _subscription;
   int offset = 0;
+  Timer _timer;
+  int durationSeconds = 0;
 
   Future<void> initPlatformState() async {
+    _pedometer = new Pedometer();
+    //offset = await _pedometer.pedometerStream.first;
+    print("start from = $offset");
     startListening();
   }
 
@@ -28,15 +34,23 @@ class WorkOutController extends ControllerMVC {
   }
 
   Future<void> startListening() async {
-    _pedometer = new Pedometer();
-    offset = await _pedometer.pedometerStream.first;
-    print("start from = $offset");
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
     setState(() {
       _WorkoutModel.startWorkout();
     });
-   // mock();
+    startTimer();
+    mock();
+  }
+
+  void startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      print("Yeah, this line is printed after ${timer.tick} second");
+      setState(() {
+        durationSeconds++;
+        _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
+      });
+    });
   }
 
   Future<void> mock() async {
@@ -57,6 +71,7 @@ class WorkOutController extends ControllerMVC {
       _WorkoutModel.stopWorkout();
     });
     _subscription.cancel();
+    _timer.cancel();
   }
 
   void _onData(int stepCountValue) async {
@@ -75,6 +90,9 @@ class WorkOutController extends ControllerMVC {
   }
 
   void replanWorkOut() {
+    stopListening();
+    durationSeconds = 0;
+    _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
     _WorkoutModel.resetCounter();
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => StartScreen()));
@@ -85,13 +103,19 @@ class _WorkoutModel {
   static bool _isStartedWorkout = false;
   static int _stepCountValue = 0;
   static int _targetSteps = 0;
+  static Duration _workoutDuration = Duration();
 
   static int get stepCountValue => _stepCountValue;
   static int get targetSteps => _targetSteps;
   static bool get isWorkoutStared => _isStartedWorkout;
+  static Duration get workoutDuration => _workoutDuration;
 
   static void resetCounter() {
     _stepCountValue = 0;
+  }
+
+  static void incrementDuration(Duration duration) {
+    _workoutDuration = duration;
   }
 
   static void incrementCounter(int stepCountValue) {

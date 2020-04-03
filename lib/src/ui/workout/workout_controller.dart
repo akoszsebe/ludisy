@@ -24,9 +24,12 @@ class WorkOutController extends ControllerMVC {
 
   Future<void> initPlatformState() async {
     _pedometer = new Pedometer();
-    //offset = await _pedometer.pedometerStream.first;
+    offset = await _pedometer.pedometerStream.first.catchError((error) {
+      print(error.toString());
+    });
     print("start from = $offset");
     startListening();
+    startTimer();
   }
 
   void onData(int stepCountValue) {
@@ -39,8 +42,7 @@ class WorkOutController extends ControllerMVC {
     setState(() {
       _WorkoutModel.startWorkout();
     });
-    startTimer();
-    mock();
+    //mock();
   }
 
   void startTimer() {

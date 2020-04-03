@@ -1,6 +1,6 @@
 {
   "title": "Your Notes",
-  "start_msg": "Hi, set up your workout plan",
+  "start_msg": "Are you ready \n for some exercise?",
   "start_counting" : "Start workout",
   "stop_counting" : "Stop workout",
   "easy_button" :"Easy",

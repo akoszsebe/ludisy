@@ -1,11 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
-import 'package:stairstepsport/src/widgets/rounded_button.dart';
 
 class WorkOutScreen extends StatefulWidget {
   final int stepPlan;

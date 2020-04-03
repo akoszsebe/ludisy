@@ -10,22 +10,33 @@ class StartController extends ControllerMVC {
   int get stepCountValue => _StartModel.stepCountValue;
 
   int offset = 0;
+  Difficulty difficulty = Difficulty.easy;
 
-  void setUp(Difficulty difficulty) {
+  void setUp() {
     var stepPlan = 0;
     switch (difficulty) {
       case Difficulty.easy:
         stepPlan = 100;
         break;
       case Difficulty.normal:
-        stepPlan = 300;
+        stepPlan = 250;
         break;
       case Difficulty.hard:
         stepPlan = 500;
         break;
+      case Difficulty.veryhard:
+        stepPlan = 1000;
+        break;
+      case Difficulty.impoible:
+        stepPlan = 10000;
+        break;
     }
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => WorkOutScreen(stepPlan)));
+  }
+
+  void setDificulty(int value) {
+    difficulty =  Difficulty.values[value];
   }
 }
 
@@ -49,4 +60,4 @@ class _StartModel {
   }
 }
 
-enum Difficulty { easy, normal, hard }
+enum Difficulty { easy, normal, hard, veryhard, impoible }

@@ -56,6 +56,7 @@ flutter:
     - lib/resources/images/stop.png
     - lib/resources/images/pause.png
     - lib/resources/images/start.png
+    - lib/resources/images/history.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

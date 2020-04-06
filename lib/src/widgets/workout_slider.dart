@@ -127,7 +127,7 @@ class _WorkoutSliderState extends State<WorkoutSlider>
   }
 }
 
-const double circleDiameter = 60;
+const double circleDiameter = 56;
 const double paddingSize = 0;
 
 class MeasureLine extends StatelessWidget {
@@ -145,10 +145,8 @@ class MeasureLine extends StatelessWidget {
 
     states.asMap().forEach((index, text) {
       var scale = 1.0;
-      var ocupacity = 0.0;
       if (animatingUnitIndex == index) {
-        scale = (1 + unitAnimatingValue / 4);
-        ocupacity = unitAnimatingValue;
+        scale = (1 - unitAnimatingValue / 4);
       }
       res.add(LimitedBox(
         key: ValueKey(text),
@@ -157,19 +155,16 @@ class MeasureLine extends StatelessWidget {
           onTap: () {
             handleTap(index);
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Transform.scale(
-                  scale: scale,
-                  child: Stack(
-                    children: [
-                      Head(
-                          text: text,
-                          color: Color(0xFFCDCD).withOpacity(ocupacity)),
-                    ],
-                  )),
-            ],
+          child: Transform.scale(
+            scale: scale,
+            child: Stack(
+              children: [
+                Head(
+                  text: text,
+                  color: Colors.transparent,
+                ),
+              ],
+            ),
           ),
         ),
       ));
@@ -201,10 +196,14 @@ class MeasureLine extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildUnits(),
-        ),
+        Padding(
+            padding: EdgeInsets.only(left: 8,right: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: _buildUnits(),
+            )),
       ],
     );
   }
@@ -233,7 +232,7 @@ class MyPainter extends CustomPainter {
 
     switch (activeIndex) {
       case 0:
-        angle = 55 - unitAnimatingValue * 50;
+        angle = 55 - unitAnimatingValue * 56;
         wide = 80.0;
         break;
       case 1:
@@ -418,11 +417,13 @@ class MyIndicator extends StatelessWidget {
       child: Container(
         width: circleDiameter,
         height: circleDiameter,
-        child: Head(
-          text: title,
-          selected: true,
-          color: Color(0xffFFCDCD),
-        ),
+        child: Transform.scale(
+            scale: 1.4,
+            child: Head(
+              text: title,
+              selected: true,
+              color: Color(0xff7FA1F7),
+            )),
       ),
     );
   }
@@ -440,7 +441,16 @@ class Head extends StatelessWidget {
     return Container(
       decoration: new BoxDecoration(
           color: color,
-          borderRadius: new BorderRadius.all(const Radius.circular(40.0))),
+          borderRadius: new BorderRadius.all(const Radius.circular(40.0)),
+          boxShadow: [
+            BoxShadow(
+              color:
+                  selected ? Colors.black.withOpacity(0.4) : Colors.transparent,
+              spreadRadius: 1,
+              blurRadius: 20,
+              offset: Offset(0, 0),
+            )
+          ]),
       height: circleDiameter,
       width: circleDiameter,
       child: Column(
@@ -449,14 +459,14 @@ class Head extends StatelessWidget {
         children: <Widget>[
           Text(text,
               style: GoogleFonts.montserrat(
-                  fontSize: selected ? 16.0 : 13.0,
+                  fontSize: selected ? 12.2 : 13.0,
                   fontWeight: selected ? FontWeight.bold : FontWeight.w600,
-                  color: Colors.black)),
+                  color: selected ? Colors.white : Colors.black)),
           Text("step",
               style: GoogleFonts.montserrat(
-                  fontSize: selected ? 16.0 : 13.0,
+                  fontSize: selected ? 12.2 : 13.0,
                   fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                  color: Colors.black))
+                  color: selected ? Colors.white : Colors.black))
         ],
       ),
     );

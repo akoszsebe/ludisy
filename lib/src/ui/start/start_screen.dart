@@ -37,115 +37,152 @@ class _StartScreenState extends StateMVC<StartScreen> {
             body: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Column(children: <Widget>[
-                          FlatButton(
-                            child: Image(
-                              image: AssetImage(
-                                  "lib/resources/images/history.png"),
+                    padding: EdgeInsets.only(top: 20, left: 24),
+                    child: Container(
+                        height: 48,
+                        decoration: new BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: new BorderRadius.all(
+                                const Radius.circular(40.0))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _createPersonInfo("Hi Akos!",
+                                "https://scontent-otp1-1.xx.fbcdn.net/v/t1.0-9/11214269_903830379662861_408449604046268151_n.jpg?_nc_cat=105&_nc_sid=09cbfe&_nc_ohc=owX8bXwDq_kAX9zOzyc&_nc_ht=scontent-otp1-1.xx&oh=16e90ef40c3535454c5ffa29fcf1e7b3&oe=5EAB36ED"),
+                            Padding(
+                              padding: EdgeInsets.only(left: 30),
                             ),
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(20.0)),
-                          ),
-                          Text(
-                            "History",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xff7FA1F6)),
-                          ),
-                        ]),
-                        Padding(
-                          padding: EdgeInsets.only(top: 31),
-                          child: _createPersonInfo("Hi Akos!",
-                              "https://scontent-otp1-1.xx.fbcdn.net/v/t1.0-9/11214269_903830379662861_408449604046268151_n.jpg?_nc_cat=105&_nc_sid=09cbfe&_nc_ohc=owX8bXwDq_kAX9zOzyc&_nc_ht=scontent-otp1-1.xx&oh=16e90ef40c3535454c5ffa29fcf1e7b3&oe=5EAB36ED"),
-                        ),
-                        Column(children: <Widget>[
-                          FlatButton(
-                            child: Image(
-                              image:
-                                  AssetImage("lib/resources/images/step.png"),
-                              width: 24,
-                              color: Color(0xff7FA1F7),
+                            MaterialButton(
+                              height: 48,
+                              minWidth: 56,
+                              padding: EdgeInsets.all(0),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Image(
+                                      height: 18,
+                                      image: AssetImage(
+                                          "lib/resources/images/history.png"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 2),
+                                    ),
+                                    Text(
+                                      "History",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff7FA1F6)),
+                                    ),
+                                  ]),
+                              onPressed: () {},
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
                             ),
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(20.0)),
-                          ),
-                          Text(
-                            "1287",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xff7FA1F6)),
-                          ),
-                        ])
-                      ],
-                    )),
-                Container(
-                    decoration: new BoxDecoration(
-                        color: Color(0xff7A9FFF),
-                        borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(40.0),
-                          topRight: const Radius.circular(40.0),
-                        )),
-                    child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 24),
-                        child: Column(children: <Widget>[
-                          Center(
-                              child: Text(
-                            AppLocalizations.of(context).tr('start_msg'),
-                            style: GoogleFonts.montserrat(
-                                fontSize: 33,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xff010101)),
-                            textAlign: TextAlign.center,
-                          )),
-                          Padding(padding: EdgeInsets.only(top: 50)),
-                          WorkoutSlider((value) {
-                            print("value : " + value.toString());
-                            con.setDificulty(value);
-                          }),
-                          Padding(padding: EdgeInsets.only(top: 50)),
-                          FloatingActionButton(
-                            heroTag: "stop",
-                            backgroundColor: Colors.white,
-                            child: Image(
-                              image:
-                                  AssetImage("lib/resources/images/start.png"),
+                            MaterialButton(
+                              height: 48,
+                              minWidth: 56,
+                              padding: EdgeInsets.all(0),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Image(
+                                      height: 18,
+                                      image: AssetImage(
+                                          "lib/resources/images/step.png"),
+                                      width: 25,
+                                      color: Color(0xff7FA1F7),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 2),
+                                    ),
+                                    Text(
+                                      "1287",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff7FA1F6)),
+                                    ),
+                                  ]),
+                              onPressed: () {},
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
                             ),
-                            onPressed: () {
-                              con.setUp();
-                            },
-                          ),
-                        ]))),
+                            Padding(
+                              padding: EdgeInsets.only(right: 4),
+                            ),
+                          ],
+                        ))),
+                Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 40),
+                      child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 24),
+                              child: Column(children: <Widget>[
+                                Padding(padding: EdgeInsets.only(top: 30)),
+                                Center(
+                                    child: Text(
+                                  AppLocalizations.of(context).tr('start_msg'),
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xff010101)),
+                                  textAlign: TextAlign.center,
+                                )),
+                                Padding(padding: EdgeInsets.only(top: 20)),
+                                FloatingActionButton(
+                                  heroTag: "stop",
+                                  backgroundColor: Color(0xff7A9FFF),
+                                  child: Image(
+                                    color: Colors.white,
+                                    image: AssetImage(
+                                        "lib/resources/images/start.png"),
+                                  ),
+                                  onPressed: () {
+                                    con.setUp();
+                                  },
+                                ),
+                              ]))),
+                    ),
+                    Positioned(
+                        top: 0,
+                        left: 30,
+                        child: WorkoutSlider((value) {
+                          print("value : " + value.toString());
+                          con.setDificulty(value);
+                        })),
+                  ],
+                )
               ],
             )));
   }
 
   Widget _createPersonInfo(String name, String picUrl) {
-    return Column(
+    return Row(
       children: <Widget>[
         Container(
-          width: 64.0,
-          height: 64.0,
+          width: 48.0,
+          height: 48.0,
           decoration: BoxDecoration(
             color: const Color(0xff7c94b6),
             image: DecorationImage(
               image: NetworkImage(picUrl),
               fit: BoxFit.cover,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            borderRadius: BorderRadius.all(Radius.circular(24.0)),
             border: Border.all(
               color: Color(0xff7FA1F6),
               width: 2.0,
@@ -153,14 +190,14 @@ class _StartScreenState extends StateMVC<StartScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 16),
+          padding: EdgeInsets.only(left: 8),
         ),
         Text(
           name,
           style: GoogleFonts.montserrat(
-              fontSize: 22.0,
+              fontSize: 18.0,
               fontWeight: FontWeight.w400,
-              color: Color(0xff7FA1F6)),
+              color: Color(0xff323232)),
         ),
       ],
     );

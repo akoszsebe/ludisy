@@ -81,7 +81,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                                 fontWeight: FontWeight.bold, fontSize: 26.0),
                           ),
                           Text(
-                            "${con.kalCounterValue} kcal",
+                            "${con.calCounterValue.toStringAsFixed(2)} kcal",
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w500, fontSize: 18.0),
                           )

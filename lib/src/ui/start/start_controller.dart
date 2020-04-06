@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:pedometer/pedometer.dart';
 import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
 
 class StartController extends ControllerMVC {
@@ -9,8 +10,20 @@ class StartController extends ControllerMVC {
 
   int get stepCountValue => _StartModel.stepCountValue;
 
-  int offset = 0;
   Difficulty difficulty = Difficulty.easy;
+
+  Pedometer _pedometer;
+
+  Future<void> initPlatformState() async {
+    _pedometer = new Pedometer();
+    var steps = await _pedometer.pedometerStream.first.catchError((error) {
+      print(error.toString());
+    });
+    print("start from = $steps");
+    setState(() {
+      _StartModel.incrementCounter(steps);
+    });
+  }
 
   void setUp() {
     var stepPlan = 0;
@@ -36,7 +49,7 @@ class StartController extends ControllerMVC {
   }
 
   void setDificulty(int value) {
-    difficulty =  Difficulty.values[value];
+    difficulty = Difficulty.values[value];
   }
 }
 

@@ -22,6 +22,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
   @override
   void initState() {
     super.initState();
+    con.initPlatformState();
   }
 
   @override
@@ -105,7 +106,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
                                       padding: EdgeInsets.only(top: 2),
                                     ),
                                     Text(
-                                      "1287",
+                                      con.stepCountValue.toString(),
                                       style: GoogleFonts.montserrat(
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.w400,

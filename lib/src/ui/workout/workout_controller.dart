@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/ui/start/start_screen.dart';
+import 'package:stairstepsport/src/util/calory_calculator.dart';
 
 class WorkOutController extends ControllerMVC {
   factory WorkOutController() => _this ??= WorkOutController._();
@@ -10,7 +11,7 @@ class WorkOutController extends ControllerMVC {
   WorkOutController._();
 
   int get stepCountValue => _WorkoutModel.stepCountValue;
-  int get kalCounterValue => _WorkoutModel.kalCounterValue;
+  double get calCounterValue => _WorkoutModel.calCounterValue;
   double get percentageValue =>
       _WorkoutModel.stepCountValue / _WorkoutModel.targetSteps;
   bool get isWorkoutStarted => _WorkoutModel.isWorkoutStared;
@@ -39,7 +40,7 @@ class WorkOutController extends ControllerMVC {
     setState(() {
       _WorkoutModel.startWorkout();
     });
-    //mock();
+   // mock();
   }
 
   void startTimer() {
@@ -47,7 +48,6 @@ class WorkOutController extends ControllerMVC {
       setState(() {
         durationSeconds++;
         _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
-        print("Yeah, this line is printed after ${timer.tick} second");
       });
     });
   }
@@ -55,8 +55,17 @@ class WorkOutController extends ControllerMVC {
   Future<void> mock() async {
     print("target = ${_WorkoutModel.targetSteps}");
     for (var i = 0; i < _WorkoutModel.targetSteps + 10; i += 10) {
+       var cal = CaloriCalculator.calculateEnergyExpenditure(
+        176,
+        DateTime(1995, 2, 5),
+        70,
+        0,
+        workoutDuration.inSeconds,
+        stepCountValue,
+        0.5);
       setState(() {
-        _WorkoutModel.incrementCounter(i, i + 54);
+        _WorkoutModel.incrementStepCounter(i);
+         _WorkoutModel.incrementCalorieCounter(cal);
       });
       if (!isWorkoutStarted) {
         break;
@@ -75,8 +84,17 @@ class WorkOutController extends ControllerMVC {
 
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - offset}");
+    var cal = CaloriCalculator.calculateEnergyExpenditure(
+        176,
+        DateTime(1995, 2, 5),
+        70,
+        0,
+        workoutDuration.inSeconds,
+        stepCountValue,
+        0.5);
     setState(() {
-      _WorkoutModel.incrementCounter(stepCountValue - offset, 3);
+      _WorkoutModel.incrementStepCounter(stepCountValue - offset);
+      _WorkoutModel.incrementCalorieCounter(cal);
     });
   }
 
@@ -100,29 +118,33 @@ class WorkOutController extends ControllerMVC {
 
 class _WorkoutModel {
   static bool _isStartedWorkout = false;
-  static int _kalCounterValue = 0;
+  static double _calCounterValue = 0;
   static int _stepCountValue = 0;
   static int _targetSteps = 0;
   static Duration _workoutDuration = Duration();
 
   static int get stepCountValue => _stepCountValue;
-  static int get kalCounterValue => _kalCounterValue;
+  static double get calCounterValue => _calCounterValue;
   static int get targetSteps => _targetSteps;
   static bool get isWorkoutStared => _isStartedWorkout;
   static Duration get workoutDuration => _workoutDuration;
 
   static void resetCounter() {
     _stepCountValue = 0;
-    _kalCounterValue = 0;
+    _calCounterValue = 0;
   }
 
   static void incrementDuration(Duration duration) {
     _workoutDuration = duration;
   }
 
-  static void incrementCounter(int stepCountValue, int kalCounterValue) {
+  static void incrementStepCounter(int stepCountValue) {
     _stepCountValue = stepCountValue;
-    _kalCounterValue = kalCounterValue;
+    _calCounterValue = calCounterValue;
+  }
+
+  static void incrementCalorieCounter(double calCounterValue) {
+    _calCounterValue = calCounterValue;
   }
 
   static void setTargetSteps(int targetSteps) {

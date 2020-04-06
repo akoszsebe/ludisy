@@ -10,6 +10,7 @@ class WorkOutController extends ControllerMVC {
   WorkOutController._();
 
   int get stepCountValue => _WorkoutModel.stepCountValue;
+  int get kalCounterValue => _WorkoutModel.kalCounterValue;
   double get percentageValue =>
       _WorkoutModel.stepCountValue / _WorkoutModel.targetSteps;
   bool get isWorkoutStarted => _WorkoutModel.isWorkoutStared;
@@ -29,14 +30,10 @@ class WorkOutController extends ControllerMVC {
     });
     print("start from = $offset");
     startListening();
-    startTimer();
-  }
-
-  void onData(int stepCountValue) {
-    print(stepCountValue);
   }
 
   Future<void> startListening() async {
+    startTimer();
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
     setState(() {
@@ -47,10 +44,10 @@ class WorkOutController extends ControllerMVC {
 
   void startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      print("Yeah, this line is printed after ${timer.tick} second");
       setState(() {
         durationSeconds++;
         _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
+        print("Yeah, this line is printed after ${timer.tick} second");
       });
     });
   }
@@ -59,7 +56,7 @@ class WorkOutController extends ControllerMVC {
     print("target = ${_WorkoutModel.targetSteps}");
     for (var i = 0; i < _WorkoutModel.targetSteps + 10; i += 10) {
       setState(() {
-        _WorkoutModel.incrementCounter(i);
+        _WorkoutModel.incrementCounter(i, i + 54);
       });
       if (!isWorkoutStarted) {
         break;
@@ -79,7 +76,7 @@ class WorkOutController extends ControllerMVC {
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - offset}");
     setState(() {
-      _WorkoutModel.incrementCounter(stepCountValue - offset);
+      _WorkoutModel.incrementCounter(stepCountValue - offset, 3);
     });
   }
 
@@ -94,7 +91,7 @@ class WorkOutController extends ControllerMVC {
   void replanWorkOut() {
     stopListening();
     durationSeconds = 0;
-    _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
+    _WorkoutModel.incrementDuration(Duration(seconds: 0));
     _WorkoutModel.resetCounter();
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => StartScreen()));
@@ -103,25 +100,29 @@ class WorkOutController extends ControllerMVC {
 
 class _WorkoutModel {
   static bool _isStartedWorkout = false;
+  static int _kalCounterValue = 0;
   static int _stepCountValue = 0;
   static int _targetSteps = 0;
   static Duration _workoutDuration = Duration();
 
   static int get stepCountValue => _stepCountValue;
+  static int get kalCounterValue => _kalCounterValue;
   static int get targetSteps => _targetSteps;
   static bool get isWorkoutStared => _isStartedWorkout;
   static Duration get workoutDuration => _workoutDuration;
 
   static void resetCounter() {
     _stepCountValue = 0;
+    _kalCounterValue = 0;
   }
 
   static void incrementDuration(Duration duration) {
     _workoutDuration = duration;
   }
 
-  static void incrementCounter(int stepCountValue) {
+  static void incrementCounter(int stepCountValue, int kalCounterValue) {
     _stepCountValue = stepCountValue;
+    _kalCounterValue = kalCounterValue;
   }
 
   static void setTargetSteps(int targetSteps) {

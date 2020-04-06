@@ -143,18 +143,20 @@ class _StartScreenState extends StateMVC<StartScreen> {
                                   textAlign: TextAlign.center,
                                 )),
                                 Padding(padding: EdgeInsets.only(top: 20)),
-                                FloatingActionButton(
-                                  heroTag: "stop",
-                                  backgroundColor: Color(0xff7A9FFF),
-                                  child: Image(
-                                    color: Colors.white,
-                                    image: AssetImage(
-                                        "lib/resources/images/start.png"),
-                                  ),
-                                  onPressed: () {
-                                    con.setUp();
-                                  },
-                                ),
+                                Transform.scale(
+                                    scale: 1.2,
+                                    child: FloatingActionButton(
+                                      heroTag: "stop",
+                                      backgroundColor: Color(0xff7A9FFF),
+                                      child: Image(
+                                        color: Colors.white,
+                                        image: AssetImage(
+                                            "lib/resources/images/start.png"),
+                                      ),
+                                      onPressed: () {
+                                        con.setUp();
+                                      },
+                                    )),
                               ]))),
                     ),
                     Positioned(

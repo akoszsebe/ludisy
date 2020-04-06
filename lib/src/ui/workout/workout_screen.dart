@@ -39,15 +39,24 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Color.fromRGBO(127, 161, 246, 0.5),
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
             body: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: FloatingActionButton(
+                          mini: true,
+                          backgroundColor: Colors.white,
+                          child:
+                              Icon(Icons.arrow_back, color: Color(0xff7FA1F6)),
+                          onPressed: () => con.replanWorkOut(),
+                        )),
+                  ],
+                ),
                 Center(
                     child: Column(
                   children: <Widget>[
@@ -70,6 +79,11 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                             "${con.stepCountValue}",
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold, fontSize: 26.0),
+                          ),
+                          Text(
+                            "${con.kalCounterValue} kcal",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500, fontSize: 18.0),
                           )
                         ],
                       ),
@@ -79,32 +93,54 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 6),
                     ),
-                    Text(
-                      "${con.workoutDuration.toString().split('.').first.substring(2, 7)}",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, fontSize: 20.0)
-                    ),
                   ],
                 )),
                 Padding(
                   padding: EdgeInsets.only(top: 70),
                 ),
-                Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      buildWorkoutButton(),
-                      Padding(padding: EdgeInsets.only(left: 64)),
-                      FloatingActionButton(
-                        heroTag: "stop",
-                        backgroundColor: Colors.white,
-                        child: Image(
-                          image: AssetImage("lib/resources/images/stop.png"),
-                        ),
-                        onPressed: () {
-                          con.replanWorkOut();
-                        },
-                      ),
-                    ]),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Container(
+                        height: 48,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(const Radius.circular(40.0))),
+                        child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Transform.scale(
+                                  scale: 1.2,
+                                  child: FloatingActionButton(
+                                    heroTag: "stop",
+                                    backgroundColor: Color(0xff7A9FFF),
+                                    child: Image(
+                                      color: Colors.white,
+                                      image: AssetImage(
+                                          "lib/resources/images/stop.png"),
+                                    ),
+                                    onPressed: () {
+                                      con.replanWorkOut();
+                                    },
+                                  )),
+                              Padding(
+                                padding: EdgeInsets.only(left: 24, right: 24),
+                                child: Container(
+                                    width: 70,
+                                    child: Text(
+                                        "${con.workoutDuration.toString().split('.').first.substring(2, 7)}",
+                                        style: GoogleFonts.montserrat(
+                                          color: Color(0xff321323),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20.0,
+                                        ))),
+                              ),
+                              Transform.scale(
+                                scale: 1.2,
+                                child: buildWorkoutButton(),
+                              ),
+                            ]))),
                 Padding(
                   padding: EdgeInsets.only(top: 80),
                 ),
@@ -116,8 +152,9 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
     if (con.isWorkoutStarted)
       return FloatingActionButton(
         heroTag: "pause",
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff7A9FFF),
         child: Image(
+          color: Colors.white,
           image: AssetImage("lib/resources/images/pause.png"),
         ),
         onPressed: () {
@@ -127,8 +164,9 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
     else
       return FloatingActionButton(
         heroTag: "start",
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff7A9FFF),
         child: Image(
+          color: Colors.white,
           image: AssetImage("lib/resources/images/start.png"),
         ),
         onPressed: () {

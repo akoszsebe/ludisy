@@ -1,16 +1,16 @@
 class CaloriCalculator {
-/**
-     * Calculated the energy expenditure for an activity. Adapted from the following website https://sites.google.com/site/compendiumofphysicalactivities/corrected-mets
-     *
-     * @param height               The height in metres.
-     * @param age                  The date of birth.
-     * @param weight               The weight of the user.
-     * @param gender               The gender of the user.
-     * @param durationInSeconds    The duration of the activity in seconds.
-     * @param stepsTaken           The steps taken.
-     * @param strideLengthInMetres The stride length of the user
-     * @return The number of calories burnt (kCal)
-     */
+  ///
+  /// Calculated the energy expenditure for an activity. Adapted from the following website https://sites.google.com/site/compendiumofphysicalactivities/corrected-mets
+  ///
+  /// @param height               The height in metres.
+  /// @param age                  The date of birth.
+  /// @param weight               The weight of the user.
+  /// @param gender               The gender of the user.
+  /// @param durationInSeconds    The duration of the activity in seconds.
+  /// @param stepsTaken           The steps taken.
+  /// @param strideLengthInMetres The stride length of the user
+  /// @return The number of calories burnt (kCal)
+  ///
   static double calculateEnergyExpenditure(
       double height,
       DateTime age,
@@ -38,12 +38,12 @@ class CaloriCalculator {
     return correctedMets * hours * weight;
   }
 
-/**
-     * Gets a users age from a date. Only takes into account years.
-     *
-     * @param age The date of birth.
-     * @return The age in years.
-     */
+  ///
+  /// Gets a users age from a date. Only takes into account years.
+  ///
+  /// @param age The date of birth.
+  /// @return The age in years.
+  ///
   static int _getAgeFromDateOfBirth(DateTime dateOfBirth) {
     DateTime currentDate = DateTime.now();
 
@@ -86,12 +86,12 @@ class CaloriCalculator {
     return ((stepsTaken * entityStrideLength) / 1000);
   }
 
-/**
-     * Gets the MET value for an activity. Based on https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories/walking .
-     *
-     * @param speedInMph The speed in miles per hour
-     * @return The met value.
-     */
+  ///
+  /// Gets the MET value for an activity. Based on https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories/walking .
+  ///
+  /// @param speedInMph The speed in miles per hour
+  /// @return The met value.
+  ///
   static double _getMetForActivity(double speedInMph) {
     if (speedInMph < 2.0) {
       return 2.0;
@@ -115,15 +115,15 @@ class CaloriCalculator {
     return 0;
   }
 
-/**
-     * Calculates the Harris Benedict RMR value for an entity. Based on above calculation for Com
-     *
-     * @param gender   Users gender.
-     * @param weightKg Weight in Kg.
-     * @param age      Age in years.
-     * @param heightCm Height in CM.
-     * @return Harris benedictRMR value.
-     */
+  ///
+  /// Calculates the Harris Benedict RMR value for an entity. Based on above calculation for Com
+  ///
+  /// @param gender   Users gender.
+  /// @param weightKg Weight in Kg.
+  /// @param age      Age in years.
+  /// @param heightCm Height in CM.
+  /// @return Harris benedictRMR value.
+  ///
   static double _harrisBenedictRmr(
       int gender, double weightKg, int age, double heightCm) {
     if (gender == 1) {
@@ -141,10 +141,5 @@ class CaloriCalculator {
 
   static double _kmphTOmph(double kmph) {
     return 0.6214 * kmph;
-  }
-
-// Function to convert mph to kmph
-  static double _mphTOkmph(double mph) {
-    return mph * 1.60934;
   }
 }

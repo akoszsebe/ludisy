@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "955655684915",
+    "firebase_url": "https://stairstepsport.firebaseio.com",
+    "project_id": "stairstepsport",
+    "storage_bucket": "stairstepsport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955655684915:android:61e0120e40262dd7077446",
+        "android_client_info": {
+          "package_name": "com.example.stairstepsport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955655684915-d3s2js6o48jabd29i8i90uuckd4s09th.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOvGIve2blDreGsoIB5wRYMV0amh73fUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955655684915-d3s2js6o48jabd29i8i90uuckd4s09th.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

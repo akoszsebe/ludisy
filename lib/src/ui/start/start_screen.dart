@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:stairstepsport/src/ui/profile/profile_screen.dart';
 
 import 'package:stairstepsport/src/ui/start/start_controller.dart';
 import 'package:stairstepsport/src/widgets/workout_slider.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
-  final String title = 'Flutter Demo Home Page';
   @override
   _StartScreenState createState() => _StartScreenState();
 }
@@ -53,8 +53,8 @@ class _StartScreenState extends StateMVC<StartScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            _createPersonInfo("Hi Akos!",
-                                "https://scontent-otp1-1.xx.fbcdn.net/v/t1.0-9/11214269_903830379662861_408449604046268151_n.jpg?_nc_cat=105&_nc_sid=09cbfe&_nc_ohc=owX8bXwDq_kAX9zOzyc&_nc_ht=scontent-otp1-1.xx&oh=16e90ef40c3535454c5ffa29fcf1e7b3&oe=5EAB36ED"),
+                            _createPersonInfo("Hi ${con.userData.displayName}!",
+                                con.userData.photoUrl),
                             Padding(
                               padding: EdgeInsets.only(left: 30),
                             ),
@@ -176,21 +176,31 @@ class _StartScreenState extends StateMVC<StartScreen> {
   Widget _createPersonInfo(String name, String picUrl) {
     return Row(
       children: <Widget>[
-        Container(
-          width: 48.0,
-          height: 48.0,
-          decoration: BoxDecoration(
-            color: const Color(0xff7c94b6),
-            image: DecorationImage(
-              image: NetworkImage(picUrl),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(24.0)),
-            border: Border.all(
-              color: Color(0xff7FA1F6),
-              width: 2.0,
+        MaterialButton(
+          minWidth: 48,
+          padding: EdgeInsets.all(0),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()));
+          },
+          child: Container(
+            width: 48.0,
+            height: 48.0,
+            decoration: BoxDecoration(
+              color: const Color(0xff7c94b6),
+              image: DecorationImage(
+                image: NetworkImage(picUrl),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(24.0)),
+              border: Border.all(
+                color: Color(0xff7FA1F6),
+                width: 2.0,
+              ),
             ),
           ),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(24.0)),
         ),
         Padding(
           padding: EdgeInsets.only(left: 8),

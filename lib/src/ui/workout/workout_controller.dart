@@ -37,36 +37,33 @@ class WorkOutController extends ControllerMVC {
     startTimer();
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
-    setState(() {
-      _WorkoutModel.startWorkout();
-    });
-   // mock();
+    _WorkoutModel.startWorkout();
+    refresh();
+    // mock();
   }
 
   void startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        durationSeconds++;
-        _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
-      });
+      durationSeconds++;
+      _WorkoutModel.incrementDuration(Duration(seconds: durationSeconds));
+      refresh();
     });
   }
 
   Future<void> mock() async {
     print("target = ${_WorkoutModel.targetSteps}");
     for (var i = 0; i < _WorkoutModel.targetSteps + 10; i += 10) {
-       var cal = CaloriCalculator.calculateEnergyExpenditure(
-        176,
-        DateTime(1995, 2, 5),
-        70,
-        0,
-        workoutDuration.inSeconds,
-        stepCountValue,
-        0.5);
-      setState(() {
-        _WorkoutModel.incrementStepCounter(i);
-         _WorkoutModel.incrementCalorieCounter(cal);
-      });
+      var cal = CaloriCalculator.calculateEnergyExpenditure(
+          176,
+          DateTime(1995, 2, 5),
+          70,
+          0,
+          workoutDuration.inSeconds,
+          stepCountValue,
+          0.5);
+      _WorkoutModel.incrementStepCounter(i);
+      _WorkoutModel.incrementCalorieCounter(cal);
+      refresh();
       if (!isWorkoutStarted) {
         break;
       }
@@ -92,10 +89,9 @@ class WorkOutController extends ControllerMVC {
         workoutDuration.inSeconds,
         stepCountValue,
         0.5);
-    setState(() {
-      _WorkoutModel.incrementStepCounter(stepCountValue - offset);
-      _WorkoutModel.incrementCalorieCounter(cal);
-    });
+    _WorkoutModel.incrementStepCounter(stepCountValue - offset);
+    _WorkoutModel.incrementCalorieCounter(cal);
+    refresh();
   }
 
   void _onDone() => print("Finished pedometer tracking");

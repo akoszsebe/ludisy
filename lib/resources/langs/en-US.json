@@ -6,5 +6,8 @@
   "easy_button" :"Easy",
   "medium_button" :"Mormal",
   "hard_button" :"Hard",
-  "replan_button" : "Replan workout"
+  "replan_button" : "Replan workout",
+  "wellcome_msg" : "Do you need a stair counter?",
+  "sign_in" : "Sign in",
+  "thisisyourdata" : "This is your data"
 }

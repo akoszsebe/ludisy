@@ -8,10 +8,11 @@ class AppTheme {
     return ThemeData.dark().copyWith(
       primaryColor: Color(0xff7FA1F6),
       primaryColorLight: Colors.white,
-      primaryColorDark: Colors.grey[800],
+      primaryColorDark: Colors.grey[300],
       accentColor: Colors.cyan[300],
       backgroundColor: Colors.white,
       textSelectionColor: Colors.cyan[200],
+      canvasColor: Colors.grey[100],
       cardColor: Colors.white.withOpacity(0.15),
       toggleableActiveColor: Colors.cyan[300],
       accentIconTheme: accentIconTheme.copyWith(color: Colors.grey[900]),

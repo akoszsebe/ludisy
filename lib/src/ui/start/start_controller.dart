@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
+import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class StartController extends ControllerMVC {
   factory StartController() => _this ??= StartController._();
@@ -9,20 +11,23 @@ class StartController extends ControllerMVC {
   StartController._();
 
   int get stepCountValue => _StartModel.stepCountValue;
+  UserModel get userData => _StartModel.userData;
 
   Difficulty difficulty = Difficulty.easy;
 
-  Pedometer _pedometer;
+  void init() async {}
 
   Future<void> initPlatformState() async {
-    _pedometer = new Pedometer();
-    var steps = await _pedometer.pedometerStream.first.catchError((error) {
-      print(error.toString());
-    });
+    var userData = await SharedPrefs.getUserData();
+    _StartModel.setUserDate(userData);
+    Pedometer pedometer = new Pedometer();
+    var steps = 0;
+    //  await pedometer.pedometerStream.first.catchError((error) {
+    //   print(error.toString());
+    // });
     print("start from = $steps");
-    setState(() {
-      _StartModel.incrementCounter(steps);
-    });
+    _StartModel.incrementCounter(steps);
+    refresh();
   }
 
   void setUp() {
@@ -54,22 +59,18 @@ class StartController extends ControllerMVC {
 }
 
 class _StartModel {
-  static bool _isStartedWorkout = false;
   static int _stepCountValue = 0;
+  static UserModel _userData;
 
   static int get stepCountValue => _stepCountValue;
-  static bool get isWorkoutStared => _isStartedWorkout;
+  static UserModel get userData => _userData;
+
+  static void setUserDate(UserModel userData) {
+    _userData = userData;
+  }
 
   static void incrementCounter(int stepCountValue) {
     _stepCountValue = stepCountValue;
-  }
-
-  static void startWorkout() {
-    _isStartedWorkout = true;
-  }
-
-  static void stopWorkout() {
-    _isStartedWorkout = false;
   }
 }
 

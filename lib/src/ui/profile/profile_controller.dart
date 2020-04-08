@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
@@ -18,10 +19,11 @@ class ProfileController extends ControllerMVC {
     refresh();
   }
 
-  void logout() {
+  Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();
     _ProfileModel.setUserDate(null);
-    SharedPrefs.setUserData(null);
+    await SharedPrefs.setUserData(null);
+    callback();
   }
 
   void genderChange(String v) {
@@ -46,6 +48,23 @@ class ProfileController extends ControllerMVC {
      userData.height = v;
     _ProfileModel.setUserDate(userData);
     refresh();
+  }
+
+  Future<void> saveUserdata(VoidCallback callback) async {
+     if (userData.gender == null){
+      return;
+    }
+    if (userData.bithDate == null){
+      return;
+    }
+    if (userData.height == null){
+      return;
+    }
+    if (userData.weight == null){
+      return;
+    }
+    await SharedPrefs.setUserData(userData);
+    callback();
   }
 }
 

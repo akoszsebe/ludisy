@@ -60,7 +60,7 @@ class StartController extends ControllerMVC {
 
 class _StartModel {
   static int _stepCountValue = 0;
-  static UserModel _userData;
+  static UserModel _userData = UserModel();
 
   static int get stepCountValue => _stepCountValue;
   static UserModel get userData => _userData;

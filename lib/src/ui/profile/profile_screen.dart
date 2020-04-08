@@ -49,9 +49,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                             backgroundColor: Colors.white,
                             child: Icon(Icons.arrow_back,
                                 color: Color(0xff7FA1F6)),
-                            onPressed: () => {
-                              Navigator.of(context).pop()
-                            },
+                            onPressed: () => {Navigator.of(context).pop()},
                           ),
                           FloatingActionButton(
                             heroTag: "logout",
@@ -62,11 +60,12 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                 image: AssetImage(
                                     "lib/resources/images/logout.png")),
                             onPressed: () {
-                              con.logout();
-                              Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(builder: (context) {
-                                return LoginScreen();
-                              }), ModalRoute.withName('/'));
+                              con.logout(() {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoginScreen();
+                                }), ModalRoute.withName('/'));
+                              });
                             },
                           ),
                         ],
@@ -91,7 +90,10 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                               decoration: BoxDecoration(
                                 color: const Color(0xff7c94b6),
                                 image: DecorationImage(
-                                  image: NetworkImage(con.userData.photoUrl),
+                                  image: con.userData.photoUrl == null
+                                      ? AssetImage(
+                                          "lib/resources/images/google_logo.png")
+                                      : NetworkImage(con.userData.photoUrl),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius:
@@ -130,204 +132,52 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
+                                    Column(children: <Widget>[
+                                      buildDropDown(
+                                        <String>[
+                                          'Male',
+                                          'Female',
+                                        ],
+                                        " Gender",
+                                        con.userData.gender,
+                                        (v) {
+                                          con.genderChange(v);
+                                        },
+                                      ),
+                                      buildDropDown(
+                                        <String>[
+                                          for (var i = 40; i <= 200; i += 5)
+                                            "$i kg"
+                                        ],
+                                        "  Weight",
+                                        con.userData.weight,
+                                        (v) {
+                                          con.weightChange(v);
+                                        },
+                                      ),
+                                    ]),
                                     Column(
                                       children: <Widget>[
-                                        DropdownButton<String>(
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(0xff010101),
-                                          ),
-                                          hint: Text(
-                                            "Gender",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xff010101)),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          value: con.userData.gender,
-                                          items: <String>[
-                                            'Male',
-                                            'Female',
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Color(0xff010101)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (v) {
-                                            con.genderChange(v);
-                                          },
-                                        ),
-                                        DropdownButton<String>(
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(0xff010101),
-                                          ),
-                                          hint: Text(
-                                            "Weight",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xff010101)),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          value: con.userData.height,
-                                          items: <String>[
-                                            '40 kg',
-                                            '45 kg',
-                                            '50 kg',
-                                            '55 kg',
-                                            '60 kg',
-                                            '65 kg',
-                                            '70 kg',
-                                            '75 kg',
-                                            '80 kg',
-                                            '85 kg',
-                                            '90 kg',
-                                            '95 kg',
-                                            '100 kg',
-                                            '105 kg',
-                                            '110 kg',
-                                            '115 kg',
-                                            '120 kg',
-                                            '125 kg',
-                                            '130 kg',
-                                            '135 kg',
-                                            '140 kg',
-                                            '145 kg',
-                                            '150 kg',
-                                            '155 kg',
-                                            '160 kg',
-                                            '165 kg',
-                                            '170 kg',
-                                            '175 kg',
-                                            '180 kg',
-                                            '185 kg',
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Color(0xff010101)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (v) {
+                                        buildDropDown(<String>[
+                                          for (var i = DateTime.now().year;
+                                              i >= 1900;
+                                              i--)
+                                            "$i"
+                                        ], "Bithdate", con.userData.bithDate,
+                                            (v) {
+                                          con.bithDateChange(v);
+                                        }, datePicker: true),
+                                        buildDropDown(
+                                          <String>[
+                                            for (var i = 70; i <= 240; i += 5)
+                                              "$i cm"
+                                          ],
+                                          "    Heigh",
+                                          con.userData.height,
+                                          (v) {
                                             con.heightChange(v);
                                           },
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        DropdownButton<String>(
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(0xff010101),
-                                          ),
-                                          hint: Text(
-                                            "Bith Date",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xff010101)),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          value: con.userData.bithDate,
-                                          items: <String>[
-                                            '1995',
-                                            '1996',
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Color(0xff010101)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (v) {
-                                            con.bithDateChange(v);
-                                          },
                                         ),
-                                        DropdownButton<String>(
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(0xff010101),
-                                          ),
-                                          hint: Text(
-                                            "Heigh",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xff010101)),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          value: con.userData.weight,
-                                          items: <String>[
-                                            '40 cm',
-                                            '45 cm',
-                                            '50 cm',
-                                            '55 cm',
-                                            '60 cm',
-                                            '65 cm',
-                                            '70 cm',
-                                            '75 cm',
-                                            '80 cm',
-                                            '85 cm',
-                                            '90 cm',
-                                            '95 cm',
-                                            '100 cm',
-                                            '105 cm',
-                                            '110 cm',
-                                            '115 cm',
-                                            '120 cm',
-                                            '125 cm',
-                                            '130 cm',
-                                            '135 cm',
-                                            '140 cm',
-                                            '145 cm',
-                                            '150 cm',
-                                            '155 cm',
-                                            '160 cm',
-                                            '165 cm',
-                                            '170 cm',
-                                            '175 cm',
-                                            '180 cm',
-                                            '185 cm',
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Color(0xff010101)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (v) {
-                                            con.weightChange(v);
-                                          },
-                                        )
                                       ],
                                     )
                                   ],
@@ -341,9 +191,60 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                       height: 30,
                                       image: AssetImage(
                                           "lib/resources/images/done.png")),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    con.saveUserdata(() {
+                                      Navigator.of(context).pop();
+                                    });
+                                  },
                                 )),
                           ])))
             ])));
+  }
+
+  Widget buildDropDown(
+      List<String> items, String hint, String value, Function(String) onChanged,
+      {bool datePicker = false}) {
+    return SizedBox(
+        width: 110,
+        child: Theme(
+            data: Theme.of(context).copyWith(
+                buttonTheme: ButtonTheme.of(context).copyWith(
+              padding: EdgeInsets.all(0),
+              alignedDropdown: true,
+            )),
+            child: DropdownButton<String>(
+                iconSize: 30,
+                icon: Icon(
+                  datePicker ? Icons.date_range : Icons.arrow_drop_down,
+                  color: Color(0xff010101),
+                  size: datePicker ? 20 : 24,
+                ),
+                hint: Text(
+                  hint,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff010101)),
+                  textAlign: TextAlign.center,
+                ),
+                value: value,
+                items: items.map((String item) {
+                  return DropdownMenuItem<String>(
+                    value: item,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          item,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff010101)),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  );
+                }).toList(),
+                onChanged: onChanged)));
   }
 }

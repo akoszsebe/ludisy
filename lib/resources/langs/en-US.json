@@ -9,5 +9,8 @@
   "replan_button" : "Replan workout",
   "wellcome_msg" : "Do you need a stair counter?",
   "sign_in" : "Sign in",
-  "thisisyourdata" : "This is your data"
+  "thisisyourdata" : "This is your data",
+  "weneedyourdata" : "We need some data for calorie counting",
+  "congratulation" : "Congratulation!",
+  "letsdosomesteps" : "Let's do some steps"
 }

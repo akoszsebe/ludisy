@@ -189,7 +189,9 @@ class _StartScreenState extends StateMVC<StartScreen> {
             decoration: BoxDecoration(
               color: const Color(0xff7c94b6),
               image: DecorationImage(
-                image: NetworkImage(picUrl),
+                image: picUrl == null
+                    ? AssetImage("lib/resources/images/google_logo.png")
+                    : NetworkImage(picUrl),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.all(Radius.circular(24.0)),

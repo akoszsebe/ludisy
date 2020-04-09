@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/ui/login/login_screen.dart';
 import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
+import 'package:stairstepsport/src/widgets/dropdown_item.dart';
+import 'package:stairstepsport/src/widgets/rounded_button.dart';
+import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -43,23 +46,17 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          FloatingActionButton(
-                            heroTag: "back",
-                            mini: true,
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.arrow_back,
-                                color: Color(0xff7FA1F6)),
-                            onPressed: () => {Navigator.of(context).pop()},
+                          RoundedMiniButton(
+                            "back",
+                            "back.png",
+                            () {                    
+                                Navigator.of(context).pop();
+                            },
                           ),
-                          FloatingActionButton(
-                            heroTag: "logout",
-                            mini: true,
-                            backgroundColor: Colors.white,
-                            child: Image(
-                                height: 30,
-                                image: AssetImage(
-                                    "lib/resources/images/logout.png")),
-                            onPressed: () {
+                          RoundedMiniButton(
+                            "logout",
+                            "logout.png",
+                            () {
                               con.logout(() {
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(builder: (context) {
@@ -67,6 +64,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                 }), ModalRoute.withName('/'));
                               });
                             },
+                            iconColor: const Color(0xffEA4335),
                           ),
                         ],
                       ))),
@@ -133,118 +131,69 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Column(children: <Widget>[
-                                      buildDropDown(
+                                      DropDownItem(
+                                        con.userData.gender,
                                         <String>[
                                           'Male',
                                           'Female',
                                         ],
-                                        " Gender",
-                                        con.userData.gender,
                                         (v) {
                                           con.genderChange(v);
                                         },
+                                        hint: "Gender",
                                       ),
-                                      buildDropDown(
+                                      DropDownItem(
+                                        "${con.userData.weight} kg",
                                         <String>[
                                           for (var i = 40; i <= 200; i += 5)
                                             "$i kg"
                                         ],
-                                        "  Weight",
-                                        con.userData.weight,
                                         (v) {
                                           con.weightChange(v);
                                         },
+                                        hint: "Weight",
                                       ),
                                     ]),
                                     Column(
                                       children: <Widget>[
-                                        buildDropDown(<String>[
-                                          for (var i = DateTime.now().year;
-                                              i >= 1900;
-                                              i--)
-                                            "$i"
-                                        ], "Bithdate", con.userData.bithDate,
-                                            (v) {
-                                          con.bithDateChange(v);
-                                        }, datePicker: true),
-                                        buildDropDown(
+                                        DropDownItem(
+                                          con.userData.bithDate.toString(),
+                                          <String>[
+                                            for (var i = DateTime.now().year;
+                                                i >= 1900;
+                                                i--)
+                                              "$i"
+                                          ],
+                                          (v) {
+                                            con.bithDateChange(v);
+                                          },
+                                          hint: "Bithdate",
+                                        ),
+                                        DropDownItem(
+                                          "${con.userData.height} cm",
                                           <String>[
                                             for (var i = 70; i <= 240; i += 5)
                                               "$i cm"
                                           ],
-                                          "    Heigh",
-                                          con.userData.height,
                                           (v) {
                                             con.heightChange(v);
                                           },
+                                          hint: "Heigh",
                                         ),
                                       ],
                                     )
                                   ],
                                 )),
-                            Transform.scale(
-                                scale: 1.2,
-                                child: FloatingActionButton(
-                                  heroTag: "done",
-                                  backgroundColor: Color(0xff7FA1F6),
-                                  child: Image(
-                                      height: 30,
-                                      image: AssetImage(
-                                          "lib/resources/images/done.png")),
-                                  onPressed: () {
-                                    con.saveUserdata(() {
-                                      Navigator.of(context).pop();
-                                    });
-                                  },
-                                )),
+                            RoundedButton(
+                              "done",
+                              "done.png",
+                              () {
+                                con.saveUserdata(() {
+                                  Navigator.of(context).pop();
+                                });
+                              },
+                            ),
                           ])))
             ])));
-  }
-
-  Widget buildDropDown(
-      List<String> items, String hint, String value, Function(String) onChanged,
-      {bool datePicker = false}) {
-    return SizedBox(
-        width: 110,
-        child: Theme(
-            data: Theme.of(context).copyWith(
-                buttonTheme: ButtonTheme.of(context).copyWith(
-              padding: EdgeInsets.all(0),
-              alignedDropdown: true,
-            )),
-            child: DropdownButton<String>(
-                iconSize: 30,
-                icon: Icon(
-                  datePicker ? Icons.date_range : Icons.arrow_drop_down,
-                  color: Color(0xff010101),
-                  size: datePicker ? 20 : 24,
-                ),
-                hint: Text(
-                  hint,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff010101)),
-                  textAlign: TextAlign.center,
-                ),
-                value: value,
-                items: items.map((String item) {
-                  return DropdownMenuItem<String>(
-                    value: item,
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          item,
-                          style: GoogleFonts.montserrat(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff010101)),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  );
-                }).toList(),
-                onChanged: onChanged)));
   }
 }

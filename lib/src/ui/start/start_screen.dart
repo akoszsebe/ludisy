@@ -5,6 +5,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/ui/profile/profile_screen.dart';
 
 import 'package:stairstepsport/src/ui/start/start_controller.dart';
+import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/workout_slider.dart';
 
 class StartScreen extends StatefulWidget {
@@ -144,20 +145,13 @@ class _StartScreenState extends StateMVC<StartScreen> {
                                   textAlign: TextAlign.center,
                                 )),
                                 Padding(padding: EdgeInsets.only(top: 20)),
-                                Transform.scale(
-                                    scale: 1.2,
-                                    child: FloatingActionButton(
-                                      heroTag: "stop",
-                                      backgroundColor: Color(0xff7A9FFF),
-                                      child: Image(
-                                        color: Colors.white,
-                                        image: AssetImage(
-                                            "lib/resources/images/start.png"),
-                                      ),
-                                      onPressed: () {
-                                        con.setUp();
-                                      },
-                                    )),
+                                RoundedButton(
+                                  "start",
+                                  "start.png",
+                                  () {
+                                    con.setUp();
+                                  },
+                                ),
                               ]))),
                     ),
                     Positioned(

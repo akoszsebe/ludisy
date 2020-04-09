@@ -4,6 +4,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
+import 'package:stairstepsport/src/widgets/rounded_button.dart';
 
 class WorkOutScreen extends StatefulWidget {
   final int stepPlan;
@@ -110,20 +111,13 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Transform.scale(
-                                  scale: 1.2,
-                                  child: FloatingActionButton(
-                                    heroTag: "stop",
-                                    backgroundColor: Color(0xff7A9FFF),
-                                    child: Image(
-                                      color: Colors.white,
-                                      image: AssetImage(
-                                          "lib/resources/images/stop.png"),
-                                    ),
-                                    onPressed: () {
-                                      con.replanWorkOut();
-                                    },
-                                  )),
+                              RoundedButton(
+                                "stop",
+                                "stop.png",
+                                () {
+                                  con.replanWorkOut();
+                                },
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 24, right: 24),
                                 child: Container(
@@ -136,10 +130,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                                           fontSize: 20.0,
                                         ))),
                               ),
-                              Transform.scale(
-                                scale: 1.2,
-                                child: buildWorkoutButton(),
-                              ),
+                              buildWorkoutButton(),
                             ]))),
                 Padding(
                   padding: EdgeInsets.only(top: 80),
@@ -150,26 +141,18 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
 
   buildWorkoutButton() {
     if (con.isWorkoutStarted)
-      return FloatingActionButton(
-        heroTag: "pause",
-        backgroundColor: Color(0xff7A9FFF),
-        child: Image(
-          color: Colors.white,
-          image: AssetImage("lib/resources/images/pause.png"),
-        ),
-        onPressed: () {
+      return RoundedButton(
+        "pause",
+        "pause.png",
+        () {
           con.stopListening();
         },
       );
     else
-      return FloatingActionButton(
-        heroTag: "start",
-        backgroundColor: Color(0xff7A9FFF),
-        child: Image(
-          color: Colors.white,
-          image: AssetImage("lib/resources/images/start.png"),
-        ),
-        onPressed: () {
+      return RoundedButton(
+        "start",
+        "start.png",
+        () {
           con.startListening();
         },
       );

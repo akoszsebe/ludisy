@@ -21,8 +21,8 @@ class ProfileController extends ControllerMVC {
 
   Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();
-    _ProfileModel.setUserDate(null);
-    await SharedPrefs.setUserData(null);
+    _ProfileModel.setUserDate(UserModel());
+    await SharedPrefs.setUserData(UserModel());
     callback();
   }
 
@@ -33,34 +33,34 @@ class ProfileController extends ControllerMVC {
   }
 
   void weightChange(String v) {
-     userData.weight = v;
+    userData.weight = int.parse(v.split(' ')[0]);
     _ProfileModel.setUserDate(userData);
     refresh();
   }
 
   void bithDateChange(String v) {
-     userData.bithDate = v;
+    userData.bithDate = int.parse(v);
     _ProfileModel.setUserDate(userData);
     refresh();
   }
 
-    void heightChange(String v) {
-     userData.height = v;
+  void heightChange(String v) {
+    userData.height = int.parse(v.split(' ')[0]);
     _ProfileModel.setUserDate(userData);
     refresh();
   }
 
   Future<void> saveUserdata(VoidCallback callback) async {
-     if (userData.gender == null){
+    if (userData.gender == null) {
       return;
     }
-    if (userData.bithDate == null){
+    if (userData.bithDate == null) {
       return;
     }
-    if (userData.height == null){
+    if (userData.height == null) {
       return;
     }
-    if (userData.weight == null){
+    if (userData.weight == null) {
       return;
     }
     await SharedPrefs.setUserData(userData);
@@ -69,7 +69,7 @@ class ProfileController extends ControllerMVC {
 }
 
 class _ProfileModel {
-  static UserModel _userData;
+  static UserModel _userData = UserModel();
 
   static UserModel get userData => _userData;
 

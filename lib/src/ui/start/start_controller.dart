@@ -15,19 +15,18 @@ class StartController extends ControllerMVC {
 
   Difficulty difficulty = Difficulty.easy;
 
-  void init() async {}
-
   Future<void> initPlatformState() async {
     var userData = await SharedPrefs.getUserData();
     _StartModel.setUserDate(userData);
     Pedometer pedometer = new Pedometer();
     var steps = 0;
-    //  await pedometer.pedometerStream.first.catchError((error) {
-    //   print(error.toString());
-    // });
-    print("start from = $steps");
-    _StartModel.incrementCounter(steps);
-    refresh();
+    await pedometer.pedometerStream.first.then((onValue) {
+      print("start from = $steps");
+      _StartModel.incrementCounter(steps);
+      refresh();
+    }).catchError((error) {
+      print(error.toString());
+    });
   }
 
   void setUp() {

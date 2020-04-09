@@ -5,6 +5,9 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
 import 'package:stairstepsport/src/ui/start/start_screen.dart';
+import 'package:stairstepsport/src/widgets/dropdown_item.dart';
+import 'package:stairstepsport/src/widgets/loader.dart';
+import 'package:stairstepsport/src/widgets/rounded_button.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -19,7 +22,6 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
   LoginController con;
   final ItemScrollController itemScrollController = ItemScrollController();
 
-  /// Listener that reports the position of items when the list is scrolled.
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
 
@@ -27,9 +29,15 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
   void initState() {
     super.initState();
     con.checkLogin((logenIn) {
+      if (logenIn == null) {
+        scrollTo(2);
+        return;
+      }
       if (logenIn) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => StartScreen()));
+      } else {
+        scrollTo(1);
       }
     });
   }
@@ -56,14 +64,16 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                       itemScrollController: itemScrollController,
                       itemPositionsListener: itemPositionsListener,
                       scrollDirection: Axis.horizontal,
-                      itemCount: 3,
+                      itemCount: 4,
                       itemBuilder: (_, index) {
                         switch (index) {
                           case 0:
-                            return buildSignInWidget();
+                            return buildLoader();
                           case 1:
-                            return buildUserDateWidget();
+                            return buildSignInWidget();
                           case 2:
+                            return buildUserDateWidget();
+                          case 3:
                             return buildDoneWidget();
                         }
                         return Container();
@@ -71,6 +81,14 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                     )),
               )
             ])));
+  }
+
+  Widget buildLoader() {
+    return Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        width: MediaQuery.of(context).size.width,
+        child: Loader());
   }
 
   Widget buildSignInWidget() {
@@ -119,7 +137,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                       con.login((err) {
                         if (err != null) {
                         } else {
-                          scrollTo(1);
+                          scrollTo(2);
                         }
                       });
                     },
@@ -153,62 +171,66 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Column(children: <Widget>[
-                        buildDropDown(
+                        DropDownItem(
+                          con.userData.gender,
                           <String>[
                             'Male',
                             'Female',
                           ],
-                          " Gender",
-                          con.userData.gender,
                           (v) {
                             con.genderChange(v);
                           },
+                          hint: "Gender",
+                          hintColor: con.field1 ? Color(0xff010101) : Colors.red[300],
                         ),
-                        buildDropDown(
+                        DropDownItem(
+                          "${con.userData.weight.toString()} kg",
                           <String>[for (var i = 40; i <= 200; i += 5) "$i kg"],
-                          "  Weight",
-                          con.userData.weight,
                           (v) {
                             con.weightChange(v);
                           },
+                          hint: "Weight",
+                          hintColor: con.field2 ? Color(0xff010101) : Colors.red[300],
                         ),
                       ]),
                       Column(
                         children: <Widget>[
-                          buildDropDown(<String>[
-                            for (var i = DateTime.now().year; i >= 1900; i--)
-                              "$i"
-                          ], "Bithdate", con.userData.bithDate, (v) {
-                            con.bithDateChange(v);
-                          }, datePicker: true),
-                          buildDropDown(
+                          DropDownItem(
+                            con.userData.bithDate.toString(),
+                            <String>[
+                              for (var i = DateTime.now().year; i >= 1900; i--)
+                                "$i"
+                            ],
+                            (v) {
+                              con.bithDateChange(v);
+                            },
+                            hint: "Bithdate",
+                            hintColor: con.field3 ? Color(0xff010101) : Colors.red[300],
+                          ),
+                          DropDownItem(
+                            "${con.userData.height} cm",
                             <String>[
                               for (var i = 70; i <= 240; i += 5) "$i cm"
                             ],
-                            "    Heigh",
-                            con.userData.height,
                             (v) {
                               con.heightChange(v);
                             },
+                            hint: "Heigh",
+                            hintColor: con.field4 ? Color(0xff010101) : Colors.red[300],
                           ),
                         ],
                       )
                     ],
                   )),
-              Transform.scale(
-                  scale: 1.2,
-                  child: FloatingActionButton(
-                    heroTag: "next",
-                    backgroundColor: Color(0xff7FA1F6),
-                    child: Image(
-                        height: 30,
-                        image: AssetImage("lib/resources/images/next.png")),
-                    onPressed: () {
-                      con.saveUserdata(() {
-                        scrollTo(2);
-                      });
-                    },
-                  )),
+              RoundedButton(
+                "next",
+                "next.png",
+                () {
+                  con.saveUserdata(() {
+                    scrollTo(3);
+                  });
+                },
+              ),
             ]));
   }
 
@@ -245,67 +267,15 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 60),
               ),
-              Transform.scale(
-                  scale: 1.2,
-                  child: FloatingActionButton(
-                    heroTag: "done",
-                    backgroundColor: Color(0xff7FA1F6),
-                    child: Image(
-                        height: 30,
-                        image: AssetImage("lib/resources/images/done.png")),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => StartScreen()));
-                    },
-                  )),
+              RoundedButton(
+                "done",
+                "done.png",
+                () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => StartScreen()));
+                },
+              ),
             ]));
-  }
-
-  Widget buildDropDown(
-      List<String> items, String hint, String value, Function(String) onChanged,
-      {bool datePicker = false}) {
-    return SizedBox(
-        width: 110,
-        child: Theme(
-            data: Theme.of(context).copyWith(
-                buttonTheme: ButtonTheme.of(context).copyWith(
-              padding: EdgeInsets.all(0),
-              alignedDropdown: true,
-            )),
-            child: DropdownButton<String>(
-                iconSize: 30,
-                icon: Icon(
-                  datePicker ? Icons.date_range : Icons.arrow_drop_down,
-                  color: Color(0xff010101),
-                  size: datePicker ? 20 : 24,
-                ),
-                hint: Text(
-                  hint,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff010101)),
-                  textAlign: TextAlign.center,
-                ),
-                value: value,
-                items: items.map((String item) {
-                  return DropdownMenuItem<String>(
-                    value: item,
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          item,
-                          style: GoogleFonts.montserrat(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff010101)),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  );
-                }).toList(),
-                onChanged: onChanged)));
   }
 
   void scrollTo(int index) => itemScrollController.scrollTo(

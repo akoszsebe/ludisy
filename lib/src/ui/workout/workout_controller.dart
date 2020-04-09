@@ -44,7 +44,7 @@ class WorkOutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     _WorkoutModel.startWorkout();
     refresh();
-   // mock();
+    // mock();
   }
 
   void startTimer() {
@@ -59,13 +59,13 @@ class WorkOutController extends ControllerMVC {
     print("target = ${_WorkoutModel.targetSteps}");
     for (var i = 0; i < _WorkoutModel.targetSteps + 10; i += 10) {
       var cal = CaloriCalculator.calculateEnergyExpenditure(
-          double.parse(userData.height.split(' ')[0]),
-          DateTime(int.parse(userData.bithDate)),
-          double.parse(userData.weight.split(' ')[0]),
+          userData.height.toDouble(),
+          DateTime(userData.bithDate),
+          userData.weight.toDouble(),
           userData.gender == "Male" ? 0 : 1,
           workoutDuration.inSeconds,
           stepCountValue,
-          0.5);
+          0.4);
       _WorkoutModel.incrementStepCounter(i);
       _WorkoutModel.incrementCalorieCounter(cal);
       refresh();
@@ -87,13 +87,13 @@ class WorkOutController extends ControllerMVC {
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - offset}");
     var cal = CaloriCalculator.calculateEnergyExpenditure(
-        double.parse(userData.height.split(' ')[0]),
-        DateTime(int.parse(userData.bithDate)),
-        double.parse(userData.weight.split(' ')[0]),
+        userData.height.toDouble(),
+        DateTime(userData.bithDate),
+        userData.weight.toDouble(),
         userData.gender == "Male" ? 0 : 1,
         workoutDuration.inSeconds,
         stepCountValue,
-        0.5);
+        0.4);
     _WorkoutModel.incrementStepCounter(stepCountValue - offset);
     _WorkoutModel.incrementCalorieCounter(cal);
     refresh();

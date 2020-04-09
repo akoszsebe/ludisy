@@ -3,9 +3,9 @@ class UserModel {
   String photoUrl;
   String userId;
   String gender;
-  String weight;
-  String bithDate;
-  String height;
+  int weight;
+  int bithDate;
+  int height;
 
   UserModel(
       {this.displayName,

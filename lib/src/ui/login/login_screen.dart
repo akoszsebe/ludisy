@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
-import 'package:stairstepsport/src/ui/start/start_screen.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/loader.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
+import 'package:stairstepsport/src/util/navigation_module.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -34,8 +34,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         return;
       }
       if (logenIn) {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => StartScreen()));
+        NavigationModule.navigateToStartScreen(context);
       } else {
         scrollTo(1);
       }
@@ -172,7 +171,9 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                     children: <Widget>[
                       Column(children: <Widget>[
                         DropDownItem(
-                          con.userData.gender,
+                          con.userData.gender == null
+                              ? null
+                              : con.userData.gender,
                           <String>[
                             'Male',
                             'Female',
@@ -181,22 +182,28 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                             con.genderChange(v);
                           },
                           hint: "Gender",
-                          hintColor: con.field1 ? Color(0xff010101) : Colors.red[300],
+                          hintColor:
+                              con.field1 ? Color(0xff010101) : Colors.red[300],
                         ),
                         DropDownItem(
-                          "${con.userData.weight.toString()} kg",
+                          con.userData.weight == null
+                              ? null
+                              : "${con.userData.weight.toString()} kg",
                           <String>[for (var i = 40; i <= 200; i += 5) "$i kg"],
                           (v) {
                             con.weightChange(v);
                           },
                           hint: "Weight",
-                          hintColor: con.field2 ? Color(0xff010101) : Colors.red[300],
+                          hintColor:
+                              con.field2 ? Color(0xff010101) : Colors.red[300],
                         ),
                       ]),
                       Column(
                         children: <Widget>[
                           DropDownItem(
-                            con.userData.bithDate.toString(),
+                            con.userData.bithDate == null
+                                ? null
+                                : con.userData.bithDate.toString(),
                             <String>[
                               for (var i = DateTime.now().year; i >= 1900; i--)
                                 "$i"
@@ -205,10 +212,14 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                               con.bithDateChange(v);
                             },
                             hint: "Bithdate",
-                            hintColor: con.field3 ? Color(0xff010101) : Colors.red[300],
+                            hintColor: con.field3
+                                ? Color(0xff010101)
+                                : Colors.red[300],
                           ),
                           DropDownItem(
-                            "${con.userData.height} cm",
+                            con.userData.height == null
+                                ? null
+                                : "${con.userData.height} cm",
                             <String>[
                               for (var i = 70; i <= 240; i += 5) "$i cm"
                             ],
@@ -216,7 +227,9 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                               con.heightChange(v);
                             },
                             hint: "Heigh",
-                            hintColor: con.field4 ? Color(0xff010101) : Colors.red[300],
+                            hintColor: con.field4
+                                ? Color(0xff010101)
+                                : Colors.red[300],
                           ),
                         ],
                       )
@@ -271,8 +284,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 "done",
                 "done.png",
                 () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => StartScreen()));
+                  NavigationModule.navigateToStartScreen(context);
                 },
               ),
             ]));

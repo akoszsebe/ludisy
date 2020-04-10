@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class StartController extends ControllerMVC {
@@ -18,6 +16,7 @@ class StartController extends ControllerMVC {
   Future<void> initPlatformState() async {
     var userData = await SharedPrefs.getUserData();
     _StartModel.setUserDate(userData);
+    refresh();
     Pedometer pedometer = new Pedometer();
     var steps = 0;
     await pedometer.pedometerStream.first.then((onValue) {
@@ -29,7 +28,7 @@ class StartController extends ControllerMVC {
     });
   }
 
-  void setUp() {
+  void setUp(Function(int) callback) {
     var stepPlan = 0;
     switch (difficulty) {
       case Difficulty.easy:
@@ -48,8 +47,7 @@ class StartController extends ControllerMVC {
         stepPlan = 10000;
         break;
     }
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => WorkOutScreen(stepPlan)));
+    callback(stepPlan);
   }
 
   void setDificulty(int value) {

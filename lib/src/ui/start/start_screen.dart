@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/ui/profile/profile_screen.dart';
-
+import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/start/start_controller.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/workout_slider.dart';
@@ -146,12 +145,12 @@ class _StartScreenState extends StateMVC<StartScreen> {
                                 )),
                                 Padding(padding: EdgeInsets.only(top: 20)),
                                 RoundedButton(
-                                  "start",
-                                  "start.png",
-                                  () {
-                                    con.setUp();
-                                  },
-                                ),
+                                    "start",
+                                    "start.png",
+                                    () => con.setUp((stepPlan) =>
+                                        NavigationModule
+                                            .navigateToWorkoutScreen(
+                                                context, stepPlan))),
                               ]))),
                     ),
                     Positioned(
@@ -174,8 +173,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
           minWidth: 48,
           padding: EdgeInsets.all(0),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()));
+            NavigationModule.navigateToProfileScreen(context);
           },
           child: Container(
             width: 48.0,

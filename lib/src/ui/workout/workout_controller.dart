@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/ui/start/start_screen.dart';
 import 'package:stairstepsport/src/util/calory_calculator.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
@@ -44,7 +43,7 @@ class WorkOutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     _WorkoutModel.startWorkout();
     refresh();
-    // mock();
+    mock();
   }
 
   void startTimer() {
@@ -77,11 +76,14 @@ class WorkOutController extends ControllerMVC {
   }
 
   void stopListening() {
-    setState(() {
-      _WorkoutModel.stopWorkout();
-    });
-    _subscription.cancel();
-    _timer.cancel();
+    _WorkoutModel.stopWorkout();
+    if (_subscription != null) {
+      _subscription.cancel();
+    }
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    refresh();
   }
 
   void _onData(int stepCountValue) async {
@@ -105,15 +107,21 @@ class WorkOutController extends ControllerMVC {
 
   void setupTargetSteps(int stepPlan) {
     _WorkoutModel.setTargetSteps(stepPlan);
+    durationSeconds = 0;
+    _WorkoutModel.incrementDuration(Duration(seconds: 0));
+    _WorkoutModel.resetCounter();
   }
 
-  void replanWorkOut() {
+  void replanWorkOut(VoidCallback callback) {
     stopListening();
     durationSeconds = 0;
     _WorkoutModel.incrementDuration(Duration(seconds: 0));
     _WorkoutModel.resetCounter();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => StartScreen()));
+    callback();
+  }
+
+  void doneWorkout(Function(int, int, double, Duration) callback) {
+    callback(stepCountValue, targetSteps, calCounterValue, workoutDuration);
   }
 }
 

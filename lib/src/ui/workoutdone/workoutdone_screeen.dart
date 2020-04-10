@@ -3,32 +3,38 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
+import 'package:stairstepsport/src/ui/workoutdone/workoutdone_controller.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
-class WorkOutScreen extends StatefulWidget {
-  final int stepPlan;
+class WorkOutDoneScreen extends StatefulWidget {
+  final int steps;
+  final int stepsPlaned;
+  final double cal;
+  final Duration duration;
 
-  WorkOutScreen(this.stepPlan, {Key key}) : super(key: key);
+  WorkOutDoneScreen(this.steps, this.stepsPlaned, this.cal, this.duration,
+      {Key key})
+      : super(key: key);
   final String title = 'Flutter Demo Home Page';
   @override
-  _WorkOutScreenState createState() => _WorkOutScreenState(stepPlan);
+  _WorkOutDoneScreenState createState() =>
+      _WorkOutDoneScreenState(steps, stepsPlaned, cal, duration);
 }
 
-class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
-  _WorkOutScreenState(this.stepPlan) : super(WorkOutController()) {
+class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
+  _WorkOutDoneScreenState(
+      int steps, int stepsPlaned, double cal, Duration duration)
+      : super(WorkOutDoneController()) {
     con = controller;
-    con.setupTargetSteps(stepPlan);
+    con.setUpValues(steps, stepsPlaned, cal, duration);
   }
 
-  final int stepPlan;
-  WorkOutController con;
+  WorkOutDoneController con;
 
   @override
   void initState() {
     super.initState();
-    con.initPlatformState();
   }
 
   @override
@@ -49,18 +55,24 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                 Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: EdgeInsets.only(top: 8, left: 20),
                       child: RoundedMiniButton(
-                          "back",
-                          "back.png",
-                          () => con.replanWorkOut(() =>
-                              NavigationModule.navigateToStartScreen(context))),
+                        "back",
+                        "back.png",
+                        () => NavigationModule.navigateToStartScreen(context),
+                      ),
                     )
                   ],
                 ),
                 Center(
                     child: Column(
                   children: <Widget>[
+                    Text(
+                      "Congratulation!",
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600, fontSize: 22.0),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 30)),
                     CircularPercentIndicator(
                       radius: 180.0,
                       backgroundColor: Colors.white,
@@ -72,17 +84,17 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Image(
-                            image: AssetImage("lib/resources/images/step.png"),
-                            height: 64,
+                            image: AssetImage("lib/resources/images/done.png"),
+                            height: 48,
                           ),
                           Padding(padding: EdgeInsets.only(top: 9)),
                           Text(
-                            "${con.stepCountValue}",
+                            "${con.steps}",
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold, fontSize: 26.0),
                           ),
                           Text(
-                            "${con.calCounterValue.toStringAsFixed(2)} kcal",
+                            "${con.cal.toStringAsFixed(2)} kcal",
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w500, fontSize: 18.0),
                           )
@@ -92,12 +104,17 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                       progressColor: Color(0xff7FA1F6),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 6),
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    Text(
+                      "You're tough as Hulk!",
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500, fontSize: 19.0),
                     ),
                   ],
                 )),
                 Padding(
-                  padding: EdgeInsets.only(top: 70),
+                  padding: EdgeInsets.only(top: 30),
                 ),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
@@ -112,54 +129,34 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               RoundedButton(
-                                "stop",
-                                "stop.png",
-                                () {
-                                  con.doneWorkout(
-                                      (steps, stepsPlaned, cal, duration) {
-                                    NavigationModule
-                                        .navigateToWorkoutDoneScreen(context,
-                                            steps, stepsPlaned, cal, duration);
-                                  });
-                                },
-                              ),
+                                  "reload",
+                                  "reload.png",
+                                  () =>
+                                      NavigationModule.navigateToWorkoutScreen(
+                                          context, con.stepsPlaned)),
                               Padding(
                                 padding: EdgeInsets.only(left: 24, right: 24),
                                 child: Container(
                                     width: 70,
                                     child: Text(
-                                        "${con.workoutDuration.toString().split('.').first.substring(2, 7)}",
+                                        "${con.duration.toString().split('.').first.substring(2, 7)}",
                                         style: GoogleFonts.montserrat(
                                           color: Color(0xff321323),
                                           fontWeight: FontWeight.w500,
                                           fontSize: 20.0,
                                         ))),
                               ),
-                              buildWorkoutButton(),
+                              RoundedButton(
+                                "done",
+                                "done.png",
+                                () => NavigationModule.navigateToStartScreen(
+                                    context),
+                              )
                             ]))),
                 Padding(
-                  padding: EdgeInsets.only(top: 80),
+                  padding: EdgeInsets.only(top: 100),
                 ),
               ],
             )));
-  }
-
-  buildWorkoutButton() {
-    if (con.isWorkoutStarted)
-      return RoundedButton(
-        "pause",
-        "pause.png",
-        () {
-          con.stopListening();
-        },
-      );
-    else
-      return RoundedButton(
-        "start",
-        "start.png",
-        () {
-          con.startListening();
-        },
-      );
   }
 }

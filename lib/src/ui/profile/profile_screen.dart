@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/ui/login/login_screen.dart';
 import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
+import 'package:stairstepsport/src/util/navigation_module.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -49,8 +49,8 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                           RoundedMiniButton(
                             "back",
                             "back.png",
-                            () {                    
-                                Navigator.of(context).pop();
+                            () {
+                              NavigationModule.pop(context);
                             },
                           ),
                           RoundedMiniButton(
@@ -58,10 +58,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                             "logout.png",
                             () {
                               con.logout(() {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(builder: (context) {
-                                  return LoginScreen();
-                                }), ModalRoute.withName('/'));
+                                NavigationModule.navigateToLoginScreen(context);
                               });
                             },
                             iconColor: const Color(0xffEA4335),
@@ -189,7 +186,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                               "done.png",
                               () {
                                 con.saveUserdata(() {
-                                  Navigator.of(context).pop();
+                                  NavigationModule.pop(context);
                                 });
                               },
                             ),

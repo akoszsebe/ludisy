@@ -20,6 +20,7 @@ class RoundedButton extends StatelessWidget {
             backgroundColor: backgroundColor,
             child: Image(
               height: 18,
+              width:  18,
               color: iconColor,
               image: AssetImage("lib/resources/images/$assetName"),
             ),

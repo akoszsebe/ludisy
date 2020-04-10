@@ -64,6 +64,7 @@ flutter:
     - lib/resources/images/logout.png
     - lib/resources/images/next.png
     - lib/resources/images/back.png
+    - lib/resources/images/reload.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

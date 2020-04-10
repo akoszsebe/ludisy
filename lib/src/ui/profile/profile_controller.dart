@@ -11,42 +11,37 @@ class ProfileController extends ControllerMVC {
 
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  UserModel get userData => _ProfileModel.userData;
+  UserModel userData = UserModel();
 
   Future<void> init() async {
-    var userData = await SharedPrefs.getUserData();
-    _ProfileModel.setUserDate(userData);
+    userData = await SharedPrefs.getUserData();
     refresh();
   }
 
   Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();
-    _ProfileModel.setUserDate(UserModel());
-    await SharedPrefs.setUserData(UserModel());
+    userData = UserModel();
+    await SharedPrefs.setUserData(userData);
     callback();
   }
 
   void genderChange(String v) {
     userData.gender = v;
-    _ProfileModel.setUserDate(userData);
     refresh();
   }
 
   void weightChange(String v) {
     userData.weight = int.parse(v.split(' ')[0]);
-    _ProfileModel.setUserDate(userData);
     refresh();
   }
 
   void bithDateChange(String v) {
     userData.bithDate = int.parse(v);
-    _ProfileModel.setUserDate(userData);
     refresh();
   }
 
   void heightChange(String v) {
     userData.height = int.parse(v.split(' ')[0]);
-    _ProfileModel.setUserDate(userData);
     refresh();
   }
 
@@ -65,15 +60,5 @@ class ProfileController extends ControllerMVC {
     }
     await SharedPrefs.setUserData(userData);
     callback();
-  }
-}
-
-class _ProfileModel {
-  static UserModel _userData = UserModel();
-
-  static UserModel get userData => _userData;
-
-  static void setUserDate(UserModel userData) {
-    _userData = userData;
   }
 }

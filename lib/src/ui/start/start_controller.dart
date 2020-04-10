@@ -20,7 +20,6 @@ class StartController extends ControllerMVC {
     Pedometer pedometer = new Pedometer();
     var steps = 0;
     await pedometer.pedometerStream.first.then((onValue) {
-      print("start from = $steps");
       _StartModel.incrementCounter(steps);
       refresh();
     }).catchError((error) {

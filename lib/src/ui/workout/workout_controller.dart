@@ -11,9 +11,10 @@ import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class WorkOutController extends ControllerMVC {
-  factory WorkOutController() => _this ??= WorkOutController._();
+  factory WorkOutController(appDatabase) => _this ??= WorkOutController._(appDatabase);
   static WorkOutController _this;
-  WorkOutController._();
+  WorkOutController._(this._appDatabase);
+  final AppDatabase _appDatabase;
 
   int stepCountValue = 0;
   double calCounterValue = 0;
@@ -142,9 +143,8 @@ class WorkOutController extends ControllerMVC {
     if (_timer != null) {
       _timer.cancel();
     }
-    final database =
-        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-    await database.workoutDao.insertWorkOut(WorkOut(
+   
+    await _appDatabase.workoutDao.insertWorkOut(WorkOut(
         null,
         stepCountValue,
         calCounterValue,

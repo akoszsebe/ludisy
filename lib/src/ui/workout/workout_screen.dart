@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
@@ -9,15 +10,16 @@ import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
 class WorkOutScreen extends StatefulWidget {
   final int stepPlan;
+  final AppDatabase appDatabase;
 
-  WorkOutScreen(this.stepPlan, {Key key}) : super(key: key);
+  WorkOutScreen(this.appDatabase,this.stepPlan, {Key key}) : super(key: key);
   final String title = 'Flutter Demo Home Page';
   @override
-  _WorkOutScreenState createState() => _WorkOutScreenState(stepPlan);
+  _WorkOutScreenState createState() => _WorkOutScreenState(appDatabase, stepPlan);
 }
 
 class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
-  _WorkOutScreenState(this.stepPlan) : super(WorkOutController()) {
+  _WorkOutScreenState(AppDatabase appDatabase, this.stepPlan) : super(WorkOutController(appDatabase)) {
     con = controller;
     con.setupTargetSteps(stepPlan);
   }

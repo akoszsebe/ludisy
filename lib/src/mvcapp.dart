@@ -8,6 +8,8 @@ import 'package:stairstepsport/src/util/style/app_theme.dart';
 import 'package:flutter/services.dart';
 
 class MVCApp extends AppMVC {
+  MVCApp();
+
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color.fromRGBO(127, 161, 246, 0.5), //or set color with: Color(0xFF0000FF)

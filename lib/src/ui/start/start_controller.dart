@@ -1,12 +1,14 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:pedometer/pedometer.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
+import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class StartController extends ControllerMVC {
-  factory StartController() => _this ??= StartController._();
+  factory StartController(appDatabase) =>
+      _this ??= StartController._(appDatabase);
   static StartController _this;
-  StartController._();
+  StartController._(this._appDatabase);
+  final AppDatabase _appDatabase;
 
   int get stepCountValue => _StartModel.stepCountValue;
   UserModel get userData => _StartModel.userData;
@@ -16,15 +18,10 @@ class StartController extends ControllerMVC {
   Future<void> initPlatformState() async {
     var userData = await SharedPrefs.getUserData();
     _StartModel.setUserDate(userData);
-    refresh();
-    Pedometer pedometer = new Pedometer();
     var steps = 0;
-    await pedometer.pedometerStream.first.then((onValue) {
-      _StartModel.incrementCounter(steps);
-      refresh();
-    }).catchError((error) {
-      print(error.toString());
-    });
+    steps = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
+    _StartModel.incrementCounter(steps);
+    refresh();
   }
 
   void setUp(Function(int) callback) {

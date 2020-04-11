@@ -81,7 +81,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `WorkOut` (`id` INTEGER, `steps` INTEGER, `cal` REAL, `duration` INTEGER, `when` INTEGER, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `WorkOut` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `steps` INTEGER, `cal` REAL, `duration` INTEGER, `timeStamp` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
 
 class _$WorkOutDao extends WorkOutDao {
   _$WorkOutDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database, changeListener),
+      : _queryAdapter = QueryAdapter(database),
         _workOutInsertionAdapter = InsertionAdapter(
             database,
             'WorkOut',
@@ -105,9 +105,8 @@ class _$WorkOutDao extends WorkOutDao {
                   'steps': item.steps,
                   'cal': item.cal,
                   'duration': item.duration,
-                  'when': item.when
-                },
-            changeListener);
+                  'timeStamp': item.timeStamp
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -120,7 +119,7 @@ class _$WorkOutDao extends WorkOutDao {
       row['steps'] as int,
       row['cal'] as double,
       row['duration'] as int,
-      row['when'] as int);
+      row['timeStamp'] as int);
 
   final InsertionAdapter<WorkOut> _workOutInsertionAdapter;
 
@@ -131,9 +130,11 @@ class _$WorkOutDao extends WorkOutDao {
   }
 
   @override
-  Stream<WorkOut> findWorkOutById(int id) {
-    return _queryAdapter.queryStream('SELECT * FROM WorkOut WHERE id = ?',
-        arguments: <dynamic>[id], tableName: 'WorkOut', mapper: _workOutMapper);
+  Future<List<WorkOut>> findWorkOutBetween(int date1, int date2) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM WorkOut WHERE timeStamp BETWEEN ? AND ?',
+        arguments: <dynamic>[date1, date2],
+        mapper: _workOutMapper);
   }
 
   @override

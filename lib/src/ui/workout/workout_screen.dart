@@ -128,7 +128,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                                 child: Container(
                                     width: 70,
                                     child: Text(
-                                        "${con.workoutDuration.toString().split('.').first.substring(2, 7)}",
+                                        "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(2, 7)}",
                                         style: GoogleFonts.montserrat(
                                           color: Color(0xff321323),
                                           fontWeight: FontWeight.w500,

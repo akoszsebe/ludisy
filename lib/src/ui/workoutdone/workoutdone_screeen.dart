@@ -11,23 +11,23 @@ class WorkOutDoneScreen extends StatefulWidget {
   final int steps;
   final int stepsPlaned;
   final double cal;
-  final Duration duration;
+  final int durationSeconds;
 
-  WorkOutDoneScreen(this.steps, this.stepsPlaned, this.cal, this.duration,
+  WorkOutDoneScreen(this.steps, this.stepsPlaned, this.cal, this.durationSeconds,
       {Key key})
       : super(key: key);
   final String title = 'Flutter Demo Home Page';
   @override
   _WorkOutDoneScreenState createState() =>
-      _WorkOutDoneScreenState(steps, stepsPlaned, cal, duration);
+      _WorkOutDoneScreenState(steps, stepsPlaned, cal, durationSeconds);
 }
 
 class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
   _WorkOutDoneScreenState(
-      int steps, int stepsPlaned, double cal, Duration duration)
+      int steps, int stepsPlaned, double cal, int durationSeconds)
       : super(WorkOutDoneController()) {
     con = controller;
-    con.setUpValues(steps, stepsPlaned, cal, duration);
+    con.setUpValues(steps, stepsPlaned, cal, durationSeconds);
   }
 
   WorkOutDoneController con;
@@ -139,7 +139,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                                 child: Container(
                                     width: 70,
                                     child: Text(
-                                        "${con.duration.toString().split('.').first.substring(2, 7)}",
+                                        "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(2, 7)}",
                                         style: GoogleFonts.montserrat(
                                           color: Color(0xff321323),
                                           fontWeight: FontWeight.w500,

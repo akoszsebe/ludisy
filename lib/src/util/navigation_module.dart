@@ -17,10 +17,10 @@ class NavigationModule {
   }
 
   static void navigateToWorkoutDoneScreen(BuildContext context, int steps,
-      int stepsPlaned, double cal, Duration duration) {
+      int stepsPlaned, double cal, int durationSeconds) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) =>
-            WorkOutDoneScreen(steps, stepsPlaned, cal, duration)));
+            WorkOutDoneScreen(steps, stepsPlaned, cal, durationSeconds)));
   }
 
   static void pop(BuildContext context) {

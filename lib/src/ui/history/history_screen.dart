@@ -1,13 +1,11 @@
-import 'dart:math';
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/day_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/history/history_controller.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
+import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 import 'package:stairstepsport/src/widgets/quickinfobar.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
@@ -80,104 +78,93 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                Text("data"),
-                                AppBarChart(con.dataset)
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 40),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        IconButton(
+                                            icon: new Icon(
+                                              Icons.chevron_left,
+                                              color: Colors.black,
+                                              size: 30,
+                                            ),
+                                            onPressed: () {}),
+                                        Text(
+                                          "${DateFormat('yyyy.MM.dd').format(con.firstDay)} - ${DateFormat('yyyy.MM.dd').format(con.lastDay)}",
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15.0),
+                                        ),
+                                        IconButton(
+                                            icon: new Icon(
+                                              Icons.chevron_right,
+                                              color: Colors.black,
+                                              size: 30,
+                                            ),
+                                            onPressed: () {}),
+                                      ],
+                                    )),
+                                AppBarChart(con.dataset, (index) {
+                                  con.changeSelected(index);
+                                }),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 60),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "Total Steps:",
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15.0),
+                                          ),
+                                          Text(
+                                            "${con.selectedDay.totalSteps}",
+                                            style: GoogleFonts.montserrat(
+                                                color: Color(0xff7FA1F7),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "Avg Steps:",
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15.0),
+                                          ),
+                                          Text(
+                                            "${con.selectedDay.totalSteps / con.selectedDay.workouts.length}",
+                                            style: GoogleFonts.montserrat(
+                                                color: Color(0xff7FA1F7),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ])))
                 ])));
-  }
-}
-
-class AppBarChart extends StatefulWidget {
-  final List<DayModel> dataset;
-  AppBarChart(this.dataset);
-
-  @override
-  State<StatefulWidget> createState() => AppBarChartState(dataset);
-}
-
-class AppBarChartState extends State<AppBarChart> {
-  AppBarChartState(this.dataset);
-  final Color barBackgroundColor = Colors.grey[100];
-  final Duration animDuration = const Duration(milliseconds: 250);
-  final List<DayModel> dataset;
-  int touchedIndex = 1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 220,
-        child: BarChart(
-          mainBarData(),
-          swapAnimationDuration: animDuration,
-        ));
-  }
-
-  BarChartGroupData makeGroupData(
-    int x,
-    double y, {
-    bool isTouched = true,
-    Color barColor = const Color(0x807FA1F6),
-    double width = 16,
-    List<int> showTooltips = const [],
-  }) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          y: y,
-          color: isTouched ? const Color(0xff7FA1F6) : barColor,
-          width: width,
-        ),
-      ],
-      showingTooltipIndicators: showTooltips,
-    );
-  }
-
-  List<BarChartGroupData> showingGroups() {
-    List<BarChartGroupData> list = List();
-    for (var i = 0; i < dataset.length; i++) {
-      list.add(makeGroupData(i, dataset[i].totalSteps.toDouble(),
-          isTouched: i == touchedIndex));
-    }
-    return list;
-  }
-
-  BarChartData mainBarData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.transparent,
-            getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              return BarTooltipItem("", TextStyle(color: Colors.yellow));
-            }),
-        handleBuiltInTouches: false,
-        touchCallback: (barTouchResponse) {
-          setState(() {
-            touchedIndex = barTouchResponse.spot.touchedBarGroupIndex;
-          });
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          textStyle: GoogleFonts.montserrat(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff010101)),
-          margin: 16,
-          getTitles: (double value) {
-            return dataset[value.toInt()].date.toString();
-          },
-        ),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: showingGroups(),
-    );
   }
 }

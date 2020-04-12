@@ -13,31 +13,52 @@ class HistoryController extends ControllerMVC {
 
   UserModel userData = UserModel();
   int stepCountValue = 0;
-  List<DayModel> dataset = List();
+  List<DayModel> dataset = List(7);
+  DateTime lastDay;
+  DateTime firstDay;
+  DayModel selectedDay = DayModel(0, 0, []);
 
   Future<void> initPlatformState() async {
-    dataset = [
-      DayModel(1, 234, []),
-      DayModel(2, 2, []),
-      DayModel(3, 12, []),
-      DayModel(4, 100, []),
-      DayModel(5, 50, []),
-      DayModel(6, 34, []),
-    ];
+    dataset = List();
     userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
-    var now = DateTime.now();
-    var morrning = new DateTime(now.year, now.month, now.day);
-    var night = new DateTime(now.year, now.month, now.day, 24 );
-    print(" m - ${morrning} --- n - $night");
-    var l1 = await _appDatabase.workoutDao.findWorkOutBetween(morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
-    var d = DayModel(0,0,List());
+    var today = DateTime.now();
+    await fillForWeek(today);
+    refresh();
+  }
+
+  Future<void> fillForWeek(DateTime lastDayFromThatWeek) async {
+    lastDay = lastDayFromThatWeek;
+    firstDay = lastDayFromThatWeek.subtract(Duration(days: 7));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 7)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 6)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 5)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 3)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 2)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 1)));
+    await addDay(lastDayFromThatWeek);
+    selectedDay = dataset[dataset.length - 1];
+  }
+
+  Future<void> addDay(DateTime dateTime) async {
+    var morrning = new DateTime(dateTime.year, dateTime.month, dateTime.day);
+    var night =
+        new DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
+    print(" m - $morrning --- n - $night");
+    var l1 = await _appDatabase.workoutDao.findWorkOutBetween(
+        morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
+    var d = DayModel(0, 0, List());
     d.date = morrning.day;
-    for (var l in l1){
-      d.totalSteps+= l.steps;
+    for (var l in l1) {
+      d.totalSteps += l.steps;
       d.workouts.add(l);
     }
     dataset.add(d);
+  }
+
+  void changeSelected(int index) {
+    print("selected index $index");
+    selectedDay = dataset[index];
     refresh();
   }
 }

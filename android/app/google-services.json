@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "955655684915-soepha37hmuqjhgb2tab62nj5cicn9c9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stairstepsport",
+            "certificate_hash": "60a0b1e86faf555310db58498b1cdebd9b380eff"
+          }
+        },
+        {
+          "client_id": "955655684915-cu4jfpbr86kkvjurparacsstr3k0jcrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stairstepsport",
+            "certificate_hash": "d35a4ed39fb049d97ff44437624f301ee6c5d4d2"
+          }
+        },
+        {
           "client_id": "955655684915-d3s2js6o48jabd29i8i90uuckd4s09th.apps.googleusercontent.com",
           "client_type": 3
         }

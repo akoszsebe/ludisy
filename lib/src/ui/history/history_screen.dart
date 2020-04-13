@@ -138,8 +138,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                             "${con.selectedDay.totalSteps}",
                                             style: GoogleFonts.montserrat(
                                                 color: Color(0xff7FA1F7),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 16.0),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 17.0),
                                           ),
                                         ],
                                       ),
@@ -153,26 +153,38 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                                 fontSize: 15.0),
                                           ),
                                           Text(
-                                            "${con.selectedDay.totalSteps / con.selectedDay.workouts.length}",
+                                            "${(con.selectedDay.totalSteps / con.selectedDay.workouts.length).toStringAsFixed(0)}",
                                             style: GoogleFonts.montserrat(
                                                 color: Color(0xff7FA1F7),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 16.0),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 17.0),
                                           ),
                                         ],
                                       )
                                     ],
                                   ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 50, right: 50, top: 16, bottom: 3),
+                                  child: buildTableHeaders(),
+                                ),
+                                SizedBox(
+                                  child: Container(
+                                    color: Colors.grey,
+                                    margin:
+                                        EdgeInsets.only(left: 50, right: 50),
+                                  ),
+                                  height: 1,
+                                ),
                                 Container(
                                     color: Colors.white,
-                                    height: 140.0,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 20, horizontal: 60),
+                                    height: 90.0,
+                                    padding: EdgeInsets.only(
+                                        left: 50, right: 50, top: 5),
                                     child: SingleChildScrollView(
                                         child: Table(
                                       children: [
-                                        buildTableHeaders(),
                                         if (con.selectedDay != null)
                                           for (var i = 0;
                                               i <
@@ -180,67 +192,71 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                                       .length;
                                               i++)
                                             TableRow(children: [
-                                              Text(
-                                                  "${con.selectedDay.workouts[i].steps}",
-                                                  style: GoogleFonts.montserrat(
-                                                      color: Color(0xff7FA1F7),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14.0)),
-                                              Text(
-                                                  "${con.selectedDay.workouts[i].cal.toStringAsFixed(1)} kcal",
-                                                  style: GoogleFonts.montserrat(
-                                                      color: Color(0xff7FA1F7),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14.0)),
-                                              Text(
-                                                  "${Duration(seconds: con.selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}",
-                                                  style: GoogleFonts.montserrat(
-                                                      color: Color(0xff7FA1F7),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14.0)),
-                                              Text(
-                                                  '${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(con.selectedDay.workouts[i].timeStamp))}',
-                                                  style: GoogleFonts.montserrat(
-                                                      color: Color(0xff7FA1F7),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14.0)),
+                                              buildRowItem(
+                                                  "${con.selectedDay.workouts[i].steps}"),
+                                              buildRowItem(
+                                                  "${con.selectedDay.workouts[i].cal.toStringAsFixed(1)} kcal"),
+                                              buildRowItem(
+                                                  "${Duration(seconds: con.selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
+                                              buildRowItem(
+                                                  "${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(con.selectedDay.workouts[i].timeStamp))}"),
                                             ]),
                                       ],
                                     )))
                               ]))),
                   Container(
-                    color: Colors.purple,
-                    height: 60,
-                  )
+                      color: Colors.white,
+                      height: 70,
+                      child: Stack(children: <Widget>[
+                        Center(
+                            child: Container(
+                          height: 40,
+                          width: 200,
+                          decoration: new BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 1,
+                                  blurRadius: 20,
+                                  offset: Offset(0, 0),
+                                ),
+                              ],
+                              color: Colors.white,
+                              borderRadius: new BorderRadius.all(
+                                  const Radius.circular(40.0))),
+                        )),
+                        Center(child: FloatingActionButton(backgroundColor: Color(0xff7A9FFF), onPressed: null)),
+                      ]))
                 ])));
   }
 
-  TableRow buildTableHeaders() {
-    return TableRow(children: [
-      Text("Steps",
-          style: GoogleFonts.montserrat(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0)),
-      Text("Calories",
-          style: GoogleFonts.montserrat(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0)),
-      Text("Time",
-          style: GoogleFonts.montserrat(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0)),
-      Text('Clock',
-          style: GoogleFonts.montserrat(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0)),
+  Widget buildTableHeaders() {
+    return Table(children: [
+      TableRow(children: [
+        buildTitleRowItem("Steps"),
+        buildTitleRowItem("Calories"),
+        buildTitleRowItem("Time"),
+        buildTitleRowItem("Clock"),
+      ])
     ]);
+  }
+
+  Widget buildTitleRowItem(String title) {
+    return Center(
+        child: Text(title,
+            style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 14.0)));
+  }
+
+  Widget buildRowItem(String text) {
+    return Center(
+        heightFactor: 1.3,
+        child: Text(text,
+            style: GoogleFonts.montserrat(
+                color: Color(0xff7FA1F7),
+                fontWeight: FontWeight.w500,
+                fontSize: 14.0)));
   }
 }

@@ -164,7 +164,83 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                     ],
                                   ),
                                 ),
-                              ])))
+                                Container(
+                                    color: Colors.white,
+                                    height: 140.0,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 60),
+                                    child: SingleChildScrollView(
+                                        child: Table(
+                                      children: [
+                                        buildTableHeaders(),
+                                        if (con.selectedDay != null)
+                                          for (var i = 0;
+                                              i <
+                                                  con.selectedDay.workouts
+                                                      .length;
+                                              i++)
+                                            TableRow(children: [
+                                              Text(
+                                                  "${con.selectedDay.workouts[i].steps}",
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Color(0xff7FA1F7),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0)),
+                                              Text(
+                                                  "${con.selectedDay.workouts[i].cal.toStringAsFixed(1)} kcal",
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Color(0xff7FA1F7),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0)),
+                                              Text(
+                                                  "${Duration(seconds: con.selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}",
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Color(0xff7FA1F7),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0)),
+                                              Text(
+                                                  '${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(con.selectedDay.workouts[i].timeStamp))}',
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Color(0xff7FA1F7),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0)),
+                                            ]),
+                                      ],
+                                    )))
+                              ]))),
+                  Container(
+                    color: Colors.purple,
+                    height: 60,
+                  )
                 ])));
+  }
+
+  TableRow buildTableHeaders() {
+    return TableRow(children: [
+      Text("Steps",
+          style: GoogleFonts.montserrat(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0)),
+      Text("Calories",
+          style: GoogleFonts.montserrat(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0)),
+      Text("Time",
+          style: GoogleFonts.montserrat(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0)),
+      Text('Clock',
+          style: GoogleFonts.montserrat(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0)),
+    ]);
   }
 }

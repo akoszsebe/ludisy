@@ -1,10 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stairstepsport/src/data/model/day_model.dart';
 
 class AppBarChart extends StatefulWidget {
-  final List<DayModel> dataset;
+  final List<ChartItem> dataset;
   final Function(int) onChangeSelected;
   AppBarChart(this.dataset, this.onChangeSelected);
 
@@ -13,12 +12,19 @@ class AppBarChart extends StatefulWidget {
       AppBarChartState(dataset, onChangeSelected);
 }
 
+class ChartItem {
+  int value;
+  String title;
+
+  ChartItem(this.value, this.title);
+}
+
 class AppBarChartState extends State<AppBarChart> {
   AppBarChartState(this.dataset, this.onChangeSelected,
       {this.touchedIndex = 6});
   final Color barBackgroundColor = Colors.grey[100];
   final Duration animDuration = const Duration(milliseconds: 250);
-  final List<DayModel> dataset;
+  final List<ChartItem> dataset;
   final Function(int) onChangeSelected;
   int touchedIndex;
 
@@ -62,7 +68,7 @@ class AppBarChartState extends State<AppBarChart> {
   List<BarChartGroupData> showingGroups() {
     List<BarChartGroupData> list = List();
     for (var i = 0; i < dataset.length; i++) {
-      list.add(makeGroupData(i, dataset[i].totalSteps.toDouble(),
+      list.add(makeGroupData(i, dataset[i].value.toDouble(),
           isTouched: i == touchedIndex));
     }
     return list;
@@ -95,7 +101,7 @@ class AppBarChartState extends State<AppBarChart> {
               color: Color(0xff010101)),
           margin: 16,
           getTitles: (double value) {
-            return dataset[value.toInt()].date.toString();
+            return dataset[value.toInt()].title;
           },
         ),
         leftTitles: SideTitles(

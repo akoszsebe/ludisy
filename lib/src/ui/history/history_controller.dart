@@ -3,6 +3,7 @@ import 'package:stairstepsport/src/data/model/day_model.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
+import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 
 class HistoryController extends ControllerMVC {
   factory HistoryController(appDatabase) =>
@@ -17,9 +18,11 @@ class HistoryController extends ControllerMVC {
   DateTime lastDay;
   DateTime firstDay;
   DayModel selectedDay = DayModel(0, 0, []);
+  List<ChartItem> itemsSteps = List(7);
 
   Future<void> initPlatformState() async {
     dataset = List();
+    itemsSteps = List();
     userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     var today = DateTime.now();
@@ -54,6 +57,7 @@ class HistoryController extends ControllerMVC {
       d.workouts.add(l);
     }
     dataset.add(d);
+    itemsSteps.add(ChartItem(d.totalSteps, d.date.toString()));
   }
 
   void changeSelected(int index) {

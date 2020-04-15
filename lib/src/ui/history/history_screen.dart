@@ -23,6 +23,9 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
     con = controller;
   }
   HistoryController con;
+  double translateOffset = 0;
+  String tabImageName = "step";
+  String tabName = "Steps";
 
   @override
   void initState() {
@@ -61,7 +64,9 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             padding: EdgeInsets.only(left: 16),
                           ),
                           QuickInfoBar(
-                            con.userData.displayName.split(" ")[0],
+                            con.userData.displayName != null
+                                ? con.userData.displayName.split(" ")[0]
+                                : "",
                             con.userData.photoUrl,
                             steps: con.stepCountValue,
                             onProfilePressed: () =>
@@ -92,20 +97,195 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           decoration: new BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.4),
+                                  color: Colors.black.withOpacity(0.2),
                                   spreadRadius: 1,
                                   blurRadius: 20,
                                   offset: Offset(0, 0),
                                 ),
                               ],
                               color: Colors.white,
-                              borderRadius: new BorderRadius.all(
+                              borderRadius: BorderRadius.all(
                                   const Radius.circular(40.0))),
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                      width: 56,
+                                      child: Visibility(
+                                          visible: translateOffset != -56,
+                                          child: FloatingActionButton(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Image(
+                                                      height: 16,
+                                                      width: 16,
+                                                      color: Color(0xff7A9FFF),
+                                                      image: AssetImage(
+                                                          "lib/resources/images/time.png"),
+                                                    ),
+                                                    Text(
+                                                      "Time",
+                                                      style: GoogleFonts
+                                                          .montserrat(
+                                                              color: Color(
+                                                                  0xff7A9FFF),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontSize: 9.0),
+                                                    ),
+                                                  ]),
+                                              onPressed: () {
+                                                setState(() {
+                                                  translateOffset = -56;
+                                                  tabName = "Time";
+                                                  tabImageName = "time";
+                                                });
+                                              }))),
+                                  Container(
+                                      width: 56,
+                                      child: Visibility(
+                                          visible: translateOffset != 0,
+                                          child: FloatingActionButton(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Image(
+                                                      height: 16,
+                                                      width: 16,
+                                                      color: Color(0xff7A9FFF),
+                                                      image: AssetImage(
+                                                          "lib/resources/images/step.png"),
+                                                    ),
+                                                    Text(
+                                                      "Steps",
+                                                      style: GoogleFonts
+                                                          .montserrat(
+                                                              color: Color(
+                                                                  0xff7A9FFF),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontSize: 9.0),
+                                                    ),
+                                                  ]),
+                                              onPressed: () {
+                                                setState(() {
+                                                  translateOffset = 0;
+                                                  tabName = "Steps";
+                                                  tabImageName = "step";
+                                                });
+                                              }))),
+                                  Container(
+                                      width: 56,
+                                      child: Visibility(
+                                          visible: translateOffset != 56,
+                                          child: FloatingActionButton(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Image(
+                                                      height: 16,
+                                                      width: 16,
+                                                      color: Color(0xff7A9FFF),
+                                                      image: AssetImage(
+                                                          "lib/resources/images/cal.png"),
+                                                    ),
+                                                    Text(
+                                                      "Calories",
+                                                      style: GoogleFonts
+                                                          .montserrat(
+                                                              color: Color(
+                                                                  0xff7A9FFF),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontSize: 9.0),
+                                                    ),
+                                                  ]),
+                                              onPressed: () {
+                                                setState(() {
+                                                  translateOffset = 56;
+                                                  tabName = "Calories";
+                                                  tabImageName = "cal";
+                                                });
+                                              }))),
+                                ],
+                              )),
                         )),
-                        Center(
-                            child: FloatingActionButton(
-                                backgroundColor: Color(0xff7A9FFF),
-                                onPressed: null)),
+                        Transform.translate(
+                            offset: Offset(translateOffset, -20),
+                            child: Center(
+                                child: ClipPath(
+                              clipper: CustomHalfCircleClipper(),
+                              child: Container(
+                                height: 59.0,
+                                width: 56.0,
+                                margin: EdgeInsets.only(
+                                    bottom: 3, left: 3, right: 3),
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.3),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: Offset(0, 0),
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(150.0)),
+                              ),
+                            ))),
+                        Transform.translate(
+                            offset: Offset(translateOffset, -20),
+                            child: Center(
+                                child: FloatingActionButton(
+                                    backgroundColor: Color(0xff7A9FFF),
+                                    elevation: 0,
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Image(
+                                            height: 16,
+                                            width: 16,
+                                            color: Colors.white,
+                                            image: AssetImage(
+                                                "lib/resources/images/$tabImageName.png"),
+                                          ),
+                                          Text(
+                                            "$tabName",
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 9.0),
+                                          ),
+                                        ]),
+                                    onPressed: null))),
                       ]))
                 ])));
   }
@@ -272,5 +452,22 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 color: Color(0xff7FA1F7),
                 fontWeight: FontWeight.w500,
                 fontSize: 14.0)));
+  }
+}
+
+class CustomHalfCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final Path path = new Path();
+    path.moveTo(0, size.height / 2);
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, size.height / 2);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

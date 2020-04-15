@@ -47,7 +47,9 @@ class _StartScreenState extends StateMVC<StartScreen> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 24),
                     child: QuickInfoBar(
-                      con.userData.displayName.split(" ")[0],
+                      con.userData.displayName != null
+                          ? con.userData.displayName.split(" ")[0]
+                          : " ",
                       con.userData.photoUrl,
                       steps: con.stepCountValue,
                       onProfilePressed: () =>

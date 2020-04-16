@@ -26,6 +26,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   double translateOffset = 0;
   String tabImageName = "step";
   String tabName = "Steps";
+  int selectedTab = 1;
+  int touchedIndex = 6;
 
   @override
   void initState() {
@@ -75,17 +77,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           )
                         ],
                       )),
-                  Expanded(
-                      child: buildDataSection(
-                          con.itemsSteps,
-                          con.firstDay,
-                          con.lastDay,
-                          con.selectedDay.totalSteps.toString(),
-                          "Steps",
-                          (con.selectedDay.totalSteps /
-                                  con.selectedDay.workouts.length)
-                              .toStringAsFixed(0),
-                          con.selectedDay)),
+                  Expanded(child: buildSelectedTab(selectedTab)),
                   Container(
                       color: Colors.white,
                       height: 70,
@@ -93,7 +85,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Center(
                             child: Container(
                           height: 40,
-                          width: 200,
+                          width: 250,
                           decoration: new BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -107,132 +99,39 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               borderRadius: BorderRadius.all(
                                   const Radius.circular(40.0))),
                           child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Container(
-                                      width: 56,
-                                      child: Visibility(
-                                          visible: translateOffset != -56,
-                                          child: FloatingActionButton(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Image(
-                                                      height: 16,
-                                                      width: 16,
-                                                      color: Color(0xff7A9FFF),
-                                                      image: AssetImage(
-                                                          "lib/resources/images/time.png"),
-                                                    ),
-                                                    Text(
-                                                      "Time",
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                              color: Color(
-                                                                  0xff7A9FFF),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize: 9.0),
-                                                    ),
-                                                  ]),
-                                              onPressed: () {
-                                                setState(() {
-                                                  translateOffset = -56;
-                                                  tabName = "Time";
-                                                  tabImageName = "time";
-                                                });
-                                              }))),
-                                  Container(
-                                      width: 56,
-                                      child: Visibility(
-                                          visible: translateOffset != 0,
-                                          child: FloatingActionButton(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Image(
-                                                      height: 16,
-                                                      width: 16,
-                                                      color: Color(0xff7A9FFF),
-                                                      image: AssetImage(
-                                                          "lib/resources/images/step.png"),
-                                                    ),
-                                                    Text(
-                                                      "Steps",
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                              color: Color(
-                                                                  0xff7A9FFF),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize: 9.0),
-                                                    ),
-                                                  ]),
-                                              onPressed: () {
-                                                setState(() {
-                                                  translateOffset = 0;
-                                                  tabName = "Steps";
-                                                  tabImageName = "step";
-                                                });
-                                              }))),
-                                  Container(
-                                      width: 56,
-                                      child: Visibility(
-                                          visible: translateOffset != 56,
-                                          child: FloatingActionButton(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Image(
-                                                      height: 16,
-                                                      width: 16,
-                                                      color: Color(0xff7A9FFF),
-                                                      image: AssetImage(
-                                                          "lib/resources/images/cal.png"),
-                                                    ),
-                                                    Text(
-                                                      "Calories",
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                              color: Color(
-                                                                  0xff7A9FFF),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize: 9.0),
-                                                    ),
-                                                  ]),
-                                              onPressed: () {
-                                                setState(() {
-                                                  translateOffset = 56;
-                                                  tabName = "Calories";
-                                                  tabImageName = "cal";
-                                                });
-                                              }))),
+                                  buildBottomNavButton(
+                                      selectedTab != 0, "time", "Time", () {
+                                    setState(() {
+                                      translateOffset = -70;
+                                      tabName = "Time";
+                                      tabImageName = "time";
+                                      selectedTab = 0;
+                                    });
+                                  }),
+                                  buildBottomNavButton(
+                                      selectedTab != 1, "step", "Steps", () {
+                                    setState(() {
+                                      translateOffset = 0;
+                                      tabName = "Steps";
+                                      tabImageName = "step";
+                                      selectedTab = 1;
+                                    });
+                                  }),
+                                  buildBottomNavButton(
+                                      selectedTab != 2, "cal", "Calories", () {
+                                    setState(() {
+                                      translateOffset = 70;
+                                      tabName = "Calories";
+                                      tabImageName = "cal";
+                                      selectedTab = 2;
+                                    });
+                                  }),
                                 ],
                               )),
                         )),
@@ -338,9 +237,14 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           onPressed: () {}),
                     ],
                   )),
-              AppBarChart(chartDataSet, (index) {
-                con.changeSelected(index);
-              }),
+              AppBarChart(
+                chartDataSet,
+                (index) {
+                  touchedIndex = index;
+                  con.changeSelected(index);
+                },
+                touchedIndex: touchedIndex,
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -452,6 +356,90 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 color: Color(0xff7FA1F7),
                 fontWeight: FontWeight.w500,
                 fontSize: 14.0)));
+  }
+
+  Widget buildBottomNavButton(
+      bool visible, String resName, String title, onPressed) {
+    return Container(
+        width: 56,
+        child: Visibility(
+            visible: visible,
+            child: FloatingActionButton(
+                heroTag: title,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image(
+                        height: 16,
+                        width: 16,
+                        color: Color(0xff7A9FFF),
+                        image: AssetImage("lib/resources/images/$resName.png"),
+                      ),
+                      Text(
+                        title,
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xff7A9FFF),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 9.0),
+                      ),
+                    ]),
+                onPressed: onPressed)));
+  }
+
+  Widget buildSelectedTab(selectedTab) {
+    switch (selectedTab) {
+      case 0:
+        return buildDataSection(
+            con.itemsTimes,
+            con.firstDay,
+            con.lastDay,
+            Duration(seconds: con.selectedDay.totalTimes)
+                .toString()
+                .split('.')
+                .first
+                .substring(2, 7),
+            "Time",
+            Duration(
+                    seconds: con.selectedDay.totalTimes ~/
+                        (con.selectedDay.workouts.length == 0
+                            ? 1
+                            : con.selectedDay.workouts.length))
+                .toString()
+                .split('.')
+                .first
+                .substring(2, 7),
+            con.selectedDay);
+      case 1:
+        return buildDataSection(
+            con.itemsSteps,
+            con.firstDay,
+            con.lastDay,
+            con.selectedDay.totalSteps.toString(),
+            "Steps",
+            (con.selectedDay.totalSteps /
+                    (con.selectedDay.workouts.length == 0
+                        ? 1
+                        : con.selectedDay.workouts.length))
+                .toStringAsFixed(0),
+            con.selectedDay);
+      case 2:
+        return buildDataSection(
+            con.itemsCals,
+            con.firstDay,
+            con.lastDay,
+            con.selectedDay.totalCals.toInt().toString(),
+            "Calories",
+            (con.selectedDay.totalCals.toInt() /
+                    (con.selectedDay.workouts.length == 0
+                        ? 1
+                        : con.selectedDay.workouts.length))
+                .toStringAsFixed(0),
+            con.selectedDay);
+    }
+    return Container();
   }
 }
 

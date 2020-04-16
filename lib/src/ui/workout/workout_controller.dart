@@ -11,7 +11,8 @@ import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class WorkOutController extends ControllerMVC {
-  factory WorkOutController(appDatabase) => _this ??= WorkOutController._(appDatabase);
+  factory WorkOutController(appDatabase) =>
+      _this ??= WorkOutController._(appDatabase);
   static WorkOutController _this;
   WorkOutController._(this._appDatabase);
   final AppDatabase _appDatabase;
@@ -32,9 +33,7 @@ class WorkOutController extends ControllerMVC {
   Future<void> initPlatformState() async {
     userData = await SharedPrefs.getUserData();
     _pedometer = Pedometer();
-    _offset = await _pedometer.pedometerStream.first.catchError((error) {
-      print(error.toString());
-    });
+    _offset = await _pedometer.pedometerStream.first;
     print("start from = $_offset");
     startListening();
   }
@@ -45,7 +44,7 @@ class WorkOutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-   // mock();
+    // mock();
   }
 
   void startTimer() {
@@ -107,10 +106,17 @@ class WorkOutController extends ControllerMVC {
         durationSeconds,
         stepCountValue,
         0.4);
-    stepCountValue = stepCountValue - _offset;
-    percentageValue = stepCountValue / targetSteps;
+    this.stepCountValue = stepCountValue - _offset;
+    percentageValue = this.stepCountValue / targetSteps;
     if (percentageValue > 1) {
       percentageValue = 1;
+    }
+    if (percentageValue == 1) {
+      FlutterRingtonePlayer.playNotification();
+      doneWorkout((steps, stepsPlaned, cal, duration) {
+        NavigationModule.navigateToWorkoutDoneScreen(
+            context, steps, stepsPlaned, cal, duration);
+      });
     }
     refresh();
   }
@@ -143,7 +149,7 @@ class WorkOutController extends ControllerMVC {
     if (_timer != null) {
       _timer.cancel();
     }
-   
+
     await _appDatabase.workoutDao.insertWorkOut(WorkOut(
         null,
         stepCountValue,

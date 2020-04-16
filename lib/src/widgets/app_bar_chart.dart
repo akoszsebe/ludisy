@@ -2,16 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppBarChart extends StatefulWidget {
-  final List<ChartItem> dataset;
-  final Function(int) onChangeSelected;
-  AppBarChart(this.dataset, this.onChangeSelected);
-
-  @override
-  State<StatefulWidget> createState() =>
-      AppBarChartState(dataset, onChangeSelected);
-}
-
 class ChartItem {
   int value;
   String title;
@@ -19,25 +9,19 @@ class ChartItem {
   ChartItem(this.value, this.title);
 }
 
-class AppBarChartState extends State<AppBarChart> {
-  AppBarChartState(this.dataset, this.onChangeSelected,
-      {this.touchedIndex = 6});
+class AppBarChart extends StatelessWidget {
+  AppBarChart(this.dataset, this.onChangeSelected, {this.touchedIndex});
   final Color barBackgroundColor = Colors.grey[100];
   final Duration animDuration = const Duration(milliseconds: 250);
   final List<ChartItem> dataset;
   final Function(int) onChangeSelected;
-  int touchedIndex;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final int touchedIndex;
 
   @override
   Widget build(BuildContext context) {
     print("index $touchedIndex");
     return Container(
-        height: 220,
+        height: 200,
         child: BarChart(
           mainBarData(),
           swapAnimationDuration: animDuration,
@@ -49,7 +33,7 @@ class AppBarChartState extends State<AppBarChart> {
     double y, {
     bool isTouched = true,
     Color barColor = const Color(0x807FA1F6),
-    double width = 16,
+    double width = 14,
     List<int> showTooltips = const [],
   }) {
     return BarChartGroupData(
@@ -84,11 +68,9 @@ class AppBarChartState extends State<AppBarChart> {
             }),
         handleBuiltInTouches: false,
         touchCallback: (barTouchResponse) {
-          setState(() {
-            if (barTouchResponse.spot != null)
-              touchedIndex = barTouchResponse.spot.touchedBarGroupIndex;
-          });
-          onChangeSelected(touchedIndex);
+          if (barTouchResponse.spot != null) {
+            onChangeSelected(barTouchResponse.spot.touchedBarGroupIndex);
+          }
         },
       ),
       titlesData: FlTitlesData(

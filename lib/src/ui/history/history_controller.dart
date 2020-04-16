@@ -15,14 +15,18 @@ class HistoryController extends ControllerMVC {
   UserModel userData = UserModel();
   int stepCountValue = 0;
   List<DayModel> dataset = List(7);
-  DateTime lastDay;
-  DateTime firstDay;
-  DayModel selectedDay = DayModel(0, 0, []);
+  DateTime lastDay = DateTime.now();
+  DateTime firstDay = DateTime.now();
+  DayModel selectedDay = DayModel();
   List<ChartItem> itemsSteps = List(7);
+  List<ChartItem> itemsTimes = List(7);
+  List<ChartItem> itemsCals = List(7);
 
   Future<void> initPlatformState() async {
     dataset = List();
     itemsSteps = List();
+    itemsTimes = List();
+    itemsCals = List();
     userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     var today = DateTime.now();
@@ -50,18 +54,21 @@ class HistoryController extends ControllerMVC {
     print(" m - $morrning --- n - $night");
     var l1 = await _appDatabase.workoutDao.findWorkOutBetween(
         morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
-    var d = DayModel(0, 0, List());
+    var d = DayModel();
     d.date = morrning.day;
     for (var l in l1) {
       d.totalSteps += l.steps;
+      d.totalTimes += l.duration;
+      d.totalCals += l.cal;
       d.workouts.add(l);
     }
     dataset.add(d);
     itemsSteps.add(ChartItem(d.totalSteps, d.date.toString()));
+    itemsTimes.add(ChartItem(d.totalTimes, d.date.toString()));
+    itemsCals.add(ChartItem(d.totalCals.toInt(), d.date.toString()));
   }
 
   void changeSelected(int index) {
-    print("selected index $index");
     selectedDay = dataset[index];
     refresh();
   }

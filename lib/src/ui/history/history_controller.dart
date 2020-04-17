@@ -14,37 +14,37 @@ class HistoryController extends ControllerMVC {
 
   UserModel userData = UserModel();
   int stepCountValue = 0;
-  List<DayModel> dataset = List(7);
+  List<DayModel> dataset = List();
   DateTime lastDay = DateTime.now();
   DateTime firstDay = DateTime.now();
   DayModel selectedDay = DayModel();
-  List<ChartItem> itemsSteps = List(7);
-  List<ChartItem> itemsTimes = List(7);
-  List<ChartItem> itemsCals = List(7);
+  List<ChartItem> itemsSteps = List();
+  List<ChartItem> itemsTimes = List();
+  List<ChartItem> itemsCals = List();
 
   Future<void> initPlatformState() async {
+    userData = await SharedPrefs.getUserData();
+    stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
+    var today = DateTime.now();
+    fillForWeek(today);
+  }
+
+  Future<void> fillForWeek(DateTime lastDayFromThatWeek) async {
     dataset = List();
     itemsSteps = List();
     itemsTimes = List();
     itemsCals = List();
-    userData = await SharedPrefs.getUserData();
-    stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
-    var today = DateTime.now();
-    await fillForWeek(today);
-    refresh();
-  }
-
-  Future<void> fillForWeek(DateTime lastDayFromThatWeek) async {
     lastDay = lastDayFromThatWeek;
-    firstDay = lastDayFromThatWeek.subtract(Duration(days: 7));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 7)));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 6)));
+    firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 5)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 5)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 4)));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 3)));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 2)));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 1)));
     await addDay(lastDayFromThatWeek);
     selectedDay = dataset[dataset.length - 1];
+    refresh();
   }
 
   Future<void> addDay(DateTime dateTime) async {

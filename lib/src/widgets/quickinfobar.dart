@@ -84,7 +84,7 @@ class QuickInfoBar extends StatelessWidget{
                                           color: Color(0xff7FA1F6)),
                                     ),
                                   ]),
-                              onPressed: () {},
+                              onPressed: null,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       new BorderRadius.circular(30.0)),

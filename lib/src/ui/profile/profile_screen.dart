@@ -129,7 +129,9 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                   children: <Widget>[
                                     Column(children: <Widget>[
                                       DropDownItem(
-                                        con.userData.gender,
+                                        con.userData.gender == null
+                                            ? null
+                                            : con.userData.gender,
                                         <String>[
                                           'Male',
                                           'Female',
@@ -140,7 +142,9 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                         hint: "Gender",
                                       ),
                                       DropDownItem(
-                                        "${con.userData.weight} kg",
+                                        con.userData.weight == null
+                                            ? null
+                                            : "${con.userData.weight} kg",
                                         <String>[
                                           for (var i = 40; i <= 200; i += 5)
                                             "$i kg"
@@ -154,7 +158,10 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                     Column(
                                       children: <Widget>[
                                         DropDownItem(
-                                          con.userData.bithDate.toString(),
+                                          con.userData.bithDate == null
+                                              ? null
+                                              : con.userData.bithDate
+                                                  .toString(),
                                           <String>[
                                             for (var i = DateTime.now().year;
                                                 i >= 1900;
@@ -167,7 +174,9 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                           hint: "Bithdate",
                                         ),
                                         DropDownItem(
-                                          "${con.userData.height} cm",
+                                          con.userData.height == null
+                                              ? null
+                                              : "${con.userData.height} cm",
                                           <String>[
                                             for (var i = 70; i <= 240; i += 5)
                                               "$i cm"

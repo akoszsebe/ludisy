@@ -66,9 +66,10 @@ class AppBarChart extends StatelessWidget {
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem("", TextStyle(color: Colors.yellow));
             }),
-        handleBuiltInTouches: false,
+        handleBuiltInTouches: true,
         touchCallback: (barTouchResponse) {
-          if (barTouchResponse.spot != null) {
+          if (barTouchResponse.spot != null && barTouchResponse.touchInput is! FlPanEnd) {
+            print("object");
             onChangeSelected(barTouchResponse.spot.touchedBarGroupIndex);
           }
         },

@@ -78,114 +78,6 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         ],
                       )),
                   Expanded(child: buildSelectedTab(selectedTab)),
-                  Container(
-                      color: Colors.white,
-                      height: 70,
-                      child: Stack(children: <Widget>[
-                        Center(
-                            child: Container(
-                          height: 40,
-                          width: 250,
-                          decoration: new BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 0),
-                                ),
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                  const Radius.circular(40.0))),
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  buildBottomNavButton(
-                                      selectedTab != 0, "time", "Time", () {
-                                    setState(() {
-                                      translateOffset = -70;
-                                      tabName = "Time";
-                                      tabImageName = "time";
-                                      selectedTab = 0;
-                                    });
-                                  }),
-                                  buildBottomNavButton(
-                                      selectedTab != 1, "step", "Steps", () {
-                                    setState(() {
-                                      translateOffset = 0;
-                                      tabName = "Steps";
-                                      tabImageName = "step";
-                                      selectedTab = 1;
-                                    });
-                                  }),
-                                  buildBottomNavButton(
-                                      selectedTab != 2, "cal", "Calories", () {
-                                    setState(() {
-                                      translateOffset = 70;
-                                      tabName = "Calories";
-                                      tabImageName = "cal";
-                                      selectedTab = 2;
-                                    });
-                                  }),
-                                ],
-                              )),
-                        )),
-                        Transform.translate(
-                            offset: Offset(translateOffset, -20),
-                            child: Center(
-                                child: ClipPath(
-                              clipper: CustomHalfCircleClipper(),
-                              child: Container(
-                                height: 59.0,
-                                width: 56.0,
-                                margin: EdgeInsets.only(
-                                    bottom: 3, left: 3, right: 3),
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.3),
-                                        spreadRadius: 2,
-                                        blurRadius: 2,
-                                        offset: Offset(0, 0),
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(150.0)),
-                              ),
-                            ))),
-                        Transform.translate(
-                            offset: Offset(translateOffset, -20),
-                            child: Center(
-                                child: FloatingActionButton(
-                                    backgroundColor: Color(0xff7A9FFF),
-                                    elevation: 0,
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Image(
-                                            height: 16,
-                                            width: 16,
-                                            color: Colors.white,
-                                            image: AssetImage(
-                                                "lib/resources/images/$tabImageName.png"),
-                                          ),
-                                          Text(
-                                            "$tabName",
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 9.0),
-                                          ),
-                                        ]),
-                                    onPressed: null))),
-                      ]))
                 ])));
   }
 
@@ -203,7 +95,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               SizedBox(
                 height: 20,
@@ -214,13 +106,18 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      IconButton(
-                          icon: new Icon(
-                            Icons.chevron_left,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          onPressed: () {}),
+                      Container(
+                          width: 60,
+                          child: IconButton(
+                              icon: new Icon(
+                                Icons.chevron_left,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                con.fillForWeek(
+                                    con.firstDay.subtract(Duration(days: 1)));
+                              })),
                       Text(
                         "${DateFormat('yyyy.MM.dd').format(startDate)} - ${DateFormat('yyyy.MM.dd').format(endDate)}",
                         style: GoogleFonts.montserrat(
@@ -228,23 +125,32 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             fontWeight: FontWeight.w400,
                             fontSize: 15.0),
                       ),
-                      IconButton(
-                          icon: new Icon(
-                            Icons.chevron_right,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          onPressed: () {}),
+                      Container(
+                          width: 60,
+                          child: Visibility(
+                              visible: con.lastDay.isBefore(
+                                  DateTime.now().subtract(Duration(days: 1))),
+                              child: IconButton(
+                                  icon: new Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.black,
+                                    size: 30,
+                                  ),
+                                  onPressed: () {
+                                    con.fillForWeek(
+                                        con.lastDay.add(Duration(days: 7)));
+                                  }))),
                     ],
                   )),
-              AppBarChart(
-                chartDataSet,
-                (index) {
-                  touchedIndex = index;
-                  con.changeSelected(index);
-                },
-                touchedIndex: touchedIndex,
-              ),
+              if (chartDataSet != null && chartDataSet.length != 0)
+                AppBarChart(
+                  chartDataSet,
+                  (index) {
+                    touchedIndex = index;
+                    con.changeSelected(index);
+                  },
+                  touchedIndex: touchedIndex,
+                ),
               SizedBox(
                 height: 20,
               ),
@@ -306,8 +212,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 height: 1,
               ),
               Container(
-                  color: Colors.white,
-                  height: 90.0,
+                  height: 100.0,
                   padding: EdgeInsets.only(left: 50, right: 50, top: 5),
                   child: SingleChildScrollView(
                       child: Table(
@@ -324,7 +229,119 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                 "${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedDay.workouts[i].timeStamp))}"),
                           ]),
                     ],
-                  )))
+                  ))),
+              Padding(
+                  padding: EdgeInsets.only(bottom: 8,top: 8),
+                  child: Container(
+                      height: 70,
+                      child: Stack(children: <Widget>[
+                        Center(
+                            child: Container(
+                          height: 50,
+                          width: 250,
+                          decoration: new BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 20,
+                                  offset: Offset(0, 0),
+                                ),
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                  const Radius.circular(40.0))),
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  buildBottomNavButton(
+                                      selectedTab != 0, "time", "Time", () {
+                                    setState(() {
+                                      translateOffset = -70;
+                                      tabName = "Time";
+                                      tabImageName = "time";
+                                      selectedTab = 0;
+                                    });
+                                  }),
+                                  buildBottomNavButton(
+                                      selectedTab != 1, "step", "Steps", () {
+                                    setState(() {
+                                      translateOffset = 0;
+                                      tabName = "Steps";
+                                      tabImageName = "step";
+                                      selectedTab = 1;
+                                    });
+                                  }),
+                                  buildBottomNavButton(
+                                      selectedTab != 2, "cal", "Calories", () {
+                                    setState(() {
+                                      translateOffset = 70;
+                                      tabName = "Calories";
+                                      tabImageName = "cal";
+                                      selectedTab = 2;
+                                    });
+                                  }),
+                                ],
+                              )),
+                        )),
+                        Transform.translate(
+                            offset: Offset(translateOffset, -25),
+                            child: Center(
+                                child: ClipPath(
+                              clipper: CustomHalfCircleClipper(),
+                              child: Container(
+                                height: 71.0,
+                                width: 55.0,
+                                margin: EdgeInsets.only(
+                                    bottom: 3, left: 3, right: 3),
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.3),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: Offset(0, 0),
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(150.0)),
+                              ),
+                            ))),
+                        Transform.translate(
+                            offset: Offset(translateOffset, -20),
+                            child: Center(
+                                child: FloatingActionButton(
+                                    backgroundColor: Color(0xff7A9FFF),
+                                    elevation: 0,
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Image(
+                                            height: 18,
+                                            width: 18,
+                                            color: Colors.white,
+                                            image: AssetImage(
+                                                "lib/resources/images/$tabImageName.png"),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "$tabName",
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.0),
+                                          ),
+                                        ]),
+                                    onPressed: null))),
+                      ])))
             ]));
   }
 
@@ -373,17 +390,20 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image(
-                        height: 16,
-                        width: 16,
+                        height: 18,
+                        width: 18,
                         color: Color(0xff7A9FFF),
                         image: AssetImage("lib/resources/images/$resName.png"),
+                      ),
+                      SizedBox(
+                        height: 2,
                       ),
                       Text(
                         title,
                         style: GoogleFonts.montserrat(
                             color: Color(0xff7A9FFF),
                             fontWeight: FontWeight.w400,
-                            fontSize: 9.0),
+                            fontSize: 10.0),
                       ),
                     ]),
                 onPressed: onPressed)));

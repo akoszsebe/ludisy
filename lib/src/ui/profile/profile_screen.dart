@@ -43,7 +43,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                   right: 0,
                   left: 0,
                   child: Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                      padding: EdgeInsets.only(left: 12, right: 12, top: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -76,7 +76,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                           borderRadius:
                               BorderRadius.all(const Radius.circular(32.0))),
                       height: 370,
-                      margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                      margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,

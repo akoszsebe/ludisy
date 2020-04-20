@@ -448,12 +448,12 @@ class Head extends StatelessWidget {
               color:
                   selected ? Colors.black.withOpacity(0.4) : Colors.transparent,
               spreadRadius: 1,
-              blurRadius: 20,
+              blurRadius: 10,
               offset: Offset(0, 0),
             )
           ]),
       height: circleDiameter,
-      width: circleDiameter,
+      width: circleDiameter-10,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,

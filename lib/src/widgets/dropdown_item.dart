@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 
 class DropDownItem extends StatelessWidget {
   final IconData iconData;
@@ -12,7 +13,7 @@ class DropDownItem extends StatelessWidget {
   DropDownItem(this.value, this.items, this.onChanged,
       {this.hint = "",
       this.iconData = Icons.arrow_drop_down,
-      this.hintColor = const Color(0xff010101)});
+      this.hintColor = AppColors.textBlack});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class DropDownItem extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xff010101)),
+                      color: AppColors.textBlack),
                   textAlign: TextAlign.center,
                 ),
                 value: value,
@@ -50,7 +51,7 @@ class DropDownItem extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff010101)),
+                              color: AppColors.textBlack),
                           textAlign: TextAlign.center,
                         )
                       ],

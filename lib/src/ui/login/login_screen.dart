@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/loader.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
@@ -47,7 +48,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -84,9 +85,12 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
 
   Widget buildLoader() {
     return Container(
-        color: Colors.white,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+        width: MediaQuery.of(context).size.width - 32,
         padding: EdgeInsets.symmetric(vertical: 20.0),
-        width: MediaQuery.of(context).size.width,
         child: Loader());
   }
 
@@ -95,8 +99,8 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(const Radius.circular(32.0))),
-        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
-        width: MediaQuery.of(context).size.width - 48,
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+        width: MediaQuery.of(context).size.width - 32,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -109,7 +113,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff010101)),
+                    color: AppColors.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -120,7 +124,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xff010101)),
+                    color: AppColors.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -151,20 +155,20 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(const Radius.circular(32.0))),
-        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
-        width: MediaQuery.of(context).size.width - 48,
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+        width: MediaQuery.of(context).size.width - 32,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+                padding: EdgeInsets.only(top: 24, left: 34, right: 34),
                 child: Text(
                   AppLocalizations.of(context).tr('weneedyourdata'),
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff010101)),
+                      color: AppColors.textBlack),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -188,7 +192,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                           },
                           hint: "Gender",
                           hintColor:
-                              con.field1 ? Color(0xff010101) : Colors.red[300],
+                              con.field1 ? AppColors.textBlack : AppColors.red,
                         ),
                         DropDownItem(
                           con.userData.weight == null
@@ -200,7 +204,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                           },
                           hint: "Weight",
                           hintColor:
-                              con.field2 ? Color(0xff010101) : Colors.red[300],
+                              con.field2 ? AppColors.textBlack : AppColors.red,
                         ),
                       ]),
                       Column(
@@ -218,8 +222,8 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                             },
                             hint: "Bithdate",
                             hintColor: con.field3
-                                ? Color(0xff010101)
-                                : Colors.red[300],
+                                ? AppColors.textBlack
+                                : AppColors.red,
                           ),
                           DropDownItem(
                             con.userData.height == null
@@ -233,8 +237,8 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                             },
                             hint: "Heigh",
                             hintColor: con.field4
-                                ? Color(0xff010101)
-                                : Colors.red[300],
+                                ? AppColors.textBlack
+                                : AppColors.red,
                           ),
                         ],
                       )
@@ -257,8 +261,8 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(const Radius.circular(32.0))),
-        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
-        width: MediaQuery.of(context).size.width - 48,
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+        width: MediaQuery.of(context).size.width - 32,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -271,7 +275,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xff010101)),
+                    color: AppColors.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -282,7 +286,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff010101)),
+                    color: AppColors.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(

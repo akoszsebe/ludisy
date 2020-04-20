@@ -5,8 +5,8 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
-import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
 class WorkOutScreen extends StatefulWidget {
   final int stepPlan;
@@ -39,27 +39,16 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
-            backgroundColor: Color.fromRGBO(127, 161, 246, 0.5),
+            backgroundColor: AppColors.blueWithOcupacity50,
             body: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: RoundedMiniButton(
-                          "back",
-                          "back.png",
-                          () => con.replanWorkOut(() =>
-                              NavigationModule.navigateToStartScreen(context))),
-                    )
-                  ],
-                ),
+                SizedBox(height: 80,),
                 Center(
                     child: Column(
                   children: <Widget>[
@@ -91,7 +80,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                         ],
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Color(0xff7FA1F6),
+                      progressColor: AppColors.blue,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 6),
@@ -102,7 +91,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                   padding: EdgeInsets.only(top: 70),
                 ),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 46),
                     child: Container(
                         height: 48,
                         decoration: BoxDecoration(
@@ -132,7 +121,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                                     child: Text(
                                         "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(2, 7)}",
                                         style: GoogleFonts.montserrat(
-                                          color: Color(0xff321323),
+                                          color: AppColors.textGray,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 20.0,
                                         ))),

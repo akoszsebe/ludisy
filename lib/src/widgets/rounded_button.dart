@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 
 class RoundedButton extends StatelessWidget {
   final String tag;
@@ -8,7 +9,7 @@ class RoundedButton extends StatelessWidget {
   final String assetName;
 
   RoundedButton(this.tag, this.assetName, this.onPressed,
-      {this.backgroundColor = const Color(0xff7A9FFF),
+      {this.backgroundColor = AppColors.blue,
       this.iconColor = Colors.white});
 
   @override

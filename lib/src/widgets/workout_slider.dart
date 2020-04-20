@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:vector_math/vector_math.dart' as v_math;
 
 class WorkoutSlider extends StatefulWidget {
@@ -212,7 +213,7 @@ class MeasureLine extends StatelessWidget {
 class MyPainter extends CustomPainter {
   MyPainter(
     animationValue, {
-    this.color = const Color(0xFF615f56),
+    this.color = AppColors.blue,
   })  : activeIndex = animationValue.floor(),
         unitAnimatingValue = (animationValue * 10 % 10 / 10);
 
@@ -418,11 +419,11 @@ class MyIndicator extends StatelessWidget {
         width: circleDiameter,
         height: circleDiameter,
         child: Transform.scale(
-            scale: 1.4,
+            scale: 1.3,
             child: Head(
               text: title,
               selected: true,
-              color: Color(0xff7FA1F7),
+              color: AppColors.blue,
             )),
       ),
     );
@@ -441,7 +442,7 @@ class Head extends StatelessWidget {
     return Container(
       decoration: new BoxDecoration(
           color: color,
-          borderRadius: new BorderRadius.all(const Radius.circular(40.0)),
+          borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
           boxShadow: [
             BoxShadow(
               color:
@@ -459,12 +460,12 @@ class Head extends StatelessWidget {
         children: <Widget>[
           Text(text,
               style: GoogleFonts.montserrat(
-                  fontSize: selected ? 12.2 : 13.0,
+                  fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.bold : FontWeight.w600,
                   color: selected ? Colors.white : Colors.black)),
           Text("step",
               style: GoogleFonts.montserrat(
-                  fontSize: selected ? 12.2 : 13.0,
+                  fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
                   color: selected ? Colors.white : Colors.black))
         ],

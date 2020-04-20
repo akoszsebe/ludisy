@@ -6,13 +6,14 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/ui/login/login_screen.dart';
 import 'package:stairstepsport/src/util/style/app_theme.dart';
 import 'package:flutter/services.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 
 class MVCApp extends AppMVC {
   MVCApp();
 
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color.fromRGBO(127, 161, 246, 0.5), //or set color with: Color(0xFF0000FF)
+      statusBarColor: AppColors.blueWithOcupacity50,
     ));
     var data = EasyLocalizationProvider.of(context).data;
     return MaterialApp(

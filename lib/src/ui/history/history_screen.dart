@@ -6,6 +6,7 @@ import 'package:stairstepsport/src/data/model/day_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/history/history_controller.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 import 'package:stairstepsport/src/widgets/quickinfobar.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
@@ -41,7 +42,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -51,7 +52,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20, bottom: 40),
+                      padding: EdgeInsets.only(left: 12, top: 20, bottom: 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -63,7 +64,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 16),
+                            padding: EdgeInsets.only(left: 12),
                           ),
                           QuickInfoBar(
                               con.userData.displayName != null
@@ -96,7 +97,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.all(const Radius.circular(32.0))),
         height: 370,
-        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: double.infinity,
         child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -178,7 +179,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "$totalValue",
                           style: GoogleFonts.montserrat(
-                              color: Color(0xff7FA1F7),
+                              color: AppColors.blue,
                               fontWeight: FontWeight.w600,
                               fontSize: 17.0),
                         ),
@@ -196,7 +197,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "$avgValue",
                           style: GoogleFonts.montserrat(
-                              color: Color(0xff7FA1F7),
+                              color: AppColors.blue,
                               fontWeight: FontWeight.w600,
                               fontSize: 17.0),
                         ),
@@ -321,7 +322,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             offset: Offset(translateOffset, -20),
                             child: Center(
                                 child: FloatingActionButton(
-                                    backgroundColor: Color(0xff7A9FFF),
+                                    backgroundColor: AppColors.blue,
                                     elevation: 0,
                                     child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -376,7 +377,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         heightFactor: 1.3,
         child: Text(text,
             style: GoogleFonts.montserrat(
-                color: Color(0xff7FA1F7),
+                color: AppColors.blue,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.0)));
   }
@@ -398,7 +399,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       Image(
                         height: 18,
                         width: 18,
-                        color: Color(0xff7A9FFF),
+                        color: AppColors.blue,
                         image: AssetImage("lib/resources/images/$resName.png"),
                       ),
                       SizedBox(
@@ -407,7 +408,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       Text(
                         title,
                         style: GoogleFonts.montserrat(
-                            color: Color(0xff7A9FFF),
+                            color: AppColors.blue,
                             fontWeight: FontWeight.w400,
                             fontSize: 10.0),
                       ),

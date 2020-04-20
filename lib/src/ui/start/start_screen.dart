@@ -5,6 +5,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/start/start_controller.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/quickinfobar.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/workout_slider.dart';
@@ -35,7 +36,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -45,7 +46,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(top: 20, left: 24),
+                    padding: EdgeInsets.only(top: 20, left: 16),
                     child: QuickInfoBar(
                       con.userData.displayName != null
                           ? con.userData.displayName.split(" ")[0]
@@ -65,7 +66,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(
-                          top: 40, left: 24, right: 24, bottom: 24),
+                          top: 40, left: 16, right: 16, bottom: 24),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius:
@@ -81,7 +82,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
                               style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xff010101)),
+                                  color: AppColors.textBlack),
                               textAlign: TextAlign.center,
                             )),
                             Padding(padding: EdgeInsets.only(top: 20)),

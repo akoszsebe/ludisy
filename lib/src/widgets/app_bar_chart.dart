@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 
 class ChartItem {
   int value;
@@ -32,7 +33,7 @@ class AppBarChart extends StatelessWidget {
     int x,
     double y, {
     bool isTouched = true,
-    Color barColor = const Color(0x807FA1F6),
+    Color barColor = AppColors.blueWithOcupacity50,
     double width = 14,
     List<int> showTooltips = const [],
   }) {
@@ -41,7 +42,7 @@ class AppBarChart extends StatelessWidget {
       barRods: [
         BarChartRodData(
           y: y,
-          color: isTouched ? const Color(0xff7FA1F6) : barColor,
+          color: isTouched ? AppColors.blue : barColor,
           width: width,
         ),
       ],
@@ -81,7 +82,7 @@ class AppBarChart extends StatelessWidget {
           textStyle: GoogleFonts.montserrat(
               fontSize: 12,
               fontWeight: FontWeight.w400,
-              color: Color(0xff010101)),
+              color: AppColors.textBlack),
           margin: 16,
           getTitles: (double value) {
             return dataset[value.toInt()].title;

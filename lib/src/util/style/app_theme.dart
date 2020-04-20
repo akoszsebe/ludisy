@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 
 class AppTheme {
   static get appTheme {
@@ -6,7 +7,7 @@ class AppTheme {
     final primaryTextTheme = ThemeData.light().primaryTextTheme;
     final accentIconTheme = ThemeData.dark().accentIconTheme;
     return ThemeData.dark().copyWith(
-      primaryColor: Color(0xff7FA1F6),
+      primaryColor: AppColors.blue,
       primaryColorLight: Colors.white,
       primaryColorDark: Colors.grey[300],
       accentColor: Colors.cyan[300],

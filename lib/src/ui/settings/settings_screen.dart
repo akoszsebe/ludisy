@@ -37,7 +37,7 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -47,7 +47,7 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20, bottom: 40),
+                      padding: EdgeInsets.only(left: 12, top: 20, bottom: 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -59,7 +59,7 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 16),
+                            padding: EdgeInsets.only(left: 12),
                           ),
                           QuickInfoBar(
                             con.userData.displayName != null
@@ -86,7 +86,7 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.all(const Radius.circular(32.0))),
         height: 370,
-        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: double.infinity,
         child: Column(
             mainAxisSize: MainAxisSize.max,

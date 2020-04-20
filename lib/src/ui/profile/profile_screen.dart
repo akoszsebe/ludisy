@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
@@ -32,7 +33,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -61,7 +62,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                 NavigationModule.navigateToLoginScreen(context);
                               });
                             },
-                            iconColor: const Color(0xffEA4335),
+                            iconColor: AppColors.red,
                           ),
                         ],
                       ))),
@@ -87,7 +88,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                               width: 64.0,
                               height: 64.0,
                               decoration: BoxDecoration(
-                                color: const Color(0xff7c94b6),
+                                color: AppColors.blue,
                                 image: DecorationImage(
                                   image: con.userData.photoUrl == null
                                       ? AssetImage(
@@ -98,7 +99,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(32.0)),
                                 border: Border.all(
-                                  color: Color(0xff7FA1F6),
+                                  color: AppColors.blue,
                                   width: 2.0,
                                 ),
                               ),
@@ -111,7 +112,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                               style: GoogleFonts.montserrat(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff323232)),
+                                  color: AppColors.textGray),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 11),
@@ -121,7 +122,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                               style: GoogleFonts.montserrat(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xff010101)),
+                                  color: AppColors.textBlack),
                               textAlign: TextAlign.center,
                             ),
                             Padding(

@@ -4,8 +4,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/workoutdone/workoutdone_controller.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
-import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
 class WorkOutDoneScreen extends StatefulWidget {
   final int steps;
@@ -13,7 +13,8 @@ class WorkOutDoneScreen extends StatefulWidget {
   final double cal;
   final int durationSeconds;
 
-  WorkOutDoneScreen(this.steps, this.stepsPlaned, this.cal, this.durationSeconds,
+  WorkOutDoneScreen(
+      this.steps, this.stepsPlaned, this.cal, this.durationSeconds,
       {Key key})
       : super(key: key);
   final String title = 'Flutter Demo Home Page';
@@ -43,26 +44,17 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.jpg"),
+                image: AssetImage("lib/resources/images/stairs1.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
-            backgroundColor: Color.fromRGBO(127, 161, 246, 0.5),
+            backgroundColor: AppColors.blueWithOcupacity50,
             body: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 8, left: 20),
-                      child: RoundedMiniButton(
-                        "back",
-                        "back.png",
-                        () => NavigationModule.navigateToStartScreen(context),
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  height: 70,
                 ),
                 Center(
                     child: Column(
@@ -101,7 +93,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                         ],
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Color(0xff7FA1F6),
+                      progressColor: AppColors.blue,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 20),
@@ -117,7 +109,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                   padding: EdgeInsets.only(top: 30),
                 ),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 46),
                     child: Container(
                         height: 48,
                         decoration: BoxDecoration(
@@ -141,7 +133,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                                     child: Text(
                                         "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(2, 7)}",
                                         style: GoogleFonts.montserrat(
-                                          color: Color(0xff321323),
+                                          color: AppColors.textGray,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 20.0,
                                         ))),

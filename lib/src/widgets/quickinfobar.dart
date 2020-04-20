@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 
 class QuickInfoBar extends StatelessWidget {
   final String name;
@@ -58,7 +59,7 @@ class QuickInfoBar extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 13.0,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff7FA1F6)),
+                              color: AppColors.blue),
                         ),
                       ]),
                   onPressed: onSettingsPressed,
@@ -90,7 +91,7 @@ class QuickInfoBar extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 13.0,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff7FA1F6)),
+                              color: AppColors.blue),
                         ),
                       ]),
                   onPressed: onHistoryPressed,
@@ -109,7 +110,7 @@ class QuickInfoBar extends StatelessWidget {
                       height: 18,
                       image: AssetImage("lib/resources/images/step.png"),
                       width: 25,
-                      color: Color(0xff7FA1F7),
+                      color: AppColors.blue,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 2),
@@ -119,7 +120,7 @@ class QuickInfoBar extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                           fontSize: 13.0,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xff7FA1F6)),
+                          color: AppColors.blue),
                     ),
                   ]),
               onPressed: null,
@@ -144,7 +145,7 @@ class QuickInfoBar extends StatelessWidget {
             width: 48.0,
             height: 48.0,
             decoration: BoxDecoration(
-              color: const Color(0xff7c94b6),
+              color: AppColors.blue,
               image: DecorationImage(
                 image: picUrl == null
                     ? AssetImage("lib/resources/images/google_logo.png")
@@ -153,13 +154,13 @@ class QuickInfoBar extends StatelessWidget {
               ),
               borderRadius: BorderRadius.all(Radius.circular(24.0)),
               border: Border.all(
-                color: Color(0xff7FA1F6),
+                color: AppColors.blue,
                 width: 2.0,
               ),
             ),
           ),
           shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(24.0)),
+              borderRadius: BorderRadius.circular(24.0)),
         ),
         Padding(
           padding: EdgeInsets.only(left: 8),
@@ -169,7 +170,7 @@ class QuickInfoBar extends StatelessWidget {
           style: GoogleFonts.montserrat(
               fontSize: 18.0,
               fontWeight: FontWeight.w400,
-              color: Color(0xff323232)),
+              color: AppColors.textGray),
         ),
       ],
     );

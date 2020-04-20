@@ -66,15 +66,17 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             padding: EdgeInsets.only(left: 16),
                           ),
                           QuickInfoBar(
-                            con.userData.displayName != null
-                                ? con.userData.displayName.split(" ")[0]
-                                : "",
-                            con.userData.photoUrl,
-                            steps: con.stepCountValue,
-                            onProfilePressed: () =>
-                                NavigationModule.navigateToProfileScreen(
-                                    context),
-                          )
+                              con.userData.displayName != null
+                                  ? con.userData.displayName.split(" ")[0]
+                                  : "",
+                              con.userData.photoUrl,
+                              steps: con.stepCountValue,
+                              onProfilePressed: () =>
+                                  NavigationModule.navigateToProfileScreen(
+                                      context),
+                              settingVisible: true,
+                              onSettingsPressed: () => NavigationModule
+                                  .navigateAndReplaceToSettingsScreen(context)),
                         ],
                       )),
                   Expanded(child: buildSelectedTab(selectedTab)),
@@ -90,18 +92,22 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
       String avgValue,
       DayModel selectedDay) {
     return Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+        height: 370,
+        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
         width: double.infinity,
-        color: Colors.white,
         child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               SizedBox(
-                height: 20,
+                height: 4,
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
@@ -152,10 +158,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   touchedIndex: touchedIndex,
                 ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 60),
+                padding: EdgeInsets.symmetric(horizontal: 38),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
@@ -201,19 +207,19 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
               ),
               Padding(
                 padding:
-                    EdgeInsets.only(left: 50, right: 50, top: 16, bottom: 3),
+                    EdgeInsets.only(left: 28, right: 28, top: 16, bottom: 3),
                 child: buildTableHeaders(),
               ),
               SizedBox(
                 child: Container(
                   color: Colors.grey,
-                  margin: EdgeInsets.only(left: 50, right: 50),
+                  margin: EdgeInsets.only(left: 38, right: 38),
                 ),
                 height: 1,
               ),
               Container(
                   height: 100.0,
-                  padding: EdgeInsets.only(left: 50, right: 50, top: 5),
+                  padding: EdgeInsets.only(left: 28, right: 28, top: 5),
                   child: SingleChildScrollView(
                       child: Table(
                     children: [
@@ -231,14 +237,14 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     ],
                   ))),
               Padding(
-                  padding: EdgeInsets.only(bottom: 8,top: 8),
+                  padding: EdgeInsets.only(bottom: 6, top: 8),
                   child: Container(
                       height: 70,
                       child: Stack(children: <Widget>[
                         Center(
                             child: Container(
                           height: 50,
-                          width: 250,
+                          width: 300,
                           decoration: new BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -252,7 +258,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               borderRadius: BorderRadius.all(
                                   const Radius.circular(40.0))),
                           child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding: EdgeInsets.symmetric(horizontal: 26),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -261,7 +267,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   buildBottomNavButton(
                                       selectedTab != 0, "time", "Time", () {
                                     setState(() {
-                                      translateOffset = -70;
+                                      translateOffset = -96;
                                       tabName = "Time";
                                       tabImageName = "time";
                                       selectedTab = 0;
@@ -279,7 +285,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   buildBottomNavButton(
                                       selectedTab != 2, "cal", "Calories", () {
                                     setState(() {
-                                      translateOffset = 70;
+                                      translateOffset = 96;
                                       tabName = "Calories";
                                       tabImageName = "cal";
                                       selectedTab = 2;

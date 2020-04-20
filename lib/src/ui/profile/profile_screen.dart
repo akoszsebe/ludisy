@@ -70,8 +70,12 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                   right: 0,
                   left: 0,
                   child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.all(const Radius.circular(32.0))),
                       height: 370,
-                      color: Colors.white,
+                      margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,

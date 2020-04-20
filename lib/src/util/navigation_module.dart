@@ -3,6 +3,7 @@ import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/history/history_screen.dart';
 import 'package:stairstepsport/src/ui/login/login_screen.dart';
 import 'package:stairstepsport/src/ui/profile/profile_screen.dart';
+import 'package:stairstepsport/src/ui/settings/settings_screen.dart';
 import 'package:stairstepsport/src/ui/start/start_screen.dart';
 import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
 import 'package:stairstepsport/src/ui/workoutdone/workoutdone_screeen.dart';
@@ -50,5 +51,20 @@ class NavigationModule {
   static void navigateToHistoryScreen(BuildContext context) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => HistoryScreen(database)));
+  }
+
+  static void navigateAndReplaceToHistoryScreen(BuildContext context) {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => HistoryScreen(database)));
+  }
+
+  static void navigateToSettingsScreen(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SettingsScreen(database)));
+  }
+
+  static void navigateAndReplaceToSettingsScreen(BuildContext context) {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => SettingsScreen(database)));
   }
 }

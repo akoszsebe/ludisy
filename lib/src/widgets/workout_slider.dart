@@ -51,7 +51,7 @@ class _WorkoutSliderState extends State<WorkoutSlider>
 
   _afterLayout(_) {
     setState(() {
-      _innerWidth = MediaQuery.of(context).size.width - 60;
+      _innerWidth = MediaQuery.of(context).size.width - 90;
     });
   }
 

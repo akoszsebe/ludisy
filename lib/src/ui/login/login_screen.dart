@@ -57,7 +57,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 right: 0,
                 left: 0,
                 child: Container(
-                    height: 240.0,
+                    height: 300.0,
                     child: ScrollablePositionedList.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       itemScrollController: itemScrollController,
@@ -92,9 +92,11 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
 
   Widget buildSignInWidget() {
     return Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 20.0),
-        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        width: MediaQuery.of(context).size.width - 48,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -122,7 +124,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 textAlign: TextAlign.center,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 26),
+                padding: EdgeInsets.only(top: 46),
               ),
               Transform.scale(
                   scale: 1.2,
@@ -146,22 +148,25 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
 
   Widget buildUserDateWidget() {
     return Container(
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        width: MediaQuery.of(context).size.width - 48,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 24),
-              ),
-              Text(
-                AppLocalizations.of(context).tr('weneedyourdata'),
-                style: GoogleFonts.montserrat(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff010101)),
-                textAlign: TextAlign.center,
+                padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+                child: Text(
+                  AppLocalizations.of(context).tr('weneedyourdata'),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff010101)),
+                  textAlign: TextAlign.center,
+                ),
               ),
               Padding(
                   padding:
@@ -249,8 +254,11 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
 
   Widget buildDoneWidget() {
     return Container(
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+        margin: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        width: MediaQuery.of(context).size.width - 48,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -278,7 +286,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 textAlign: TextAlign.center,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 60),
+                padding: EdgeInsets.only(top: 104),
               ),
               RoundedButton(
                 "done",

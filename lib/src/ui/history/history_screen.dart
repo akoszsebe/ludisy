@@ -7,6 +7,7 @@ import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/history/history_controller.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
+import 'package:stairstepsport/src/widgets/always_show_scrollbar.dart';
 import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 import 'package:stairstepsport/src/widgets/quickinfobar.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
@@ -221,22 +222,27 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
               Container(
                   height: 100.0,
                   padding: EdgeInsets.only(left: 28, right: 28, top: 5),
-                  child: SingleChildScrollView(
+                  child: SingleChildScrollViewWithScrollbar(
+                      scrollbarColor: AppColors.blueWithOcupacity50,
+                      scrollbarThickness: 2.0,
                       child: Table(
-                    children: [
-                      if (selectedDay != null)
-                        for (var i = 0; i < selectedDay.workouts.length; i++)
-                          TableRow(children: [
-                            buildRowItem("${selectedDay.workouts[i].steps}"),
-                            buildRowItem(
-                                "${selectedDay.workouts[i].cal.toStringAsFixed(1)} kcal"),
-                            buildRowItem(
-                                "${Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
-                            buildRowItem(
-                                "${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedDay.workouts[i].timeStamp))}"),
-                          ]),
-                    ],
-                  ))),
+                        children: [
+                          if (selectedDay != null)
+                            for (var i = 0;
+                                i < selectedDay.workouts.length;
+                                i++)
+                              TableRow(children: [
+                                buildRowItem(
+                                    "${selectedDay.workouts[i].steps}"),
+                                buildRowItem(
+                                    "${selectedDay.workouts[i].cal.toStringAsFixed(1)} kcal"),
+                                buildRowItem(
+                                    "${Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
+                                buildRowItem(
+                                    "${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedDay.workouts[i].timeStamp))}"),
+                              ]),
+                        ],
+                      ))),
               Padding(
                   padding: EdgeInsets.only(bottom: 6, top: 8),
                   child: Container(

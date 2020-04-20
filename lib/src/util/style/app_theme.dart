@@ -10,7 +10,7 @@ class AppTheme {
       primaryColor: AppColors.blue,
       primaryColorLight: Colors.white,
       primaryColorDark: Colors.grey[300],
-      accentColor: Colors.cyan[300],
+      accentColor: AppColors.blue,
       backgroundColor: Colors.white,
       textSelectionColor: Colors.cyan[200],
       canvasColor: Colors.grey[100],

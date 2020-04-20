@@ -16,6 +16,7 @@ class MVCApp extends AppMVC {
       statusBarColor: AppColors.blueWithOcupacity50,
     ));
     var data = EasyLocalizationProvider.of(context).data;
+    precacheImage(AssetImage("lib/resources/images/stair1_normal.png"), context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'stairstepsport',

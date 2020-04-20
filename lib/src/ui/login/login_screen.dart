@@ -31,13 +31,17 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
     super.initState();
     con.checkLogin((logenIn) {
       if (logenIn == null) {
-        scrollTo(2);
+        setState(() {
+          scrollTo(2);
+        });
         return;
       }
       if (logenIn) {
         NavigationModule.navigateToStartScreen(context);
       } else {
-        scrollTo(1);
+        setState(() {
+          scrollTo(1);
+        });
       }
     });
   }
@@ -48,7 +52,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
+                image: AssetImage("lib/resources/images/stair1_normal.png"),
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,

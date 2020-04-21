@@ -29,6 +29,7 @@ class WorkOutController extends ControllerMVC {
   StreamSubscription<int> _subscription;
   int _offset = 0;
   Timer _timer;
+  int _startime = 0;
 
   Future<void> init() async {
     userData = await SharedPrefs.getUserData();
@@ -39,15 +40,18 @@ class WorkOutController extends ControllerMVC {
   }
 
   Future<void> startListening() async {
+    _startime = DateTime.now().millisecondsSinceEpoch;
     startTimer();
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-    // mock();
+    mock();
   }
 
   void startTimer() {
+    durationSeconds =
+        (DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       durationSeconds++;
       refresh();
@@ -57,31 +61,29 @@ class WorkOutController extends ControllerMVC {
   Future<void> mock() async {
     print("target = $targetSteps");
     for (var i = 0; i < targetSteps + 10; i += 10) {
-      calCounterValue = CaloriCalculator.calculateEnergyExpenditure(
-          userData.height.toDouble(),
-          DateTime(userData.bithDate),
-          userData.weight.toDouble(),
-          userData.gender == "Male" ? 0 : 1,
-          durationSeconds,
-          stepCountValue,
-          0.4);
+      calCounterValue = CaloriCalculator.calculeteCalories(
+          userData, durationSeconds, stepCountValue);
       stepCountValue = i;
       percentageValue = stepCountValue / targetSteps;
-      if (percentageValue > 1) {
-        percentageValue = 1;
-      }
-      if (percentageValue == 1) {
-        FlutterRingtonePlayer.playNotification();
-        doneWorkout((steps, stepsPlaned, cal, duration) {
-          NavigationModule.navigateToWorkoutDoneScreen(
-              context, steps, stepsPlaned, cal, duration);
-        });
-      }
+      checkPercentage();
       refresh();
       if (!isWorkoutStarted) {
         break;
       }
       await Future.delayed(Duration(milliseconds: 500));
+    }
+  }
+
+  void checkPercentage() {
+    if (percentageValue > 1) {
+      percentageValue = 1;
+    }
+    if (percentageValue == 1) {
+      FlutterRingtonePlayer.playNotification();
+      doneWorkout((steps, stepsPlaned, cal, duration) {
+        NavigationModule.navigateToWorkoutDoneScreen(
+            context, steps, stepsPlaned, cal, duration);
+      });
     }
   }
 
@@ -98,26 +100,11 @@ class WorkOutController extends ControllerMVC {
 
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - _offset}");
-    calCounterValue = CaloriCalculator.calculateEnergyExpenditure(
-        userData.height.toDouble(),
-        DateTime(userData.bithDate),
-        userData.weight.toDouble(),
-        userData.gender == "Male" ? 0 : 1,
-        durationSeconds,
-        stepCountValue,
-        0.4);
+    calCounterValue = CaloriCalculator.calculeteCalories(
+        userData, durationSeconds, stepCountValue);
     this.stepCountValue = stepCountValue - _offset;
     percentageValue = this.stepCountValue / targetSteps;
-    if (percentageValue > 1) {
-      percentageValue = 1;
-    }
-    if (percentageValue == 1) {
-      FlutterRingtonePlayer.playNotification();
-      doneWorkout((steps, stepsPlaned, cal, duration) {
-        NavigationModule.navigateToWorkoutDoneScreen(
-            context, steps, stepsPlaned, cal, duration);
-      });
-    }
+    checkPercentage();
     refresh();
   }
 
@@ -149,7 +136,8 @@ class WorkOutController extends ControllerMVC {
     if (_timer != null) {
       _timer.cancel();
     }
-
+    durationSeconds =
+        ((DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000).toInt();
     await _appDatabase.workoutDao.insertWorkOut(WorkOut(
         null,
         stepCountValue,
@@ -157,5 +145,15 @@ class WorkOutController extends ControllerMVC {
         durationSeconds,
         DateTime.now().millisecondsSinceEpoch));
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
+  }
+
+  void paused() {
+    _timer.cancel();
+  }
+
+  void resume() {
+    if (isWorkoutStarted) {
+      startTimer();
+    }
   }
 }

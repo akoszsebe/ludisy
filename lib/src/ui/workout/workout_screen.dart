@@ -35,6 +35,16 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
     con.init();
   }
 
+    @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused){
+      con.paused();
+    } else if (state == AppLifecycleState.resumed){
+      con.resume();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -76,7 +86,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                                 fontWeight: FontWeight.bold, fontSize: 26.0),
                           ),
                           Text(
-                            "${con.calCounterValue.toStringAsFixed(2)} kcal",
+                            "${con.calCounterValue.toStringAsFixed(1)} cal",
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w500, fontSize: 18.0),
                           )

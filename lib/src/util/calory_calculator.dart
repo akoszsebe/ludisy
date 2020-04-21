@@ -1,4 +1,18 @@
+import 'package:stairstepsport/src/data/model/user_model.dart';
+
 class CaloriCalculator {
+  
+  static double calculeteCalories(UserModel userData,int duration,int steps){
+    return calculateEnergyExpenditure(
+          userData.height.toDouble(),
+          DateTime(userData.bithDate),
+          userData.weight.toDouble(),
+          userData.gender == "Male" ? 0 : 1,
+          duration,
+          steps,
+          0.4);
+  }
+
   ///
   /// Calculated the energy expenditure for an activity. Adapted from the following website https://sites.google.com/site/compendiumofphysicalactivities/corrected-mets
   ///
@@ -23,7 +37,7 @@ class CaloriCalculator {
 
     var harrisBenedictRmR = _convertKilocaloriesToMlKmin(
         _harrisBenedictRmr(
-            gender, weight, ageCalculated, _convertMetresToCentimetre(height)),
+            gender, weight, ageCalculated, height),
         weight);
 
     var kmTravelled =
@@ -75,10 +89,6 @@ class CaloriCalculator {
     kcalMin /= 5;
 
     return ((kcalMin / (weightKgs)) * 1000);
-  }
-
-  static double _convertMetresToCentimetre(double metres) {
-    return metres * 100;
   }
 
   static double _calculateDistanceTravelledInKM(

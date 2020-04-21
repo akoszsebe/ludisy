@@ -237,7 +237,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                 buildRowItem(
                                     "${selectedDay.workouts[i].steps}"),
                                 buildRowItem(
-                                    "${selectedDay.workouts[i].cal.toStringAsFixed(1)} kcal"),
+                                    "${selectedDay.workouts[i].cal.toStringAsFixed(0)} cal"),
                                 buildRowItem(
                                     "${Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
                                 buildRowItem(

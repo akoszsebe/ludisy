@@ -4,11 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 
 class SharedPrefs {
-  ///
-  /// Instantiation of the SharedPreferences library
-  ///
   static final String _userData = "userdata";
-
 
   static Future<UserModel> getUserData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

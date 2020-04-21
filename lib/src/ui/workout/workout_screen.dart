@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
@@ -12,14 +13,15 @@ class WorkOutScreen extends StatefulWidget {
   final int stepPlan;
   final AppDatabase appDatabase;
 
-  WorkOutScreen(this.appDatabase,this.stepPlan, {Key key}) : super(key: key);
-  final String title = 'Flutter Demo Home Page';
+  WorkOutScreen(this.appDatabase, this.stepPlan, {Key key}) : super(key: key);
   @override
-  _WorkOutScreenState createState() => _WorkOutScreenState(appDatabase, stepPlan);
+  _WorkOutScreenState createState() =>
+      _WorkOutScreenState(appDatabase, stepPlan);
 }
 
 class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
-  _WorkOutScreenState(AppDatabase appDatabase, this.stepPlan) : super(WorkOutController(appDatabase)) {
+  _WorkOutScreenState(AppDatabase appDatabase, this.stepPlan)
+      : super(WorkOutController(appDatabase)) {
     con = controller;
     con.setupTargetSteps(stepPlan);
   }
@@ -30,7 +32,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
   @override
   void initState() {
     super.initState();
-    con.initPlatformState();
+    con.init();
   }
 
   @override
@@ -38,9 +40,8 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
     return Container(
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
-                fit: BoxFit.fill)),
+            image:
+                DecorationImage(image: AppAssets.background, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: AppColors.blueWithOcupacity50,
             body: Column(
@@ -48,7 +49,9 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 80,),
+                SizedBox(
+                  height: 80,
+                ),
                 Center(
                     child: Column(
                   children: <Widget>[
@@ -63,7 +66,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Image(
-                            image: AssetImage("lib/resources/images/step.png"),
+                            image: AppAssets.step,
                             height: 64,
                           ),
                           Padding(padding: EdgeInsets.only(top: 9)),
@@ -104,7 +107,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
                             children: <Widget>[
                               RoundedButton(
                                 "stop",
-                                "stop.png",
+                                AppAssets.stop,
                                 () {
                                   con.doneWorkout(
                                       (steps, stepsPlaned, cal, duration) {
@@ -139,7 +142,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
     if (con.isWorkoutStarted)
       return RoundedButton(
         "pause",
-        "pause.png",
+        AppAssets.pause,
         () {
           con.stopListening();
         },
@@ -147,7 +150,7 @@ class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
     else
       return RoundedButton(
         "start",
-        "start.png",
+        AppAssets.start,
         () {
           con.startListening();
         },

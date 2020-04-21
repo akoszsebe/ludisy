@@ -1,16 +1,27 @@
 {
-  "title": "Your Notes",
-  "start_msg": "Are you ready \n for some exercise?",
-  "start_counting" : "Start workout",
-  "stop_counting" : "Stop workout",
-  "easy_button" :"Easy",
-  "medium_button" :"Mormal",
-  "hard_button" :"Hard",
-  "replan_button" : "Replan workout",
-  "wellcome_msg" : "Do you need a stair counter?",
-  "sign_in" : "Sign in",
-  "thisisyourdata" : "This is your data",
-  "weneedyourdata" : "We need some data for calorie counting",
-  "congratulation" : "Congratulation!",
-  "letsdosomesteps" : "Let's do some steps"
+  "history": {
+    "steps": "Steps",
+    "time": "Time",
+    "calories": "Calories",
+    "clock": "Clock"
+  },
+  "login": {
+    "wellcome": "Do you need a stair counter?",
+    "sign_in": "Sign in",
+    "weneedyourdata": "We need some data for calorie counting",
+    "congratulation": "Congratulation!",
+    "letsdosomesteps": "Let's do some steps"
+  },
+  "profile": {
+    "thisisyourdata": "This is your data"
+  },
+  "settings": {},
+  "start": {
+    "start_msg": "Are you ready \n for some exercise?"
+  },
+  "workout": {},
+  "workoutdone": {
+    "congratulation": "Congratulation!",
+    "success1": "You're tough as Hulk!"
+  }
 }

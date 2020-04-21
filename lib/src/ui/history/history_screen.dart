@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +6,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/day_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/history/history_controller.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/always_show_scrollbar.dart';
@@ -26,25 +28,25 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   }
   HistoryController con;
   double translateOffset = 0;
-  String tabImageName = "step";
-  String tabName = "Steps";
+  AssetImage tabImage = AppAssets.step;
+  String tabName = "";
   int selectedTab = 1;
   int touchedIndex = 6;
 
   @override
   void initState() {
     super.initState();
-    con.initPlatformState();
+    con.init();
   }
 
   @override
   Widget build(BuildContext context) {
+    tabName = AppLocalizations.of(context).tr('history.steps');
     return Container(
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
-                fit: BoxFit.fill)),
+            image:
+                DecorationImage(image: AppAssets.background, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Column(
@@ -59,7 +61,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         children: <Widget>[
                           RoundedMiniButton(
                             "back",
-                            "back.png",
+                            AppAssets.back,
                             () {
                               NavigationModule.pop(context);
                             },
@@ -272,29 +274,34 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   buildBottomNavButton(
-                                      selectedTab != 0, "time", "Time", () {
+                                      selectedTab != 0, AppAssets.time, "Time",
+                                      () {
                                     setState(() {
                                       translateOffset = -96;
-                                      tabName = "Time";
-                                      tabImageName = "time";
+                                      tabName = AppLocalizations.of(context)
+                                          .tr('history.time');
+                                      tabImage = AppAssets.time;
                                       selectedTab = 0;
                                     });
                                   }),
                                   buildBottomNavButton(
-                                      selectedTab != 1, "step", "Steps", () {
+                                      selectedTab != 1, AppAssets.step, "Steps",
+                                      () {
                                     setState(() {
                                       translateOffset = 0;
-                                      tabName = "Steps";
-                                      tabImageName = "step";
+                                      tabName = AppLocalizations.of(context)
+                                          .tr('history.steps');
+                                      tabImage = AppAssets.step;
                                       selectedTab = 1;
                                     });
                                   }),
-                                  buildBottomNavButton(
-                                      selectedTab != 2, "cal", "Calories", () {
+                                  buildBottomNavButton(selectedTab != 2,
+                                      AppAssets.cal, "Calories", () {
                                     setState(() {
                                       translateOffset = 96;
-                                      tabName = "Calories";
-                                      tabImageName = "cal";
+                                      tabName = AppLocalizations.of(context)
+                                          .tr('history.calories');
+                                      tabImage = AppAssets.cal;
                                       selectedTab = 2;
                                     });
                                   }),
@@ -339,8 +346,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                             height: 18,
                                             width: 18,
                                             color: Colors.white,
-                                            image: AssetImage(
-                                                "lib/resources/images/$tabImageName.png"),
+                                            image: tabImage,
                                           ),
                                           SizedBox(
                                             height: 2,
@@ -361,10 +367,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   Widget buildTableHeaders() {
     return Table(children: [
       TableRow(children: [
-        buildTitleRowItem("Steps"),
-        buildTitleRowItem("Calories"),
-        buildTitleRowItem("Time"),
-        buildTitleRowItem("Clock"),
+        buildTitleRowItem(AppLocalizations.of(context).tr('history.steps')),
+        buildTitleRowItem(AppLocalizations.of(context).tr('history.calories')),
+        buildTitleRowItem(AppLocalizations.of(context).tr('history.time')),
+        buildTitleRowItem(AppLocalizations.of(context).tr('history.clock')),
       ])
     ]);
   }
@@ -389,7 +395,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   }
 
   Widget buildBottomNavButton(
-      bool visible, String resName, String title, onPressed) {
+      bool visible, AssetImage res, String title, onPressed) {
     return Container(
         width: 56,
         child: Visibility(
@@ -406,7 +412,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         height: 18,
                         width: 18,
                         color: AppColors.blue,
-                        image: AssetImage("lib/resources/images/$resName.png"),
+                        image: res,
                       ),
                       SizedBox(
                         height: 2,
@@ -434,7 +440,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 .split('.')
                 .first
                 .substring(2, 7),
-            "Time",
+            AppLocalizations.of(context).tr('history.time'),
             Duration(
                     seconds: con.selectedDay.totalTimes ~/
                         (con.selectedDay.workouts.length == 0
@@ -451,7 +457,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             con.firstDay,
             con.lastDay,
             con.selectedDay.totalSteps.toString(),
-            "Steps",
+            AppLocalizations.of(context).tr('history.steps'),
             (con.selectedDay.totalSteps /
                     (con.selectedDay.workouts.length == 0
                         ? 1
@@ -464,7 +470,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             con.firstDay,
             con.lastDay,
             con.selectedDay.totalCals.toInt().toString(),
-            "Calories",
+            AppLocalizations.of(context).tr('history.calories'),
             (con.selectedDay.totalCals.toInt() /
                     (con.selectedDay.workouts.length == 0
                         ? 1

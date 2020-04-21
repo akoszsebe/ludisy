@@ -15,7 +15,7 @@ class StartController extends ControllerMVC {
 
   Difficulty difficulty = Difficulty.easy;
 
-  Future<void> initPlatformState() async {
+  Future<void> init() async {
     var userData = await SharedPrefs.getUserData();
     _StartModel.setUserDate(userData);
     var steps = 0;

@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/workoutdone/workoutdone_controller.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
@@ -17,7 +19,6 @@ class WorkOutDoneScreen extends StatefulWidget {
       this.steps, this.stepsPlaned, this.cal, this.durationSeconds,
       {Key key})
       : super(key: key);
-  final String title = 'Flutter Demo Home Page';
   @override
   _WorkOutDoneScreenState createState() =>
       _WorkOutDoneScreenState(steps, stepsPlaned, cal, durationSeconds);
@@ -43,9 +44,8 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
     return Container(
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
-                fit: BoxFit.fill)),
+            image:
+                DecorationImage(image: AppAssets.background, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: AppColors.blueWithOcupacity50,
             body: Column(
@@ -60,7 +60,8 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                     child: Column(
                   children: <Widget>[
                     Text(
-                      "Congratulation!",
+                      AppLocalizations.of(context)
+                          .tr('workoutdone.congratulation'),
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w600, fontSize: 22.0),
                     ),
@@ -76,7 +77,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Image(
-                            image: AssetImage("lib/resources/images/done.png"),
+                            image: AppAssets.done,
                             height: 48,
                           ),
                           Padding(padding: EdgeInsets.only(top: 9)),
@@ -99,7 +100,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                       padding: EdgeInsets.only(top: 20),
                     ),
                     Text(
-                      "You're tough as Hulk!",
+                      AppLocalizations.of(context).tr('workoutdone.success1'),
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w500, fontSize: 19.0),
                     ),
@@ -122,7 +123,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                             children: <Widget>[
                               RoundedButton(
                                   "reload",
-                                  "reload.png",
+                                  AppAssets.reload,
                                   () =>
                                       NavigationModule.navigateToWorkoutScreen(
                                           context, con.stepsPlaned)),
@@ -140,7 +141,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                               ),
                               RoundedButton(
                                 "done",
-                                "done.png",
+                                AppAssets.done,
                                 () => NavigationModule.navigateToStartScreen(
                                     context),
                               )

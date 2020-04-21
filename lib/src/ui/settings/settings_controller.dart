@@ -13,12 +13,9 @@ class SettingsController extends ControllerMVC {
   UserModel userData = UserModel();
   int stepCountValue = 0;
 
-
-  Future<void> initPlatformState() async {
+  Future<void> init() async {
     userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     refresh();
   }
-
-
 }

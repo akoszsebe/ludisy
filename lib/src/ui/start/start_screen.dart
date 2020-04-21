@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/ui/start/start_controller.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
@@ -27,7 +28,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
   @override
   void initState() {
     super.initState();
-    con.initPlatformState();
+    con.init();
   }
 
   @override
@@ -36,7 +37,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
+                image: AppAssets.background,
                 fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -78,7 +79,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
                             Padding(padding: EdgeInsets.only(top: 30)),
                             Center(
                                 child: Text(
-                              AppLocalizations.of(context).tr('start_msg'),
+                              AppLocalizations.of(context).tr('start.start_msg'),
                               style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
@@ -88,7 +89,7 @@ class _StartScreenState extends StateMVC<StartScreen> {
                             Padding(padding: EdgeInsets.only(top: 20)),
                             RoundedButton(
                                 "start",
-                                "start.png",
+                                AppAssets.start,
                                 () => con.setUp((stepPlan) =>
                                     NavigationModule.navigateToWorkoutScreen(
                                         context, stepPlan))),
@@ -98,7 +99,6 @@ class _StartScreenState extends StateMVC<StartScreen> {
                         top: 0,
                         left: 45,
                         child: WorkoutSlider((value) {
-                          print("value : " + value.toString());
                           con.setDificulty(value);
                         })),
                   ],

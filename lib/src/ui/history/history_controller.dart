@@ -22,7 +22,7 @@ class HistoryController extends ControllerMVC {
   List<ChartItem> itemsTimes = List();
   List<ChartItem> itemsCals = List();
 
-  Future<void> initPlatformState() async {
+  Future<void> init() async {
     userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     var today = DateTime.now();
@@ -51,7 +51,6 @@ class HistoryController extends ControllerMVC {
     var morrning = new DateTime(dateTime.year, dateTime.month, dateTime.day);
     var night =
         new DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
-    print(" m - $morrning --- n - $night");
     var l1 = await _appDatabase.workoutDao.findWorkOutBetween(
         morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
     var d = DayModel();

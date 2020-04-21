@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
 
 class QuickInfoBar extends StatelessWidget {
@@ -48,8 +49,7 @@ class QuickInfoBar extends StatelessWidget {
                       children: <Widget>[
                         Image(
                           height: 18,
-                          image:
-                              AssetImage("lib/resources/images/settings.png"),
+                          image: AppAssets.settings,
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 2),
@@ -81,7 +81,7 @@ class QuickInfoBar extends StatelessWidget {
                       children: <Widget>[
                         Image(
                           height: 18,
-                          image: AssetImage("lib/resources/images/history.png"),
+                          image: AppAssets.history,
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 2),
@@ -108,7 +108,7 @@ class QuickInfoBar extends StatelessWidget {
                   children: <Widget>[
                     Image(
                       height: 18,
-                      image: AssetImage("lib/resources/images/step.png"),
+                      image: AppAssets.step,
                       width: 25,
                       color: AppColors.blue,
                     ),
@@ -148,7 +148,7 @@ class QuickInfoBar extends StatelessWidget {
               color: AppColors.blue,
               image: DecorationImage(
                 image: picUrl == null
-                    ? AssetImage("lib/resources/images/google_logo.png")
+                    ? AppAssets.googleLogo
                     : NetworkImage(picUrl),
                 fit: BoxFit.cover,
               ),
@@ -159,8 +159,8 @@ class QuickInfoBar extends StatelessWidget {
               ),
             ),
           ),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         ),
         Padding(
           padding: EdgeInsets.only(left: 8),

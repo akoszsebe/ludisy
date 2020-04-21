@@ -30,7 +30,7 @@ class WorkOutController extends ControllerMVC {
   int _offset = 0;
   Timer _timer;
 
-  Future<void> initPlatformState() async {
+  Future<void> init() async {
     userData = await SharedPrefs.getUserData();
     _pedometer = Pedometer();
     _offset = await _pedometer.pedometerStream.first;

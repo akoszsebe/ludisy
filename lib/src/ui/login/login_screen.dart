@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/loader.dart';
@@ -52,8 +53,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/resources/images/stair1_normal.png"),
-                fit: BoxFit.fill)),
+                image: AppAssets.backgroundStart, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Stack(children: <Widget>[
@@ -113,7 +113,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 padding: EdgeInsets.only(top: 24),
               ),
               Text(
-                AppLocalizations.of(context).tr('wellcome_msg'),
+                AppLocalizations.of(context).tr('login.wellcome'),
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -124,7 +124,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 padding: EdgeInsets.only(top: 16),
               ),
               Text(
-                AppLocalizations.of(context).tr('sign_in'),
+                 AppLocalizations.of(context).tr('login.sign_in'),
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
@@ -138,10 +138,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                   scale: 1.2,
                   child: FloatingActionButton(
                     backgroundColor: Colors.white,
-                    child: Image(
-                        height: 30,
-                        image:
-                            AssetImage("lib/resources/images/google_logo.png")),
+                    child: Image(height: 30, image: AppAssets.googleLogo),
                     onPressed: () {
                       con.login((err) {
                         if (err != null) {
@@ -168,7 +165,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 24, left: 34, right: 34),
                 child: Text(
-                  AppLocalizations.of(context).tr('weneedyourdata'),
+                  AppLocalizations.of(context).tr('login.weneedyourdata'),
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -250,7 +247,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                   )),
               RoundedButton(
                 "next",
-                "next.png",
+                AppAssets.next,
                 () {
                   con.saveUserdata(() {
                     scrollTo(3);
@@ -275,7 +272,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 padding: EdgeInsets.only(top: 24),
               ),
               Text(
-                AppLocalizations.of(context).tr('congratulation'),
+                AppLocalizations.of(context).tr('login.congratulation'),
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -286,7 +283,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 padding: EdgeInsets.only(top: 16),
               ),
               Text(
-                AppLocalizations.of(context).tr('letsdosomesteps'),
+                AppLocalizations.of(context).tr('login.letsdosomesteps'),
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -298,7 +295,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
               ),
               RoundedButton(
                 "done",
-                "done.png",
+                AppAssets.done,
                 () {
                   NavigationModule.navigateToStartScreen(context);
                 },

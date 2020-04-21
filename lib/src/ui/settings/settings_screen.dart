@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/settings/settings_controller.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 import 'package:stairstepsport/src/widgets/quickinfobar.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
@@ -19,16 +20,11 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
     con = controller;
   }
   SettingsController con;
-  double translateOffset = 0;
-  String tabImageName = "step";
-  String tabName = "Steps";
-  int selectedTab = 1;
-  int touchedIndex = 6;
 
   @override
   void initState() {
     super.initState();
-    con.initPlatformState();
+    con.init();
   }
 
   @override
@@ -36,9 +32,8 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
     return Container(
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
-                fit: BoxFit.fill)),
+            image:
+                DecorationImage(image: AppAssets.background, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Column(
@@ -53,7 +48,7 @@ class _SettingsScreenState extends StateMVC<SettingsScreen> {
                         children: <Widget>[
                           RoundedMiniButton(
                             "back",
-                            "back.png",
+                            AppAssets.back,
                             () {
                               NavigationModule.pop(context);
                             },

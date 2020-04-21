@@ -6,9 +6,9 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color backgroundColor;
   final Color iconColor;
-  final String assetName;
+  final AssetImage asset;
 
-  RoundedButton(this.tag, this.assetName, this.onPressed,
+  RoundedButton(this.tag, this.asset, this.onPressed,
       {this.backgroundColor = AppColors.blue,
       this.iconColor = Colors.white});
 
@@ -23,7 +23,7 @@ class RoundedButton extends StatelessWidget {
               height: 18,
               width:  18,
               color: iconColor,
-              image: AssetImage("lib/resources/images/$assetName"),
+              image: asset,
             ),
             onPressed: onPressed));
   }

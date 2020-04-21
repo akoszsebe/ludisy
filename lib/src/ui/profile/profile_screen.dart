@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
+import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
@@ -32,9 +33,8 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
     return Container(
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("lib/resources/images/stairs1.png"),
-                fit: BoxFit.fill)),
+            image:
+                DecorationImage(image: AppAssets.background, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Stack(children: <Widget>[
@@ -49,14 +49,14 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                         children: <Widget>[
                           RoundedMiniButton(
                             "back",
-                            "back.png",
+                            AppAssets.back,
                             () {
                               NavigationModule.pop(context);
                             },
                           ),
                           RoundedMiniButton(
                             "logout",
-                            "logout.png",
+                            AppAssets.logout,
                             () {
                               con.logout(() {
                                 NavigationModule.navigateToLoginScreen(context);
@@ -91,8 +91,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                 color: AppColors.blue,
                                 image: DecorationImage(
                                   image: con.userData.photoUrl == null
-                                      ? AssetImage(
-                                          "lib/resources/images/google_logo.png")
+                                      ? AppAssets.googleLogo
                                       : NetworkImage(con.userData.photoUrl),
                                   fit: BoxFit.cover,
                                 ),
@@ -118,7 +117,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                               padding: EdgeInsets.only(top: 11),
                             ),
                             Text(
-                              AppLocalizations.of(context).tr('thisisyourdata'),
+                              AppLocalizations.of(context).tr('profile.thisisyourdata'),
                               style: GoogleFonts.montserrat(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -197,7 +196,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                                 )),
                             RoundedButton(
                               "done",
-                              "done.png",
+                              AppAssets.done,
                               () {
                                 con.saveUserdata(() {
                                   NavigationModule.pop(context);

@@ -54,7 +54,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 70,
+                  height: 50,
                 ),
                 Center(
                     child: Column(
@@ -107,7 +107,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                   ],
                 )),
                 Padding(
-                  padding: EdgeInsets.only(top: 30),
+                  padding: EdgeInsets.only(top: 60),
                 ),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 46),
@@ -125,7 +125,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                                   "reload",
                                   AppAssets.reload,
                                   () =>
-                                      NavigationModule.navigateToWorkoutScreen(
+                                      NavigationModule.navigateAndReplaceToWorkoutScreen(
                                           context, con.stepsPlaned)),
                               Padding(
                                 padding: EdgeInsets.only(left: 24, right: 24),
@@ -142,7 +142,7 @@ class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
                               RoundedButton(
                                 "done",
                                 AppAssets.done,
-                                () => NavigationModule.navigateToStartScreen(
+                                () => NavigationModule.pop(
                                     context),
                               )
                             ]))),

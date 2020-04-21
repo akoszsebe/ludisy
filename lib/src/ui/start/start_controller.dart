@@ -1,7 +1,7 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
+import 'package:stairstepsport/src/states/user_state.dart';
 
 class StartController extends ControllerMVC {
   factory StartController(appDatabase) =>
@@ -10,17 +10,13 @@ class StartController extends ControllerMVC {
   StartController._(this._appDatabase);
   final AppDatabase _appDatabase;
 
-  int get stepCountValue => _StartModel.stepCountValue;
-  UserModel get userData => _StartModel.userData;
+  int stepCountValue = 0;
+  UserModel get userData => UserState.getUserData();
 
   Difficulty difficulty = Difficulty.easy;
 
   Future<void> init() async {
-    var userData = await SharedPrefs.getUserData();
-    _StartModel.setUserDate(userData);
-    var steps = 0;
-    steps = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
-    _StartModel.incrementCounter(steps);
+    stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     refresh();
   }
 
@@ -48,22 +44,6 @@ class StartController extends ControllerMVC {
 
   void setDificulty(int value) {
     difficulty = Difficulty.values[value];
-  }
-}
-
-class _StartModel {
-  static int _stepCountValue = 0;
-  static UserModel _userData = UserModel();
-
-  static int get stepCountValue => _stepCountValue;
-  static UserModel get userData => _userData;
-
-  static void setUserDate(UserModel userData) {
-    _userData = userData;
-  }
-
-  static void incrementCounter(int stepCountValue) {
-    _stepCountValue = stepCountValue;
   }
 }
 

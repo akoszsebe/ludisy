@@ -22,6 +22,11 @@ class NavigationModule {
 
   static void navigateToWorkoutScreen(BuildContext context, int stepsPlaned) {
     Navigator.of(context)
+        .push(AppRoute(page: WorkOutScreen(database, stepsPlaned)));
+  }
+
+  static void navigateAndReplaceToWorkoutScreen(BuildContext context, int stepsPlaned) {
+    Navigator.of(context)
         .pushReplacement(AppRoute(page: WorkOutScreen(database, stepsPlaned)));
   }
 
@@ -80,18 +85,8 @@ class AppRoute extends PageRouteBuilder {
           ) =>
               FadeTransition(
                   opacity: animation,
-                  child: ScaleTransition(
-                    scale: Tween<double>(
-                      begin: 0.0,
-                      end: 1.0,
-                    ).animate(
-                      CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.fastOutSlowIn,
-                      ),
-                    ),
                     child: child,
-                  )),
-          transitionDuration: Duration(milliseconds: 500),
+                  ),
+          transitionDuration: Duration(milliseconds: 600),
         );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
+import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class LoginController extends ControllerMVC {
@@ -10,26 +11,11 @@ class LoginController extends ControllerMVC {
   LoginController._();
 
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-  UserModel userData = UserModel();
+  UserModel userData = UserState.getUserData();
   bool field1 = true;
   bool field2 = true;
   bool field3 = true;
   bool field4 = true;
-
-  void checkLogin(Function(bool) callback) async {
-    bool logedIn = await _googleSignIn.isSignedIn();
-    userData = await SharedPrefs.getUserData();
-    await Future.delayed(Duration(milliseconds: 300));
-    if (logedIn) {
-      if (userData.weight == null) {
-        callback(null);
-      } else {
-        callback(true);
-      }
-    } else {
-      callback(false);
-    }
-  }
 
   void login(Function(String) callback) async {
     try {
@@ -38,7 +24,7 @@ class LoginController extends ControllerMVC {
           displayName: _googleSignIn.currentUser.displayName,
           photoUrl: _googleSignIn.currentUser.photoUrl,
           userId: _googleSignIn.currentUser.email);
-      await SharedPrefs.setUserData(userData);
+      await UserState.setUserData(userData);
       callback(null);
     } catch (err) {
       print(err);
@@ -76,7 +62,7 @@ class LoginController extends ControllerMVC {
       refresh();
       return;
     }
-     if (userData.weight == null) {
+    if (userData.weight == null) {
       field2 = false;
       refresh();
       return;
@@ -91,7 +77,7 @@ class LoginController extends ControllerMVC {
       refresh();
       return;
     }
-   
+
     await SharedPrefs.setUserData(userData);
     callback();
   }

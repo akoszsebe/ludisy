@@ -25,9 +25,6 @@ class AppAssets {
   static const AssetImage background =
       const AssetImage("lib/resources/images/stairs1.png");
 
-  static const AssetImage backgroundStart =
-      const AssetImage("lib/resources/images/stair1_normal.png");
-
   static const AssetImage step =
       const AssetImage("lib/resources/images/step.png");
 

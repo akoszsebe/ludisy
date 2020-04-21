@@ -6,9 +6,9 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/model/workout_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/util/calory_calculator.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class WorkOutController extends ControllerMVC {
   factory WorkOutController(appDatabase) =>
@@ -21,7 +21,7 @@ class WorkOutController extends ControllerMVC {
   double calCounterValue = 0;
   bool isWorkoutStarted = false;
   int targetSteps = 0;
-  UserModel userData = UserModel();
+  UserModel userData = UserState.getUserData();
   double percentageValue = 0;
   int durationSeconds = 0;
 
@@ -32,7 +32,6 @@ class WorkOutController extends ControllerMVC {
   int _startime = 0;
 
   Future<void> init() async {
-    userData = await SharedPrefs.getUserData();
     _pedometer = Pedometer();
     _offset = await _pedometer.pedometerStream.first;
     print("start from = $_offset");
@@ -46,7 +45,7 @@ class WorkOutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-    mock();
+   // mock();
   }
 
   void startTimer() {

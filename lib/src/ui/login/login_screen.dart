@@ -7,7 +7,6 @@ import 'package:stairstepsport/src/ui/login/login_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
-import 'package:stairstepsport/src/widgets/loader.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 
@@ -30,21 +29,6 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    con.checkLogin((logenIn) {
-      if (logenIn == null) {
-        setState(() {
-          scrollTo(2);
-        });
-        return;
-      }
-      if (logenIn) {
-        NavigationModule.navigateToStartScreen(context);
-      } else {
-        setState(() {
-          scrollTo(1);
-        });
-      }
-    });
   }
 
   @override
@@ -53,7 +37,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
         margin: EdgeInsets.only(top: 24),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AppAssets.backgroundStart, fit: BoxFit.fill)),
+                image: AppAssets.background, fit: BoxFit.fill)),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Stack(children: <Widget>[
@@ -72,12 +56,10 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                       itemBuilder: (_, index) {
                         switch (index) {
                           case 0:
-                            return buildLoader();
-                          case 1:
                             return buildSignInWidget();
-                          case 2:
+                          case 1:
                             return buildUserDateWidget();
-                          case 3:
+                          case 2:
                             return buildDoneWidget();
                         }
                         return Container();
@@ -85,17 +67,6 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                     )),
               )
             ])));
-  }
-
-  Widget buildLoader() {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
-        margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
-        width: MediaQuery.of(context).size.width - 32,
-        padding: EdgeInsets.symmetric(vertical: 20.0),
-        child: Loader());
   }
 
   Widget buildSignInWidget() {
@@ -124,7 +95,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 padding: EdgeInsets.only(top: 16),
               ),
               Text(
-                 AppLocalizations.of(context).tr('login.sign_in'),
+                AppLocalizations.of(context).tr('login.sign_in'),
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
@@ -143,7 +114,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                       con.login((err) {
                         if (err != null) {
                         } else {
-                          scrollTo(2);
+                          scrollTo(1);
                         }
                       });
                     },
@@ -250,7 +221,7 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
                 AppAssets.next,
                 () {
                   con.saveUserdata(() {
-                    scrollTo(3);
+                    scrollTo(2);
                   });
                 },
               ),

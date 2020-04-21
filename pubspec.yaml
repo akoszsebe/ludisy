@@ -60,7 +60,6 @@ flutter:
   assets:
     - lib/resources/langs/en-US.json 
     - lib/resources/images/stairs1.png
-    - lib/resources/images/stair1_normal.png
     - lib/resources/images/step.png
     - lib/resources/images/stop.png
     - lib/resources/images/pause.png

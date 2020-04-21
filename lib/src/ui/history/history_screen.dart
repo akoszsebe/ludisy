@@ -60,7 +60,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           RoundedMiniButton(
-                            "back",
+                            "backTag",
                             AppAssets.back,
                             () {
                               NavigationModule.pop(context);
@@ -225,7 +225,9 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   height: 100.0,
                   padding: EdgeInsets.only(left: 28, right: 28, top: 5),
                   child: SingleChildScrollViewWithScrollbar(
-                      scrollbarColor: AppColors.blueWithOcupacity50,
+                      scrollbarColor: selectedDay.workouts.length < 4
+                          ? Colors.transparent
+                          : AppColors.blueWithOcupacity50,
                       scrollbarThickness: 2.0,
                       child: Table(
                         children: [

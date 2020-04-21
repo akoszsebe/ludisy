@@ -126,7 +126,7 @@ class _ProfileScreenState extends StateMVC<ProfileScreen> {
                             ),
                             Padding(
                                 padding: EdgeInsets.only(
-                                    top: 10, left: 10, right: 10, bottom: 20),
+                                    top: 10, left: 10, right: 10, bottom: 28),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,

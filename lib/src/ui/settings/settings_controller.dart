@@ -1,7 +1,7 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
+import 'package:stairstepsport/src/states/user_state.dart';
 
 class SettingsController extends ControllerMVC {
   factory SettingsController(appDatabase) =>
@@ -10,11 +10,10 @@ class SettingsController extends ControllerMVC {
   SettingsController._(this._appDatabase);
   final AppDatabase _appDatabase;
 
-  UserModel userData = UserModel();
+  UserModel userData = UserState.getUserData();
   int stepCountValue = 0;
 
   Future<void> init() async {
-    userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     refresh();
   }

@@ -2,7 +2,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/day_model.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
+import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 
 class HistoryController extends ControllerMVC {
@@ -12,7 +12,7 @@ class HistoryController extends ControllerMVC {
   HistoryController._(this._appDatabase);
   final AppDatabase _appDatabase;
 
-  UserModel userData = UserModel();
+  UserModel userData = UserState.getUserData();
   int stepCountValue = 0;
   List<DayModel> dataset = List();
   DateTime lastDay = DateTime.now();
@@ -23,7 +23,6 @@ class HistoryController extends ControllerMVC {
   List<ChartItem> itemsCals = List();
 
   Future<void> init() async {
-    userData = await SharedPrefs.getUserData();
     stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
     var today = DateTime.now();
     fillForWeek(today);

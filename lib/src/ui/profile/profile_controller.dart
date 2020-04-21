@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
+import 'package:stairstepsport/src/states/user_state.dart';
 
 class ProfileController extends ControllerMVC {
   factory ProfileController() => _this ??= ProfileController._();
@@ -11,17 +11,15 @@ class ProfileController extends ControllerMVC {
 
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  UserModel userData = UserModel();
+  UserModel userData = UserState.getUserData();
 
   Future<void> init() async {
-    userData = await SharedPrefs.getUserData();
-    refresh();
   }
 
   Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();
     userData = UserModel();
-    await SharedPrefs.setUserData(userData);
+    await UserState.setUserData(userData);
     callback();
   }
 
@@ -58,7 +56,7 @@ class ProfileController extends ControllerMVC {
     if (userData.weight == null) {
       return;
     }
-    await SharedPrefs.setUserData(userData);
+    await UserState.setUserData(userData);
     callback();
   }
 }

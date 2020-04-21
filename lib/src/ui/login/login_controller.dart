@@ -19,7 +19,7 @@ class LoginController extends ControllerMVC {
   void checkLogin(Function(bool) callback) async {
     bool logedIn = await _googleSignIn.isSignedIn();
     userData = await SharedPrefs.getUserData();
-    await Future.delayed(Duration(milliseconds: 11300));
+    await Future.delayed(Duration(milliseconds: 300));
     if (logedIn) {
       if (userData.weight == null) {
         callback(null);

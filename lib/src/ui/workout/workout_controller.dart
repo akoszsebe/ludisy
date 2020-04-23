@@ -4,14 +4,14 @@ import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/workout_model.dart';
-import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
 import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/util/calory_calculator.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
-  final AppDatabase _appDatabase = locator<AppDatabase>();
+  final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
   int stepCountValue = 0;
@@ -136,7 +136,7 @@ class WorkOutController extends ControllerMVC {
     }
     durationSeconds =
         ((DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000).toInt();
-    await _appDatabase.workoutDao.insertWorkOut(WorkOut(
+    await _workOutDao.insertWorkOut(WorkOut(
         null,
         stepCountValue,
         calCounterValue,

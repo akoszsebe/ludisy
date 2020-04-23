@@ -6,16 +6,13 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/model/workout_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/util/calory_calculator.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
-  factory WorkOutController(appDatabase) =>
-      _this ??= WorkOutController._(appDatabase);
-  static WorkOutController _this;
-  WorkOutController._(this._appDatabase);
-  final AppDatabase _appDatabase;
+  final AppDatabase _appDatabase = locator<AppDatabase>();
 
   int stepCountValue = 0;
   double calCounterValue = 0;
@@ -45,7 +42,7 @@ class WorkOutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-   // mock();
+    // mock();
   }
 
   void startTimer() {
@@ -99,8 +96,11 @@ class WorkOutController extends ControllerMVC {
 
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - _offset}");
-    calCounterValue = CaloriCalculator.calculeteCalories(
+    var cal = CaloriCalculator.calculeteCalories(
         userData, durationSeconds, stepCountValue);
+    if (cal > 0) {
+      calCounterValue = cal;
+    }
     this.stepCountValue = stepCountValue - _offset;
     percentageValue = this.stepCountValue / targetSteps;
     checkPercentage();

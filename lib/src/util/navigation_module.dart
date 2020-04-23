@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/ui/history/history_screen.dart';
 import 'package:stairstepsport/src/ui/login/login_screen.dart';
 import 'package:stairstepsport/src/ui/profile/profile_screen.dart';
@@ -9,25 +8,20 @@ import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
 import 'package:stairstepsport/src/ui/workoutdone/workoutdone_screeen.dart';
 
 class NavigationModule {
-  static AppDatabase database;
-
-  static void setAppDatabase(AppDatabase db) {
-    database = db;
-  }
 
   static void navigateToStartScreen(BuildContext context) {
     Navigator.of(context)
-        .pushReplacement(AppRoute(page: StartScreen(database)));
+        .pushReplacement(AppRoute(page: StartScreen()));
   }
 
   static void navigateToWorkoutScreen(BuildContext context, int stepsPlaned) {
     Navigator.of(context)
-        .push(AppRoute(page: WorkOutScreen(database, stepsPlaned)));
+        .push(AppRoute(page: WorkOutScreen(stepsPlaned)));
   }
 
   static void navigateAndReplaceToWorkoutScreen(BuildContext context, int stepsPlaned) {
     Navigator.of(context)
-        .pushReplacement(AppRoute(page: WorkOutScreen(database, stepsPlaned)));
+        .pushReplacement(AppRoute(page: WorkOutScreen(stepsPlaned)));
   }
 
   static void navigateToWorkoutDoneScreen(BuildContext context, int steps,
@@ -50,20 +44,20 @@ class NavigationModule {
   }
 
   static void navigateToHistoryScreen(BuildContext context) {
-    Navigator.push(context, AppRoute(page: HistoryScreen(database)));
+    Navigator.push(context, AppRoute(page: HistoryScreen()));
   }
 
   static void navigateAndReplaceToHistoryScreen(BuildContext context) {
-    Navigator.pushReplacement(context, AppRoute(page: HistoryScreen(database)));
+    Navigator.pushReplacement(context, AppRoute(page: HistoryScreen()));
   }
 
   static void navigateToSettingsScreen(BuildContext context) {
-    Navigator.push(context, AppRoute(page: SettingsScreen(database)));
+    Navigator.push(context, AppRoute(page: SettingsScreen()));
   }
 
   static void navigateAndReplaceToSettingsScreen(BuildContext context) {
     Navigator.pushReplacement(
-        context, AppRoute(page: SettingsScreen(database)));
+        context, AppRoute(page: SettingsScreen()));
   }
 }
 

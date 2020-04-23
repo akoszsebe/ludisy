@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
@@ -33,40 +34,34 @@ class _LoginScreenState extends StateMVC<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: 24),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AppAssets.background, fit: BoxFit.fill)),
-        child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Stack(children: <Widget>[
-              Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Container(
-                    height: 300.0,
-                    child: ScrollablePositionedList.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemScrollController: itemScrollController,
-                      itemPositionsListener: itemPositionsListener,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (_, index) {
-                        switch (index) {
-                          case 0:
-                            return buildSignInWidget();
-                          case 1:
-                            return buildUserDateWidget();
-                          case 2:
-                            return buildDoneWidget();
-                        }
-                        return Container();
-                      },
-                    )),
-              )
-            ])));
+    return BaseView(
+        child: Stack(children: <Widget>[
+      Positioned(
+        bottom: 0,
+        right: 0,
+        left: 0,
+        child: Container(
+            height: 300.0,
+            child: ScrollablePositionedList.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemScrollController: itemScrollController,
+              itemPositionsListener: itemPositionsListener,
+              scrollDirection: Axis.horizontal,
+              itemCount: 4,
+              itemBuilder: (_, index) {
+                switch (index) {
+                  case 0:
+                    return buildSignInWidget();
+                  case 1:
+                    return buildUserDateWidget();
+                  case 2:
+                    return buildDoneWidget();
+                }
+                return Container();
+              },
+            )),
+      )
+    ]));
   }
 
   Widget buildSignInWidget() {

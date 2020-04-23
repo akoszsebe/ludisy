@@ -2,15 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class LoginController extends ControllerMVC {
-  factory LoginController() => _this ??= LoginController._();
-  static LoginController _this;
-  LoginController._();
-
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   UserModel userData = UserState.getUserData();
   bool field1 = true;
   bool field2 = true;

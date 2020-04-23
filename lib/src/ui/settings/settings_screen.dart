@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/settings/settings_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
@@ -9,15 +9,14 @@ import 'package:stairstepsport/src/widgets/quickinfobar.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final AppDatabase appDatabase;
-  SettingsScreen(this.appDatabase, {Key key}) : super(key: key);
+  SettingsScreen({Key key}) : super(key: key);
   @override
-  _SettingsScreenState createState() => _SettingsScreenState(appDatabase);
+  _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends StateMVC<SettingsScreen> {
-  _SettingsScreenState(AppDatabase appDatabase)
-      : super(SettingsController(appDatabase)) {
+  _SettingsScreenState()
+      : super(locator<SettingsController>()) {
     con = controller;
   }
   SettingsController con;

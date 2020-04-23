@@ -1,17 +1,14 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class WorkOutDoneController extends ControllerMVC {
-  factory WorkOutDoneController() => _this ??= WorkOutDoneController._();
-  static WorkOutDoneController _this;
-  WorkOutDoneController._();
-
   int steps = 0;
   int stepsPlaned = 0;
   double cal = 0;
   int durationSeconds = 0;
   double percentageValue = 0;
 
-  void setUpValues(int steps, int stepsPlaned, double cal, int durationSeconds) {
+  void setUpValues(
+      int steps, int stepsPlaned, double cal, int durationSeconds) {
     this.steps = steps;
     this.stepsPlaned = stepsPlaned;
     this.cal = cal;

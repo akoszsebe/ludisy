@@ -2,15 +2,14 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/day_model.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 
 class HistoryController extends ControllerMVC {
-  factory HistoryController(appDatabase) =>
-      _this ??= HistoryController._(appDatabase);
-  static HistoryController _this;
-  HistoryController._(this._appDatabase);
-  final AppDatabase _appDatabase;
+  HistoryController();
+
+  final AppDatabase _appDatabase = locator<AppDatabase>();
 
   UserModel userData = UserState.getUserData();
   int stepCountValue = 0;

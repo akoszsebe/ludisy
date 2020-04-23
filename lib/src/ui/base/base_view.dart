@@ -3,8 +3,9 @@ import 'package:stairstepsport/src/util/assets.dart';
 
 class BaseView extends StatelessWidget {
   final Widget child;
+  final Color bacgroundColor;
 
-  BaseView({this.child});
+  BaseView({this.child, this.bacgroundColor = Colors.transparent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,6 @@ class BaseView extends StatelessWidget {
         decoration: BoxDecoration(
             image:
                 DecorationImage(image: AppAssets.background, fit: BoxFit.fill)),
-        child: Scaffold(backgroundColor: Colors.transparent, body: child));
+        child: Scaffold(backgroundColor: bacgroundColor, body: child));
   }
 }

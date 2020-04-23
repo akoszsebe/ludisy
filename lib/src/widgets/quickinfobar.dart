@@ -41,7 +41,7 @@ class QuickInfoBar extends StatelessWidget {
                 visible: settingVisible,
                 child: MaterialButton(
                   height: 48,
-                  minWidth: 56,
+                  minWidth: 62,
                   padding: EdgeInsets.all(0),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -66,14 +66,11 @@ class QuickInfoBar extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
                 )),
-            SizedBox(
-              width: 4,
-            ),
             Visibility(
                 visible: hostoryVisible,
                 child: MaterialButton(
                   height: 48,
-                  minWidth: 56,
+                  minWidth: 62,
                   padding: EdgeInsets.all(0),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,

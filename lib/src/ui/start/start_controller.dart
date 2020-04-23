@@ -1,14 +1,11 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 
 class StartController extends ControllerMVC {
-  factory StartController(appDatabase) =>
-      _this ??= StartController._(appDatabase);
-  static StartController _this;
-  StartController._(this._appDatabase);
-  final AppDatabase _appDatabase;
+  final AppDatabase _appDatabase = locator<AppDatabase>();
 
   int stepCountValue = 0;
   UserModel get userData => UserState.getUserData();

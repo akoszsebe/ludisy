@@ -2,19 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 
 class ProfileController extends ControllerMVC {
-  factory ProfileController() => _this ??= ProfileController._();
-  static ProfileController _this;
-  ProfileController._();
-
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
 
   UserModel userData = UserState.getUserData();
 
-  Future<void> init() async {
-  }
+  Future<void> init() async {}
 
   Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/ui/splash/splash_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
@@ -12,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends StateMVC<SplashScreen> {
-  _SplashScreenState() : super(SplashController()) {
+  _SplashScreenState() : super(locator<SplashController>()) {
     con = controller;
   }
   SplashController con;

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/data/model/workout_model.dart';
 import 'package:stairstepsport/src/data/persitance/database.dart';
 import 'package:stairstepsport/src/di/locator.dart';
@@ -13,12 +12,12 @@ import 'package:stairstepsport/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
   final AppDatabase _appDatabase = locator<AppDatabase>();
+  final UserState userState = locator<UserState>();
 
   int stepCountValue = 0;
   double calCounterValue = 0;
   bool isWorkoutStarted = false;
   int targetSteps = 0;
-  UserModel userData = UserState.getUserData();
   double percentageValue = 0;
   int durationSeconds = 0;
 
@@ -58,7 +57,7 @@ class WorkOutController extends ControllerMVC {
     print("target = $targetSteps");
     for (var i = 0; i < targetSteps + 10; i += 10) {
       calCounterValue = CaloriCalculator.calculeteCalories(
-          userData, durationSeconds, stepCountValue);
+          userState.getUserData(), durationSeconds, stepCountValue);
       stepCountValue = i;
       percentageValue = stepCountValue / targetSteps;
       checkPercentage();
@@ -97,7 +96,7 @@ class WorkOutController extends ControllerMVC {
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - _offset}");
     var cal = CaloriCalculator.calculeteCalories(
-        userData, durationSeconds, stepCountValue);
+        userState.getUserData(), durationSeconds, stepCountValue);
     if (cal > 0) {
       calCounterValue = cal;
     }
@@ -142,7 +141,8 @@ class WorkOutController extends ControllerMVC {
         stepCountValue,
         calCounterValue,
         durationSeconds,
-        DateTime.now().millisecondsSinceEpoch));
+        DateTime.now().millisecondsSinceEpoch,
+        userState.getUserData().userId));
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
   }
 

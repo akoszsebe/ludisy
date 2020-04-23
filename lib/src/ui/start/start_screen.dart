@@ -1,8 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/di/locator.dart';
+import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
@@ -18,13 +17,7 @@ class StartScreen extends StatefulWidget {
   _StartScreenState createState() => _StartScreenState();
 }
 
-class _StartScreenState extends StateMVC<StartScreen> {
-  _StartScreenState()
-      : super(locator<StartController>()) {
-    con = controller;
-  }
-  StartController con;
-
+class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   @override
   void initState() {
     super.initState();
@@ -42,10 +35,10 @@ class _StartScreenState extends StateMVC<StartScreen> {
         Padding(
             padding: EdgeInsets.only(top: 20, left: 16),
             child: QuickInfoBar(
-              con.userData.displayName != null
-                  ? con.userData.displayName.split(" ")[0]
+              con.userState.getUserData().displayName != null
+                  ? con.userState.getUserData().displayName.split(" ")[0]
                   : " ",
-              con.userData.photoUrl,
+              con.userState.getUserData().photoUrl,
               steps: con.stepCountValue,
               onProfilePressed: () =>
                   NavigationModule.navigateToProfileScreen(context),

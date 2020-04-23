@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
@@ -17,11 +17,7 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends StateMVC<LoginScreen> {
-  _LoginScreenState() : super(LoginController()) {
-    con = controller;
-  }
-  LoginController con;
+class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   final ItemPositionsListener itemPositionsListener =

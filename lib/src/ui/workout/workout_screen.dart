@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:stairstepsport/src/di/locator.dart';
+import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
@@ -20,15 +19,13 @@ class WorkOutScreen extends StatefulWidget {
       _WorkOutScreenState(stepPlan);
 }
 
-class _WorkOutScreenState extends StateMVC<WorkOutScreen> {
+class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutController> {
   _WorkOutScreenState(this.stepPlan)
-      : super(locator<WorkOutController>()) {
-    con = controller;
+      : super() {
     con.setupTargetSteps(stepPlan);
   }
 
   final int stepPlan;
-  WorkOutController con;
 
   @override
   void initState() {

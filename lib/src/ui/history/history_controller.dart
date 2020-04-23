@@ -1,7 +1,6 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/day_model.dart';
-import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
 import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
@@ -9,9 +8,9 @@ import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
 class HistoryController extends ControllerMVC {
   HistoryController();
 
-  final AppDatabase _appDatabase = locator<AppDatabase>();
+  final WorkOutDao _workoutDao = locator<WorkOutDao>();
+  final UserState userState = locator<UserState>();
 
-  UserModel userData = UserState.getUserData();
   int stepCountValue = 0;
   List<DayModel> dataset = List();
   DateTime lastDay = DateTime.now();
@@ -22,7 +21,7 @@ class HistoryController extends ControllerMVC {
   List<ChartItem> itemsCals = List();
 
   Future<void> init() async {
-    stepCountValue = await _appDatabase.workoutDao.getAllSteps(_appDatabase);
+    stepCountValue = await _workoutDao.getAllSteps();
     var today = DateTime.now();
     fillForWeek(today);
   }
@@ -49,7 +48,7 @@ class HistoryController extends ControllerMVC {
     var morrning = new DateTime(dateTime.year, dateTime.month, dateTime.day);
     var night =
         new DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
-    var l1 = await _appDatabase.workoutDao.findWorkOutBetween(
+    var l1 = await _workoutDao.findWorkOutBetween(
         morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
     var d = DayModel();
     d.date = morrning.day;

@@ -64,10 +64,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     padding: EdgeInsets.only(left: 12),
                   ),
                   QuickInfoBar(
-                      con.userData.displayName != null
-                          ? con.userData.displayName.split(" ")[0]
+                      con.userState.getUserData().displayName != null
+                          ? con.userState.getUserData().displayName.split(" ")[0]
                           : "",
-                      con.userData.photoUrl,
+                      con.userState.getUserData().photoUrl,
                       steps: con.stepCountValue,
                       onProfilePressed: () =>
                           NavigationModule.navigateToProfileScreen(context),

@@ -5,12 +5,13 @@ import 'package:stairstepsport/src/states/user_state.dart';
 
 class SplashController extends ControllerMVC {
   GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  UserState _userState = locator<UserState>();
 
   void checkLogin(Function(bool) callback) async {
-    await UserState.initState();
+    await _userState.initState();
     bool logedIn = await _googleSignIn.isSignedIn();
     if (logedIn) {
-      if (UserState.getUserData().weight != null) {
+      if (_userState.getUserData().weight != null) {
         callback(true);
       } else {
         callback(false);

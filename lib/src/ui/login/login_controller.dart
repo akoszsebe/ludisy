@@ -4,11 +4,12 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:stairstepsport/src/data/model/user_model.dart';
 import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
 
 class LoginController extends ControllerMVC {
-  GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
-  UserModel userData = UserState.getUserData();
+  final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  final UserState userState = locator<UserState>();
+
+  UserModel userData = UserModel();
   bool field1 = true;
   bool field2 = true;
   bool field3 = true;
@@ -21,7 +22,7 @@ class LoginController extends ControllerMVC {
           displayName: _googleSignIn.currentUser.displayName,
           photoUrl: _googleSignIn.currentUser.photoUrl,
           userId: _googleSignIn.currentUser.email);
-      await UserState.setUserData(userData);
+      await userState.setUserData(userData);
       callback(null);
     } catch (err) {
       print(err);
@@ -75,7 +76,7 @@ class LoginController extends ControllerMVC {
       return;
     }
 
-    await SharedPrefs.setUserData(userData);
+    await userState.setUserData(userData);
     callback();
   }
 }

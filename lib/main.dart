@@ -10,6 +10,8 @@ Future<void> main() async {
   Stetho.initialize();
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  setupLocator(database);
+  final workOutDao = database.workoutDao;
+  workOutDao.setLocalAppDatabase(database);
+  setupLocator(workOutDao);
   runApp(EasyLocalization(child: MVCApp()));
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/di/locator.dart';
+import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/settings/settings_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
@@ -14,12 +13,8 @@ class SettingsScreen extends StatefulWidget {
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends StateMVC<SettingsScreen> {
-  _SettingsScreenState()
-      : super(locator<SettingsController>()) {
-    con = controller;
-  }
-  SettingsController con;
+class _SettingsScreenState
+    extends BaseScreenState<SettingsScreen, SettingsController> {
 
   @override
   void initState() {

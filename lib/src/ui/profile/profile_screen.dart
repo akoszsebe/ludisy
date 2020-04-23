@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
@@ -17,12 +17,8 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends StateMVC<ProfileScreen> {
-  _ProfileScreenState() : super(ProfileController()) {
-    con = controller;
-  }
-  ProfileController con;
-
+class _ProfileScreenState
+    extends BaseScreenState<ProfileScreen, ProfileController> {
   @override
   void initState() {
     super.initState();

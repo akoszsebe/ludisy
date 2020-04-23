@@ -81,7 +81,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `WorkOut` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `steps` INTEGER, `cal` REAL, `duration` INTEGER, `timeStamp` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `WorkOut` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `steps` INTEGER, `cal` REAL, `duration` INTEGER, `timeStamp` INTEGER, `userId` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,7 +105,8 @@ class _$WorkOutDao extends WorkOutDao {
                   'steps': item.steps,
                   'cal': item.cal,
                   'duration': item.duration,
-                  'timeStamp': item.timeStamp
+                  'timeStamp': item.timeStamp,
+                  'userId': item.userId
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -119,7 +120,8 @@ class _$WorkOutDao extends WorkOutDao {
       row['steps'] as int,
       row['cal'] as double,
       row['duration'] as int,
-      row['timeStamp'] as int);
+      row['timeStamp'] as int,
+      row['userId'] as String);
 
   final InsertionAdapter<WorkOut> _workOutInsertionAdapter;
 

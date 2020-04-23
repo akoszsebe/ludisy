@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
@@ -25,15 +25,13 @@ class WorkOutDoneScreen extends StatefulWidget {
       _WorkOutDoneScreenState(steps, stepsPlaned, cal, durationSeconds);
 }
 
-class _WorkOutDoneScreenState extends StateMVC<WorkOutDoneScreen> {
+class _WorkOutDoneScreenState
+    extends BaseScreenState<WorkOutDoneScreen, WorkOutDoneController> {
   _WorkOutDoneScreenState(
       int steps, int stepsPlaned, double cal, int durationSeconds)
-      : super(WorkOutDoneController()) {
-    con = controller;
+      : super() {
     con.setUpValues(steps, stepsPlaned, cal, durationSeconds);
   }
-
-  WorkOutDoneController con;
 
   @override
   void initState() {

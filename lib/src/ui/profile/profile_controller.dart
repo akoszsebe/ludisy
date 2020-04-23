@@ -6,16 +6,20 @@ import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 
 class ProfileController extends ControllerMVC {
-  GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  final UserState userState = locator<UserState>();
 
-  UserModel userData = UserState.getUserData();
+  UserModel userData = UserModel();
 
-  Future<void> init() async {}
+  Future<void> init() async {
+    userData = userState.getUserData();
+    refresh();
+  }
 
   Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();
     userData = UserModel();
-    await UserState.setUserData(userData);
+    await userState.setUserData(userData);
     callback();
   }
 
@@ -52,7 +56,7 @@ class ProfileController extends ControllerMVC {
     if (userData.weight == null) {
       return;
     }
-    await UserState.setUserData(userData);
+    await userState.setUserData(userData);
     callback();
   }
 }

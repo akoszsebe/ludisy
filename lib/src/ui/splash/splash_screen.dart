@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
 import 'package:stairstepsport/src/ui/splash/splash_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
+import 'package:stairstepsport/src/util/style/colors.dart';
 import 'package:stairstepsport/src/widgets/loader.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,7 +33,31 @@ class _SplashScreenState
     return Container(
         margin: EdgeInsets.only(top: 24),
         child: Scaffold(
-            backgroundColor: Colors.white, body: Center(child: buildLoader())));
+            backgroundColor: Colors.white,
+            body: Column(children: <Widget>[
+              SizedBox(
+                height: 56,
+              ),
+              Text(
+                "Stair sport",
+                style: GoogleFonts.montserrat(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blue),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Image(
+                height: 170,
+                width: 170,
+                image: AppAssets.splash_icon,
+              ),
+              SizedBox(
+                height: 200,
+              ),
+              buildLoader()
+            ])));
   }
 
   Widget buildLoader() {

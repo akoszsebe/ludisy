@@ -7,7 +7,7 @@ class Loader extends StatelessWidget {
     return Center(
         child: CupertinoActivityIndicator(
       animating: true,
-      radius: 30,
+      radius: 20,
     ));
   }
 }

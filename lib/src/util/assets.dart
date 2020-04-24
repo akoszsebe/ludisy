@@ -45,7 +45,16 @@ class AppAssets {
 
   static const AssetImage history =
       const AssetImage("lib/resources/images/history.png");
-      
+
   static const AssetImage splash_icon =
       const AssetImage("lib/resources/images/splash_icon.png");
+
+  static const AssetImage water =
+      const AssetImage("lib/resources/images/water.png");
+
+  static const AssetImage coffee =
+      const AssetImage("lib/resources/images/coffee.png");
+
+  static const AssetImage luanch =
+      const AssetImage("lib/resources/images/luanch.png");
 }

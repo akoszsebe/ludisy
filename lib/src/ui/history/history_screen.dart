@@ -22,8 +22,7 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends StateMVC<HistoryScreen> {
-  _HistoryScreenState()
-      : super(locator<HistoryController>()) {
+  _HistoryScreenState() : super(locator<HistoryController>()) {
     con = controller;
   }
   HistoryController con;
@@ -65,7 +64,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   ),
                   QuickInfoBar(
                       con.userState.getUserData().displayName != null
-                          ? con.userState.getUserData().displayName.split(" ")[0]
+                          ? con.userState
+                              .getUserData()
+                              .displayName
+                              .split(" ")[0]
                           : "",
                       con.userState.getUserData().photoUrl,
                       steps: con.stepCountValue,
@@ -147,13 +149,172 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     ],
                   )),
               if (chartDataSet != null && chartDataSet.length != 0)
-                AppBarChart(
-                  chartDataSet,
-                  (index) {
-                    touchedIndex = index;
-                    con.changeSelected(index);
-                  },
-                  touchedIndex: touchedIndex,
+                Stack(
+                  children: <Widget>[
+                    AppBarChart(
+                      chartDataSet,
+                      (index) {
+                        // touchedIndex = index;
+                        // con.changeSelected(index);
+                      },
+                      touchedIndex: touchedIndex,
+                    ),
+                    Positioned(
+                        top: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 0;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.2),
+                                  width: 42,
+                                  height: 200,
+                                  alignment: Alignment.bottomLeft,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 0,
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 1;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.1),
+                                  width: 42,
+                                  height: 200,
+                                  alignment: Alignment.bottomLeft,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 1,
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 2;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.2),
+                                  width: 42,
+                                  height: 200,
+                                  alignment: Alignment.bottomLeft,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 2,
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 3;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.1),
+                                  width: 42,
+                                  height: 200,
+                                  alignment: Alignment.bottomLeft,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 3,
+                                          child: Container(
+                                             height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 4;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.2),
+                                  width: 42,
+                                  height: 200,
+                                  alignment: Alignment.bottomLeft,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 4,
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 5;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.1),
+                                  width: 40,
+                                  height: 200,
+                                  alignment: Alignment.bottomLeft,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 5,
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  touchedIndex = 6;
+                                  con.changeSelected(touchedIndex);
+                                },
+                                child: Container(
+                                  color: Colors.redAccent.withOpacity(0.2),
+                                  width: 40,
+                                  height: 200,
+                                  alignment: Alignment.bottomRight,
+                                  child: ClipOval(
+                                      child: Visibility(
+                                          visible: touchedIndex == 6,
+                                          child: Container(
+                                             height: 20,
+                                              width: 20,
+                                              color: AppColors.blue,
+                                              child: Text(
+                                                  chartDataSet[touchedIndex]
+                                                      .title)))),
+                                )),
+                          ],
+                        ))
+                  ],
                 ),
               SizedBox(
                 height: 10,

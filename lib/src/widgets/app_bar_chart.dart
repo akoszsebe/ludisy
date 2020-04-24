@@ -22,7 +22,9 @@ class AppBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     print("index $touchedIndex");
     return Container(
+      padding: EdgeInsets.only(left:13,right: 13),
         height: 200,
+        width: 294,
         child: BarChart(
           mainBarData(),
           swapAnimationDuration: animDuration,
@@ -34,7 +36,7 @@ class AppBarChart extends StatelessWidget {
     double y, {
     bool isTouched = true,
     Color barColor = AppColors.blueWithOcupacity50,
-    double width = 14,
+    double width = 16,
     List<int> showTooltips = const [],
   }) {
     return BarChartGroupData(
@@ -67,20 +69,14 @@ class AppBarChart extends StatelessWidget {
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem("", TextStyle(color: Colors.yellow));
             }),
-        handleBuiltInTouches: true,
-        touchCallback: (barTouchResponse) {
-          if (barTouchResponse.spot != null && barTouchResponse.touchInput is! FlPanEnd) {
-            print("object");
-            onChangeSelected(barTouchResponse.spot.touchedBarGroupIndex);
-          }
-        },
+        handleBuiltInTouches: false,
       ),
       titlesData: FlTitlesData(
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
           textStyle: GoogleFonts.montserrat(
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: FontWeight.w400,
               color: AppColors.textBlack),
           margin: 16,

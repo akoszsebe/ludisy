@@ -165,153 +165,34 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 0;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.2),
-                                  width: 42,
-                                  height: 200,
-                                  alignment: Alignment.bottomLeft,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 0,
-                                          child: Container(
-                                              height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 1;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.1),
-                                  width: 42,
-                                  height: 200,
-                                  alignment: Alignment.bottomLeft,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 1,
-                                          child: Container(
-                                              height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 2;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.2),
-                                  width: 42,
-                                  height: 200,
-                                  alignment: Alignment.bottomLeft,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 2,
-                                          child: Container(
-                                              height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 3;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.1),
-                                  width: 42,
-                                  height: 200,
-                                  alignment: Alignment.bottomLeft,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 3,
-                                          child: Container(
-                                             height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 4;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.2),
-                                  width: 42,
-                                  height: 200,
-                                  alignment: Alignment.bottomLeft,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 4,
-                                          child: Container(
-                                              height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 5;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.1),
-                                  width: 40,
-                                  height: 200,
-                                  alignment: Alignment.bottomLeft,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 5,
-                                          child: Container(
-                                              height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
-                            GestureDetector(
-                                onTap: () {
-                                  touchedIndex = 6;
-                                  con.changeSelected(touchedIndex);
-                                },
-                                child: Container(
-                                  color: Colors.redAccent.withOpacity(0.2),
-                                  width: 40,
-                                  height: 200,
-                                  alignment: Alignment.bottomRight,
-                                  child: ClipOval(
-                                      child: Visibility(
-                                          visible: touchedIndex == 6,
-                                          child: Container(
-                                             height: 20,
-                                              width: 20,
-                                              color: AppColors.blue,
-                                              child: Text(
-                                                  chartDataSet[touchedIndex]
-                                                      .title)))),
-                                )),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 0,
+                                0),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 1,
+                                1),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 2,
+                                2),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 3,
+                                3),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 4,
+                                4),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 5,
+                                5),
+                            buildChartClicableOverlay(
+                                chartDataSet[touchedIndex].title,
+                                touchedIndex == 6,
+                                6),
                           ],
                         ))
                   ],
@@ -380,7 +261,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   height: 100.0,
                   padding: EdgeInsets.only(left: 28, right: 28, top: 5),
                   child: SingleChildScrollViewWithScrollbar(
-                      scrollbarColor: selectedDay.workouts.length < 4
+                      scrollbarColor: selectedDay.workouts.length <= 4
                           ? Colors.transparent
                           : AppColors.blueWithOcupacity50,
                       scrollbarThickness: 2.0,
@@ -521,6 +402,62 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             ]));
   }
 
+  Widget buildChartClicableOverlay(String text, bool visible, int index) {
+    return GestureDetector(
+        onTap: () {
+          touchedIndex = index;
+          con.changeSelected(touchedIndex);
+        },
+        child: Container(
+          color: Colors.transparent,
+          width: 42,
+          height: 196,
+          alignment: Alignment.bottomCenter,
+          child: visible
+              ? Stack(alignment: Alignment.center, children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 11),
+                    child: CustomPaint(
+                      painter: LineHalfCircleLinePainter(),
+                    ),
+                  ),
+                  AnimatedOpacity(
+                      opacity: visible ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: 250),
+                      child: Container(
+                          height: 24,
+                          width: 24,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.blue,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 8,
+                                offset: Offset(1.0, 1.0),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(text,
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white)),
+                          ))),
+                ])
+              : Padding(
+                  padding: EdgeInsets.only(bottom: 17),
+                  child: SizedBox(
+                    child: Container(
+                      color: Colors.grey,
+                    ),
+                    height: 1,
+                  )),
+        ));
+  }
+
   Widget buildTableHeaders() {
     return Table(children: [
       TableRow(children: [
@@ -653,5 +590,51 @@ class CustomHalfCircleClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
+  }
+}
+
+class LineHalfCircleLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    {
+      final p1 = Offset(-13, 0);
+      final p2 = Offset(-23, 0);
+      final paint = Paint()
+        ..color = Colors.grey
+        ..strokeWidth = 1;
+      canvas.drawLine(p1, p2, paint);
+    }
+    {
+      final p1 = Offset(13, 0);
+      final p2 = Offset(23, 0);
+      final paint = Paint()
+        ..color = Colors.grey
+        ..strokeWidth = 1;
+      canvas.drawLine(p1, p2, paint);
+    }
+    {
+      var paint = Paint();
+
+      paint.color = Colors.grey;
+      paint.style = PaintingStyle.stroke;
+      paint.strokeWidth = 1;
+
+      var startPoint = Offset(-13, 0);
+      var controlPoint1 = Offset(-8, -12);
+      var controlPoint2 = Offset(8, -12);
+      var endPoint = Offset(13, 0);
+
+      var path = Path();
+      path.moveTo(startPoint.dx, startPoint.dy);
+      path.cubicTo(controlPoint1.dx, controlPoint1.dy, controlPoint2.dx,
+          controlPoint2.dy, endPoint.dx, endPoint.dy);
+
+      canvas.drawPath(path, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return false;
   }
 }

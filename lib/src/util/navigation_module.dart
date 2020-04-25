@@ -8,18 +8,16 @@ import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
 import 'package:stairstepsport/src/ui/workoutdone/workoutdone_screeen.dart';
 
 class NavigationModule {
-
   static void navigateToStartScreen(BuildContext context) {
-    Navigator.of(context)
-        .pushReplacement(AppRoute(page: StartScreen()));
+    Navigator.of(context).pushReplacement(AppRoute(page: StartScreen()));
   }
 
   static void navigateToWorkoutScreen(BuildContext context, int stepsPlaned) {
-    Navigator.of(context)
-        .push(AppRoute(page: WorkOutScreen(stepsPlaned)));
+    Navigator.of(context).push(AppRoute(page: WorkOutScreen(stepsPlaned)));
   }
 
-  static void navigateAndReplaceToWorkoutScreen(BuildContext context, int stepsPlaned) {
+  static void navigateAndReplaceToWorkoutScreen(
+      BuildContext context, int stepsPlaned) {
     Navigator.of(context)
         .pushReplacement(AppRoute(page: WorkOutScreen(stepsPlaned)));
   }
@@ -34,9 +32,13 @@ class NavigationModule {
     Navigator.of(context).pop();
   }
 
-  static void navigateToLoginScreen(BuildContext context) {
+  static void navigateToLoginScreenAndRemove(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
         AppRoute(page: LoginScreen()), ModalRoute.withName('/'));
+  }
+
+  static void navigateToLoginScreen(BuildContext context) {
+    Navigator.of(context).pushReplacement(AppRoute(page: LoginScreen()));
   }
 
   static void navigateToProfileScreen(BuildContext context) {
@@ -56,8 +58,7 @@ class NavigationModule {
   }
 
   static void navigateAndReplaceToSettingsScreen(BuildContext context) {
-    Navigator.pushReplacement(
-        context, AppRoute(page: SettingsScreen()));
+    Navigator.pushReplacement(context, AppRoute(page: SettingsScreen()));
   }
 }
 
@@ -78,9 +79,9 @@ class AppRoute extends PageRouteBuilder {
             Widget child,
           ) =>
               FadeTransition(
-                  opacity: animation,
-                    child: child,
-                  ),
+            opacity: animation,
+            child: child,
+          ),
           transitionDuration: Duration(milliseconds: 600),
         );
 }

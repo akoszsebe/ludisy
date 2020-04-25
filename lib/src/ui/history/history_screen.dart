@@ -70,7 +70,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               .split(" ")[0]
                           : "",
                       con.userState.getUserData().photoUrl,
-                      steps: con.stepCountValue,
+                      steps: con.userState.getAllSteps(),
                       onProfilePressed: () =>
                           NavigationModule.navigateToProfileScreen(context),
                       settingVisible: true,
@@ -79,7 +79,12 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               context)),
                 ],
               )),
-          Expanded(child: buildSelectedTab(selectedTab)),
+          Expanded(
+              child: Hero(
+                  tag: "history",
+                  child: Material(
+                      type: MaterialType.transparency,
+                      child: buildSelectedTab(selectedTab)))),
         ]));
   }
 
@@ -107,23 +112,28 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 height: 4,
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Container(
-                          width: 60,
-                          child: IconButton(
-                              icon: new Icon(
-                                Icons.chevron_left,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                con.fillForWeek(
-                                    con.firstDay.subtract(Duration(days: 1)));
-                              })),
+                          width: 50,
+                          height: 40,
+                          child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                  customBorder: CircleBorder(),
+                                  splashColor: AppColors.blueWithOcupacity50,
+                                  child: Icon(
+                                    Icons.chevron_left,
+                                    color: Colors.black,
+                                    size: 30,
+                                  ),
+                                  onTap: () {
+                                    con.fillForWeek(con.firstDay
+                                        .subtract(Duration(days: 1)));
+                                  }))),
                       Text(
                         "${DateFormat('yyyy.MM.dd').format(startDate)} - ${DateFormat('yyyy.MM.dd').format(endDate)}",
                         style: GoogleFonts.montserrat(
@@ -132,20 +142,26 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             fontSize: 15.0),
                       ),
                       Container(
-                          width: 60,
+                          width: 50,
+                          height: 40,
                           child: Visibility(
                               visible: con.lastDay.isBefore(
                                   DateTime.now().subtract(Duration(days: 1))),
-                              child: IconButton(
-                                  icon: new Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    con.fillForWeek(
-                                        con.lastDay.add(Duration(days: 7)));
-                                  }))),
+                              child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                      customBorder: CircleBorder(),
+                                      splashColor:
+                                          AppColors.blueWithOcupacity50,
+                                      child: Icon(
+                                        Icons.chevron_right,
+                                        color: Colors.black,
+                                        size: 30,
+                                      ),
+                                      onTap: () {
+                                        con.fillForWeek(
+                                            con.lastDay.add(Duration(days: 7)));
+                                      })))),
                     ],
                   )),
               if (chartDataSet != null && chartDataSet.length != 0)
@@ -153,10 +169,6 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   children: <Widget>[
                     AppBarChart(
                       chartDataSet,
-                      (index) {
-                        // touchedIndex = index;
-                        // con.changeSelected(index);
-                      },
                       touchedIndex: touchedIndex,
                     ),
                     Positioned(
@@ -165,34 +177,11 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 0,
-                                0),
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 1,
-                                1),
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 2,
-                                2),
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 3,
-                                3),
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 4,
-                                4),
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 5,
-                                5),
-                            buildChartClicableOverlay(
-                                chartDataSet[touchedIndex].title,
-                                touchedIndex == 6,
-                                6),
+                            for (int i = 0; i < 7; i++)
+                              buildChartClickableOverlay(
+                                  chartDataSet[touchedIndex].title,
+                                  touchedIndex == i,
+                                  i),
                           ],
                         ))
                   ],
@@ -373,6 +362,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             offset: Offset(translateOffset, -20),
                             child: Center(
                                 child: FloatingActionButton(
+                                    heroTag: null,
                                     backgroundColor: AppColors.blue,
                                     elevation: 0,
                                     child: Column(
@@ -402,7 +392,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             ]));
   }
 
-  Widget buildChartClicableOverlay(String text, bool visible, int index) {
+  Widget buildChartClickableOverlay(String text, bool visible, int index) {
     return GestureDetector(
         onTap: () {
           touchedIndex = index;
@@ -495,7 +485,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         child: Visibility(
             visible: visible,
             child: FloatingActionButton(
-                heroTag: title,
+                heroTag: null,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 child: Column(

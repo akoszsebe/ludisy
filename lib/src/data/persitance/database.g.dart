@@ -126,22 +126,23 @@ class _$WorkOutDao extends WorkOutDao {
   final InsertionAdapter<WorkOut> _workOutInsertionAdapter;
 
   @override
-  Future<List<WorkOut>> findAllWorkOuts() async {
-    return _queryAdapter.queryList('SELECT * FROM WorkOut',
-        mapper: _workOutMapper);
+  Future<List<WorkOut>> findAllWorkOuts(String userId) async {
+    return _queryAdapter.queryList('SELECT * FROM WorkOut WHERE userId = ?',
+        arguments: <dynamic>[userId], mapper: _workOutMapper);
   }
 
   @override
-  Future<List<WorkOut>> findWorkOutBetween(int date1, int date2) async {
+  Future<List<WorkOut>> findWorkOutBetween(
+      String userId, int date1, int date2) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM WorkOut WHERE timeStamp BETWEEN ? AND ?',
-        arguments: <dynamic>[date1, date2],
+        'SELECT * FROM WorkOut WHERE userId = ? AND timeStamp BETWEEN ? AND ?',
+        arguments: <dynamic>[userId, date1, date2],
         mapper: _workOutMapper);
   }
 
   @override
-  Future<void> insertWorkOut(WorkOut person) async {
+  Future<void> insertWorkOut(WorkOut workout) async {
     await _workOutInsertionAdapter.insert(
-        person, sqflite.ConflictAlgorithm.abort);
+        workout, sqflite.ConflictAlgorithm.abort);
   }
 }

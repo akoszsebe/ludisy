@@ -10,20 +10,20 @@ abstract class WorkOutDao {
     _localAppDatabase = appDatabase;
   }
 
-  @Query('SELECT * FROM WorkOut')
-  Future<List<WorkOut>> findAllWorkOuts();
+  @Query('SELECT * FROM WorkOut WHERE userId = :userId')
+  Future<List<WorkOut>> findAllWorkOuts(String userId);
 
-  @Query('SELECT * FROM WorkOut WHERE timeStamp BETWEEN :date1 AND :date2')
-  Future<List<WorkOut>> findWorkOutBetween(int date1, int date2);
+  @Query('SELECT * FROM WorkOut WHERE userId = :userId AND timeStamp BETWEEN :date1 AND :date2')
+  Future<List<WorkOut>> findWorkOutBetween(String userId, int date1, int date2);
 
   //@Query('SELECT sum(steps) FROM WorkOut')
-  Future<int> getAllSteps() async {
+  Future<int> getAllSteps(String userId) async {
     final Map<String, dynamic> numbersSum =
-        (await _localAppDatabase.database.rawQuery('SELECT SUM(steps) FROM WorkOut'))
+        (await _localAppDatabase.database.rawQuery('SELECT SUM(steps) FROM WorkOut WHERE userId = "$userId"'))
             .first;
     return numbersSum["SUM(steps)"];
   }
 
   @insert
-  Future<void> insertWorkOut(WorkOut person);
+  Future<void> insertWorkOut(WorkOut workout);
 }

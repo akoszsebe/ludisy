@@ -11,7 +11,6 @@ class HistoryController extends ControllerMVC {
   final WorkOutDao _workoutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
-  int stepCountValue = 0;
   List<DayModel> dataset = List();
   DateTime lastDay = DateTime.now();
   DateTime firstDay = DateTime.now();
@@ -21,7 +20,6 @@ class HistoryController extends ControllerMVC {
   List<ChartItem> itemsCals = List();
 
   Future<void> init() async {
-    stepCountValue = await _workoutDao.getAllSteps();
     var today = DateTime.now();
     fillForWeek(today);
   }
@@ -33,7 +31,7 @@ class HistoryController extends ControllerMVC {
     itemsCals = List();
     lastDay = lastDayFromThatWeek;
     firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 5)));
+    await addDay(lastDayFromThatWeek.subtract(Duration(days: 6)));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 5)));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 4)));
     await addDay(lastDayFromThatWeek.subtract(Duration(days: 3)));
@@ -49,7 +47,9 @@ class HistoryController extends ControllerMVC {
     var night =
         new DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
     var l1 = await _workoutDao.findWorkOutBetween(
-        morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
+        userState.getUserData().userId,
+        morrning.millisecondsSinceEpoch,
+        night.millisecondsSinceEpoch);
     var d = DayModel();
     d.date = morrning.day;
     for (var l in l1) {

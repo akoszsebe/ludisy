@@ -11,11 +11,10 @@ class ChartItem {
 }
 
 class AppBarChart extends StatelessWidget {
-  AppBarChart(this.dataset, this.onChangeSelected, {this.touchedIndex});
+  AppBarChart(this.dataset, {this.touchedIndex});
   final Color barBackgroundColor = Colors.grey[100];
   final Duration animDuration = const Duration(milliseconds: 250);
   final List<ChartItem> dataset;
-  final Function(int) onChangeSelected;
   final int touchedIndex;
 
   @override

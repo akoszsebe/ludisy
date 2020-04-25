@@ -51,7 +51,7 @@ class _SettingsScreenState
                         ? con.userData.displayName.split(" ")[0]
                         : "",
                     con.userData.photoUrl,
-                    steps: con.stepCountValue,
+                    steps: con.userState.getAllSteps(),
                     onProfilePressed: () =>
                         NavigationModule.navigateToProfileScreen(context),
                     hostoryVisible: true,
@@ -61,57 +61,69 @@ class _SettingsScreenState
                   ),
                 ],
               )),
-          Expanded(child: buildBody())
+          Expanded(child: Hero(tag: "settings", child: buildBody()))
         ]));
   }
 
   Widget buildBody() {
-    return Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-          child: buildButton("Delete all data", AppColors.red, () {})),
-      Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-          child: buildButton("Source code", AppColors.textBlack, () => con.launchURL("https://github.com/akoszsebe/stairstepsport"))),
-      Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-          child:
-              buildButton("Contact the developer", AppColors.textBlack, () => con.launchURL("https://www.linkedin.com/in/zsebe-akos-b581b9139"))),
-      Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-          child: Container(
-            height: 180,
-            width: double.infinity,
-            padding: EdgeInsets.only(top: 16, left: 38, right: 38, bottom: 20),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(const Radius.circular(32.0))),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Support the development",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textBlack),
-                ),
-                Row(
+    return Material(
+        type: MaterialType.transparency,
+        child: Center(
+            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: buildButton("Delete all data", AppColors.red, () {})),
+          Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: buildButton(
+                  "Source code",
+                  AppColors.textBlack,
+                  () => con.launchURL(
+                      "https://github.com/akoszsebe/stairstepsport"))),
+          Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: buildButton(
+                  "Contact the developer",
+                  AppColors.textBlack,
+                  () => con.launchURL(
+                      "https://www.linkedin.com/in/zsebe-akos-b581b9139"))),
+          Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: Container(
+                height: 180,
+                width: double.infinity,
+                padding:
+                    EdgeInsets.only(top: 16, left: 38, right: 38, bottom: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.all(const Radius.circular(32.0))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    buildInAppPourchaseButton("Water", "0.99", AppAssets.water),
-                    buildInAppPourchaseButton(
-                        "Coffee", "1.99", AppAssets.coffee),
-                    buildInAppPourchaseButton(
-                        "Luanch", "2.99", AppAssets.luanch)
+                    Text(
+                      "Support the development",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textBlack),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        buildInAppPourchaseButton(
+                            "Water", "0.99", AppAssets.water),
+                        buildInAppPourchaseButton(
+                            "Coffee", "1.99", AppAssets.coffee),
+                        buildInAppPourchaseButton(
+                            "Luanch", "2.99", AppAssets.luanch)
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          ))
-    ]));
+                ),
+              ))
+        ])));
   }
 
   Widget buildButton(String title, Color color, VoidCallback onTap) {

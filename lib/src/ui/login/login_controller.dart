@@ -23,6 +23,7 @@ class LoginController extends ControllerMVC {
           photoUrl: _googleSignIn.currentUser.photoUrl,
           userId: _googleSignIn.currentUser.email);
       await userState.setUserData(userData);
+      await userState.initState();
       callback(null);
     } catch (err) {
       print(err);

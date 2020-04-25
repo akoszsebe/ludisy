@@ -1,19 +1,14 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
 import 'package:stairstepsport/src/di/locator.dart';
 import 'package:stairstepsport/src/states/user_state.dart';
 
 class StartController extends ControllerMVC {
-  final WorkOutDao _workoutDao = locator<WorkOutDao>();
+  
   final UserState userState = locator<UserState>();
-
-  int stepCountValue = 0;
 
   Difficulty difficulty = Difficulty.easy;
 
   Future<void> init() async {
-    stepCountValue = await _workoutDao.getAllSteps();
-    refresh();
   }
 
   void setUp(Function(int) callback) {

@@ -143,6 +143,7 @@ class WorkOutController extends ControllerMVC {
         durationSeconds,
         DateTime.now().millisecondsSinceEpoch,
         userState.getUserData().userId));
+    userState.addSteps(stepCountValue);
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
   }
 

@@ -39,18 +39,18 @@ class _ProfileScreenState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   RoundedMiniButton(
-                    "back",
+                    null,
                     AppAssets.back,
                     () {
                       NavigationModule.pop(context);
                     },
                   ),
                   RoundedMiniButton(
-                    "logout",
+                    null,
                     AppAssets.logout,
                     () {
                       con.logout(() {
-                        NavigationModule.navigateToLoginScreen(context);
+                        NavigationModule.navigateToLoginScreenAndRemove(context);
                       });
                     },
                     iconColor: AppColors.red,
@@ -74,24 +74,27 @@ class _ProfileScreenState
                     Padding(
                       padding: EdgeInsets.only(top: 24),
                     ),
-                    Container(
-                      width: 64.0,
-                      height: 64.0,
-                      decoration: BoxDecoration(
-                        color: AppColors.blue,
-                        image: DecorationImage(
-                          image: con.userData.photoUrl == null
-                              ? AppAssets.googleLogo
-                              : NetworkImage(con.userData.photoUrl),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                        border: Border.all(
-                          color: AppColors.blue,
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
+                    Hero(
+                        tag: "user",
+                        child: Container(
+                          width: 64.0,
+                          height: 64.0,
+                          decoration: BoxDecoration(
+                            color: AppColors.blue,
+                            image: DecorationImage(
+                              image: con.userData.photoUrl == null
+                                  ? AppAssets.googleLogo
+                                  : NetworkImage(con.userData.photoUrl),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0)),
+                            border: Border.all(
+                              color: AppColors.blue,
+                              width: 2.0,
+                            ),
+                          ),
+                        )),
                     Padding(
                       padding: EdgeInsets.only(top: 8),
                     ),
@@ -180,7 +183,7 @@ class _ProfileScreenState
                           ],
                         )),
                     RoundedButton(
-                      "done",
+                      null,
                       AppAssets.done,
                       () {
                         con.saveUserdata(() {

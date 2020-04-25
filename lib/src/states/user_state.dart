@@ -12,8 +12,9 @@ class UserState {
 
   Future<void> initState() async {
     _userModel = await SharedPrefs.getUserData();
-    _allSteps =
-        await _workoutDao.getAllSteps(_userModel.userId);
+    if (_userModel != null) {
+      _allSteps = await _workoutDao.getAllSteps(_userModel.userId);
+    }
   }
 
   UserModel getUserData() {
@@ -25,11 +26,11 @@ class UserState {
     _userModel = data;
   }
 
-  int getAllSteps(){
+  int getAllSteps() {
     return _allSteps;
   }
 
-  void addSteps(int steps){
+  void addSteps(int steps) {
     _allSteps += steps;
   }
 }

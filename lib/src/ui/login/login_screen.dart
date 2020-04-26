@@ -7,6 +7,7 @@ import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/login/login_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
+import 'package:stairstepsport/src/widgets/date_picker.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/util/navigation_module.dart';
@@ -172,22 +173,16 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                       ]),
                       Column(
                         children: <Widget>[
-                          DropDownItem(
-                            con.userData.bithDate == null
-                                ? null
-                                : con.userData.bithDate.toString(),
-                            <String>[
-                              for (var i = DateTime.now().year; i >= 1900; i--)
-                                "$i"
-                            ],
-                            (v) {
-                              con.bithDateChange(v);
-                            },
-                            hint: "Bithdate",
-                            hintColor: con.field3
-                                ? AppColors.textBlack
-                                : AppColors.red,
-                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
+                              child: AppDatePicker(
+                                hint: "Birthdate",
+                                initDate: con.userData.bithDate == null ? null : DateTime(con.userData.bithDate),
+                                showError: !con.field3,
+                                onDateChanged: (date) {
+                                  con.bithDateChange(date);
+                                },
+                              )),
                           DropDownItem(
                             con.userData.height == null
                                 ? null

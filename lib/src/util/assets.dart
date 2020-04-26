@@ -55,6 +55,6 @@ class AppAssets {
   static const AssetImage coffee =
       const AssetImage("lib/resources/images/coffee.png");
 
-  static const AssetImage luanch =
-      const AssetImage("lib/resources/images/luanch.png");
+  static const AssetImage lunch =
+      const AssetImage("lib/resources/images/lunch.png");
 }

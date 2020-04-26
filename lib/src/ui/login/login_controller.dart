@@ -43,8 +43,8 @@ class LoginController extends ControllerMVC {
     refresh();
   }
 
-  void bithDateChange(String v) {
-    userData.bithDate = int.parse(v);
+  void bithDateChange(DateTime dateTime) {
+    userData.bithDate = dateTime.year;
     field3 = true;
     refresh();
   }

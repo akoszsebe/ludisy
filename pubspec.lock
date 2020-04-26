@@ -209,6 +209,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_cupertino_date_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_cupertino_date_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.12"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -322,6 +329,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  in_app_purchase:
+    dependency: "direct main"
+    description:
+      name: in_app_purchase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.3"
   intl:
     dependency: "direct main"
     description:

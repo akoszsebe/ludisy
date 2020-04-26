@@ -6,6 +6,7 @@ import 'package:stairstepsport/src/ui/base/base_view.dart';
 import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
 import 'package:stairstepsport/src/util/assets.dart';
 import 'package:stairstepsport/src/util/style/colors.dart';
+import 'package:stairstepsport/src/widgets/date_picker.dart';
 import 'package:stairstepsport/src/widgets/dropdown_item.dart';
 import 'package:stairstepsport/src/widgets/rounded_button.dart';
 import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
@@ -50,7 +51,8 @@ class _ProfileScreenState
                     AppAssets.logout,
                     () {
                       con.logout(() {
-                        NavigationModule.navigateToLoginScreenAndRemove(context);
+                        NavigationModule.navigateToLoginScreenAndRemove(
+                            context);
                       });
                     },
                     iconColor: AppColors.red,
@@ -151,20 +153,16 @@ class _ProfileScreenState
                             ]),
                             Column(
                               children: <Widget>[
-                                DropDownItem(
-                                  con.userData.bithDate == null
-                                      ? null
-                                      : con.userData.bithDate.toString(),
-                                  <String>[
-                                    for (var i = DateTime.now().year;
-                                        i >= 1900;
-                                        i--)
-                                      "$i"
-                                  ],
-                                  (v) {
-                                    con.bithDateChange(v);
-                                  },
-                                  hint: "Bithdate",
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: AppDatePicker(
+                                    hint: "Birthdate",
+                                    initDate: DateTime(con.userData.bithDate),
+                                    showError: false,
+                                    onDateChanged: (date) {
+                                      con.bithDateChange(date);
+                                    },
+                                  ),
                                 ),
                                 DropDownItem(
                                   con.userData.height == null

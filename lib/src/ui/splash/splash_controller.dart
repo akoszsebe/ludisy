@@ -11,13 +11,13 @@ class SplashController extends ControllerMVC {
     await _userState.initState();
     bool logedIn = await _googleSignIn.isSignedIn();
     if (logedIn) {
-      if (_userState.getUserData().weight != null) {
-        callback(true);
-      } else {
-        callback(false);
+      if (_userState.getUserData() != null) {
+        if (_userState.getUserData().weight != null) {
+          callback(true);
+          return;
+        }
       }
-    } else {
-      callback(false);
     }
+    callback(false);
   }
 }

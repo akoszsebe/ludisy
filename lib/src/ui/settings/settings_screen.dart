@@ -117,7 +117,7 @@ class _SettingsScreenState
                         buildInAppPourchaseButton(
                             "Coffee", "1.99", AppAssets.coffee),
                         buildInAppPourchaseButton(
-                            "Luanch", "2.99", AppAssets.luanch)
+                            "Lunch", "2.99", AppAssets.lunch)
                       ],
                     )
                   ],

@@ -39,7 +39,7 @@ class _SplashScreenState
                 height: 56,
               ),
               Text(
-                "Stair sport",
+                "Ludisy",
                 style: GoogleFonts.montserrat(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,

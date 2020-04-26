@@ -1,7 +1,7 @@
-import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/util/shared_pref.dart';
+import 'package:ludisy/src/data/model/user_model.dart';
+import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/util/shared_pref.dart';
 
 class UserState {
   UserState();

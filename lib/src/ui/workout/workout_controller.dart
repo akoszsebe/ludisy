@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/workout_model.dart';
-import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/states/user_state.dart';
-import 'package:stairstepsport/src/util/calory_calculator.dart';
-import 'package:stairstepsport/src/util/navigation_module.dart';
+import 'package:ludisy/src/data/model/workout_model.dart';
+import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/user_state.dart';
+import 'package:ludisy/src/util/calory_calculator.dart';
+import 'package:ludisy/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
   final WorkOutDao _workOutDao = locator<WorkOutDao>();

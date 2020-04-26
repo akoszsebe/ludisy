@@ -1,7 +1,7 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/states/user_state.dart';
+import 'package:ludisy/src/data/model/user_model.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/user_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsController extends ControllerMVC {

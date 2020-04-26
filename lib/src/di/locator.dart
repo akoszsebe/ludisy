@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
-import 'package:stairstepsport/src/states/user_state.dart';
-import 'package:stairstepsport/src/ui/history/history_controller.dart';
-import 'package:stairstepsport/src/ui/login/login_controller.dart';
-import 'package:stairstepsport/src/ui/profile/profile_controller.dart';
-import 'package:stairstepsport/src/ui/settings/settings_controller.dart';
-import 'package:stairstepsport/src/ui/splash/splash_controller.dart';
-import 'package:stairstepsport/src/ui/start/start_controller.dart';
-import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
-import 'package:stairstepsport/src/ui/workoutdone/workoutdone_controller.dart';
+import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/states/user_state.dart';
+import 'package:ludisy/src/ui/history/history_controller.dart';
+import 'package:ludisy/src/ui/login/login_controller.dart';
+import 'package:ludisy/src/ui/profile/profile_controller.dart';
+import 'package:ludisy/src/ui/settings/settings_controller.dart';
+import 'package:ludisy/src/ui/splash/splash_controller.dart';
+import 'package:ludisy/src/ui/start/start_controller.dart';
+import 'package:ludisy/src/ui/workout/workout_controller.dart';
+import 'package:ludisy/src/ui/workoutdone/workoutdone_controller.dart';
 
 final GetIt locator = GetIt.instance;
 

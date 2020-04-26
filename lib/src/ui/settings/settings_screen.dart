@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
-import 'package:stairstepsport/src/ui/base/base_view.dart';
-import 'package:stairstepsport/src/ui/settings/settings_controller.dart';
-import 'package:stairstepsport/src/util/assets.dart';
-import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
-import 'package:stairstepsport/src/widgets/quickinfobar.dart';
-import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
+import 'package:ludisy/src/ui/base/base_screen_state.dart';
+import 'package:ludisy/src/ui/base/base_view.dart';
+import 'package:ludisy/src/ui/settings/settings_controller.dart';
+import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/widgets/quickinfobar.dart';
+import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
@@ -79,7 +79,7 @@ class _SettingsScreenState
                   "Source code",
                   AppColors.textBlack,
                   () => con.launchURL(
-                      "https://github.com/akoszsebe/stairstepsport"))),
+                      "https://github.com/akoszsebe/ludisy"))),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: buildButton(

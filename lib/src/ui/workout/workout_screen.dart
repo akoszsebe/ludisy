@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
-import 'package:stairstepsport/src/ui/base/base_view.dart';
-import 'package:stairstepsport/src/util/assets.dart';
-import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/ui/workout/workout_controller.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
-import 'package:stairstepsport/src/widgets/rounded_button.dart';
-import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
+import 'package:ludisy/src/ui/base/base_screen_state.dart';
+import 'package:ludisy/src/ui/base/base_view.dart';
+import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:ludisy/src/ui/workout/workout_controller.dart';
+import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/widgets/rounded_button.dart';
+import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
 class WorkOutScreen extends StatefulWidget {
   final int stepPlan;

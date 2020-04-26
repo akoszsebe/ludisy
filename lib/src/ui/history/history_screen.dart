@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/day_model.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/ui/base/base_view.dart';
-import 'package:stairstepsport/src/ui/history/history_controller.dart';
-import 'package:stairstepsport/src/util/assets.dart';
-import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
-import 'package:stairstepsport/src/widgets/always_show_scrollbar.dart';
-import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
-import 'package:stairstepsport/src/widgets/quickinfobar.dart';
-import 'package:stairstepsport/src/widgets/rounded_mini_button.dart';
+import 'package:ludisy/src/data/model/day_model.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/ui/base/base_view.dart';
+import 'package:ludisy/src/ui/history/history_controller.dart';
+import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/widgets/always_show_scrollbar.dart';
+import 'package:ludisy/src/widgets/app_bar_chart.dart';
+import 'package:ludisy/src/widgets/quickinfobar.dart';
+import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({Key key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stairstepsport/src/util/assets.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
+import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/style/colors.dart';
 
 class QuickInfoBar extends StatelessWidget {
   final String name;

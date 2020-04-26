@@ -1,9 +1,9 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/day_model.dart';
-import 'package:stairstepsport/src/data/persitance/dao/workout_dao.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/states/user_state.dart';
-import 'package:stairstepsport/src/widgets/app_bar_chart.dart';
+import 'package:ludisy/src/data/model/day_model.dart';
+import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/user_state.dart';
+import 'package:ludisy/src/widgets/app_bar_chart.dart';
 
 class HistoryController extends ControllerMVC {
   HistoryController();

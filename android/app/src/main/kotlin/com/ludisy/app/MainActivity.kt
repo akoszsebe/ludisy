@@ -1,4 +1,4 @@
-package com.example.stairstepsport
+package com.ludisy.app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

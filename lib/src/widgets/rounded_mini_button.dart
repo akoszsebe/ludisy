@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
+import 'package:ludisy/src/util/style/colors.dart';
 
 class RoundedMiniButton extends StatelessWidget {
   final String tag;

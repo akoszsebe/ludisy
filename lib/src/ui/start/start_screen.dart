@@ -1,15 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
-import 'package:stairstepsport/src/ui/base/base_view.dart';
-import 'package:stairstepsport/src/util/assets.dart';
-import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/ui/start/start_controller.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
-import 'package:stairstepsport/src/widgets/quickinfobar.dart';
-import 'package:stairstepsport/src/widgets/rounded_button.dart';
-import 'package:stairstepsport/src/widgets/workout_slider.dart';
+import 'package:ludisy/src/ui/base/base_screen_state.dart';
+import 'package:ludisy/src/ui/base/base_view.dart';
+import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:ludisy/src/ui/start/start_controller.dart';
+import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/widgets/quickinfobar.dart';
+import 'package:ludisy/src/widgets/rounded_button.dart';
+import 'package:ludisy/src/widgets/workout_slider.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);

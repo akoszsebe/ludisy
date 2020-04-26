@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stairstepsport/src/util/assets.dart';
+import 'package:ludisy/src/util/assets.dart';
 
 class BaseView extends StatelessWidget {
   final Widget child;

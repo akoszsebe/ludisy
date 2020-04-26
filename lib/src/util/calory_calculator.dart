@@ -1,4 +1,4 @@
-import 'package:stairstepsport/src/data/model/user_model.dart';
+import 'package:ludisy/src/data/model/user_model.dart';
 
 class CaloriCalculator {
   

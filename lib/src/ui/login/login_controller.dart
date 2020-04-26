@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/data/model/user_model.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/states/user_state.dart';
+import 'package:ludisy/src/data/model/user_model.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/user_state.dart';
 
 class LoginController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();

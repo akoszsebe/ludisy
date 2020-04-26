@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stairstepsport/src/data/model/user_model.dart';
+import 'package:ludisy/src/data/model/user_model.dart';
 
 class SharedPrefs {
   static final String _userData = "userdata";

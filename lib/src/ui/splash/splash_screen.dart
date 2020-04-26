@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stairstepsport/src/ui/base/base_screen_state.dart';
-import 'package:stairstepsport/src/ui/splash/splash_controller.dart';
-import 'package:stairstepsport/src/util/assets.dart';
-import 'package:stairstepsport/src/util/navigation_module.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
-import 'package:stairstepsport/src/widgets/loader.dart';
+import 'package:ludisy/src/ui/base/base_screen_state.dart';
+import 'package:ludisy/src/ui/splash/splash_controller.dart';
+import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/widgets/loader.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);

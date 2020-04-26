@@ -1,6 +1,6 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/di/locator.dart';
-import 'package:stairstepsport/src/states/user_state.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/user_state.dart';
 
 class StartController extends ControllerMVC {
   

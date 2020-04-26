@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:stairstepsport/src/data/model/workout_model.dart';
-import 'package:stairstepsport/src/data/persitance/database.dart';
+import 'package:ludisy/src/data/model/workout_model.dart';
+import 'package:ludisy/src/data/persitance/database.dart';
 
 @dao
 abstract class WorkOutDao {

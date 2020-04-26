@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:stairstepsport/src/ui/history/history_screen.dart';
-import 'package:stairstepsport/src/ui/login/login_screen.dart';
-import 'package:stairstepsport/src/ui/profile/profile_screen.dart';
-import 'package:stairstepsport/src/ui/settings/settings_screen.dart';
-import 'package:stairstepsport/src/ui/start/start_screen.dart';
-import 'package:stairstepsport/src/ui/workout/workout_screen.dart';
-import 'package:stairstepsport/src/ui/workoutdone/workoutdone_screeen.dart';
+import 'package:ludisy/src/ui/history/history_screen.dart';
+import 'package:ludisy/src/ui/login/login_screen.dart';
+import 'package:ludisy/src/ui/profile/profile_screen.dart';
+import 'package:ludisy/src/ui/settings/settings_screen.dart';
+import 'package:ludisy/src/ui/start/start_screen.dart';
+import 'package:ludisy/src/ui/workout/workout_screen.dart';
+import 'package:ludisy/src/ui/workoutdone/workoutdone_screeen.dart';
 
 class NavigationModule {
   static void navigateToStartScreen(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:stairstepsport/src/data/model/workout_model.dart';
+import 'package:ludisy/src/data/model/workout_model.dart';
 
 class DayModel {
   int date = 0;

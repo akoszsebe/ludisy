@@ -3,10 +3,10 @@ import 'package:easy_localization/easy_localization_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:stairstepsport/src/ui/splash/splash_screen.dart';
-import 'package:stairstepsport/src/util/style/app_theme.dart';
+import 'package:ludisy/src/ui/splash/splash_screen.dart';
+import 'package:ludisy/src/util/style/app_theme.dart';
 import 'package:flutter/services.dart';
-import 'package:stairstepsport/src/util/style/colors.dart';
+import 'package:ludisy/src/util/style/colors.dart';
 
 class MVCApp extends AppMVC {
   MVCApp();
@@ -18,7 +18,7 @@ class MVCApp extends AppMVC {
     var data = EasyLocalizationProvider.of(context).data;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'stairstepsport',
+      title: 'ludisy',
       theme: AppTheme.appTheme,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

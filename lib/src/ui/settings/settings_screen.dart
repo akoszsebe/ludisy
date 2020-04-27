@@ -75,11 +75,8 @@ class _SettingsScreenState
               child: buildButton("Delete all data", AppColors.red, () {})),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton(
-                  "Source code",
-                  AppColors.textBlack,
-                  () => con.launchURL(
-                      "https://github.com/akoszsebe/ludisy"))),
+              child: buildButton("Source code", AppColors.textBlack,
+                  () => con.launchURL("https://github.com/akoszsebe/ludisy"))),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: buildButton(
@@ -113,11 +110,11 @@ class _SettingsScreenState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         buildInAppPourchaseButton(
-                            "Water", "0.99", AppAssets.water),
+                            "Water", "0.99", AppAssets.water, 0),
                         buildInAppPourchaseButton(
-                            "Coffee", "1.99", AppAssets.coffee),
+                            "Coffee", "1.99", AppAssets.coffee, 1),
                         buildInAppPourchaseButton(
-                            "Lunch", "2.99", AppAssets.lunch)
+                            "Lunch", "2.99", AppAssets.lunch, 2)
                       ],
                     )
                   ],
@@ -148,7 +145,8 @@ class _SettingsScreenState
                 ))));
   }
 
-  Widget buildInAppPourchaseButton(String title, String cost, AssetImage icon) {
+  Widget buildInAppPourchaseButton(
+      String title, String cost, AssetImage icon, int index) {
     return MaterialButton(
       height: 102,
       minWidth: 64,
@@ -180,7 +178,9 @@ class _SettingsScreenState
                   color: AppColors.textGray),
             ),
           ]),
-      onPressed: () {},
+      onPressed: () {
+        con.pay(index);
+      },
       shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
     );

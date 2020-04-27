@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "695310395817-9lhljnj0hvnuteojgriodam1vn92nu32.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ludisy.app",
+            "certificate_hash": "7aa8ec1cf2a7402afbdd27a6e0b6a9158d583a23"
+          }
+        },
+        {
           "client_id": "695310395817-2u2opk1au4mqqpokgii6ou0bb1is865u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

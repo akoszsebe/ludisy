@@ -8,7 +8,7 @@ import 'package:ludisy/src/widgets/app_bar_chart.dart';
 class HistoryController extends ControllerMVC {
   HistoryController();
 
-  final WorkOutDao _workoutDao = locator<WorkOutDao>();
+  final WorkOutDao _workoutDao = null;//locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
   List<DayModel> dataset = List();

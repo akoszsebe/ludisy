@@ -9,7 +9,7 @@ class LoginController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   final UserState userState = locator<UserState>();
 
-  UserModel userData = UserModel();
+  User userData = User();
   bool field1 = true;
   bool field2 = true;
   bool field3 = true;
@@ -18,16 +18,16 @@ class LoginController extends ControllerMVC {
   void login(Function(String) callback) async {
     try {
       await _googleSignIn.signIn();
-      userData = UserModel(
+      userData = User(
           displayName: _googleSignIn.currentUser.displayName,
           photoUrl: _googleSignIn.currentUser.photoUrl,
-          userId: _googleSignIn.currentUser.email);
+          userId: _googleSignIn.currentUser.id);
       await userState.setUserData(userData);
       await userState.initState();
       callback(null);
     } catch (err) {
       print(err);
-      callback(err.message);
+      callback(err.toString());
     }
   }
 

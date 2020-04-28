@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
+import 'package:ludisy/src/data/persitance/database.dart';
 import 'package:ludisy/src/states/user_state.dart';
 import 'package:ludisy/src/ui/history/history_controller.dart';
 import 'package:ludisy/src/ui/login/login_controller.dart';
@@ -13,10 +14,12 @@ import 'package:ludisy/src/ui/workoutdone/workoutdone_controller.dart';
 
 final GetIt locator = GetIt.instance;
 
-void setupLocator(WorkOutDao workOutDao) {
+void setupLocator(String databasePath) {
   // Services
   locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email']));
-  locator.registerLazySingleton<WorkOutDao>(() => workOutDao);
+  locator.registerLazySingleton<AppDatabase>(() => AppDatabaseImpl(databasePath));
+  locator.registerLazySingleton<UserDao>(() => UserDaoImpl());
+ // locator.registerLazySingleton<WorkOutDao>(() => workOutDao);
   // States
   locator.registerLazySingleton(() => UserState());
   // Controllers

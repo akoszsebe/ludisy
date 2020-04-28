@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingsController extends ControllerMVC {
   final UserState userState = locator<UserState>();
 
-  UserModel userData = UserModel();
+  User userData = User();
 
   bool available = true;
 

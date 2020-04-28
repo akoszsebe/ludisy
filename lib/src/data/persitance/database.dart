@@ -1,14 +1,52 @@
-import 'dart:async';
-import 'package:floor/floor.dart';
-import 'package:sqflite/sqflite.dart' as sqflite;
-import 'package:path/path.dart';
+import 'package:objectdb/objectdb.dart';
 
-import 'package:ludisy/src/data/model/workout_model.dart';
-import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+abstract class AppDatabase {
+  Future<void> insert(Map<dynamic, dynamic> doc);
 
-part 'database.g.dart'; // the generated code will be there
+  Future<void> update(
+      Map<dynamic, dynamic> query, Map<dynamic, dynamic> changes);
 
-@Database(version: 1, entities: [WorkOut])
-abstract class AppDatabase extends FloorDatabase {
-  WorkOutDao get workoutDao;
+  Future<void> delete(Map query);
+
+  Future<Map<dynamic, dynamic>> findFirst(Map<dynamic, dynamic> query);
+}
+
+class AppDatabaseImpl implements AppDatabase {
+  ObjectDB _db;
+
+  AppDatabaseImpl._internal(this._db);
+
+  factory AppDatabaseImpl(String databasePath) {
+    return AppDatabaseImpl._internal(ObjectDB(databasePath));
+  }
+
+  @override
+  Future<void> insert(Map<dynamic, dynamic> doc) async {
+    _db.open();
+    _db.insert(doc);
+    await _db.close();
+  }
+
+  @override
+  Future<Map<dynamic, dynamic>> findFirst(Map<dynamic, dynamic> query) async {
+    _db.open();
+    var result = await _db.first(query);
+    await _db.close();
+    return result;
+  }
+
+  @override
+  Future<void> update(
+      Map<dynamic, dynamic> query, Map<dynamic, dynamic> changes) async {
+    _db.open();
+    _db.update(query, changes);
+    await _db.close();
+  }
+
+  @override
+  Future<void> delete(Map query) async {
+    _db.open();
+    _db.remove(query);
+    await _db.close();
+  }
 }

@@ -9,7 +9,7 @@ class ProfileController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   final UserState userState = locator<UserState>();
 
-  UserModel userData = UserModel();
+  User userData = User();
 
   Future<void> init() async {
     userData = userState.getUserData();
@@ -18,8 +18,7 @@ class ProfileController extends ControllerMVC {
 
   Future<void> logout(VoidCallback callback) async {
     _googleSignIn.signOut();
-    userData = UserModel();
-    await userState.setUserData(userData);
+    await userState.removeUserData(userData);
     callback();
   }
 

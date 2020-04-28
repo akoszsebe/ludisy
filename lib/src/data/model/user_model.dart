@@ -1,4 +1,4 @@
-class UserModel {
+class User {
   String displayName;
   String photoUrl;
   String userId;
@@ -7,7 +7,7 @@ class UserModel {
   int bithDate;
   int height;
 
-  UserModel(
+  User(
       {this.displayName,
       this.photoUrl,
       this.userId,
@@ -16,7 +16,7 @@ class UserModel {
       this.bithDate,
       this.height});
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => new UserModel(
+  factory User.fromJson(Map<String, dynamic> json) => User(
       displayName: json["displayName"],
       photoUrl: json["photoUrl"],
       userId: json["user_id"],
@@ -26,6 +26,18 @@ class UserModel {
       height: json["height"]);
 
   Map<String, dynamic> toJson() => {
+        "displayName": displayName,
+        "photoUrl": photoUrl,
+        "user_id": userId,
+        "gender": gender,
+        "weight": weight,
+        "bithDate": bithDate,
+        "height": height
+      };
+
+  Map<String, dynamic> toJsonJustUserId() => {"user_id": userId};
+
+  Map<String, dynamic> toJsonWithoutUserId() => {
         "displayName": displayName,
         "photoUrl": photoUrl,
         "user_id": userId,

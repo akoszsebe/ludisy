@@ -1,8 +1,6 @@
-import 'package:floor/floor.dart';
 
-@entity
+
 class WorkOut {
-  @PrimaryKey(autoGenerate: true)
   final int id;
   final int steps;
   final double cal;

@@ -1,6 +1,7 @@
 import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/data/persitance/database.dart';
 import 'package:ludisy/src/di/locator.dart';
 
 class UserState {
@@ -8,6 +9,7 @@ class UserState {
 
   final WorkOutDao _workoutDao = null; //locator<WorkOutDao>();
   final UserDao _userDao = locator<UserDao>();
+  final AppDatabase _appDatabase = locator<AppDatabase>();
   User _userModel = User();
   int _allSteps = 0;
 
@@ -41,7 +43,7 @@ class UserState {
   }
 
   Future<void> removeUserData(User user) async {
-    await _userDao.deleteUser(user);
+    await _appDatabase.tidyUp();
     _userModel = User();
   }
 }

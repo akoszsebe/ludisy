@@ -21,7 +21,8 @@ class LoginController extends ControllerMVC {
       userData = User(
           displayName: _googleSignIn.currentUser.displayName,
           photoUrl: _googleSignIn.currentUser.photoUrl,
-          userId: _googleSignIn.currentUser.id);
+          userId: _googleSignIn.currentUser.id,
+          workOuts: List());
       await userState.setUserData(userData);
       await userState.initState();
       callback(null);

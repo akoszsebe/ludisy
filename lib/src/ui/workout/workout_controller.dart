@@ -11,7 +11,7 @@ import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
-  final WorkOutDao _workOutDao = null;//locator<WorkOutDao>();
+  final WorkOutDao _workOutDao = null; //locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
   int stepCountValue = 0;
@@ -137,12 +137,12 @@ class WorkOutController extends ControllerMVC {
     durationSeconds =
         ((DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000).toInt();
     await _workOutDao.insertWorkOut(WorkOut(
-        null,
-        stepCountValue,
-        calCounterValue,
-        durationSeconds,
-        DateTime.now().millisecondsSinceEpoch,
-        userState.getUserData().userId));
+        id: null,
+        duration: durationSeconds,
+        timeStamp: DateTime.now().millisecondsSinceEpoch,
+        cal: calCounterValue,
+        type: 0,
+        data: Stairs(stairsCount: stepCountValue)));
     userState.addSteps(stepCountValue);
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
   }

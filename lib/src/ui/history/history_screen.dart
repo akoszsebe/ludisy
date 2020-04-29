@@ -262,7 +262,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                 i++)
                               TableRow(children: [
                                 buildRowItem(
-                                    "${selectedDay.workouts[i].steps}"),
+                                  "st"),
+                                    // "${selectedDay.workouts[i].steps}"),
                                 buildRowItem(
                                     "${selectedDay.workouts[i].cal.toStringAsFixed(0)} cal"),
                                 buildRowItem(

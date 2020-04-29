@@ -9,6 +9,8 @@ abstract class AppDatabase {
   Future<void> delete(Map query);
 
   Future<Map<dynamic, dynamic>> findFirst(Map<dynamic, dynamic> query);
+
+  Future<void> tidyUp();
 }
 
 class AppDatabaseImpl implements AppDatabase {
@@ -47,6 +49,13 @@ class AppDatabaseImpl implements AppDatabase {
   Future<void> delete(Map query) async {
     _db.open();
     _db.remove(query);
+    await _db.close();
+  }
+
+  @override
+  Future<void> tidyUp() async {
+    _db.open();
+    _db.tidy();
     await _db.close();
   }
 }

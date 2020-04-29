@@ -53,7 +53,7 @@ class HistoryController extends ControllerMVC {
     var d = DayModel();
     d.date = morrning.day;
     for (var l in l1) {
-      d.totalSteps += l.steps;
+     // d.totalSteps += l.steps;
       d.totalTimes += l.duration;
       d.totalCals += l.cal;
       d.workouts.add(l);

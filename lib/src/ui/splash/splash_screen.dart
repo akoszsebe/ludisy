@@ -30,8 +30,9 @@ class _SplashScreenState
 
   @override
   Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
-        margin: EdgeInsets.only(top: 24),
+        margin: EdgeInsets.only(top: statusBarHeight),
         child: Scaffold(
             backgroundColor: Colors.white,
             body: Column(children: <Widget>[

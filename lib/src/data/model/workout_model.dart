@@ -15,7 +15,7 @@ class WorkOut {
         timeStamp: json["timeStamp"],
         cal: json["cal"],
         type: json["type"],
-        data: json["data"],
+        data: fromJsonByType(json["type"], json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -24,14 +24,38 @@ class WorkOut {
         "timeStamp": timeStamp,
         "cal": cal,
         "type": type,
-        "data": data,
+        "data": toJsonByType(type, data),
       };
+
+  static Map<String, dynamic> toJsonByType(int type, Object data) {
+    switch (type) {
+      case 0:
+        return (data as Stairs).toJson();
+    }
+    return {};
+  }
+
+  static Object fromJsonByType(int type, dynamic data) {
+    switch (type) {
+      case 0:
+        return Stairs.fromJson(data);
+    }
+    return {};
+  }
 }
 
 class Stairs {
   int stairsCount;
 
   Stairs({this.stairsCount});
+
+  factory Stairs.fromJson(Map<String, dynamic> json) => Stairs(
+        stairsCount: json["stairsCount"] == null ? null : json["stairsCount"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "stairsCount": stairsCount == null ? null : stairsCount,
+      };
 }
 
 class Biking {

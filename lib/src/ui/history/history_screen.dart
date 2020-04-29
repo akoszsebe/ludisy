@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/day_model.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -262,8 +263,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                 i++)
                               TableRow(children: [
                                 buildRowItem(
-                                  "st"),
-                                    // "${selectedDay.workouts[i].steps}"),
+                                    "${(selectedDay.workouts[i].data as Stairs).stairsCount}"),
                                 buildRowItem(
                                     "${selectedDay.workouts[i].cal.toStringAsFixed(0)} cal"),
                                 buildRowItem(

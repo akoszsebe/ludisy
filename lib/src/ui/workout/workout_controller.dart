@@ -11,7 +11,7 @@ import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
-  final WorkOutDao _workOutDao = null; //locator<WorkOutDao>();
+  final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
   int stepCountValue = 0;

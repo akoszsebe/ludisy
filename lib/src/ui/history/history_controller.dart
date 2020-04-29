@@ -1,3 +1,4 @@
+import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/day_model.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
@@ -8,7 +9,7 @@ import 'package:ludisy/src/widgets/app_bar_chart.dart';
 class HistoryController extends ControllerMVC {
   HistoryController();
 
-  final WorkOutDao _workoutDao = null;//locator<WorkOutDao>();
+  final WorkOutDao _workoutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
   List<DayModel> dataset = List();
@@ -47,13 +48,11 @@ class HistoryController extends ControllerMVC {
     var night =
         new DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
     var l1 = await _workoutDao.findWorkOutBetween(
-        userState.getUserData().userId,
-        morrning.millisecondsSinceEpoch,
-        night.millisecondsSinceEpoch);
+        morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
     var d = DayModel();
     d.date = morrning.day;
     for (var l in l1) {
-     // d.totalSteps += l.steps;
+      d.totalSteps += (l.data as Stairs).stairsCount;
       d.totalTimes += l.duration;
       d.totalCals += l.cal;
       d.workouts.add(l);

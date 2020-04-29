@@ -65,8 +65,8 @@ void pickTime(
     context,
     pickerTheme: DateTimePickerTheme(
       showTitle: true,
-      confirm: Text('Done', style: TextStyle(color: AppColors.red)),
-      cancel: Text('Cancel', style: TextStyle(color: AppColors.blue)),
+      confirm: Text('Done', style: TextStyle(color: AppColors.blue)),
+      cancel: Text('Cancel', style: TextStyle(color: AppColors.red)),
     ),
     minDateTime: DateTime(1900),
     maxDateTime: DateTime.now(),

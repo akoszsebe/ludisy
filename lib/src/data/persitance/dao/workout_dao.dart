@@ -7,9 +7,9 @@ abstract class WorkOutDao {
 
   Future<List<WorkOut>> findAllWorkOuts(String userId);
 
-  Future<List<WorkOut>> findWorkOutBetween(String userId, int date1, int date2);
+  Future<List<WorkOut>> findWorkOutBetween(int date1, int date2);
 
-  Future<int> getAllSteps(String userId);
+  Future<int> getAllSteps();
 }
 
 class WorkOutDaoImpl extends BaseDao implements WorkOutDao {
@@ -34,15 +34,34 @@ class WorkOutDaoImpl extends BaseDao implements WorkOutDao {
   }
 
   @override
-  Future<List<WorkOut>> findWorkOutBetween(
-      String userId, int date1, int date2) {
-    // TODO: implement findWorkOutBetween
-    return null;
+  Future<List<WorkOut>> findWorkOutBetween(int date1, int date2) async {
+    var result = List<WorkOut>();
+    var userIndb = await appDatabase.findFirst({});
+    if (userIndb != null) {
+      var user = User.fromJson(userIndb);
+      if (user.workOuts != null) {
+        result = user.workOuts
+            .where((l) => l.timeStamp >= date1 && l.timeStamp <= date2)
+            .toList();
+      }
+    }
+    return result;
   }
 
   @override
-  Future<int> getAllSteps(String userId) {
-    // TODO: implement getAllSteps
-    return null;
+  Future<int> getAllSteps() async {
+    var result = 0;
+    var userIndb = await appDatabase.findFirst({});
+    if (userIndb != null) {
+      var user = User.fromJson(userIndb);
+      if (user.workOuts != null) {
+        user.workOuts.forEach((workout) {
+          if (workout.type == 0) {
+            result += (workout.data as Stairs).stairsCount;
+          }
+        });
+      }
+    }
+    return result;
   }
 }

@@ -8,9 +8,9 @@ class SplashController extends ControllerMVC {
   UserState _userState = locator<UserState>();
 
   void checkLogin(Function(bool) callback) async {
-    await _userState.initState();
     bool logedIn = await _googleSignIn.isSignedIn();
     if (logedIn) {
+      await _userState.initState();
       if (_userState.getUserData() != null) {
         callback(true);
         return;

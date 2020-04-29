@@ -7,7 +7,7 @@ import 'package:ludisy/src/di/locator.dart';
 class UserState {
   UserState();
 
-  final WorkOutDao _workoutDao = null; //locator<WorkOutDao>();
+  final WorkOutDao _workoutDao = locator<WorkOutDao>();
   final UserDao _userDao = locator<UserDao>();
   final AppDatabase _appDatabase = locator<AppDatabase>();
   User _userModel = User();
@@ -21,7 +21,7 @@ class UserState {
       print("init user - null");
     }
     if (_userModel != null && _workoutDao != null) {
-      _allSteps = await _workoutDao.getAllSteps(_userModel.userId);
+      _allSteps = await _workoutDao.getAllSteps();
     }
   }
 

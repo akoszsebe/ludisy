@@ -30,12 +30,10 @@ class User {
       height: json["height"],
       workOuts: json["workOuts"] == null
           ? null
-          : json["workOuts"].map((i) => WorkOut.fromJson(i)).toList());
+          : List<WorkOut>.from(
+              json["workOuts"].map((i) => WorkOut.fromJson(i)).toList()));
 
   Map<String, dynamic> toJson() {
-    List<Map> workOuts = this.workOuts != null
-        ? this.workOuts.map((i) => i.toJson()).toList()
-        : [];
     return {
       "displayName": displayName,
       "photoUrl": photoUrl,
@@ -44,7 +42,8 @@ class User {
       "weight": weight,
       "bithDate": bithDate,
       "height": height,
-      "workOuts": workOuts
+      "workOuts":
+          List<dynamic>.from(workOuts.map((x) => x.toJson())),
     };
   }
 

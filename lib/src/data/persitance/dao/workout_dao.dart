@@ -5,7 +5,7 @@ import 'package:ludisy/src/data/persitance/dao/base_dao.dart';
 abstract class WorkOutDao {
   Future<void> insertWorkOut(WorkOut workout);
 
-  Future<List<WorkOut>> findAllWorkOuts(String userId);
+  Future<List<WorkOut>> findAllWorkOuts();
 
   Future<List<WorkOut>> findWorkOutBetween(int date1, int date2);
 
@@ -22,15 +22,21 @@ class WorkOutDaoImpl extends BaseDao implements WorkOutDao {
         user.workOuts = List();
       }
       user.workOuts.add(workout);
-      print("${user.toJsonJustWorkouts()}");
       appDatabase.update(user.toJsonJustUserId(), user.toJsonJustWorkouts());
     }
   }
 
   @override
-  Future<List<WorkOut>> findAllWorkOuts(String userId) {
-    // TODO: implement findAllWorkOuts
-    return null;
+  Future<List<WorkOut>> findAllWorkOuts() async {
+    var result = List<WorkOut>();
+    var userIndb = await appDatabase.findFirst({});
+    if (userIndb != null) {
+      var user = User.fromJson(userIndb);
+      if (user.workOuts != null) {
+        result = user.workOuts;
+      }
+    }
+    return result;
   }
 
   @override

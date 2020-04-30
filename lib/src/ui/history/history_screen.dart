@@ -32,6 +32,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   String tabName = "";
   int selectedTab = 1;
   int touchedIndex = 6;
+  static final int oneHour = 3600;
 
   @override
   void initState() {
@@ -267,7 +268,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                 buildRowItem(
                                     "${selectedDay.workouts[i].cal.toStringAsFixed(0)} cal"),
                                 buildRowItem(
-                                    "${Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
+                                    "${selectedDay.workouts[i].duration >= oneHour ? Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(0, 7) : Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
                                 buildRowItem(
                                     "${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedDay.workouts[i].timeStamp))}"),
                               ]),
@@ -514,27 +515,40 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   }
 
   Widget buildSelectedTab(selectedTab) {
+    var avgTime = con.selectedDay.totalTimes ~/
+        (con.selectedDay.workouts.length == 0
+            ? 1
+            : con.selectedDay.workouts.length);
+    print("time ${con.selectedDay.totalTimes}");
     switch (selectedTab) {
       case 0:
         return buildDataSection(
             con.itemsTimes,
             con.firstDay,
             con.lastDay,
-            Duration(seconds: con.selectedDay.totalTimes)
-                .toString()
-                .split('.')
-                .first
-                .substring(2, 7),
+            con.selectedDay.totalTimes >= oneHour
+                ? Duration(seconds: con.selectedDay.totalTimes)
+                    .toString()
+                    .split('.')
+                    .first
+                    .substring(0, 7)
+                : Duration(seconds: con.selectedDay.totalTimes)
+                    .toString()
+                    .split('.')
+                    .first
+                    .substring(2, 7),
             AppLocalizations.of(context).tr('history.time'),
-            Duration(
-                    seconds: con.selectedDay.totalTimes ~/
-                        (con.selectedDay.workouts.length == 0
-                            ? 1
-                            : con.selectedDay.workouts.length))
-                .toString()
-                .split('.')
-                .first
-                .substring(2, 7),
+            avgTime >= oneHour
+                ? Duration(seconds: avgTime)
+                    .toString()
+                    .split('.')
+                    .first
+                    .substring(0, 7)
+                : Duration(seconds: avgTime)
+                    .toString()
+                    .split('.')
+                    .first
+                    .substring(2, 7),
             con.selectedDay);
       case 1:
         return buildDataSection(

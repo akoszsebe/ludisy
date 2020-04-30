@@ -15,7 +15,7 @@ Future<void> main() async {
   InAppPurchaseConnection.enablePendingPurchases();
   Directory appDocDir = await getApplicationDocumentsDirectory();
   FirebaseApp firebaseApp = await FirebaseApp.configure(
-    name: 'ludisyapp',
+    name: 'ludisy-c2af6',
     options: const FirebaseOptions(
       googleAppID: '1:695310395817:android:291dedce3396ad2e3c7cb8',
       apiKey: 'AIzaSyDWtgZCyDE-u2ION5GANmLyEzskpGRI_3o',

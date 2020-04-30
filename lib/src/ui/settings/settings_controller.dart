@@ -33,7 +33,7 @@ class SettingsController extends ControllerMVC {
 
   Future<void> pay(index) async {
     final bool available = await InAppPurchaseConnection.instance.isAvailable();
-    if (!available) {
+    if (available) {
       print("available");
       const Set<String> _kIds = {
         'buy_water_for_developer',

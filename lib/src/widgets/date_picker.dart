@@ -53,26 +53,26 @@ class AppDatePicker extends StatelessWidget {
       )
     ]);
   }
-}
 
-void pickTime(
-  BuildContext context,
-  onChange,
-) {
-  String _format = 'yyyy-MMMM-dd';
-  DateTimePickerLocale _locale = DateTimePickerLocale.en_us;
-  DatePicker.showDatePicker(
-    context,
-    pickerTheme: DateTimePickerTheme(
-      showTitle: true,
-      confirm: Text('Done', style: TextStyle(color: AppColors.blue)),
-      cancel: Text('Cancel', style: TextStyle(color: AppColors.red)),
-    ),
-    minDateTime: DateTime(1900),
-    maxDateTime: DateTime.now(),
-    initialDateTime: DateTime.now().subtract(Duration(days: 4500)),
-    dateFormat: _format,
-    locale: _locale,
-    onConfirm: onChange,
-  );
+  void pickTime(
+    BuildContext context,
+    onChange,
+  ) {
+    String _format = 'yyyy-MMMM-dd';
+    DateTimePickerLocale _locale = DateTimePickerLocale.en_us;
+    DatePicker.showDatePicker(
+      context,
+      pickerTheme: DateTimePickerTheme(
+        showTitle: true,
+        confirm: Text('Done', style: TextStyle(color: AppColors.blue)),
+        cancel: Text('Cancel', style: TextStyle(color: AppColors.red)),
+      ),
+      minDateTime: DateTime(1970),
+      maxDateTime: DateTime.now(),
+      initialDateTime: initDate,
+      dateFormat: _format,
+      locale: _locale,
+      onConfirm: onChange,
+    );
+  }
 }

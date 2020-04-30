@@ -177,7 +177,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                               padding: EdgeInsets.only(top: 5, bottom: 5),
                               child: AppDatePicker(
                                 hint: "Birthdate",
-                                initDate: con.userData.bithDate == null ? null : DateTime(con.userData.bithDate),
+                                initDate: con.userData.bithDate == null ? null : DateTime.fromMillisecondsSinceEpoch(con.userData.bithDate),
                                 showError: !con.field3,
                                 onDateChanged: (date) {
                                   con.bithDateChange(date);

@@ -157,7 +157,7 @@ class _ProfileScreenState
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
                                   child: AppDatePicker(
                                     hint: "Birthdate",
-                                    initDate: DateTime(con.userData.bithDate),
+                                    initDate: DateTime.fromMillisecondsSinceEpoch(con.userData.bithDate),
                                     showError: false,
                                     onDateChanged: (date) {
                                       con.bithDateChange(date);

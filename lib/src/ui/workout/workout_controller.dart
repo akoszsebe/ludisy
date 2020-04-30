@@ -41,7 +41,7 @@ class WorkOutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-    // mock();
+    mock();
   }
 
   void startTimer() {

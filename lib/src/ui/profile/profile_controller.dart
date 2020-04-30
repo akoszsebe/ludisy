@@ -33,7 +33,7 @@ class ProfileController extends ControllerMVC {
   }
 
   void bithDateChange(DateTime dateTime) {
-    userData.bithDate = dateTime.year;
+    userData.bithDate = dateTime.millisecondsSinceEpoch;
     refresh();
   }
 

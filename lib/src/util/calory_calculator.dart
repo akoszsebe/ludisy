@@ -1,16 +1,16 @@
 import 'package:ludisy/src/data/model/user_model.dart';
 
 class CaloriCalculator {
-  
-  static double calculeteCalories(User userData,int duration,int steps){
+  static double calculeteCalories(User userData, int duration, int steps) {
+    print("${userData.toJsonWithoutUserId()}");
     return calculateEnergyExpenditure(
-          userData.height.toDouble(),
-          DateTime(userData.bithDate),
-          userData.weight.toDouble(),
-          userData.gender == "Male" ? 0 : 1,
-          duration,
-          steps,
-          0.4);
+        userData.height.toDouble(),
+        DateTime.fromMillisecondsSinceEpoch(userData.bithDate),
+        userData.weight.toDouble(),
+        userData.gender == "Male" ? 0 : 1,
+        duration,
+        steps,
+        0.4);
   }
 
   ///
@@ -36,9 +36,7 @@ class CaloriCalculator {
     var ageCalculated = _getAgeFromDateOfBirth(age);
 
     var harrisBenedictRmR = _convertKilocaloriesToMlKmin(
-        _harrisBenedictRmr(
-            gender, weight, ageCalculated, height),
-        weight);
+        _harrisBenedictRmr(gender, weight, ageCalculated, height), weight);
 
     var kmTravelled =
         _calculateDistanceTravelledInKM(stepsTaken, strideLengthInMetres);

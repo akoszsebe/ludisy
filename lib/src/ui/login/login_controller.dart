@@ -9,7 +9,8 @@ import 'package:ludisy/src/states/user_state.dart';
 class LoginController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   final UserState userState = locator<UserState>();
-  final DatabaseReference _userRef = locator<DatabaseReference>(instanceName: "userFirebaseDao");
+  final DatabaseReference _userRef =
+      locator<DatabaseReference>(instanceName: "userFirebaseDao");
 
   User userData = User();
   bool field1 = true;
@@ -27,7 +28,7 @@ class LoginController extends ControllerMVC {
           photoUrl: _googleSignIn.currentUser.photoUrl,
           userId: _googleSignIn.currentUser.id,
           workOuts: List());
-      _userRef
+      await _userRef
           .child(_googleSignIn.currentUser.id)
           .once()
           .then((DataSnapshot snapshot) {
@@ -41,8 +42,8 @@ class LoginController extends ControllerMVC {
           userData.workOuts = userFromFirebase.workOuts;
           refresh();
         }
-      callback(null);
       });
+      callback(null);
     } catch (err) {
       print(err);
       callback(err.toString());
@@ -98,7 +99,7 @@ class LoginController extends ControllerMVC {
     if (userIsRegistered) {
       _userRef.child(userData.userId).update(userData.toJsonWithoutUserId());
     } else {
-      _userRef.child(userData.userId).update(userData.toJson());   
+      _userRef.child(userData.userId).update(userData.toJson());
     }
     await userState.setUserData(userData);
     await userState.initState();

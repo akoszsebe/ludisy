@@ -43,6 +43,7 @@ class UserState {
   }
 
   Future<void> removeUserData(User user) async {
+    await _appDatabase.delete(user.toJsonJustUserId());
     await _appDatabase.tidyUp();
     _userModel = User();
   }

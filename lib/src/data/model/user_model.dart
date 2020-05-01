@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 
 class User {
@@ -30,9 +31,10 @@ class User {
           json["bithDate"] == null ? null : DateTime.parse(json["bithDate"]),
       height: json["height"],
       workOuts: json["workOuts"] == null
-          ? null
-          : List<WorkOut>.from(
-              json["workOuts"].map((i) => WorkOut.fromJson(i)).toList()));
+          ? []
+          : List<WorkOut>.from(json["workOuts"]
+              .map((i) => WorkOut.fromJson(i.cast<String, dynamic>()))
+              .toList()));
 
   Map<String, dynamic> toJson() {
     return {
@@ -64,5 +66,29 @@ class User {
         ? this.workOuts.map((i) => i.toJson()).toList()
         : null;
     return {"workOuts": workOuts};
+  }
+
+  factory User.fromSnapshot(DataSnapshot snapshot) {
+    List<WorkOut> workouts = List();
+    try {
+      snapshot.value["workOuts"].forEach((k, v) =>
+          {workouts.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
+    } catch (Exeption) {
+      try {
+        snapshot.value["workOuts"].forEach((v) =>
+            {workouts.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
+      } catch (Exeption) {}
+    }
+    return User(
+        displayName: snapshot.value["displayName"],
+        photoUrl: snapshot.value["photoUrl"],
+        userId: snapshot.value["user_id"],
+        gender: snapshot.value["gender"],
+        weight: snapshot.value["weight"],
+        bithDate: snapshot.value["bithDate"] == null
+            ? null
+            : DateTime.parse(snapshot.value["bithDate"]),
+        height: snapshot.value["height"],
+        workOuts: workouts);
   }
 }

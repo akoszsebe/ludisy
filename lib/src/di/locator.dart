@@ -21,6 +21,9 @@ void setupLocator(String databasePath, FirebaseApp firebaseApp) {
   // Services
   locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email']));
   locator.registerLazySingleton(() => FirebaseDatabase(app: firebaseApp));
+  locator.registerLazySingleton<DatabaseReference>(() => locator<FirebaseDatabase>()
+      .reference()
+      .child('user'),instanceName: "userFirebaseDao");
   locator
       .registerLazySingleton<AppDatabase>(() => AppDatabaseImpl(databasePath));
   locator.registerLazySingleton<UserDao>(() => UserDaoImpl());

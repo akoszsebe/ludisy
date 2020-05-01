@@ -13,7 +13,7 @@ class WorkOut {
         id: json["id"],
         duration: json["duration"],
         timeStamp: json["timeStamp"],
-        cal: json["cal"],
+        cal: json["cal"].toDouble(),
         type: json["type"],
         data: fromJsonByType(json["type"], json["data"]),
       );
@@ -38,7 +38,7 @@ class WorkOut {
   static Object fromJsonByType(int type, dynamic data) {
     switch (type) {
       case 0:
-        return Stairs.fromJson(data);
+        return Stairs.fromJson(data.cast<String, dynamic>());
     }
     return {};
   }

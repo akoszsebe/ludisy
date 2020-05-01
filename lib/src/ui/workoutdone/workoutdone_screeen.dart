@@ -123,13 +123,13 @@ class _WorkOutDoneScreenState
                           Padding(
                             padding: EdgeInsets.only(left: 24, right: 24),
                             child: Container(
-                                width: 70,
+                                width: 72,
                                 child: Text(
-                                    "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(2, 7)}",
+                                    "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(0, 7)}",
                                     style: GoogleFonts.montserrat(
                                       color: AppColors.textGray,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 20.0,
+                                      fontSize: 18.0,
                                     ))),
                           ),
                           RoundedButton(

@@ -67,7 +67,7 @@ class AppDatePicker extends StatelessWidget {
         confirm: Text('Done', style: TextStyle(color: AppColors.blue)),
         cancel: Text('Cancel', style: TextStyle(color: AppColors.red)),
       ),
-      minDateTime: DateTime(1970),
+      minDateTime: DateTime(DateTime.now().year - 100),
       maxDateTime: DateTime.now(),
       initialDateTime: initDate,
       dateFormat: _format,

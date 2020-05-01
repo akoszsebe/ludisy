@@ -6,7 +6,7 @@ class User {
   String userId;
   String gender;
   int weight;
-  int bithDate;
+  DateTime bithDate;
   int height;
   List<WorkOut> workOuts;
 
@@ -26,7 +26,8 @@ class User {
       userId: json["user_id"],
       gender: json["gender"],
       weight: json["weight"],
-      bithDate: json["bithDate"],
+      bithDate:
+          json["bithDate"] == null ? null : DateTime.parse(json["bithDate"]),
       height: json["height"],
       workOuts: json["workOuts"] == null
           ? null
@@ -40,10 +41,9 @@ class User {
       "user_id": userId,
       "gender": gender,
       "weight": weight,
-      "bithDate": bithDate,
+      "bithDate": bithDate.toIso8601String(),
       "height": height,
-      "workOuts":
-          List<dynamic>.from(workOuts.map((x) => x.toJson())),
+      "workOuts": List<dynamic>.from(workOuts.map((x) => x.toJson())),
     };
   }
 
@@ -55,7 +55,7 @@ class User {
         "user_id": userId,
         "gender": gender,
         "weight": weight,
-        "bithDate": bithDate,
+        "bithDate": bithDate.toIso8601String(),
         "height": height
       };
 

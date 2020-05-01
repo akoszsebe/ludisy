@@ -5,7 +5,7 @@ class CaloriCalculator {
     print("${userData.toJsonWithoutUserId()}");
     return calculateEnergyExpenditure(
         userData.height.toDouble(),
-        DateTime.fromMillisecondsSinceEpoch(userData.bithDate),
+        userData.bithDate,
         userData.weight.toDouble(),
         userData.gender == "Male" ? 0 : 1,
         duration,

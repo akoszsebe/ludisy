@@ -519,7 +519,6 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         (con.selectedDay.workouts.length == 0
             ? 1
             : con.selectedDay.workouts.length);
-    print("time ${con.selectedDay.totalTimes}");
     switch (selectedTab) {
       case 0:
         return buildDataSection(

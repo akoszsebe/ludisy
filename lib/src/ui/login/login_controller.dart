@@ -43,7 +43,7 @@ class LoginController extends ControllerMVC {
   }
 
   void bithDateChange(DateTime dateTime) {
-    userData.bithDate = dateTime.millisecondsSinceEpoch;
+    userData.bithDate = dateTime;
     field3 = true;
     refresh();
   }

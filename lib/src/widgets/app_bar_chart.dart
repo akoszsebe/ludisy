@@ -19,7 +19,6 @@ class AppBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("index $touchedIndex");
     return Container(
       padding: EdgeInsets.only(left:13,right: 13),
         height: 200,

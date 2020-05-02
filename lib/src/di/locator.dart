@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
-import 'package:ludisy/src/data/persitance/database.dart';
 import 'package:ludisy/src/states/user_state.dart';
 import 'package:ludisy/src/ui/history/history_controller.dart';
 import 'package:ludisy/src/ui/login/login_controller.dart';
@@ -20,12 +19,9 @@ final GetIt locator = GetIt.instance;
 void setupLocator(String databasePath, FirebaseApp firebaseApp) {
   // Services
   locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email']));
-  locator.registerLazySingleton(() => FirebaseDatabase(app: firebaseApp));
-  locator.registerLazySingleton<DatabaseReference>(() => locator<FirebaseDatabase>()
-      .reference()
-      .child('user'),instanceName: "userFirebaseDao");
-  locator
-      .registerLazySingleton<AppDatabase>(() => AppDatabaseImpl(databasePath));
+  locator.registerLazySingleton(() => provideFirebase(firebaseApp));
+  locator.registerLazySingleton<DatabaseReference>(() => provideUserRef(),
+      instanceName: "userFirebaseDao");
   locator.registerLazySingleton<UserDao>(() => UserDaoImpl());
   locator.registerLazySingleton<WorkOutDao>(() => WorkOutDaoImpl());
   // States
@@ -39,4 +35,17 @@ void setupLocator(String databasePath, FirebaseApp firebaseApp) {
   locator.registerFactory(() => WorkOutController());
   locator.registerFactory(() => WorkOutDoneController());
   locator.registerFactory(() => SplashController());
+}
+
+DatabaseReference provideUserRef() {
+  var userRef = locator<FirebaseDatabase>().reference().child('user');
+  userRef.keepSynced(true);
+  return userRef;
+}
+
+FirebaseDatabase provideFirebase(FirebaseApp firebaseApp) {
+  var database = FirebaseDatabase(app: firebaseApp);
+  database.setPersistenceEnabled(true);
+  database.setPersistenceCacheSizeBytes(40000000);
+  return database;
 }

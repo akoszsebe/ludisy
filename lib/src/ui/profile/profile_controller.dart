@@ -1,6 +1,6 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -9,7 +9,7 @@ import 'package:ludisy/src/states/user_state.dart';
 class ProfileController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   final UserState userState = locator<UserState>();
-  final Query _userRef = locator<Query>(instanceName: "userFirebaseDao");
+  final UserDao _userDao = locator<UserDao>();
 
   User userData = User();
 
@@ -57,7 +57,7 @@ class ProfileController extends ControllerMVC {
     if (userData.weight == null) {
       return;
     }
-    _userRef.reference().child(userData.userId).update(userData.toJson());
+    _userDao.updateUser(userData);
     await userState.setUserData(userData);
     callback();
   }

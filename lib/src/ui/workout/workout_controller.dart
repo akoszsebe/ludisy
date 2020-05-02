@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:pedometer/pedometer.dart';
@@ -14,7 +13,6 @@ import 'package:ludisy/src/util/navigation_module.dart';
 class WorkOutController extends ControllerMVC {
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
-  final Query _userRef = locator<Query>(instanceName: "userFirebaseDao");
 
   int stepCountValue = 0;
   double calCounterValue = 0;
@@ -147,11 +145,6 @@ class WorkOutController extends ControllerMVC {
         data: Stairs(stairsCount: stepCountValue));
     await _workOutDao.insertWorkOut(workout);
     userState.addSteps(stepCountValue);
-    await _userRef
-        .reference()
-        .child(userState.getUserData().userId)
-        .child("workOuts").push()
-        .update(workout.toJson());
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
   }
 

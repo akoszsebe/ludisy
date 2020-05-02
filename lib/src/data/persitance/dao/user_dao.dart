@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/data/persitance/dao/base_dao.dart';
 
@@ -6,17 +7,17 @@ abstract class UserDao {
 
   Future<void> insertOrUpdateUser(User user);
 
-  Future<void> deleteUser(User user);
+  Future<User> getUser(String userId);
 
-  Future<User> getUser();
+  Future<void> updateUser(User userData);
 }
 
 class UserDaoImpl extends BaseDao implements UserDao {
   @override
-  Future<User> getUser() async {
-    var result = await appDatabase.findFirst({});
-    if (result != null) {
-      return User.fromJson(result);
+  Future<User> getUser(String userId) async {
+    DataSnapshot snapshot = await userRef.child(userId).once();
+    if (snapshot.value != null) {
+      return User.fromSnapshot(snapshot);
     } else {
       return null;
     }
@@ -24,26 +25,23 @@ class UserDaoImpl extends BaseDao implements UserDao {
 
   @override
   Future<void> insertUser(User user) async {
-    await appDatabase.insert(user.toJson());
-  }
-
-  @override
-  Future<void> deleteUser(User user) async {
-    await appDatabase.delete(user.toJsonJustUserId());
+    await userRef.child(user.userId).update(user.toJson());
   }
 
   @override
   Future<void> insertOrUpdateUser(User user) async {
-    var savedUser = await getUser();
+    var savedUser = await getUser(user.userId);
     if (savedUser != null) {
       if (savedUser.userId == user.userId) {
-        await appDatabase.update(
-            user.toJsonJustUserId(), user.toJsonWithoutUserId());
+        updateUser(user);
         return;
-      } else {
-        await deleteUser(user);
       }
     }
     await insertUser(user);
+  }
+
+  @override
+  Future<void> updateUser(User user) async {
+    await userRef.child(user.userId).update(user.toJsonWithoutUserId());
   }
 }

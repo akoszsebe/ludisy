@@ -1,6 +1,7 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
+import 'package:ludisy/src/util/shared_prefs.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -9,8 +10,7 @@ import 'package:ludisy/src/states/user_state.dart';
 class LoginController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   final UserState userState = locator<UserState>();
-  final DatabaseReference _userRef =
-      locator<DatabaseReference>(instanceName: "userFirebaseDao");
+  final UserDao _userDao = locator<UserDao>();
 
   User userData = User();
   bool field1 = true;
@@ -28,21 +28,16 @@ class LoginController extends ControllerMVC {
           photoUrl: _googleSignIn.currentUser.photoUrl,
           userId: _googleSignIn.currentUser.id,
           workOuts: List());
-      await _userRef
-          .child(_googleSignIn.currentUser.id)
-          .once()
-          .then((DataSnapshot snapshot) {
-        if (snapshot.value != null) {
-          userIsRegistered = true;
-          var userFromFirebase = User.fromSnapshot(snapshot);
-          userData.weight = userFromFirebase.weight;
-          userData.height = userFromFirebase.height;
-          userData.bithDate = userFromFirebase.bithDate;
-          userData.gender = userFromFirebase.gender;
-          userData.workOuts = userFromFirebase.workOuts;
-          refresh();
-        }
-      });
+      var userFromFirebase =
+          await _userDao.getUser(_googleSignIn.currentUser.id);
+      if (userFromFirebase != null) {
+        userData.weight = userFromFirebase.weight;
+        userData.height = userFromFirebase.height;
+        userData.bithDate = userFromFirebase.bithDate;
+        userData.gender = userFromFirebase.gender;
+        userData.workOuts = userFromFirebase.workOuts;
+        refresh();
+      }
       callback(null);
     } catch (err) {
       print(err);
@@ -95,14 +90,9 @@ class LoginController extends ControllerMVC {
       refresh();
       return;
     }
-
-    if (userIsRegistered) {
-      _userRef.child(userData.userId).update(userData.toJsonWithoutUserId());
-    } else {
-      _userRef.child(userData.userId).update(userData.toJson());
-    }
+    await SharedPrefs.setUserId(userData.userId);
     await userState.setUserData(userData);
-    await userState.initState();
+    await userState.initState(userData.userId);
     callback();
   }
 }

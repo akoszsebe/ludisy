@@ -32,26 +32,38 @@ class HistoryController extends ControllerMVC {
     itemsCals = List();
     lastDay = lastDayFromThatWeek;
     firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 6)));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 5)));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 4)));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 3)));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 2)));
-    await addDay(lastDayFromThatWeek.subtract(Duration(days: 1)));
-    await addDay(lastDayFromThatWeek);
+    var workoutsForaWeek = await _workoutDao.findWorkOutBetween(
+        DateTime(firstDay.year, firstDay.month, firstDay.day)
+            .millisecondsSinceEpoch,
+        DateTime(lastDay.year, lastDay.month, lastDay.day, 23, 59, 59)
+            .millisecondsSinceEpoch);
+    await addDay(
+        lastDayFromThatWeek.subtract(Duration(days: 6)), workoutsForaWeek);
+    await addDay(
+        lastDayFromThatWeek.subtract(Duration(days: 5)), workoutsForaWeek);
+    await addDay(
+        lastDayFromThatWeek.subtract(Duration(days: 4)), workoutsForaWeek);
+    await addDay(
+        lastDayFromThatWeek.subtract(Duration(days: 3)), workoutsForaWeek);
+    await addDay(
+        lastDayFromThatWeek.subtract(Duration(days: 2)), workoutsForaWeek);
+    await addDay(
+        lastDayFromThatWeek.subtract(Duration(days: 1)), workoutsForaWeek);
+    await addDay(lastDayFromThatWeek, workoutsForaWeek);
     selectedDay = dataset[dataset.length - 1];
     refresh();
   }
 
-  Future<void> addDay(DateTime dateTime) async {
-    var morrning = new DateTime(dateTime.year, dateTime.month, dateTime.day);
+  Future<void> addDay(DateTime dateTime, List<WorkOut> workoutsForaWeek) async {
+    var morrning = DateTime(dateTime.year, dateTime.month, dateTime.day);
     var night =
-        new DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
-    var l1 = await _workoutDao.findWorkOutBetween(
-        morrning.millisecondsSinceEpoch, night.millisecondsSinceEpoch);
+        DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59)
+            .millisecondsSinceEpoch;
+    var workoutsForCurrentDay = workoutsForaWeek.where((x) =>
+        x.timeStamp >= morrning.millisecondsSinceEpoch && x.timeStamp <= night);
     var d = DayModel();
     d.date = morrning.day;
-    for (var l in l1) {
+    for (var l in workoutsForCurrentDay) {
       d.totalSteps += (l.data as Stairs).stairsCount;
       d.totalTimes += l.duration;
       d.totalCals += l.cal;

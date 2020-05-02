@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+
 class WorkOut {
   String id; //autgenerated
   int duration;
@@ -41,6 +43,22 @@ class WorkOut {
         return Stairs.fromJson(data.cast<String, dynamic>());
     }
     return {};
+  }
+
+  static List<WorkOut> listFrom(DataSnapshot snapshot) {
+    var result = List<WorkOut>();
+    if (snapshot.value != null) {
+      try {
+        snapshot.value.forEach((k, v) =>
+            {result.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
+      } catch (Exeption) {
+        try {
+          snapshot.value.forEach(
+              (v) => {result.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
+        } catch (Exeption) {}
+      }
+    }
+    return result;
   }
 }
 

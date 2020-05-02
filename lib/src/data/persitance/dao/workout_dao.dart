@@ -1,6 +1,8 @@
-import 'package:ludisy/src/data/model/user_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/data/persitance/dao/base_dao.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/user_state.dart';
 
 abstract class WorkOutDao {
   Future<void> insertWorkOut(WorkOut workout);
@@ -13,61 +15,42 @@ abstract class WorkOutDao {
 }
 
 class WorkOutDaoImpl extends BaseDao implements WorkOutDao {
+  final UserState userState = locator<UserState>();
+
   @override
   Future<void> insertWorkOut(WorkOut workout) async {
-    var result = await appDatabase.findFirst({});
-    if (result != null) {
-      var user = User.fromJson(result);
-      if (user.workOuts == null) {
-        user.workOuts = List();
-      }
-      user.workOuts.add(workout);
-      appDatabase.update(user.toJsonJustUserId(), user.toJsonJustWorkouts());
-    }
+    userRef
+        .child(userState.getUserData().userId)
+        .child("workOuts")
+        .push()
+        .update(workout.toJson());
   }
 
   @override
   Future<List<WorkOut>> findAllWorkOuts() async {
-    var result = List<WorkOut>();
-    var userIndb = await appDatabase.findFirst({});
-    if (userIndb != null) {
-      var user = User.fromJson(userIndb);
-      if (user.workOuts != null) {
-        result = user.workOuts;
-      }
-    }
-    return result;
+    DataSnapshot snapshot = await userRef
+        .child(userState.getUserData().userId)
+        .child("workOuts")
+        .once();
+    return WorkOut.listFrom(snapshot);
   }
 
   @override
   Future<List<WorkOut>> findWorkOutBetween(int date1, int date2) async {
-    var result = List<WorkOut>();
-    var userIndb = await appDatabase.findFirst({});
-    if (userIndb != null) {
-      var user = User.fromJson(userIndb);
-      if (user.workOuts != null) {
-        result = user.workOuts
-            .where((l) => l.timeStamp >= date1 && l.timeStamp <= date2)
-            .toList();
-      }
-    }
-    return result;
+    DataSnapshot snapshot = await userRef
+        .child(userState.getUserData().userId)
+        .child("workOuts")
+        .orderByChild("timeStamp")
+        .startAt(date1, key: "timeStamp")
+        .endAt(date2, key: "timeStamp")
+        .once();
+    return WorkOut.listFrom(snapshot);
   }
 
   @override
   Future<int> getAllSteps() async {
     var result = 0;
-    var userIndb = await appDatabase.findFirst({});
-    if (userIndb != null) {
-      var user = User.fromJson(userIndb);
-      if (user.workOuts != null) {
-        user.workOuts.forEach((workout) {
-          if (workout.type == 0) {
-            result += (workout.data as Stairs).stairsCount;
-          }
-        });
-      }
-    }
+    // TODO: Implement
     return result;
   }
 }

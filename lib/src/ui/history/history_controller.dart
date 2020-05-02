@@ -59,8 +59,12 @@ class HistoryController extends ControllerMVC {
     var night =
         DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59)
             .millisecondsSinceEpoch;
-    var workoutsForCurrentDay = workoutsForaWeek.where((x) =>
-        x.timeStamp >= morrning.millisecondsSinceEpoch && x.timeStamp <= night);
+    var workoutsForCurrentDay = workoutsForaWeek
+        .where((x) =>
+            x.timeStamp >= morrning.millisecondsSinceEpoch &&
+            x.timeStamp <= night)
+        .toList();
+    workoutsForCurrentDay.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
     var d = DayModel();
     d.date = morrning.day;
     for (var l in workoutsForCurrentDay) {

@@ -11,6 +11,7 @@ class LoginController extends ControllerMVC {
   final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
   final UserState userState = locator<UserState>();
   final UserDao _userDao = locator<UserDao>();
+  final SharedPrefs _sharedPrefs = locator<SharedPrefs>();
 
   User userData = User();
   bool field1 = true;
@@ -90,7 +91,7 @@ class LoginController extends ControllerMVC {
       refresh();
       return;
     }
-    await SharedPrefs.setUserId(userData.userId);
+    await _sharedPrefs.setUserId(userData.userId);
     await userState.setUserData(userData);
     await userState.initState(userData.userId);
     callback();

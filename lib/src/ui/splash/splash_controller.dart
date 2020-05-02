@@ -5,12 +5,13 @@ import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 
 class SplashController extends ControllerMVC {
-  GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
-  UserState _userState = locator<UserState>();
+  final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  final UserState _userState = locator<UserState>();
+  final SharedPrefs _sharedPrefs = locator<SharedPrefs>();
 
   void checkLogin(Function(bool) callback) async {
     bool logedIn = await _googleSignIn.isSignedIn();
-    var userId = await SharedPrefs.getUserId();
+    var userId = await _sharedPrefs.getUserId();
     if (logedIn && userId != null) {
       await _userState.initState(userId);
       if (_userState.getUserData() != null) {

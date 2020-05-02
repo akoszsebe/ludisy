@@ -11,8 +11,9 @@ import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 
 class WorkOutController extends ControllerMVC {
-  final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
+  final WorkOutDao _workOutDao = locator<WorkOutDao>();
+  final Pedometer _pedometer = locator<Pedometer>();
 
   int stepCountValue = 0;
   double calCounterValue = 0;
@@ -21,14 +22,12 @@ class WorkOutController extends ControllerMVC {
   double percentageValue = 0;
   int durationSeconds = 0;
 
-  Pedometer _pedometer;
   StreamSubscription<int> _subscription;
   int _offset = 0;
   Timer _timer;
   int _startime = 0;
 
   Future<void> init() async {
-    _pedometer = Pedometer();
     _offset = await _pedometer.pedometerStream.first;
     print("start from = $_offset");
     startListening();

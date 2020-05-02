@@ -7,6 +7,7 @@ class UserState {
   UserState();
 
   final UserDao _userDao = locator<UserDao>();
+  final SharedPrefs _sharedPrefs = locator<SharedPrefs>();
   User _userModel = User();
   int _allSteps = 0;
 
@@ -40,7 +41,7 @@ class UserState {
   }
 
   Future<void> removeUserData(User user) async {
-    await SharedPrefs.setUserId(null);
+    await _sharedPrefs.setUserId(null);
     _userModel = User();
   }
 }

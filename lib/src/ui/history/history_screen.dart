@@ -133,6 +133,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                     size: 30,
                                   ),
                                   onTap: () {
+                                    touchedIndex = 6;
                                     con.fillForWeek(con.firstDay
                                         .subtract(Duration(days: 1)));
                                   }))),
@@ -161,6 +162,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                         size: 30,
                                       ),
                                       onTap: () {
+                                        touchedIndex = 6;
                                         con.fillForWeek(
                                             con.lastDay.add(Duration(days: 7)));
                                       })))),

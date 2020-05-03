@@ -2,12 +2,14 @@ import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/util/shared_prefs.dart';
+import 'package:pedometer/pedometer.dart';
 
 class UserState {
   UserState();
 
   final UserDao _userDao = locator<UserDao>();
   final SharedPrefs _sharedPrefs = locator<SharedPrefs>();
+  final Pedometer _pedometer = locator<Pedometer>();
   User _userModel = User();
   int _allSteps = 0;
 
@@ -19,7 +21,7 @@ class UserState {
       print("init user - null");
     }
     if (_userModel != null) {
-      _allSteps = 0; //TODO: implement
+      _allSteps = await _pedometer.pedometerStream.first;
     }
   }
 

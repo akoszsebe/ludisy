@@ -10,8 +10,6 @@ abstract class WorkOutDao {
   Future<List<WorkOut>> findAllWorkOuts();
 
   Future<List<WorkOut>> findWorkOutBetween(int date1, int date2);
-
-  Future<int> getAllSteps();
 }
 
 class WorkOutDaoImpl extends BaseDao implements WorkOutDao {
@@ -45,12 +43,5 @@ class WorkOutDaoImpl extends BaseDao implements WorkOutDao {
         .endAt(date2, key: "timeStamp")
         .once();
     return WorkOut.listFrom(snapshot);
-  }
-
-  @override
-  Future<int> getAllSteps() async {
-    var result = 0;
-    // TODO: Implement
-    return result;
   }
 }

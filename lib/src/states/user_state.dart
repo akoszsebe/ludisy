@@ -21,7 +21,9 @@ class UserState {
       print("init user - null");
     }
     if (_userModel != null) {
-      _allSteps = await _pedometer.pedometerStream.first;
+      _pedometer.pedometerStream.first.then((value){
+        _allSteps = value;
+      });
     }
   }
 

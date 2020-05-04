@@ -126,7 +126,7 @@ class QuickInfoBar extends StatelessWidget {
                                               new BorderRadius.circular(30.0)),
                                     )))),
                         SizedBox(
-                          width: 16,
+                          width: 12,
                         )
                       ])
                     ],

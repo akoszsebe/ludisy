@@ -33,14 +33,12 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-            padding: EdgeInsets.only(top: 20, left: 16),
-            child:
-             QuickInfoBar(
+            padding: EdgeInsets.only(top: 20, left: 16,right: 16),
+            child: QuickInfoBar(
               con.userState.getUserData().displayName != null
                   ? con.userState.getUserData().displayName.split(" ")[0]
                   : " ",
               con.userState.getUserData().photoUrl,
-              steps: con.userState.getAllSteps(),
               onProfilePressed: () =>
                   NavigationModule.navigateToProfileScreen(context),
               hostoryVisible: true,

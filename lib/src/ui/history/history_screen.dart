@@ -50,37 +50,20 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(left: 12, top: 20, bottom: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  RoundedMiniButton(
-                    "backTag",
-                    AppAssets.back,
-                    () {
-                      NavigationModule.pop(context);
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 12),
-                  ),
-                  QuickInfoBar(
-                      con.userState.getUserData().displayName != null
-                          ? con.userState
-                              .getUserData()
-                              .displayName
-                              .split(" ")[0]
-                          : "",
-                      con.userState.getUserData().photoUrl,
-                      steps: con.userState.getAllSteps(),
-                      onProfilePressed: () =>
-                          NavigationModule.navigateToProfileScreen(context),
-                      settingVisible: true,
-                      onSettingsPressed: () =>
-                          NavigationModule.navigateAndReplaceToSettingsScreen(
-                              context)),
-                ],
-              )),
+              padding:
+                  EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
+              child: QuickInfoBar(
+                  con.userState.getUserData().displayName != null
+                      ? con.userState.getUserData().displayName.split(" ")[0]
+                      : "",
+                  con.userState.getUserData().photoUrl,
+                  canGoBack: true,
+                  onProfilePressed: () =>
+                      NavigationModule.navigateToProfileScreen(context),
+                  settingVisible: true,
+                  onSettingsPressed: () =>
+                      NavigationModule.navigateAndReplaceToSettingsScreen(
+                          context))),
           Expanded(
               child: Hero(
                   tag: "history",

@@ -32,35 +32,20 @@ class _SettingsScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(left: 12, top: 20, bottom: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  RoundedMiniButton(
-                    "back",
-                    AppAssets.back,
-                    () {
-                      NavigationModule.pop(context);
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 12),
-                  ),
-                  QuickInfoBar(
-                    con.userData.displayName != null
-                        ? con.userData.displayName.split(" ")[0]
-                        : "",
-                    con.userData.photoUrl,
-                    steps: con.userState.getAllSteps(),
-                    onProfilePressed: () =>
-                        NavigationModule.navigateToProfileScreen(context),
-                    hostoryVisible: true,
-                    onHistoryPressed: () =>
-                        NavigationModule.navigateAndReplaceToHistoryScreen(
-                            context),
-                  ),
-                ],
-              )),
+            padding: EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
+            child: QuickInfoBar(
+              con.userData.displayName != null
+                  ? con.userData.displayName.split(" ")[0]
+                  : "",
+              con.userData.photoUrl,
+              canGoBack: true,
+              onProfilePressed: () =>
+                  NavigationModule.navigateToProfileScreen(context),
+              hostoryVisible: true,
+              onHistoryPressed: () =>
+                  NavigationModule.navigateAndReplaceToHistoryScreen(context),
+            ),
+          ),
           Expanded(child: Hero(tag: "settings", child: buildBody()))
         ]));
   }

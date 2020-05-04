@@ -36,6 +36,7 @@ dependencies:
   url_launcher: 5.4.5
   flutter_cupertino_date_picker: 1.0.12
   in_app_purchase: 0.3.3
+  firebase_auth: 0.16.0
   firebase_database: 3.1.5
   shared_preferences: 0.5.7
 

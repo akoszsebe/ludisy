@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ludisy/src/data/auth.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
-import 'package:ludisy/src/util/shared_prefs.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 
 class LoginController extends ControllerMVC {
-  final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  final Auth auth = locator<Auth>();
   final UserState userState = locator<UserState>();
   final UserDao _userDao = locator<UserDao>();
-  final SharedPrefs _sharedPrefs = locator<SharedPrefs>();
 
   User userData = User();
   bool field1 = true;
@@ -23,14 +21,14 @@ class LoginController extends ControllerMVC {
 
   void login(Function(String) callback) async {
     try {
-      await _googleSignIn.signIn();
+      var user = await auth.registerUserWithGoogle();
       userData = User(
-          displayName: _googleSignIn.currentUser.displayName,
-          photoUrl: _googleSignIn.currentUser.photoUrl,
-          userId: _googleSignIn.currentUser.id,
+          displayName: user.displayName,
+          photoUrl: user.photoUrl,
+          userId: user.uid,
           workOuts: List());
-      var userFromFirebase =
-          await _userDao.getUser(_googleSignIn.currentUser.id);
+      var userFromFirebase = await _userDao.getUser(user.uid);
+      auth.signOutOnyFirebase();
       if (userFromFirebase != null) {
         userData.weight = userFromFirebase.weight;
         userData.height = userFromFirebase.height;
@@ -91,7 +89,7 @@ class LoginController extends ControllerMVC {
       refresh();
       return;
     }
-    await _sharedPrefs.setUserId(userData.userId);
+    await auth.finishRegistrationAndSignIn();
     await userState.setUserData(userData);
     await userState.initState(userData.userId);
     callback();

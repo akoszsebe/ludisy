@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ludisy/src/data/auth.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/states/user_state.dart';
@@ -21,8 +23,10 @@ final GetIt locator = GetIt.instance;
 void setupLocator(String databasePath, FirebaseApp firebaseApp) {
   // Services
   locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email']));
+  locator.registerLazySingleton(() => FirebaseAuth.fromApp(firebaseApp));
+  locator.registerLazySingleton(() => Auth());
   locator.registerLazySingleton(() => provideFirebase(firebaseApp));
-  locator.registerLazySingleton<DatabaseReference>(() => provideUserRef(),
+  locator.registerFactory<DatabaseReference>(() => provideUserRef(),
       instanceName: "userFirebaseDao");
   locator.registerLazySingleton<SharedPrefs>(() => SharedPrefs());
   locator.registerLazySingleton<UserDao>(() => UserDaoImpl());

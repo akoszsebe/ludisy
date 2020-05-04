@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ludisy/src/data/auth.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/user_model.dart';
@@ -7,7 +7,7 @@ import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 
 class ProfileController extends ControllerMVC {
-  final GoogleSignIn _googleSignIn = locator<GoogleSignIn>();
+  final Auth auth = locator<Auth>();
   final UserState userState = locator<UserState>();
   final UserDao _userDao = locator<UserDao>();
 
@@ -19,7 +19,7 @@ class ProfileController extends ControllerMVC {
   }
 
   Future<void> logout(VoidCallback callback) async {
-    _googleSignIn.signOut();
+    await auth.signOut();
     await userState.removeUserData(userData);
     callback();
   }

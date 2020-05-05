@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -95,11 +96,11 @@ class _SettingsScreenState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         buildInAppPourchaseButton(
-                            "Water", "0.99", AppAssets.water, 0),
+                            "Water", "0.99", AppSVGAssets.water, 0),
                         buildInAppPourchaseButton(
-                            "Coffee", "1.99", AppAssets.coffee, 1),
+                            "Coffee", "1.99", AppSVGAssets.coffee, 1),
                         buildInAppPourchaseButton(
-                            "Lunch", "2.99", AppAssets.lunch, 2)
+                            "Lunch", "2.99", AppSVGAssets.lunch, 2)
                       ],
                     )
                   ],
@@ -131,19 +132,23 @@ class _SettingsScreenState
   }
 
   Widget buildInAppPourchaseButton(
-      String title, String cost, AssetImage icon, int index) {
+      String title, String cost, String imageName, int index) {
     return MaterialButton(
-      height: 102,
+      height: 105,
       minWidth: 64,
       padding: EdgeInsets.all(0),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Image(
+            Container(
               height: 43,
               width: 43,
-              image: icon,
+              child: SvgPicture.asset(
+                imageName,
+                width: 43,
+                fit: BoxFit.scaleDown,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 8),

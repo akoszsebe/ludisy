@@ -71,7 +71,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                     Padding(padding: EdgeInsets.only(top: 20)),
                     RoundedButton(
                         "start",
-                        AppAssets.start,
+                        AppSVGAssets.start,
                         () => con.setUp((stepPlan) =>
                             NavigationModule.navigateToWorkoutScreen(
                                 context, stepPlan))),

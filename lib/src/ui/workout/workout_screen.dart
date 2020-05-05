@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
@@ -15,13 +16,12 @@ class WorkOutScreen extends StatefulWidget {
 
   WorkOutScreen(this.stepPlan, {Key key}) : super(key: key);
   @override
-  _WorkOutScreenState createState() =>
-      _WorkOutScreenState(stepPlan);
+  _WorkOutScreenState createState() => _WorkOutScreenState(stepPlan);
 }
 
-class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutController> {
-  _WorkOutScreenState(this.stepPlan)
-      : super() {
+class _WorkOutScreenState
+    extends BaseScreenState<WorkOutScreen, WorkOutController> {
+  _WorkOutScreenState(this.stepPlan) : super() {
     con.setupTargetSteps(stepPlan);
   }
 
@@ -65,7 +65,7 @@ class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutControll
                       children: <Widget>[
                         RoundedMiniButton(
                           "back",
-                          AppAssets.back,
+                          AppSVGAssets.back,
                           () {
                             con.stopListening();
                             NavigationModule.pop(context);
@@ -86,8 +86,8 @@ class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutControll
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Image(
-                            image: AppAssets.step,
+                          SvgPicture.asset(
+                            AppSVGAssets.step,
                             height: 64,
                           ),
                           Padding(padding: EdgeInsets.only(top: 9)),
@@ -128,7 +128,7 @@ class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutControll
                             children: <Widget>[
                               RoundedButton(
                                 "stop",
-                                AppAssets.stop,
+                                AppSVGAssets.stop,
                                 () {
                                   con.doneWorkout(
                                       (steps, stepsPlaned, cal, duration) {
@@ -163,7 +163,7 @@ class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutControll
     if (con.isWorkoutStarted)
       return RoundedButton(
         "pause",
-        AppAssets.pause,
+        AppSVGAssets.pause,
         () {
           con.stopListening();
         },
@@ -171,7 +171,7 @@ class _WorkOutScreenState extends BaseScreenState<WorkOutScreen, WorkOutControll
     else
       return RoundedButton(
         "start",
-        AppAssets.start,
+        AppSVGAssets.start,
         () {
           con.startListening();
         },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
@@ -37,7 +38,7 @@ class QuickInfoBar extends StatelessWidget {
                 padding: EdgeInsets.only(right: 12),
                 child: RoundedMiniButton(
                   tag,
-                  AppAssets.back,
+                  AppSVGAssets.back,
                   () {
                     NavigationModule.pop(context);
                   },
@@ -70,9 +71,9 @@ class QuickInfoBar extends StatelessWidget {
                                           MainAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        Image(
+                                        SvgPicture.asset(
+                                          AppSVGAssets.settings,
                                           height: 18,
-                                          image: AppAssets.settings,
                                         ),
                                         Padding(
                                           padding: EdgeInsets.only(top: 2),
@@ -105,9 +106,9 @@ class QuickInfoBar extends StatelessWidget {
                                               MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
-                                            Image(
+                                            SvgPicture.asset(
+                                              AppSVGAssets.history,
                                               height: 18,
-                                              image: AppAssets.history,
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(top: 2),
@@ -150,7 +151,7 @@ class QuickInfoBar extends StatelessWidget {
                   color: AppColors.blue,
                   image: DecorationImage(
                     image: picUrl == null
-                        ? AppAssets.googleLogo
+                        ? AppAssets.splash_icon
                         : NetworkImage(picUrl),
                     fit: BoxFit.cover,
                   ),

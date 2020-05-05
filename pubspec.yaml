@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: 0.16.0
   firebase_database: 3.1.5
   shared_preferences: 0.5.7
+  flutter_svg: 0.17.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,24 +67,25 @@ flutter:
   assets:
     - lib/resources/langs/en-US.json 
     - lib/resources/images/stairs1.png
-    - lib/resources/images/step.png
-    - lib/resources/images/stop.png
-    - lib/resources/images/pause.png
-    - lib/resources/images/start.png
-    - lib/resources/images/history.png
-    - lib/resources/images/google_logo.png
-    - lib/resources/images/done.png
-    - lib/resources/images/logout.png
-    - lib/resources/images/next.png
-    - lib/resources/images/back.png
-    - lib/resources/images/reload.png
-    - lib/resources/images/time.png
-    - lib/resources/images/cal.png
-    - lib/resources/images/settings.png
     - lib/resources/images/splash_icon.png
-    - lib/resources/images/water.png
-    - lib/resources/images/coffee.png
-    - lib/resources/images/lunch.png
+#   svg 
+    - lib/resources/images_svg/back.svg
+    - lib/resources/images_svg/logout.svg
+    - lib/resources/images_svg/done.svg
+    - lib/resources/images_svg/next.svg
+    - lib/resources/images_svg/start.svg
+    - lib/resources/images_svg/stop.svg
+    - lib/resources/images_svg/pause.svg
+    - lib/resources/images_svg/reload.svg
+    - lib/resources/images_svg/water.svg
+    - lib/resources/images_svg/coffee.svg
+    - lib/resources/images_svg/lunch.svg
+    - lib/resources/images_svg/step.svg
+    - lib/resources/images_svg/time.svg
+    - lib/resources/images_svg/cal.svg
+    - lib/resources/images_svg/history.svg
+    - lib/resources/images_svg/settings.svg
+    - lib/resources/images_svg/google_logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

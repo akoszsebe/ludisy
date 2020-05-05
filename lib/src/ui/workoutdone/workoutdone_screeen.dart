@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
@@ -69,8 +70,8 @@ class _WorkOutDoneScreenState
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Image(
-                        image: AppAssets.done,
+                      SvgPicture.asset(
+                        AppSVGAssets.done,
                         height: 48,
                       ),
                       Padding(padding: EdgeInsets.only(top: 9)),
@@ -116,7 +117,7 @@ class _WorkOutDoneScreenState
                         children: <Widget>[
                           RoundedButton(
                               "reload",
-                              AppAssets.reload,
+                              AppSVGAssets.reload,
                               () => NavigationModule
                                   .navigateAndReplaceToWorkoutScreen(
                                       context, con.stepsPlaned)),
@@ -134,7 +135,7 @@ class _WorkOutDoneScreenState
                           ),
                           RoundedButton(
                             "done",
-                            AppAssets.done,
+                            AppSVGAssets.done,
                             () => NavigationModule.pop(context),
                           )
                         ]))),

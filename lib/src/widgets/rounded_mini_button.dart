@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 
 class RoundedMiniButton extends StatelessWidget {
@@ -6,9 +7,9 @@ class RoundedMiniButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color backgroundColor;
   final Color iconColor;
-  final AssetImage asset;
+  final String assetName;
 
-  RoundedMiniButton(this.tag, this.asset, this.onPressed,
+  RoundedMiniButton(this.tag, this.assetName, this.onPressed,
       {this.backgroundColor = Colors.white, this.iconColor = AppColors.blue});
 
   @override
@@ -19,11 +20,12 @@ class RoundedMiniButton extends StatelessWidget {
             heroTag: tag,
             mini: true,
             backgroundColor: backgroundColor,
-            child: Image(
+            child: SvgPicture.asset(
+              assetName,
               height: 18,
               width: 18,
+              fit: BoxFit.scaleDown,
               color: iconColor,
-              image: asset,
             ),
             onPressed: onPressed));
   }

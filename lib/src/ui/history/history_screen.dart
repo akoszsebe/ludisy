@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
@@ -14,7 +15,6 @@ import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/always_show_scrollbar.dart';
 import 'package:ludisy/src/widgets/app_bar_chart.dart';
 import 'package:ludisy/src/widgets/quickinfobar.dart';
-import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({Key key}) : super(key: key);
@@ -28,7 +28,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   }
   HistoryController con;
   double translateOffset = 0;
-  AssetImage tabImage = AppAssets.step;
+  String tabImage = AppSVGAssets.step;
   String tabName = "";
   int selectedTab = 1;
   int touchedIndex = 6;
@@ -42,7 +42,9 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    tabName = AppLocalizations.of(context).tr('history.steps');
+    if (tabName.isEmpty) {
+      tabName = AppLocalizations.of(context).tr('history.steps');
+    }
     return BaseView(
         child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -288,34 +290,41 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   buildBottomNavButton(
-                                      selectedTab != 0, AppAssets.time, "Time",
-                                      () {
+                                      selectedTab != 0,
+                                      AppSVGAssets.time,
+                                      AppLocalizations.of(context)
+                                          .tr('history.time'), () {
                                     setState(() {
                                       translateOffset = -96;
                                       tabName = AppLocalizations.of(context)
                                           .tr('history.time');
-                                      tabImage = AppAssets.time;
+                                      tabImage = AppSVGAssets.time;
                                       selectedTab = 0;
                                     });
                                   }),
                                   buildBottomNavButton(
-                                      selectedTab != 1, AppAssets.step, "Steps",
-                                      () {
+                                      selectedTab != 1,
+                                      AppSVGAssets.step,
+                                      AppLocalizations.of(context)
+                                          .tr('history.steps'), () {
                                     setState(() {
                                       translateOffset = 0;
                                       tabName = AppLocalizations.of(context)
                                           .tr('history.steps');
-                                      tabImage = AppAssets.step;
+                                      tabImage = AppSVGAssets.step;
                                       selectedTab = 1;
                                     });
                                   }),
-                                  buildBottomNavButton(selectedTab != 2,
-                                      AppAssets.cal, "Calories", () {
+                                  buildBottomNavButton(
+                                      selectedTab != 2,
+                                      AppSVGAssets.cal,
+                                      AppLocalizations.of(context)
+                                          .tr('history.calories'), () {
                                     setState(() {
                                       translateOffset = 96;
                                       tabName = AppLocalizations.of(context)
                                           .tr('history.calories');
-                                      tabImage = AppAssets.cal;
+                                      tabImage = AppSVGAssets.cal;
                                       selectedTab = 2;
                                     });
                                   }),
@@ -357,11 +366,12 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Image(
+                                          SvgPicture.asset(
+                                            tabImage,
                                             height: 18,
                                             width: 18,
                                             color: Colors.white,
-                                            image: tabImage,
+                                            fit: BoxFit.scaleDown,
                                           ),
                                           SizedBox(
                                             height: 2,
@@ -466,7 +476,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   }
 
   Widget buildBottomNavButton(
-      bool visible, AssetImage res, String title, onPressed) {
+      bool visible, String res, String title, onPressed) {
     return Container(
         width: 56,
         child: Visibility(
@@ -479,11 +489,12 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image(
+                      SvgPicture.asset(
+                        res,
                         height: 18,
                         width: 18,
                         color: AppColors.blue,
-                        image: res,
+                        fit: BoxFit.scaleDown,
                       ),
                       SizedBox(
                         height: 2,

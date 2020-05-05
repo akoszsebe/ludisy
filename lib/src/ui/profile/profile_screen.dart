@@ -41,14 +41,14 @@ class _ProfileScreenState
                 children: <Widget>[
                   RoundedMiniButton(
                     null,
-                    AppAssets.back,
+                    AppSVGAssets.back,
                     () {
                       NavigationModule.pop(context);
                     },
                   ),
                   RoundedMiniButton(
                     null,
-                    AppAssets.logout,
+                    AppSVGAssets.logout,
                     () {
                       con.logout(() {
                         NavigationModule.navigateToLoginScreenAndRemove(
@@ -85,7 +85,7 @@ class _ProfileScreenState
                             color: AppColors.blue,
                             image: DecorationImage(
                               image: con.userData.photoUrl == null
-                                  ? AppAssets.googleLogo
+                                  ? AppAssets.splash_icon
                                   : NetworkImage(con.userData.photoUrl),
                               fit: BoxFit.cover,
                             ),
@@ -182,7 +182,7 @@ class _ProfileScreenState
                         )),
                     RoundedButton(
                       null,
-                      AppAssets.done,
+                      AppSVGAssets.done,
                       () {
                         con.saveUserdata(() {
                           NavigationModule.pop(context);

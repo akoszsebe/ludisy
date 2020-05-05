@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
@@ -101,7 +102,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                   scale: 1.2,
                   child: FloatingActionButton(
                     backgroundColor: Colors.white,
-                    child: Image(height: 30, image: AppAssets.googleLogo),
+                    child:
+                        SvgPicture.asset(AppSVGAssets.googleLogo, height: 30),
                     onPressed: () {
                       con.login((err) {
                         if (err != null) {
@@ -204,7 +206,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                   )),
               RoundedButton(
                 "next",
-                AppAssets.next,
+                AppSVGAssets.next,
                 () {
                   con.saveUserdata(() {
                     scrollTo(2);
@@ -252,7 +254,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
               ),
               RoundedButton(
                 "done",
-                AppAssets.done,
+                AppSVGAssets.done,
                 () {
                   NavigationModule.navigateToStartScreen(context);
                 },

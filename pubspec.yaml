@@ -86,6 +86,8 @@ flutter:
     - lib/resources/images_svg/history.svg
     - lib/resources/images_svg/settings.svg
     - lib/resources/images_svg/google_logo.svg
+    - lib/resources/images_svg/workout_info.svg
+    - lib/resources/images_svg/stairing.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

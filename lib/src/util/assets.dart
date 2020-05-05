@@ -42,4 +42,8 @@ class AppSVGAssets {
   static const String coffee = "lib/resources/images_svg/coffee.svg";
 
   static const String lunch = "lib/resources/images_svg/lunch.svg";
+
+  static const String workoutInfo = "lib/resources/images_svg/workout_info.svg";
+
+  static const String stairing = "lib/resources/images_svg/stairing.svg";
 }

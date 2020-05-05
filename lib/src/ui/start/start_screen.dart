@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -9,6 +10,7 @@ import 'package:ludisy/src/ui/start/start_controller.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/quickinfobar.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
+import 'package:ludisy/src/widgets/workout_quick_info.dart';
 import 'package:ludisy/src/widgets/workout_slider.dart';
 
 class StartScreen extends StatefulWidget {
@@ -33,7 +35,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-            padding: EdgeInsets.only(top: 20, left: 16,right: 16),
+            padding: EdgeInsets.only(top: 20, left: 16, right: 16),
             child: QuickInfoBar(
               con.userState.getUserData().displayName != null
                   ? con.userState.getUserData().displayName.split(" ")[0]
@@ -48,6 +50,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               onSettingsPressed: () =>
                   NavigationModule.navigateToSettingsScreen(context),
             )),
+        WorkoutQuickInfoBar(),
         Stack(
           children: <Widget>[
             Container(

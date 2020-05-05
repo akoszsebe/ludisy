@@ -8,7 +8,6 @@ import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/quickinfobar.dart';
-import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);

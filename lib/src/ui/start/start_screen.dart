@@ -51,6 +51,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   NavigationModule.navigateToSettingsScreen(context),
             )),
         WorkoutQuickInfoBar(),
+        SizedBox(height: 10,),
         Stack(
           children: <Widget>[
             Container(

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -23,5 +23,9 @@ Future<void> main() async {
     ),
   );
   setupLocator("${appDocDir.path}/ludisyapp.db", firebaseApp);
-  runApp(EasyLocalization(child: MVCApp()));
+  runApp(EasyLocalization(
+    child: MVCApp(),
+    path: 'lib/resources/langs',
+    supportedLocales: [Locale('en', 'US')],
+  ));
 }

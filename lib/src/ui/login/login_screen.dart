@@ -1,7 +1,7 @@
-import 'package:easy_localization/easy_localization_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -12,6 +12,7 @@ import 'package:ludisy/src/widgets/date_picker.dart';
 import 'package:ludisy/src/widgets/dropdown_item.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -77,7 +78,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 padding: EdgeInsets.only(top: 24),
               ),
               Text(
-                AppLocalizations.of(context).tr('login.wellcome'),
+                LocaleKeys.login_wellcome.tr(),
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -88,7 +89,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 padding: EdgeInsets.only(top: 16),
               ),
               Text(
-                AppLocalizations.of(context).tr('login.sign_in'),
+                LocaleKeys.login_sign_in.tr(),
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
@@ -130,7 +131,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
               Padding(
                 padding: EdgeInsets.only(top: 24, left: 34, right: 34),
                 child: Text(
-                  AppLocalizations.of(context).tr('login.weneedyourdata'),
+                  LocaleKeys.login_weneedyourdata.tr(),
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -231,7 +232,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 padding: EdgeInsets.only(top: 24),
               ),
               Text(
-                AppLocalizations.of(context).tr('login.congratulation'),
+                LocaleKeys.login_congratulation.tr(),
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -242,7 +243,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 padding: EdgeInsets.only(top: 16),
               ),
               Text(
-                AppLocalizations.of(context).tr('login.letsdosomesteps'),
+                LocaleKeys.login_letsdosomesteps.tr(),
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

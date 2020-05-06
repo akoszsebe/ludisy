@@ -1,7 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -10,6 +10,7 @@ import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/ui/workoutdone/workoutdone_controller.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class WorkOutDoneScreen extends StatefulWidget {
   final int steps;
@@ -55,7 +56,7 @@ class _WorkOutDoneScreenState
                 child: Column(
               children: <Widget>[
                 Text(
-                  AppLocalizations.of(context).tr('workoutdone.congratulation'),
+                  LocaleKeys.workoutdone_congratulation.tr(),
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600, fontSize: 22.0),
                 ),
@@ -94,7 +95,7 @@ class _WorkOutDoneScreenState
                   padding: EdgeInsets.only(top: 20),
                 ),
                 Text(
-                  AppLocalizations.of(context).tr('workoutdone.success1'),
+                  LocaleKeys.workoutdone_success1.tr(),
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500, fontSize: 19.0),
                 ),

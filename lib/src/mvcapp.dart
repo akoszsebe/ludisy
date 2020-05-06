@@ -1,5 +1,4 @@
-import 'package:easy_localization/easy_localization_delegate.dart';
-import 'package:easy_localization/easy_localization_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -13,9 +12,8 @@ class MVCApp extends AppMVC {
 
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.blueWithOcupacity50,
+      statusBarColor: AppColors.blueDark,
     ));
-    var data = EasyLocalizationProvider.of(context).data;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ludisy',
@@ -23,14 +21,10 @@ class MVCApp extends AppMVC {
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        //app-specific localization
-        EasylocaLizationDelegate(
-          locale: data.locale,
-          path: 'lib/resources/langs',
-        ),
+        EasyLocalization.of(context).delegate,
       ],
-      supportedLocales: [Locale('en', 'US')],
-      locale: data.savedLocale,
+      supportedLocales: EasyLocalization.of(context).supportedLocales,
+      locale: EasyLocalization.of(context).locale,
       routes: {"/": (context) => SplashScreen()},
     );
   }

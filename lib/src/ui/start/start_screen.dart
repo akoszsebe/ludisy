@@ -1,7 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/util/assets.dart';
@@ -12,6 +11,7 @@ import 'package:ludisy/src/widgets/quickinfobar.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/workout_quick_info.dart';
 import 'package:ludisy/src/widgets/workout_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -64,7 +64,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                     Padding(padding: EdgeInsets.only(top: 30)),
                     Center(
                         child: Text(
-                      AppLocalizations.of(context).tr('start.start_msg'),
+                      LocaleKeys.start_start_msg.tr(),
                       style: GoogleFonts.montserrat(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,

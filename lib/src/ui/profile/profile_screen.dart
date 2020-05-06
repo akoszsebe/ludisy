@@ -1,6 +1,6 @@
-import 'package:easy_localization/easy_localization_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/ui/profile/profile_controller.dart';
@@ -11,6 +11,7 @@ import 'package:ludisy/src/widgets/dropdown_item.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -111,7 +112,7 @@ class _ProfileScreenState
                       padding: EdgeInsets.only(top: 11),
                     ),
                     Text(
-                      AppLocalizations.of(context).tr('profile.thisisyourdata'),
+                      LocaleKeys.profile_thisisyourdata.tr(),
                       style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,

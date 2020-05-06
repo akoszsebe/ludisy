@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/day_model.dart';
@@ -43,7 +44,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     if (tabName.isEmpty) {
-      tabName = AppLocalizations.of(context).tr('history.steps');
+      tabName = tr(LocaleKeys.history_steps);
     }
     return BaseView(
         child: Column(
@@ -292,12 +293,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   buildBottomNavButton(
                                       selectedTab != 0,
                                       AppSVGAssets.time,
-                                      AppLocalizations.of(context)
-                                          .tr('history.time'), () {
+                                      LocaleKeys.history_time.tr(), () {
                                     setState(() {
                                       translateOffset = -96;
-                                      tabName = AppLocalizations.of(context)
-                                          .tr('history.time');
+                                      tabName = LocaleKeys.history_time.tr();
                                       tabImage = AppSVGAssets.time;
                                       selectedTab = 0;
                                     });
@@ -305,12 +304,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   buildBottomNavButton(
                                       selectedTab != 1,
                                       AppSVGAssets.step,
-                                      AppLocalizations.of(context)
-                                          .tr('history.steps'), () {
+                                      LocaleKeys.history_steps.tr(), () {
                                     setState(() {
                                       translateOffset = 0;
-                                      tabName = AppLocalizations.of(context)
-                                          .tr('history.steps');
+                                      tabName = LocaleKeys.history_steps.tr();
                                       tabImage = AppSVGAssets.step;
                                       selectedTab = 1;
                                     });
@@ -318,12 +315,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   buildBottomNavButton(
                                       selectedTab != 2,
                                       AppSVGAssets.cal,
-                                      AppLocalizations.of(context)
-                                          .tr('history.calories'), () {
+                                      LocaleKeys.history_calories.tr(), () {
                                     setState(() {
                                       translateOffset = 96;
-                                      tabName = AppLocalizations.of(context)
-                                          .tr('history.calories');
+                                      tabName = LocaleKeys.history_calories.tr();
                                       tabImage = AppSVGAssets.cal;
                                       selectedTab = 2;
                                     });
@@ -448,10 +443,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   Widget buildTableHeaders() {
     return Table(children: [
       TableRow(children: [
-        buildTitleRowItem(AppLocalizations.of(context).tr('history.steps')),
-        buildTitleRowItem(AppLocalizations.of(context).tr('history.calories')),
-        buildTitleRowItem(AppLocalizations.of(context).tr('history.time')),
-        buildTitleRowItem(AppLocalizations.of(context).tr('history.clock')),
+        buildTitleRowItem(LocaleKeys.history_steps.tr()),
+        buildTitleRowItem(LocaleKeys.history_calories.tr()),
+        buildTitleRowItem(LocaleKeys.history_time.tr()),
+        buildTitleRowItem(LocaleKeys.history_clock.tr()),
       ])
     ]);
   }
@@ -532,7 +527,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                     .split('.')
                     .first
                     .substring(2, 7),
-            AppLocalizations.of(context).tr('history.time'),
+            LocaleKeys.history_time.tr(),
             avgTime >= oneHour
                 ? Duration(seconds: avgTime)
                     .toString()
@@ -551,7 +546,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             con.firstDay,
             con.lastDay,
             con.selectedDay.totalSteps.toString(),
-            AppLocalizations.of(context).tr('history.steps'),
+            LocaleKeys.history_steps.tr(),
             (con.selectedDay.totalSteps /
                     (con.selectedDay.workouts.length == 0
                         ? 1
@@ -564,7 +559,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             con.firstDay,
             con.lastDay,
             con.selectedDay.totalCals.toInt().toString(),
-            AppLocalizations.of(context).tr('history.calories'),
+            LocaleKeys.history_calories.tr(),
             (con.selectedDay.totalCals.toInt() /
                     (con.selectedDay.workouts.length == 0
                         ? 1

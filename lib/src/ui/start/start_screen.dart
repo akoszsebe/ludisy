@@ -105,82 +105,46 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   })),
             ],
           ),
-          Container(
-              height: 60.0,
-              child: RotatedBox(
-                  quarterTurns: 1,
-                  child: ListWheelScrollView(
-                    itemExtent: 60,
-                    useMagnifier: false,
-                    physics: FixedExtentScrollPhysics(),
-                    onSelectedItemChanged: (index) {
-                      print("index $index");
-                      setState(() {
-                        selelectedWorkoutIndex = index;
-                      });
-                    },
-                    diameterRatio: 10,
+          Center(
+              child: Container(
+                  height: 60.0,
+                  width: (70 * 2).toDouble(),
+                  color: Colors.amber,
+                  child: ListView(
+                    itemExtent: 70,
+                    semanticChildCount: 20,
+                    scrollDirection: Axis.horizontal,
+                    // physics: FixedExtentScrollPhysics(),
                     children: <Widget>[
-                      RotatedBox(
-                          quarterTurns: 3,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            child: RoundedButton(
-                              null,
-                              AppSVGAssets.stairing,
-                              () {
-                                print("index mak");
-                              },
-                              backgroundColor: selelectedWorkoutIndex != 0
-                                  ? Colors.white
-                                  : AppColors.blue,
-                              iconColor: selelectedWorkoutIndex == 0
-                                  ? Colors.white
-                                  : AppColors.grayIconAsset,
-                            ),
-                            // margin: EdgeInsets.only(left: 16, right: 16),
-                          )),
-                      RotatedBox(
-                          quarterTurns: 3,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            child: RoundedButton(
-                              null,
-                              AppSVGAssets.stairing,
-                              () {},
-                              backgroundColor: selelectedWorkoutIndex != 1
-                                  ? Colors.white
-                                  : AppColors.blue,
-                              iconColor: selelectedWorkoutIndex == 1
-                                  ? Colors.white
-                                  : AppColors.grayIconAsset,
-                            ),
-                            //margin: EdgeInsets.only(left: 16, right: 16),
-                          )),
-                      RotatedBox(
-                          quarterTurns: 3,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            child: RoundedButton(
-                              null,
-                              AppSVGAssets.stairing,
-                              () {},
-                              backgroundColor: selelectedWorkoutIndex != 2
-                                  ? Colors.white
-                                  : AppColors.blue,
-                              iconColor: selelectedWorkoutIndex == 2
-                                  ? Colors.white
-                                  : AppColors.grayIconAsset,
-                            ),
-                            // margin: EdgeInsets.only(left: 16, right: 16),
-                          ))
+                      buildWorkoutSelectButton(0),
+                      buildWorkoutSelectButton(1),
                     ],
                   ))),
         ]))
       ],
     ));
+  }
+
+  Widget buildWorkoutSelectButton(int index) {
+    return Container(
+      width: 40,
+      height: 40,
+      child: RoundedButton(
+        null,
+        AppSVGAssets.stairing,
+        () {
+          setState(() {
+            selelectedWorkoutIndex = index;
+          });
+        },
+        backgroundColor:
+            selelectedWorkoutIndex != index ? Colors.white : AppColors.blue,
+        iconColor: selelectedWorkoutIndex == index
+            ? Colors.white
+            : AppColors.grayIconAsset,
+        scale: 1,
+      ),
+      margin: EdgeInsets.only(left: 8, right: 8),
+    );
   }
 }

@@ -9,3 +9,12 @@ class DayModel {
 
   DayModel();
 }
+
+class DayQuickInfoModel{
+  int durationSec = 0;
+  double value = 0;
+  double avgValue = 0;
+  final String metric;
+
+  DayQuickInfoModel(this.metric);
+}

@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
 class AppAssets {
-  static const AssetImage background =
+  static const AssetImage background_stair =
       const AssetImage("lib/resources/images/stairs1.png");
+
+  static const AssetImage background_bike =
+      const AssetImage("lib/resources/images/bike.png");
 
   static const AssetImage splash_icon =
       const AssetImage("lib/resources/images/splash_icon.png");
@@ -46,4 +49,6 @@ class AppSVGAssets {
   static const String workoutInfo = "lib/resources/images_svg/workout_info.svg";
 
   static const String stairing = "lib/resources/images_svg/stairing.svg";
+
+  static const String biking = "lib/resources/images_svg/biking.svg";
 }

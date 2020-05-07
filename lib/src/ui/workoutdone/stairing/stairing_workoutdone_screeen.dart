@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
+import 'package:ludisy/src/ui/workoutdone/stairing/stairing_workoutdone_controller.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
-import 'package:ludisy/src/ui/workoutdone/workoutdone_controller.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class WorkOutDoneScreen extends StatefulWidget {
+class StairingWorkoutDoneScreen extends StatefulWidget {
   final int steps;
   final int stepsPlaned;
   final double cal;
   final int durationSeconds;
 
-  WorkOutDoneScreen(
+  StairingWorkoutDoneScreen(
       this.steps, this.stepsPlaned, this.cal, this.durationSeconds,
       {Key key})
       : super(key: key);
@@ -28,7 +28,7 @@ class WorkOutDoneScreen extends StatefulWidget {
 }
 
 class _WorkOutDoneScreenState
-    extends BaseScreenState<WorkOutDoneScreen, WorkOutDoneController> {
+    extends BaseScreenState<StairingWorkoutDoneScreen, StairingWorkoutDoneController> {
   _WorkOutDoneScreenState(
       int steps, int stepsPlaned, double cal, int durationSeconds)
       : super() {
@@ -120,7 +120,7 @@ class _WorkOutDoneScreenState
                               "reload",
                               AppSVGAssets.reload,
                               () => NavigationModule
-                                  .navigateAndReplaceToWorkoutScreen(
+                                  .navigateAndReplaceToStairingWorkoutScreen(
                                       context, con.stepsPlaned)),
                           Padding(
                             padding: EdgeInsets.only(left: 24, right: 24),

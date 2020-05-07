@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ludisy/src/ui/workout/stairing/stairing_workout_controller.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
-import 'package:ludisy/src/ui/workout/workout_controller.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
-class WorkOutScreen extends StatefulWidget {
+class StairingWorkoutScreen extends StatefulWidget {
   final int stepPlan;
 
-  WorkOutScreen(this.stepPlan, {Key key}) : super(key: key);
+  StairingWorkoutScreen(this.stepPlan, {Key key}) : super(key: key);
   @override
-  _WorkOutScreenState createState() => _WorkOutScreenState(stepPlan);
+  _StairingWorkoutScreenState createState() => _StairingWorkoutScreenState(stepPlan);
 }
 
-class _WorkOutScreenState
-    extends BaseScreenState<WorkOutScreen, WorkOutController> {
-  _WorkOutScreenState(this.stepPlan) : super() {
+class _StairingWorkoutScreenState
+    extends BaseScreenState<StairingWorkoutScreen, StairingWorkoutController> {
+  _StairingWorkoutScreenState(this.stepPlan) : super() {
     con.setupTargetSteps(stepPlan);
   }
 
@@ -133,7 +133,7 @@ class _WorkOutScreenState
                                   con.doneWorkout(
                                       (steps, stepsPlaned, cal, duration) {
                                     NavigationModule
-                                        .navigateToWorkoutDoneScreen(context,
+                                        .navigateToStairingWorkoutDoneScreen(context,
                                             steps, stepsPlaned, cal, duration);
                                   });
                                 },
@@ -170,7 +170,7 @@ class _WorkOutScreenState
       );
     else
       return RoundedButton(
-        "start",
+        "start_stairing",
         AppSVGAssets.start,
         () {
           con.startListening();

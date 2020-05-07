@@ -1,7 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
+import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/states/ui_state.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/util/assets.dart';
@@ -27,6 +28,8 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
 
+  final UiState _uiState = locator<UiState>();
+
   int selelectedWorkoutIndex = 0;
 
   @override
@@ -37,6 +40,8 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
 
   @override
   Widget build(BuildContext context) {
+    var info =
+        con.userState.getDayQuickInfoModelForType(selelectedWorkoutIndex);
     return BaseView(
         child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -60,64 +65,70 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   NavigationModule.navigateToSettingsScreen(context),
             )),
         WorkoutQuickInfoBar(
-            "32", "10", "7.5", "km", "min", AppSVGAssets.stairing),
+            info.durationSec >= 3600
+                ? Duration(seconds: info.durationSec)
+                    .toString()
+                    .split('.')
+                    .first
+                    .substring(0, 4)
+                : Duration(seconds: info.durationSec)
+                    .toString()
+                    .split('.')
+                    .first
+                    .substring(2, 4),
+            info.value.toInt().toString(),
+            info.avgValue.toInt().toString(),
+            info.metric,
+            "min",
+            AppSVGAssets.stairing),
         SizedBox(
           height: 10,
         ),
         Container(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(
-                margin:
-                    EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 24),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.all(const Radius.circular(32.0))),
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                    child: Column(children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: 30)),
-                      Center(
-                          child: Text(
-                        LocaleKeys.start_start_msg.tr(),
-                        style: GoogleFonts.montserrat(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textBlack),
-                        textAlign: TextAlign.center,
-                      )),
-                      Padding(padding: EdgeInsets.only(top: 20)),
-                      RoundedButton(
-                          "start",
-                          AppSVGAssets.start,
-                          () => con.setUp((stepPlan) =>
-                              NavigationModule.navigateToWorkoutScreen(
-                                  context, stepPlan))),
-                    ])),
-              ),
-              Positioned(
-                  top: 0,
-                  left: 45,
-                  child: WorkoutSlider((value) {
-                    con.setDificulty(value);
-                  })),
-            ],
-          ),
+          Container(
+              height: 260.0,
+              child: ScrollablePositionedList.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemScrollController: itemScrollController,
+                itemPositionsListener: itemPositionsListener,
+                scrollDirection: Axis.horizontal,
+                itemCount: 2,
+                itemBuilder: (_, index) {
+                  switch (index) {
+                    case 0:
+                      return buildStaringWorkoutComponent();
+                    case 1:
+                      return builBikingWorkoutComponent();
+                  }
+                  return Container();
+                },
+              )),
           Center(
               child: Container(
                   height: 60.0,
+                  margin: EdgeInsets.only(bottom: 16),
                   width: (70 * 2).toDouble(),
-                  color: Colors.amber,
                   child: ListView(
+                    shrinkWrap: true,
                     itemExtent: 70,
                     semanticChildCount: 20,
                     scrollDirection: Axis.horizontal,
-                    // physics: FixedExtentScrollPhysics(),
                     children: <Widget>[
-                      buildWorkoutSelectButton(0),
-                      buildWorkoutSelectButton(1),
+                      buildWorkoutSelectButton(0, AppSVGAssets.stairing,
+                          onTap: () {
+                        setState(() {
+                          _uiState.changeBackgroundImage(
+                              AppAssets.background_stair);
+                        });
+                      }),
+                      buildWorkoutSelectButton(1, AppSVGAssets.biking,
+                          onTap: () {
+                        setState(() {
+                          _uiState
+                              .changeBackgroundImage(AppAssets.background_bike);
+                        });
+                      }),
                     ],
                   ))),
         ]))
@@ -125,17 +136,20 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
     ));
   }
 
-  Widget buildWorkoutSelectButton(int index) {
+  Widget buildWorkoutSelectButton(int index, String imageName,
+      {VoidCallback onTap}) {
     return Container(
       width: 40,
       height: 40,
       child: RoundedButton(
         null,
-        AppSVGAssets.stairing,
+        imageName,
         () {
           setState(() {
             selelectedWorkoutIndex = index;
+            scrollTo(selelectedWorkoutIndex);
           });
+          onTap();
         },
         backgroundColor:
             selelectedWorkoutIndex != index ? Colors.white : AppColors.blue,
@@ -147,4 +161,77 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
       margin: EdgeInsets.only(left: 8, right: 8),
     );
   }
+
+  Widget buildStaringWorkoutComponent() {
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width - 32,
+          margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              child: Column(children: <Widget>[
+                Padding(padding: EdgeInsets.only(top: 20)),
+                Center(
+                    child: Text(
+                  LocaleKeys.start_start_staring.tr(),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textBlack),
+                  textAlign: TextAlign.center,
+                )),
+                Padding(padding: EdgeInsets.only(top: 30)),
+                RoundedButton(
+                    "start_stairing",
+                    AppSVGAssets.start,
+                    () => con.setUpStairing((stepPlan) =>
+                        NavigationModule.navigateToStairingWorkoutScreen(
+                            context, stepPlan))),
+              ])),
+        ),
+        Positioned(
+            top: 0,
+            left: 45,
+            child: WorkoutSlider((value) {
+              con.setDificulty(value);
+            }, <String>['100', '250', '500', '1000', 'Infinit'],
+                metric: 'step')),
+      ],
+    );
+  }
+
+  Widget builBikingWorkoutComponent() {
+    return Container(
+      width: MediaQuery.of(context).size.width - 32,
+      margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          child: Column(children: <Widget>[
+            Padding(padding: EdgeInsets.only(top: 20)),
+            Center(
+                child: Text(
+              LocaleKeys.start_start_biking.tr(),
+              style: GoogleFonts.montserrat(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textBlack),
+              textAlign: TextAlign.center,
+            )),
+            Padding(padding: EdgeInsets.only(top: 30)),
+            RoundedButton("start_biking", AppSVGAssets.start, () => {}),
+          ])),
+    );
+  }
+
+  void scrollTo(int index) => itemScrollController.scrollTo(
+      index: index,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOutCubic);
 }

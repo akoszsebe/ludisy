@@ -66,6 +66,7 @@ class _SplashScreenState
   }
 
   Future<void> precacheImages() async {
-    await precacheImage(AppAssets.background, context);
+    await precacheImage(AppAssets.background_stair, context);
+    await precacheImage(AppAssets.background_bike, context);
   }
 }

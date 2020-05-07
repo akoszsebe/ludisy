@@ -10,7 +10,7 @@ import 'package:ludisy/src/states/user_state.dart';
 import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 
-class WorkOutController extends ControllerMVC {
+class StairingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Pedometer _pedometer = locator<Pedometer>();
@@ -75,7 +75,7 @@ class WorkOutController extends ControllerMVC {
     if (percentageValue == 1) {
       FlutterRingtonePlayer.playNotification();
       doneWorkout((steps, stepsPlaned, cal, duration) {
-        NavigationModule.navigateToWorkoutDoneScreen(
+        NavigationModule.navigateToStairingWorkoutDoneScreen(
             context, steps, stepsPlaned, cal, duration);
       });
     }

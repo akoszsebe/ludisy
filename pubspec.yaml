@@ -69,6 +69,7 @@ flutter:
     - lib/resources/langs/en-US.json 
     - lib/resources/images/stairs1.png
     - lib/resources/images/splash_icon.png
+    - lib/resources/images/bike.png
 #   svg 
     - lib/resources/images_svg/back.svg
     - lib/resources/images_svg/logout.svg
@@ -89,6 +90,7 @@ flutter:
     - lib/resources/images_svg/google_logo.svg
     - lib/resources/images_svg/workout_info.svg
     - lib/resources/images_svg/stairing.svg
+    - lib/resources/images_svg/biking.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -17,7 +17,8 @@
   },
   "settings": {},
   "start": {
-    "start_msg": "Are you ready \n for some exercise?"
+    "start_staring": "Are you ready \n for some exercise?",
+    "start_biking": "Are you ready \n for a bike tour?"
   },
   "workout": {},
   "workoutdone": {

@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ludisy/src/data/auth.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
+import 'package:ludisy/src/states/ui_state.dart';
 import 'package:ludisy/src/states/user_state.dart';
 import 'package:ludisy/src/ui/history/history_controller.dart';
 import 'package:ludisy/src/ui/login/login_controller.dart';
@@ -12,8 +13,8 @@ import 'package:ludisy/src/ui/profile/profile_controller.dart';
 import 'package:ludisy/src/ui/settings/settings_controller.dart';
 import 'package:ludisy/src/ui/splash/splash_controller.dart';
 import 'package:ludisy/src/ui/start/start_controller.dart';
-import 'package:ludisy/src/ui/workout/workout_controller.dart';
-import 'package:ludisy/src/ui/workoutdone/workoutdone_controller.dart';
+import 'package:ludisy/src/ui/workout/stairing/stairing_workout_controller.dart';
+import 'package:ludisy/src/ui/workoutdone/stairing/stairing_workoutdone_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ludisy/src/util/shared_prefs.dart';
 import 'package:pedometer/pedometer.dart';
@@ -34,14 +35,15 @@ void setupLocator(String databasePath, FirebaseApp firebaseApp) {
   locator.registerLazySingleton(() => Pedometer());
   // States
   locator.registerLazySingleton(() => UserState());
+  locator.registerLazySingleton(() => UiState());
   // Controllers
   locator.registerFactory(() => HistoryController());
   locator.registerFactory(() => LoginController());
   locator.registerFactory(() => ProfileController());
   locator.registerFactory(() => SettingsController());
   locator.registerFactory(() => StartController());
-  locator.registerFactory(() => WorkOutController());
-  locator.registerFactory(() => WorkOutDoneController());
+  locator.registerFactory(() => StairingWorkoutController());
+  locator.registerFactory(() => StairingWorkoutDoneController());
   locator.registerFactory(() => SplashController());
 }
 

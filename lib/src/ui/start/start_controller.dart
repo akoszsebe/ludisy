@@ -11,7 +11,7 @@ class StartController extends ControllerMVC {
   Future<void> init() async {
   }
 
-  void setUp(Function(int) callback) {
+  void setUpStairing(Function(int) callback) {
     var stepPlan = 0;
     switch (difficulty) {
       case Difficulty.easy:

@@ -15,7 +15,8 @@ abstract class  LocaleKeys {
   static const profile_thisisyourdata = 'profile.thisisyourdata';
   static const profile = 'profile';
   static const settings = 'settings';
-  static const start_start_msg = 'start.start_msg';
+  static const start_start_staring = 'start.start_staring';
+  static const start_start_biking = 'start.start_biking';
   static const start = 'start';
   static const workout = 'workout';
   static const workoutdone_congratulation = 'workoutdone.congratulation';

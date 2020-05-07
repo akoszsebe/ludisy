@@ -5,17 +5,19 @@ import 'package:vector_math/vector_math.dart' as v_math;
 
 class WorkoutSlider extends StatefulWidget {
   final Function(int) onChanged;
+  final List<String> vales;
+  final String metric;
 
-  WorkoutSlider(this.onChanged);
+  WorkoutSlider(this.onChanged, this.vales, {this.metric = ""});
 
   @override
-  _WorkoutSliderState createState() => _WorkoutSliderState(onChanged);
+  _WorkoutSliderState createState() =>
+      _WorkoutSliderState(onChanged, vales, metric);
 }
 
 class _WorkoutSliderState extends State<WorkoutSlider>
     with SingleTickerProviderStateMixin {
   double intitalReviewValue = 2;
-  final List<String> reviews = ['100', '250', '500', '1000', 'Infinit'];
 
   Animation<double> _animation;
   AnimationController _controller;
@@ -23,8 +25,10 @@ class _WorkoutSliderState extends State<WorkoutSlider>
   double _innerWidth;
   double _animationValue;
   final Function(int) onChanged;
+  final List<String> vales;
+  final String metric;
 
-  _WorkoutSliderState(this.onChanged);
+  _WorkoutSliderState(this.onChanged, this.vales, this.metric);
 
   @override
   void initState() {
@@ -69,7 +73,7 @@ class _WorkoutSliderState extends State<WorkoutSlider>
     var newAnimatedValue = _calcAnimatedValueFormDragX(
       details.globalPosition.dx,
     );
-    if (newAnimatedValue > 0 && newAnimatedValue < reviews.length - 1) {
+    if (newAnimatedValue > 0 && newAnimatedValue < vales.length - 1) {
       setState(
         () {
           _animationValue = newAnimatedValue;
@@ -79,7 +83,7 @@ class _WorkoutSliderState extends State<WorkoutSlider>
   }
 
   _calcAnimatedValueFormDragX(x) {
-    return (x - circleDiameter) / _innerWidth * reviews.length;
+    return (x - circleDiameter) / _innerWidth * vales.length;
   }
 
   _onDragEnd(_) {
@@ -110,17 +114,19 @@ class _WorkoutSliderState extends State<WorkoutSlider>
                 width: _innerWidth,
                 child: Stack(children: <Widget>[
                   MeasureLine(
-                    states: reviews,
+                    states: vales,
                     handleTap: handleTap,
                     animationValue: _animationValue,
                     width: _innerWidth,
+                    metric: metric,
                   ),
                   MyIndicator(
-                    reviews[value],
+                    vales[value],
                     animationValue: _animationValue,
                     width: _innerWidth,
                     onDrag: _onDrag,
                     onDragEnd: _onDragEnd,
+                    metric: metric,
                   ),
                 ]),
               )),
@@ -132,12 +138,13 @@ const double circleDiameter = 56;
 const double paddingSize = 0;
 
 class MeasureLine extends StatelessWidget {
-  MeasureLine({this.handleTap, this.animationValue, this.states, this.width});
+  MeasureLine({this.handleTap, this.animationValue, this.states, this.width,this.metric});
 
   final double animationValue;
   final Function handleTap;
   final List<String> states;
   final double width;
+  final String metric;
 
   List<Widget> _buildUnits() {
     var res = <Widget>[];
@@ -163,6 +170,7 @@ class MeasureLine extends StatelessWidget {
                 Head(
                   text: text,
                   color: Colors.transparent,
+                  metric: metric,
                 ),
               ],
             ),
@@ -198,7 +206,7 @@ class MeasureLine extends StatelessWidget {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(left: 8,right: 8),
+            padding: EdgeInsets.only(left: 8, right: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
@@ -387,6 +395,7 @@ class MyIndicator extends StatelessWidget {
     this.onDrag,
     this.onDragStart,
     this.onDragEnd,
+    this.metric,
   })  : width = width - circleDiameter,
         possition = animationValue == 0 ? 0 : animationValue / 4;
 
@@ -397,6 +406,7 @@ class MyIndicator extends StatelessWidget {
   final Function onDragEnd;
   final double width;
   final double animationValue;
+  final String metric;
 
   @override
   Widget build(BuildContext context) {
@@ -424,6 +434,7 @@ class MyIndicator extends StatelessWidget {
               text: title,
               selected: true,
               color: AppColors.blue,
+              metric: metric,
             )),
       ),
     );
@@ -431,11 +442,12 @@ class MyIndicator extends StatelessWidget {
 }
 
 class Head extends StatelessWidget {
-  Head({this.text = "", this.color = Colors.white, this.selected = false});
+  Head({this.text = "", this.color = Colors.white, this.selected = false, this.metric});
 
   final String text;
   final Color color;
   final bool selected;
+  final String metric;
 
   @override
   Widget build(BuildContext context) {
@@ -453,7 +465,7 @@ class Head extends StatelessWidget {
             )
           ]),
       height: circleDiameter,
-      width: circleDiameter-10,
+      width: circleDiameter - 10,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -463,7 +475,7 @@ class Head extends StatelessWidget {
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.bold : FontWeight.w600,
                   color: selected ? Colors.white : Colors.black)),
-          Text("step",
+          Text(metric,
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.w500 : FontWeight.w400,

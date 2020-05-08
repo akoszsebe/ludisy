@@ -49,8 +49,8 @@ class _SettingsScreenState
                       : "",
                   con.userData.photoUrl,
                   canGoBack: true,
-                  onBackPressed: (){
-                     NavigationModule.navigateToStartScreen(context);
+                  onBackPressed: () {
+                    NavigationModule.navigateToStartScreen(context);
                   },
                   onProfilePressed: () =>
                       NavigationModule.navigateToProfileScreen(context),
@@ -74,15 +74,69 @@ class _SettingsScreenState
               child: buildTemeSwitcher()),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton("Source code", AppColors.instance.textBlack,
-                  () => con.launchURL("https://github.com/akoszsebe/ludisy"))),
-          Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton(
-                  "Contact the developer",
-                  AppColors.instance.textBlack,
-                  () => con.launchURL(
-                      "https://www.linkedin.com/in/zsebe-akos-b581b9139"))),
+              child: RoundedContainer(
+                backgroundColor: AppColors.instance.containerColor,
+                height: 170,
+                width: double.infinity,
+                padding:
+                    EdgeInsets.only(top: 16, left: 38, right: 38, bottom: 12),
+                radius: 32.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Contact the developer",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.instance.textBlack),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        createPersonInfo(
+                            "Developed by", "Akos", AppAssets.developer_image,
+                            () {
+                          con.launchURL(
+                              "https://www.linkedin.com/in/zsebe-akos-b581b9139");
+                        }),
+                        createPersonInfo(
+                            "Designed by", "Tibold", AppAssets.designer_image,
+                            () {
+                          con.launchURL(
+                              "https://www.linkedin.com/in/jozsa-tibold");
+                        })
+                      ],
+                    ),
+                    Material(
+                        color: AppColors.instance.containerColor,
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(24.0)),
+                        elevation: 0,
+                        child: InkWell(
+                            onTap: () {
+                              con.launchURL(
+                                  "https://github.com/akoszsebe/ludisy");
+                            },
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(24.0),
+                            ),
+                            child: Container(
+                                height: 28,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Text(
+                                    "Source code",
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.instance.textGray),
+                                  ),
+                                ))))
+                  ],
+                ),
+              )),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: RoundedContainer(
@@ -187,6 +241,52 @@ class _SettingsScreenState
       shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
     );
+  }
+
+  Widget createPersonInfo(String role, String name, AssetImage pic, onPressed) {
+    return MaterialButton(
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: 32.0,
+              height: 32.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: pic,
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                border: Border.all(
+                  color: AppColors.instance.primary,
+                  width: 2.0,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+            ),
+            Text(
+              role,
+              style: GoogleFonts.montserrat(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.instance.textGray),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 2),
+            ),
+            Text(
+              name,
+              style: GoogleFonts.montserrat(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.instance.textGray),
+            ),
+          ],
+        ));
   }
 
   Widget buildTemeSwitcher() {

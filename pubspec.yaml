@@ -40,7 +40,7 @@ dependencies:
   firebase_database: 3.1.5
   shared_preferences: 0.5.7+1
   flutter_svg: 0.17.4
-  carousel_slider: 2.1.0
+  google_maps_flutter: 0.5.16
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,6 +70,8 @@ flutter:
     - lib/resources/images/stairs1.png
     - lib/resources/images/splash_icon.png
     - lib/resources/images/bike.png
+    - lib/resources/images/akos.png
+    - lib/resources/images/tibold.jpg
 #   svg 
     - lib/resources/images_svg/back.svg
     - lib/resources/images_svg/logout.svg
@@ -91,6 +93,9 @@ flutter:
     - lib/resources/images_svg/workout_info.svg
     - lib/resources/images_svg/stairing.svg
     - lib/resources/images_svg/biking.svg
+  # map
+    - lib/resources/map/map_style_light.json
+    - lib/resources/map/map_style_dark.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -9,6 +9,12 @@ class AppAssets {
 
   static const AssetImage splash_icon =
       const AssetImage("lib/resources/images/splash_icon.png");
+
+  static const AssetImage developer_image =
+      const AssetImage("lib/resources/images/akos.png");
+
+  static const AssetImage designer_image =
+      const AssetImage("lib/resources/images/tibold.jpg");
 }
 
 class AppSVGAssets {

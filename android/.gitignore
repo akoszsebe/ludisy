@@ -4,4 +4,5 @@ gradle-wrapper.jar
 /gradlew
 /gradlew.bat
 /local.properties
+/app/src/main/res/values/google_maps_api.xml
 GeneratedPluginRegistrant.java

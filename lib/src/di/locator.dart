@@ -21,7 +21,7 @@ import 'package:pedometer/pedometer.dart';
 
 final GetIt locator = GetIt.instance;
 
-void setupLocator(String databasePath, FirebaseApp firebaseApp) {
+void setupLocator(FirebaseApp firebaseApp) {
   // Services
   locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email']));
   locator.registerLazySingleton(() => FirebaseAuth.fromApp(firebaseApp));

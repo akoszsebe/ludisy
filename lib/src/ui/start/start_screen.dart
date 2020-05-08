@@ -31,8 +31,6 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
 
   final UiState _uiState = locator<UiState>();
 
-  int selelectedWorkoutIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -42,7 +40,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   @override
   Widget build(BuildContext context) {
     var info =
-        con.userState.getDayQuickInfoModelForType(selelectedWorkoutIndex);
+        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
     return BaseView(
         child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -63,7 +61,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   NavigationModule.navigateToHistoryScreen(context),
               settingVisible: true,
               onSettingsPressed: () =>
-                  NavigationModule.navigateToSettingsScreen(context),
+                  NavigationModule.navigateAndReplaceToSettingsScreen(context),
             )),
         WorkoutQuickInfoBar(
             getTimeFormatedFrom(info.durationSec),
@@ -85,6 +83,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                 itemPositionsListener: itemPositionsListener,
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
+                initialScrollIndex: con.selelectedWorkoutIndex,
                 itemBuilder: (_, index) {
                   switch (index) {
                     case 0:
@@ -111,6 +110,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                         setState(() {
                           _uiState.changeBackgroundImage(
                               AppAssets.background_stair);
+                          scrollTo(con.selelectedWorkoutIndex);
                         });
                       }),
                       buildWorkoutSelectButton(1, AppSVGAssets.biking,
@@ -118,6 +118,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                         setState(() {
                           _uiState
                               .changeBackgroundImage(AppAssets.background_bike);
+                          scrollTo(con.selelectedWorkoutIndex);
                         });
                       }),
                     ],
@@ -136,16 +137,13 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
         null,
         imageName,
         () {
-          setState(() {
-            selelectedWorkoutIndex = index;
-            scrollTo(selelectedWorkoutIndex);
-          });
+          con.setSelelectedWorkoutIndex(index);
           onTap();
         },
-        backgroundColor: selelectedWorkoutIndex != index
+        backgroundColor: con.selelectedWorkoutIndex != index
             ? AppColors.instance.containerColor
-            : AppColors.instance.blue,
-        iconColor: selelectedWorkoutIndex == index
+            : AppColors.instance.primary,
+        iconColor: con.selelectedWorkoutIndex == index
             ? Colors.white
             : AppColors.instance.grayIconAsset,
         scale: 1,
@@ -224,26 +222,28 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
     );
   }
 
-  void scrollTo(int index) => itemScrollController.scrollTo(
-      index: index,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeInOutCubic);
-}
+  void scrollTo(int index) {
+    itemScrollController.scrollTo(
+        index: index,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOutCubic);
+  }
 
-String getTimeFormatedFrom(int durationSec) {
-  if (durationSec >= 3600) {
-    return Duration(seconds: durationSec)
-        .toString()
-        .split('.')
-        .first
-        .substring(0, 4);
+  String getTimeFormatedFrom(int durationSec) {
+    if (durationSec >= 3600) {
+      return Duration(seconds: durationSec)
+          .toString()
+          .split('.')
+          .first
+          .substring(0, 4);
+    }
+    if (durationSec >= 60) {
+      return Duration(seconds: durationSec)
+          .toString()
+          .split('.')
+          .first
+          .substring(2, 4);
+    }
+    return "-";
   }
-  if (durationSec >= 60) {
-    return Duration(seconds: durationSec)
-        .toString()
-        .split('.')
-        .first
-        .substring(2, 4);
-  }
-  return "-";
 }

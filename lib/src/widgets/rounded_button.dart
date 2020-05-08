@@ -18,7 +18,7 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (backgroundColor==null){
-      backgroundColor = AppColors.instance.blue;
+      backgroundColor = AppColors.instance.primary;
     }
     if (iconColor == null){
       iconColor = AppColors.instance.containerColor;

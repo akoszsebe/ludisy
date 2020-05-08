@@ -38,14 +38,14 @@ class AppBarChart extends StatelessWidget {
     List<int> showTooltips = const [],
   }) {
     if (barColor == null) {
-      barColor = AppColors.instance.blueWithOcupacity50;
+      barColor = AppColors.instance.primaryWithOcupacity50;
     }
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
           y: y,
-          color: isTouched ? AppColors.instance.blue : barColor,
+          color: isTouched ? AppColors.instance.primary : barColor,
           width: width,
         ),
       ],

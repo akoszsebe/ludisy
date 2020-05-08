@@ -3,13 +3,22 @@ import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 
 class StartController extends ControllerMVC {
-  
   final UserState userState = locator<UserState>();
+
+  int selelectedWorkoutIndex = 0;
 
   Difficulty difficulty = Difficulty.easy;
 
   Future<void> init() async {
+    selelectedWorkoutIndex = userState.getSelelectedWorkoutIndex();
   }
+
+  
+  void setSelelectedWorkoutIndex(int index){
+    selelectedWorkoutIndex = index;
+    userState.setSelelectedWorkoutIndex(index);
+  }
+
 
   void setUpStairing(Function(int) callback) {
     var stepPlan = 0;

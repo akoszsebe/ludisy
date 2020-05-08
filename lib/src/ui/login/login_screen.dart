@@ -159,7 +159,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                           hint: "Gender",
                           hintColor: con.field1
                               ? AppColors.instance.textBlack
-                              : AppColors.instance.red,
+                              : AppColors.instance.secundary,
                         ),
                         DropDownItem(
                           con.userData.weight == null
@@ -172,7 +172,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                           hint: "Weight",
                           hintColor: con.field2
                               ? AppColors.instance.textBlack
-                              : AppColors.instance.red,
+                              : AppColors.instance.secundary,
                         ),
                       ]),
                       Column(
@@ -200,7 +200,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                             hint: "Heigh",
                             hintColor: con.field4
                                 ? AppColors.instance.textBlack
-                                : AppColors.instance.red,
+                                : AppColors.instance.secundary,
                           ),
                         ],
                       )

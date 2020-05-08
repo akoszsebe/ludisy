@@ -24,7 +24,7 @@ class _BikingWorkoutScreenState
           return true;
         },
         child: BaseView(
-            bacgroundColor: AppColors.instance.blueWithOcupacity50,
+            bacgroundColor: AppColors.instance.primaryWithOcupacity50,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

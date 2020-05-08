@@ -44,7 +44,7 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
   @override
   Widget build(BuildContext context) {
     return BaseView(
-        bacgroundColor: AppColors.instance.blueWithOcupacity50,
+        bacgroundColor: AppColors.instance.primaryWithOcupacity50,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -90,7 +90,7 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
                     ],
                   ),
                   circularStrokeCap: CircularStrokeCap.round,
-                  progressColor: AppColors.instance.blue,
+                  progressColor: AppColors.instance.primary,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),

@@ -54,7 +54,7 @@ class _StairingWorkoutScreenState
           return true;
         },
         child: BaseView(
-            bacgroundColor: AppColors.instance.blueWithOcupacity50,
+            bacgroundColor: AppColors.instance.primaryWithOcupacity50,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -96,17 +96,18 @@ class _StairingWorkoutScreenState
                           Text(
                             "${con.stepCountValue}",
                             style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold, fontSize: 26.0),
+                                fontWeight: FontWeight.bold, fontSize: 26.0,
+                                color: Colors.white),
                           ),
                           Text(
                             "${con.calCounterValue.toStringAsFixed(1)} cal",
                             style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500, fontSize: 18.0),
+                                fontWeight: FontWeight.w500, fontSize: 18.0,color: Colors.white),
                           )
                         ],
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: AppColors.instance.blue,
+                      progressColor: AppColors.instance.primary,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 6),

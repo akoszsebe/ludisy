@@ -428,7 +428,7 @@ class MyIndicator extends StatelessWidget {
         child: Transform.scale(
             scale: 1.3,
             child: Head(
-              AppColors.instance.blue,
+              AppColors.instance.primary,
               text: title,
               selected: true,
               metric: metric,

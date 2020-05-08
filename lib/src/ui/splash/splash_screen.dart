@@ -34,7 +34,7 @@ class _SplashScreenState
     return Container(
         margin: EdgeInsets.only(top: statusBarHeight),
         child: Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.instance.containerColor,
             body: Column(children: <Widget>[
               SizedBox(
                 height: 56,
@@ -44,7 +44,7 @@ class _SplashScreenState
                 style: GoogleFonts.montserrat(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.instance.blue),
+                    color: AppColors.instance.primary),
               ),
               SizedBox(
                 height: 40,

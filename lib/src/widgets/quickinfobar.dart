@@ -13,6 +13,7 @@ class QuickInfoBar extends StatelessWidget {
   final VoidCallback onHistoryPressed;
   final VoidCallback onProfilePressed;
   final VoidCallback onSettingsPressed;
+  final VoidCallback onBackPressed;
   final bool settingVisible;
   final bool hostoryVisible;
   final bool canGoBack;
@@ -25,7 +26,8 @@ class QuickInfoBar extends StatelessWidget {
       this.onProfilePressed,
       this.onHistoryPressed,
       this.canGoBack = false,
-      this.tag});
+      this.tag,
+      this.onBackPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,11 @@ class QuickInfoBar extends StatelessWidget {
                   tag,
                   AppSVGAssets.back,
                   () {
-                    NavigationModule.pop(context);
+                    if (onBackPressed == null) {
+                      NavigationModule.pop(context);
+                    } else {
+                      onBackPressed();
+                    }
                   },
                 ),
               )),
@@ -82,7 +88,7 @@ class QuickInfoBar extends StatelessWidget {
                                           style: GoogleFonts.montserrat(
                                               fontSize: 13.0,
                                               fontWeight: FontWeight.w400,
-                                              color: AppColors.instance.blue),
+                                              color: AppColors.instance.primary),
                                         ),
                                       ]),
                                   onPressed: onSettingsPressed,
@@ -118,7 +124,7 @@ class QuickInfoBar extends StatelessWidget {
                                                   fontSize: 13.0,
                                                   fontWeight: FontWeight.w400,
                                                   color:
-                                                      AppColors.instance.blue),
+                                                      AppColors.instance.primary),
                                             ),
                                           ]),
                                       onPressed: onHistoryPressed,
@@ -148,7 +154,7 @@ class QuickInfoBar extends StatelessWidget {
                 width: 48.0,
                 height: 48.0,
                 decoration: BoxDecoration(
-                  color: AppColors.instance.blue,
+                  color: AppColors.instance.primary,
                   image: DecorationImage(
                     image: picUrl == null
                         ? AppAssets.splash_icon
@@ -157,7 +163,7 @@ class QuickInfoBar extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(24.0)),
                   border: Border.all(
-                    color: AppColors.instance.blue,
+                    color: AppColors.instance.primary,
                     width: 2.0,
                   ),
                 ),

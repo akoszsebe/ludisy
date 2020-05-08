@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ludisy/src/ui/base/app_builder.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/ui/settings/settings_controller.dart';
@@ -28,43 +29,49 @@ class _SettingsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(
-        child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
-            child: QuickInfoBar(
-              con.userData.displayName != null
-                  ? con.userData.displayName.split(" ")[0]
-                  : "",
-              con.userData.photoUrl,
-              canGoBack: true,
-              onProfilePressed: () =>
-                  NavigationModule.navigateToProfileScreen(context),
-              hostoryVisible: true,
-              onHistoryPressed: () =>
-                  NavigationModule.navigateAndReplaceToHistoryScreen(context),
-            ),
-          ),
-          Expanded(child: Hero(tag: "settings", child: buildBody()))
-        ]));
+    return WillPopScope(
+        onWillPop: () async {
+          NavigationModule.navigateToStartScreen(context);
+          return false;
+        },
+        child: BaseView(
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
+                child: QuickInfoBar(
+                  con.userData.displayName != null
+                      ? con.userData.displayName.split(" ")[0]
+                      : "",
+                  con.userData.photoUrl,
+                  canGoBack: true,
+                  onBackPressed: (){
+                     NavigationModule.navigateToStartScreen(context);
+                  },
+                  onProfilePressed: () =>
+                      NavigationModule.navigateToProfileScreen(context),
+                  hostoryVisible: true,
+                  onHistoryPressed: () =>
+                      NavigationModule.navigateAndReplaceToHistoryScreen(
+                          context),
+                ),
+              ),
+              Expanded(child: Hero(tag: "settings", child: buildBody()))
+            ])));
   }
 
   Widget buildBody() {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Material(
         type: MaterialType.transparency,
         child: Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton(
-                  "Delete all data", AppColors.instance.red, () {
-                      themeProvider.setDark();
-                  })),
+              child: buildTemeSwitcher()),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: buildButton("Source code", AppColors.instance.textBlack,
@@ -180,5 +187,29 @@ class _SettingsScreenState
       shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
     );
+  }
+
+  Widget buildTemeSwitcher() {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    switch (themeProvider.themeName) {
+      case "LIGHT":
+        return buildButton("Enable Dark Mode", AppColors.instance.textBlack,
+            () {
+          themeProvider.setDark();
+          AppBuilder.of(context).rebuild();
+        });
+      case "DARK":
+        return buildButton("Enable Light Mode", AppColors.instance.textBlack,
+            () {
+          themeProvider.setLight();
+          AppBuilder.of(context).rebuild();
+        });
+      default:
+        return buildButton("Enable Dark Mode", AppColors.instance.textBlack,
+            () {
+          themeProvider.setDark();
+          AppBuilder.of(context).rebuild();
+        });
+    }
   }
 }

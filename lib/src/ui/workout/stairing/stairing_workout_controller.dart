@@ -40,7 +40,7 @@ class StairingWorkoutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-    mock();
+    // mock();
   }
 
   void startTimer() {
@@ -151,9 +151,11 @@ class StairingWorkoutController extends ControllerMVC {
     _timer.cancel();
   }
 
-  void resume() {
+  Future<void> resume() async {
     if (isWorkoutStarted) {
       startTimer();
+      var data = await _pedometer.pedometerStream.first;
+      _onData(data);
     }
   }
 }

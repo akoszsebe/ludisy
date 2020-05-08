@@ -1,19 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:ludisy/src/ui/base/app_builder.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/ui/splash/splash_screen.dart';
-import 'package:flutter/services.dart';
-import 'package:ludisy/src/util/style/colors.dart';
 
 class MVCApp extends AppMVC {
-  MVCApp();
+  final String theme;
+  MVCApp(this.theme);
 
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.instance.blueDark,
-    ));
-    return MaterialApp(
+    return AppBuilder(
+        widget: MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ludisy',
       localizationsDelegates: [
@@ -24,6 +22,6 @@ class MVCApp extends AppMVC {
       supportedLocales: EasyLocalization.of(context).supportedLocales,
       locale: EasyLocalization.of(context).locale,
       routes: {"/": (context) => SplashScreen()},
-    );
+    ));
   }
 }

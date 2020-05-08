@@ -15,10 +15,10 @@ class RoundedMiniButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (backgroundColor == null) {
-      backgroundColor = AppColors.instance.blue;
+      backgroundColor = AppColors.instance.containerColor;
     }
     if (iconColor == null) {
-      iconColor = AppColors.instance.containerColor;
+      iconColor = AppColors.instance.primary;
     }
     return Transform.scale(
         scale: 1.1,

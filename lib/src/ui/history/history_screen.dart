@@ -47,34 +47,45 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
     if (tabName.isEmpty) {
       tabName = tr(LocaleKeys.history_steps);
     }
-    return BaseView(
-        child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-          Padding(
-              padding:
-                  EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
-              child: QuickInfoBar(
-                  con.userState.getUserData().displayName != null
-                      ? con.userState.getUserData().displayName.split(" ")[0]
-                      : "",
-                  con.userState.getUserData().photoUrl,
-                  canGoBack: true,
-                  onProfilePressed: () =>
-                      NavigationModule.navigateToProfileScreen(context),
-                  settingVisible: true,
-                  onSettingsPressed: () =>
-                      NavigationModule.navigateAndReplaceToSettingsScreen(
-                          context))),
-          Expanded(
-              child: Hero(
-                  tag: "history",
-                  child: Material(
-                      type: MaterialType.transparency,
-                      child: buildSelectedTab(selectedTab)))),
-        ]));
+    return WillPopScope(
+        onWillPop: () async {
+          NavigationModule.navigateToStartScreen(context);
+          return false;
+        },
+        child: BaseView(
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+              Padding(
+                  padding:
+                      EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
+                  child: QuickInfoBar(
+                      con.userState.getUserData().displayName != null
+                          ? con.userState
+                              .getUserData()
+                              .displayName
+                              .split(" ")[0]
+                          : "",
+                      con.userState.getUserData().photoUrl,
+                      canGoBack: true,
+                      onBackPressed: () {
+                        NavigationModule.navigateToStartScreen(context);
+                      },
+                      onProfilePressed: () =>
+                          NavigationModule.navigateToProfileScreen(context),
+                      settingVisible: true,
+                      onSettingsPressed: () =>
+                          NavigationModule.navigateAndReplaceToSettingsScreen(
+                              context))),
+              Expanded(
+                  child: Hero(
+                      tag: "history",
+                      child: Material(
+                          type: MaterialType.transparency,
+                          child: buildSelectedTab(selectedTab)))),
+            ])));
   }
 
   Widget buildDataSection(
@@ -113,7 +124,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               child: InkWell(
                                   customBorder: CircleBorder(),
                                   splashColor:
-                                      AppColors.instance.blueWithOcupacity50,
+                                      AppColors.instance.primaryWithOcupacity50,
                                   child: Icon(
                                     Icons.chevron_left,
                                     color: Colors.black,
@@ -142,7 +153,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   child: InkWell(
                                       customBorder: CircleBorder(),
                                       splashColor: AppColors
-                                          .instance.blueWithOcupacity50,
+                                          .instance.primaryWithOcupacity50,
                                       child: Icon(
                                         Icons.chevron_right,
                                         color: Colors.black,
@@ -198,7 +209,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "$totalValue",
                           style: GoogleFonts.montserrat(
-                              color: AppColors.instance.blue,
+                              color: AppColors.instance.primary,
                               fontWeight: FontWeight.w600,
                               fontSize: 17.0),
                         ),
@@ -216,7 +227,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "$avgValue",
                           style: GoogleFonts.montserrat(
-                              color: AppColors.instance.blue,
+                              color: AppColors.instance.primary,
                               fontWeight: FontWeight.w600,
                               fontSize: 17.0),
                         ),
@@ -243,7 +254,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   child: SingleChildScrollViewWithScrollbar(
                       scrollbarColor: selectedDay.workouts.length <= 4
                           ? Colors.transparent
-                          : AppColors.instance.blueWithOcupacity50,
+                          : AppColors.instance.primaryWithOcupacity50,
                       scrollbarThickness: 2.0,
                       child: Table(
                         children: [
@@ -346,7 +357,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             child: Center(
                                 child: FloatingActionButton(
                                     heroTag: null,
-                                    backgroundColor: AppColors.instance.blue,
+                                    backgroundColor: AppColors.instance.primary,
                                     elevation: 0,
                                     child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -403,7 +414,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           width: 24,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.instance.blue,
+                            color: AppColors.instance.primary,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
@@ -457,7 +468,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         heightFactor: 1.3,
         child: Text(text,
             style: GoogleFonts.montserrat(
-                color: AppColors.instance.blue,
+                color: AppColors.instance.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.0)));
   }
@@ -480,7 +491,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         res,
                         height: 18,
                         width: 18,
-                        color: AppColors.instance.blue,
+                        color: AppColors.instance.primary,
                         fit: BoxFit.scaleDown,
                       ),
                       SizedBox(
@@ -489,7 +500,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       Text(
                         title,
                         style: GoogleFonts.montserrat(
-                            color: AppColors.instance.blue,
+                            color: AppColors.instance.primary,
                             fontWeight: FontWeight.w400,
                             fontSize: 10.0),
                       ),

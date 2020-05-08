@@ -12,6 +12,7 @@ class UserState {
   User _userModel = User();
   Map<int, DayQuickInfoModel> _dailyInfoMap = Map();
   final List<int> supportTypes = [0, 1];
+  int _selelectedWorkoutIndex = 0;
 
   Future<void> initState(String userId) async {
     _userModel = await _userDao.getUser(userId);
@@ -86,5 +87,13 @@ class UserState {
 
   Future<void> removeUserData(User user) async {
     _userModel = User();
+  }
+
+  void setSelelectedWorkoutIndex(int index){
+    _selelectedWorkoutIndex = index;
+  }
+
+  int getSelelectedWorkoutIndex(){
+    return _selelectedWorkoutIndex;
   }
 }

@@ -36,7 +36,7 @@ class AppDatePicker extends StatelessWidget {
                   ),
                   Icon(
                     Icons.calendar_today,
-                    color: showError ? AppColors.instance.red : AppColors.instance.textBlack,
+                    color: showError ? AppColors.instance.secundary : AppColors.instance.textBlack,
                     size: 18,
                   ),
                 ])),
@@ -64,8 +64,8 @@ class AppDatePicker extends StatelessWidget {
       context,
       pickerTheme: DateTimePickerTheme(
         showTitle: true,
-        confirm: Text('Done', style: TextStyle(color: AppColors.instance.blue)),
-        cancel: Text('Cancel', style: TextStyle(color: AppColors.instance.red)),
+        confirm: Text('Done', style: TextStyle(color: AppColors.instance.primary)),
+        cancel: Text('Cancel', style: TextStyle(color: AppColors.instance.secundary)),
       ),
       minDateTime: DateTime(DateTime.now().year - 100),
       maxDateTime: DateTime.now(),

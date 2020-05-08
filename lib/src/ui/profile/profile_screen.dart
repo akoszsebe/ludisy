@@ -57,7 +57,7 @@ class _ProfileScreenState
                             context);
                       });
                     },
-                    iconColor: AppColors.instance.red,
+                    iconColor: AppColors.instance.secundary,
                   ),
                 ],
               ))),
@@ -83,7 +83,7 @@ class _ProfileScreenState
                           width: 64.0,
                           height: 64.0,
                           decoration: BoxDecoration(
-                            color: AppColors.instance.blue,
+                            color: AppColors.instance.primary,
                             image: DecorationImage(
                               image: con.userData.photoUrl == null
                                   ? AppAssets.splash_icon
@@ -93,7 +93,7 @@ class _ProfileScreenState
                             borderRadius:
                                 BorderRadius.all(Radius.circular(32.0)),
                             border: Border.all(
-                              color: AppColors.instance.blue,
+                              color: AppColors.instance.primary,
                               width: 2.0,
                             ),
                           ),
@@ -138,7 +138,7 @@ class _ProfileScreenState
                                   con.genderChange(v);
                                 },
                                 hint: "Gender",
-                                hintColor: AppColors.instance.red,
+                                hintColor: AppColors.instance.textGray,
                               ),
                               DropDownItem(
                                 con.userData.weight == null
@@ -151,7 +151,7 @@ class _ProfileScreenState
                                   con.weightChange(v);
                                 },
                                 hint: "Weight",
-                                hintColor: AppColors.instance.red,
+                                hintColor: AppColors.instance.textGray,
                               ),
                             ]),
                             Column(
@@ -178,7 +178,7 @@ class _ProfileScreenState
                                     con.heightChange(v);
                                   },
                                   hint: "Heigh",
-                                  hintColor: AppColors.instance.red,
+                                  hintColor: AppColors.instance.textGray,
                                 ),
                               ],
                             )

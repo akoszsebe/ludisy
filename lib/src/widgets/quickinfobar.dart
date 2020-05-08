@@ -5,6 +5,7 @@ import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class QuickInfoBar extends StatelessWidget {
   final String name;
@@ -45,12 +46,9 @@ class QuickInfoBar extends StatelessWidget {
                 ),
               )),
           Expanded(
-              child: Container(
+              child: RoundedContainer(
                   height: 48,
-                  decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          new BorderRadius.all(const Radius.circular(40.0))),
+                  radius: 40.0,
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

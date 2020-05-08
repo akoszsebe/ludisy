@@ -16,6 +16,7 @@ import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/always_show_scrollbar.dart';
 import 'package:ludisy/src/widgets/app_bar_chart.dart';
 import 'package:ludisy/src/widgets/quickinfobar.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({Key key}) : super(key: key);
@@ -84,10 +85,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
       String totalTitle,
       String avgValue,
       DayModel selectedDay) {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+    return RoundedContainer(
+        radius: 32.0,
         height: 370,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: double.infinity,
@@ -318,7 +317,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                       LocaleKeys.history_calories.tr(), () {
                                     setState(() {
                                       translateOffset = 96;
-                                      tabName = LocaleKeys.history_calories.tr();
+                                      tabName =
+                                          LocaleKeys.history_calories.tr();
                                       tabImage = AppSVGAssets.cal;
                                       selectedTab = 2;
                                     });

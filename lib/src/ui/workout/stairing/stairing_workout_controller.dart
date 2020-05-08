@@ -40,7 +40,7 @@ class StairingWorkoutController extends ControllerMVC {
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
     refresh();
-    //mock();
+    mock();
   }
 
   void startTimer() {
@@ -143,7 +143,7 @@ class StairingWorkoutController extends ControllerMVC {
         type: 0,
         data: Stairs(stairsCount: stepCountValue));
     await _workOutDao.insertWorkOut(workout);
-    userState.addSteps(stepCountValue);
+    userState.addWorkout(workout);
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:vector_math/vector_math.dart' as v_math;
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class WorkoutSlider extends StatefulWidget {
   final Function(int) onChanged;
@@ -138,7 +139,12 @@ const double circleDiameter = 56;
 const double paddingSize = 0;
 
 class MeasureLine extends StatelessWidget {
-  MeasureLine({this.handleTap, this.animationValue, this.states, this.width,this.metric});
+  MeasureLine(
+      {this.handleTap,
+      this.animationValue,
+      this.states,
+      this.width,
+      this.metric});
 
   final double animationValue;
   final Function handleTap;
@@ -193,14 +199,7 @@ class MeasureLine extends StatelessWidget {
             width: width,
             height: 56,
             decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    spreadRadius: 1,
-                    blurRadius: 20,
-                    offset: Offset(0, 0),
-                  ),
-                ],
+                boxShadow: [AppContainerBoxShadow()],
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
           ),
@@ -442,7 +441,11 @@ class MyIndicator extends StatelessWidget {
 }
 
 class Head extends StatelessWidget {
-  Head({this.text = "", this.color = Colors.white, this.selected = false, this.metric});
+  Head(
+      {this.text = "",
+      this.color = Colors.white,
+      this.selected = false,
+      this.metric});
 
   final String text;
   final Color color;

@@ -15,6 +15,7 @@ import 'package:ludisy/src/widgets/workout_quick_info.dart';
 import 'package:ludisy/src/widgets/workout_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -65,22 +66,12 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   NavigationModule.navigateToSettingsScreen(context),
             )),
         WorkoutQuickInfoBar(
-            info.durationSec >= 3600
-                ? Duration(seconds: info.durationSec)
-                    .toString()
-                    .split('.')
-                    .first
-                    .substring(0, 4)
-                : Duration(seconds: info.durationSec)
-                    .toString()
-                    .split('.')
-                    .first
-                    .substring(2, 4),
+            getTimeFormatedFrom(info.durationSec),
             info.value.toInt().toString(),
             info.avgValue.toInt().toString(),
             info.metric,
-            "min",
-            AppSVGAssets.stairing),
+            info.durationSec >= 3600 ? "hour" : "min",
+            info.imageName),
         SizedBox(
           height: 10,
         ),
@@ -165,12 +156,10 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   Widget buildStaringWorkoutComponent() {
     return Stack(
       children: <Widget>[
-        Container(
+        RoundedContainer(
           width: MediaQuery.of(context).size.width - 32,
           margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+          radius: 32.0,
           child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               child: Column(children: <Widget>[
@@ -205,12 +194,10 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget builBikingWorkoutComponent() {
-    return Container(
+    return RoundedContainer(
       width: MediaQuery.of(context).size.width - 32,
       margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+      radius: 32.0,
       child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: Column(children: <Widget>[
@@ -225,7 +212,11 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               textAlign: TextAlign.center,
             )),
             Padding(padding: EdgeInsets.only(top: 30)),
-            RoundedButton("start_biking", AppSVGAssets.start, () => {}),
+            RoundedButton(
+                "start_biking",
+                AppSVGAssets.start,
+                () =>
+                    {NavigationModule.navigateToBikingWorkoutScreen(context)}),
           ])),
     );
   }
@@ -234,4 +225,22 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
       index: index,
       duration: Duration(milliseconds: 300),
       curve: Curves.easeInOutCubic);
+}
+
+String getTimeFormatedFrom(int durationSec) {
+  if (durationSec >= 3600) {
+    return Duration(seconds: durationSec)
+        .toString()
+        .split('.')
+        .first
+        .substring(0, 4);
+  }
+  if (durationSec >= 60) {
+    return Duration(seconds: durationSec)
+        .toString()
+        .split('.')
+        .first
+        .substring(2, 4);
+  }
+  return "-";
 }

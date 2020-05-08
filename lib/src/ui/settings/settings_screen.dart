@@ -8,6 +8,7 @@ import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/quickinfobar.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
@@ -109,8 +110,10 @@ class _SettingsScreenState
   }
 
   Widget buildButton(String title, Color color, VoidCallback onTap) {
-    return Material(
+    return 
+    Material(
         borderRadius: BorderRadius.all(const Radius.circular(24.0)),
+        elevation: 10,
         child: InkWell(
             onTap: onTap,
             customBorder: RoundedRectangleBorder(

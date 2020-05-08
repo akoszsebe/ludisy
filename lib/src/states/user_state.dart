@@ -1,10 +1,9 @@
-import 'dart:collection';
-
 import 'package:ludisy/src/data/model/day_model.dart';
 import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
+import 'package:ludisy/src/util/assets.dart';
 import 'package:pedometer/pedometer.dart';
 
 class UserState {
@@ -13,8 +12,8 @@ class UserState {
   final UserDao _userDao = locator<UserDao>();
   final Pedometer _pedometer = locator<Pedometer>();
   User _userModel = User();
-  int _allSteps = 0;
   Map<int, DayQuickInfoModel> _dailyInfoMap = Map();
+  final List<int> supportTypes = [0, 1];
 
   Future<void> initState(String userId) async {
     _userModel = await _userDao.getUser(userId);
@@ -25,9 +24,6 @@ class UserState {
     }
     if (_userModel != null) {
       fillDailyInfoMap();
-      _pedometer.pedometerStream.first.then((value) {
-        _allSteps = value;
-      });
     }
   }
 
@@ -42,19 +38,32 @@ class UserState {
             x.timeStamp >= morrning.millisecondsSinceEpoch &&
             x.timeStamp <= night)
         .toList();
-    DayQuickInfoModel quickInfoModel = DayQuickInfoModel("step");
-    var size = -1;
-    workoutsForCurrentDay
-        .where((element) => element.type == 0)
-        .forEach((element) {
-      size++;
-      quickInfoModel.value += (element.data as Stairs).stairsCount;
-      quickInfoModel.durationSec += element.duration;
+    supportTypes.forEach((type) {
+      DayQuickInfoModel quickInfoModel = DayQuickInfoModel("");
+      switch (type) {
+        case 0:
+          quickInfoModel = DayQuickInfoModel("step");
+          quickInfoModel.imageName = AppSVGAssets.stairing;
+          break;
+        case 1:
+          quickInfoModel = DayQuickInfoModel("km");
+          quickInfoModel.imageName = AppSVGAssets.biking;
+          break;
+      }
+      var size = -1;
+      workoutsForCurrentDay
+          .where((element) => element.type == type)
+          .forEach((element) {
+        size++;
+        quickInfoModel.value += (element.data as Stairs).stairsCount;
+        quickInfoModel.durationSec += element.duration;
+      });
+      if (size != -1) {
+        quickInfoModel.avgValue = (quickInfoModel.value / (size + 1));
+      }
+
+      _dailyInfoMap[type] = quickInfoModel;
     });
-    if (size != -1) {
-      quickInfoModel.avgValue = (quickInfoModel.value / size + 1);
-    }
-    _dailyInfoMap[0] = quickInfoModel;
   }
 
   DayQuickInfoModel getDayQuickInfoModelForType(int type) {
@@ -72,12 +81,9 @@ class UserState {
     _userModel = data;
   }
 
-  int getAllSteps() {
-    return _allSteps;
-  }
-
-  void addSteps(int steps) {
-    _allSteps += steps;
+  void addWorkout(WorkOut workOut) {
+    _userModel.workOuts.add(workOut);
+    fillDailyInfoMap();
   }
 
   Future<void> removeUserData(User user) async {

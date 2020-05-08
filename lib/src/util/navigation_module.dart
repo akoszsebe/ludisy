@@ -5,6 +5,7 @@ import 'package:ludisy/src/ui/profile/profile_screen.dart';
 import 'package:ludisy/src/ui/settings/settings_screen.dart';
 import 'package:ludisy/src/ui/start/start_screen.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_screen.dart';
+import 'package:ludisy/src/ui/workout/biking/biking_workout_screen.dart';
 import 'package:ludisy/src/ui/workoutdone/stairing/stairing_workoutdone_screeen.dart';
 
 class NavigationModule {
@@ -12,8 +13,16 @@ class NavigationModule {
     Navigator.of(context).pushReplacement(AppRoute(page: StartScreen()));
   }
 
-  static void navigateToStairingWorkoutScreen(BuildContext context, int stepsPlaned) {
-    Navigator.of(context).push(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
+  static void navigateToStairingWorkoutScreen(
+      BuildContext context, int stepsPlaned) {
+    Navigator.of(context)
+        .push(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
+  }
+
+  static void navigateToBikingWorkoutScreen(
+      BuildContext context) {
+    Navigator.of(context)
+        .push(AppRoute(page: BikingWorkoutScreen()));
   }
 
   static void navigateAndReplaceToStairingWorkoutScreen(
@@ -22,10 +31,11 @@ class NavigationModule {
         .pushReplacement(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
   }
 
-  static void navigateToStairingWorkoutDoneScreen(BuildContext context, int steps,
-      int stepsPlaned, double cal, int durationSeconds) {
+  static void navigateToStairingWorkoutDoneScreen(BuildContext context,
+      int steps, int stepsPlaned, double cal, int durationSeconds) {
     Navigator.of(context).pushReplacement(AppRoute(
-        page: StairingWorkoutDoneScreen(steps, stepsPlaned, cal, durationSeconds)));
+        page: StairingWorkoutDoneScreen(
+            steps, stepsPlaned, cal, durationSeconds)));
   }
 
   static void pop(BuildContext context) {

@@ -12,6 +12,7 @@ import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -64,10 +65,8 @@ class _ProfileScreenState
           bottom: 0,
           right: 0,
           left: 0,
-          child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+          child: RoundedContainer(
+              radius: 32.0,
               height: 370,
               margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
               child: Column(

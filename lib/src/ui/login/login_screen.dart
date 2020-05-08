@@ -13,6 +13,7 @@ import 'package:ludisy/src/widgets/dropdown_item.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -64,10 +65,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
   }
 
   Widget buildSignInWidget() {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+    return RoundedContainer(
+        radius: 32.0,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: MediaQuery.of(context).size.width - 32,
         child: Column(
@@ -118,10 +117,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
   }
 
   Widget buildUserDateWidget() {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+    return RoundedContainer(
+        radius: 32.0,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: MediaQuery.of(context).size.width - 32,
         child: Column(
@@ -218,10 +215,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
   }
 
   Widget buildDoneWidget() {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(const Radius.circular(32.0))),
+    return RoundedContainer(
+        radius: 32.0,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: MediaQuery.of(context).size.width - 32,
         child: Column(

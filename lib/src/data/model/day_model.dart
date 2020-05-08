@@ -1,4 +1,5 @@
 import 'package:ludisy/src/data/model/workout_model.dart';
+import 'package:ludisy/src/util/assets.dart';
 
 class DayModel {
   int date = 0;
@@ -10,11 +11,12 @@ class DayModel {
   DayModel();
 }
 
-class DayQuickInfoModel{
+class DayQuickInfoModel {
   int durationSec = 0;
   double value = 0;
   double avgValue = 0;
   final String metric;
+  String imageName = AppSVGAssets.stairing;
 
   DayQuickInfoModel(this.metric);
 }

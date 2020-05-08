@@ -47,6 +47,7 @@ class QuickInfoBar extends StatelessWidget {
               )),
           Expanded(
               child: RoundedContainer(
+                  backgroundColor: AppColors.instance.containerColor,
                   height: 48,
                   radius: 40.0,
                   child: Row(
@@ -81,7 +82,7 @@ class QuickInfoBar extends StatelessWidget {
                                           style: GoogleFonts.montserrat(
                                               fontSize: 13.0,
                                               fontWeight: FontWeight.w400,
-                                              color: AppColors.blue),
+                                              color: AppColors.instance.blue),
                                         ),
                                       ]),
                                   onPressed: onSettingsPressed,
@@ -116,7 +117,8 @@ class QuickInfoBar extends StatelessWidget {
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 13.0,
                                                   fontWeight: FontWeight.w400,
-                                                  color: AppColors.blue),
+                                                  color:
+                                                      AppColors.instance.blue),
                                             ),
                                           ]),
                                       onPressed: onHistoryPressed,
@@ -146,7 +148,7 @@ class QuickInfoBar extends StatelessWidget {
                 width: 48.0,
                 height: 48.0,
                 decoration: BoxDecoration(
-                  color: AppColors.blue,
+                  color: AppColors.instance.blue,
                   image: DecorationImage(
                     image: picUrl == null
                         ? AppAssets.splash_icon
@@ -155,7 +157,7 @@ class QuickInfoBar extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(24.0)),
                   border: Border.all(
-                    color: AppColors.blue,
+                    color: AppColors.instance.blue,
                     width: 2.0,
                   ),
                 ),
@@ -171,7 +173,7 @@ class QuickInfoBar extends StatelessWidget {
           style: GoogleFonts.montserrat(
               fontSize: 18.0,
               fontWeight: FontWeight.w400,
-              color: AppColors.textGray),
+              color: AppColors.instance.textGray),
         ),
       ],
     );

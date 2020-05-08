@@ -11,9 +11,7 @@ class DropDownItem extends StatelessWidget {
   final Color hintColor;
 
   DropDownItem(this.value, this.items, this.onChanged,
-      {this.hint = "",
-      this.iconData = Icons.arrow_drop_down,
-      this.hintColor = AppColors.textBlack});
+      {this.hint = "", this.iconData = Icons.arrow_drop_down, this.hintColor});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class DropDownItem extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.textBlack),
+                      color: AppColors.instance.textBlack),
                   textAlign: TextAlign.center,
                 ),
                 value: value,
@@ -51,7 +49,7 @@ class DropDownItem extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: AppColors.textBlack),
+                              color: AppColors.instance.textBlack),
                           textAlign: TextAlign.center,
                         )
                       ],

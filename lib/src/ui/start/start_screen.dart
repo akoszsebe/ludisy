@@ -143,11 +143,11 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
           onTap();
         },
         backgroundColor: selelectedWorkoutIndex != index
-            ? AppColors.containerColor
-            : AppColors.blue,
+            ? AppColors.instance.containerColor
+            : AppColors.instance.blue,
         iconColor: selelectedWorkoutIndex == index
             ? Colors.white
-            : AppColors.grayIconAsset,
+            : AppColors.instance.grayIconAsset,
         scale: 1,
       ),
       margin: EdgeInsets.only(left: 8, right: 8),
@@ -158,6 +158,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
     return Stack(
       children: <Widget>[
         RoundedContainer(
+          backgroundColor: AppColors.instance.containerColor,
           width: MediaQuery.of(context).size.width - 32,
           margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
           radius: 32.0,
@@ -171,7 +172,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textBlack),
+                      color: AppColors.instance.textBlack),
                   textAlign: TextAlign.center,
                 )),
                 Padding(padding: EdgeInsets.only(top: 30)),
@@ -196,6 +197,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
 
   Widget builBikingWorkoutComponent() {
     return RoundedContainer(
+      backgroundColor: AppColors.instance.containerColor,
       width: MediaQuery.of(context).size.width - 32,
       margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
       radius: 32.0,
@@ -209,7 +211,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               style: GoogleFonts.montserrat(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textBlack),
+                  color: AppColors.instance.textBlack),
               textAlign: TextAlign.center,
             )),
             Padding(padding: EdgeInsets.only(top: 30)),

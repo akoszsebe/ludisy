@@ -66,6 +66,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
 
   Widget buildSignInWidget() {
     return RoundedContainer(
+        backgroundColor: AppColors.instance.containerColor,
         radius: 32.0,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: MediaQuery.of(context).size.width - 32,
@@ -81,7 +82,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textBlack),
+                    color: AppColors.instance.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -92,7 +93,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textBlack),
+                    color: AppColors.instance.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -101,7 +102,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
               Transform.scale(
                   scale: 1.2,
                   child: FloatingActionButton(
-                    backgroundColor: AppColors.containerColor,
+                    backgroundColor: AppColors.instance.containerColor,
                     child:
                         SvgPicture.asset(AppSVGAssets.googleLogo, height: 30),
                     onPressed: () {
@@ -118,6 +119,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
 
   Widget buildUserDateWidget() {
     return RoundedContainer(
+        backgroundColor: AppColors.instance.containerColor,
         radius: 32.0,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: MediaQuery.of(context).size.width - 32,
@@ -132,7 +134,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.textBlack),
+                      color: AppColors.instance.textBlack),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -155,8 +157,9 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                             con.genderChange(v);
                           },
                           hint: "Gender",
-                          hintColor:
-                              con.field1 ? AppColors.textBlack : AppColors.red,
+                          hintColor: con.field1
+                              ? AppColors.instance.textBlack
+                              : AppColors.instance.red,
                         ),
                         DropDownItem(
                           con.userData.weight == null
@@ -167,8 +170,9 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                             con.weightChange(v);
                           },
                           hint: "Weight",
-                          hintColor:
-                              con.field2 ? AppColors.textBlack : AppColors.red,
+                          hintColor: con.field2
+                              ? AppColors.instance.textBlack
+                              : AppColors.instance.red,
                         ),
                       ]),
                       Column(
@@ -195,8 +199,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                             },
                             hint: "Heigh",
                             hintColor: con.field4
-                                ? AppColors.textBlack
-                                : AppColors.red,
+                                ? AppColors.instance.textBlack
+                                : AppColors.instance.red,
                           ),
                         ],
                       )
@@ -216,6 +220,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
 
   Widget buildDoneWidget() {
     return RoundedContainer(
+        backgroundColor: AppColors.instance.containerColor,
         radius: 32.0,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
         width: MediaQuery.of(context).size.width - 32,
@@ -231,7 +236,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textBlack),
+                    color: AppColors.instance.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -242,7 +247,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                 style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textBlack),
+                    color: AppColors.instance.textBlack),
                 textAlign: TextAlign.center,
               ),
               Padding(

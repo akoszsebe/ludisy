@@ -54,7 +54,7 @@ class _StairingWorkoutScreenState
           return true;
         },
         child: BaseView(
-            bacgroundColor: AppColors.blueWithOcupacity50,
+            bacgroundColor: AppColors.instance.blueWithOcupacity50,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -106,7 +106,7 @@ class _StairingWorkoutScreenState
                         ],
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: AppColors.blue,
+                      progressColor: AppColors.instance.blue,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 6),
@@ -119,6 +119,7 @@ class _StairingWorkoutScreenState
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 46),
                     child: RoundedContainer(
+                        backgroundColor: AppColors.instance.containerColor,
                         height: 48,
                         radius: 40.0,
                         child: Row(
@@ -148,7 +149,7 @@ class _StairingWorkoutScreenState
                                     child: Text(
                                         "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(0, 7)}",
                                         style: GoogleFonts.montserrat(
-                                          color: AppColors.textGray,
+                                          color: AppColors.instance.textGray,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 18.0,
                                         ))),

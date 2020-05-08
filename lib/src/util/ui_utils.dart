@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ludisy/src/util/style/colors.dart';
 
 class AppContainerBoxShadow extends BoxShadow {
   AppContainerBoxShadow()
@@ -25,7 +24,7 @@ class RoundedContainer extends Container {
       this.width,
       this.padding,
       this.margin,
-      this.backgroundColor = AppColors.containerColor,
+      this.backgroundColor,
       this.child,
       this.radius})
       : super(

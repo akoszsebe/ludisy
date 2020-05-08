@@ -30,13 +30,13 @@ class AppDatePicker extends StatelessWidget {
                     style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.textBlack,
+                      color: AppColors.instance.textBlack,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   Icon(
                     Icons.calendar_today,
-                    color: showError ? AppColors.red : AppColors.textBlack,
+                    color: showError ? AppColors.instance.red : AppColors.instance.textBlack,
                     size: 18,
                   ),
                 ])),
@@ -64,8 +64,8 @@ class AppDatePicker extends StatelessWidget {
       context,
       pickerTheme: DateTimePickerTheme(
         showTitle: true,
-        confirm: Text('Done', style: TextStyle(color: AppColors.blue)),
-        cancel: Text('Cancel', style: TextStyle(color: AppColors.red)),
+        confirm: Text('Done', style: TextStyle(color: AppColors.instance.blue)),
+        cancel: Text('Cancel', style: TextStyle(color: AppColors.instance.red)),
       ),
       minDateTime: DateTime(DateTime.now().year - 100),
       maxDateTime: DateTime.now(),

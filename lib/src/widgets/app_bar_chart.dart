@@ -20,7 +20,7 @@ class AppBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left:13,right: 13),
+        padding: EdgeInsets.only(left: 13, right: 13),
         height: 200,
         width: 294,
         child: BarChart(
@@ -33,16 +33,19 @@ class AppBarChart extends StatelessWidget {
     int x,
     double y, {
     bool isTouched = true,
-    Color barColor = AppColors.blueWithOcupacity50,
+    Color barColor,
     double width = 16,
     List<int> showTooltips = const [],
   }) {
+    if (barColor == null) {
+      barColor = AppColors.instance.blueWithOcupacity50;
+    }
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
           y: y,
-          color: isTouched ? AppColors.blue : barColor,
+          color: isTouched ? AppColors.instance.blue : barColor,
           width: width,
         ),
       ],
@@ -76,7 +79,7 @@ class AppBarChart extends StatelessWidget {
           textStyle: GoogleFonts.montserrat(
               fontSize: 11,
               fontWeight: FontWeight.w400,
-              color: AppColors.textBlack),
+              color: AppColors.instance.textBlack),
           margin: 16,
           getTitles: (double value) {
             return dataset[value.toInt()].title;

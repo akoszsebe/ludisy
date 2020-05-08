@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:ludisy/src/util/style/colors.dart';
 
 class AppTheme {
   static get appTheme {
     final primaryIconTheme = ThemeData.light().primaryIconTheme;
     final primaryTextTheme = ThemeData.light().primaryTextTheme;
     return ThemeData.dark().copyWith(
-      primaryColor: AppColors.blue,
+      primaryColor: Colors.blue,
       primaryColorLight: Colors.white,
       primaryColorDark: Colors.black,
-      accentColor: AppColors.blue,
+      accentColor: Colors.blue,
       backgroundColor: Colors.white,
       textSelectionColor: Colors.cyan[200],
       canvasColor: Colors.white,

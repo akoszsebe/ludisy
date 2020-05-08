@@ -5,15 +5,21 @@ import 'package:ludisy/src/util/style/colors.dart';
 class RoundedMiniButton extends StatelessWidget {
   final String tag;
   final VoidCallback onPressed;
-  final Color backgroundColor;
-  final Color iconColor;
+  Color backgroundColor;
+  Color iconColor;
   final String assetName;
 
   RoundedMiniButton(this.tag, this.assetName, this.onPressed,
-      {this.backgroundColor = AppColors.containerColor, this.iconColor = AppColors.blue});
+      {this.backgroundColor, this.iconColor});
 
   @override
   Widget build(BuildContext context) {
+    if (backgroundColor == null) {
+      backgroundColor = AppColors.instance.blue;
+    }
+    if (iconColor == null) {
+      iconColor = AppColors.instance.containerColor;
+    }
     return Transform.scale(
         scale: 1.1,
         child: FloatingActionButton(

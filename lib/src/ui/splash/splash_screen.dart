@@ -44,7 +44,7 @@ class _SplashScreenState
                 style: GoogleFonts.montserrat(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.blue),
+                    color: AppColors.instance.blue),
               ),
               SizedBox(
                 height: 40,

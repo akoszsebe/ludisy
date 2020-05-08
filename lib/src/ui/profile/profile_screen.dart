@@ -57,7 +57,7 @@ class _ProfileScreenState
                             context);
                       });
                     },
-                    iconColor: AppColors.red,
+                    iconColor: AppColors.instance.red,
                   ),
                 ],
               ))),
@@ -66,6 +66,7 @@ class _ProfileScreenState
           right: 0,
           left: 0,
           child: RoundedContainer(
+              backgroundColor: AppColors.instance.containerColor,
               radius: 32.0,
               height: 370,
               margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
@@ -82,7 +83,7 @@ class _ProfileScreenState
                           width: 64.0,
                           height: 64.0,
                           decoration: BoxDecoration(
-                            color: AppColors.blue,
+                            color: AppColors.instance.blue,
                             image: DecorationImage(
                               image: con.userData.photoUrl == null
                                   ? AppAssets.splash_icon
@@ -92,7 +93,7 @@ class _ProfileScreenState
                             borderRadius:
                                 BorderRadius.all(Radius.circular(32.0)),
                             border: Border.all(
-                              color: AppColors.blue,
+                              color: AppColors.instance.blue,
                               width: 2.0,
                             ),
                           ),
@@ -105,7 +106,7 @@ class _ProfileScreenState
                       style: GoogleFonts.montserrat(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.textGray),
+                          color: AppColors.instance.textGray),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 11),
@@ -115,7 +116,7 @@ class _ProfileScreenState
                       style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.textBlack),
+                          color: AppColors.instance.textBlack),
                       textAlign: TextAlign.center,
                     ),
                     Padding(
@@ -137,6 +138,7 @@ class _ProfileScreenState
                                   con.genderChange(v);
                                 },
                                 hint: "Gender",
+                                hintColor: AppColors.instance.red,
                               ),
                               DropDownItem(
                                 con.userData.weight == null
@@ -149,6 +151,7 @@ class _ProfileScreenState
                                   con.weightChange(v);
                                 },
                                 hint: "Weight",
+                                hintColor: AppColors.instance.red,
                               ),
                             ]),
                             Column(
@@ -175,6 +178,7 @@ class _ProfileScreenState
                                     con.heightChange(v);
                                   },
                                   hint: "Heigh",
+                                  hintColor: AppColors.instance.red,
                                 ),
                               ],
                             )

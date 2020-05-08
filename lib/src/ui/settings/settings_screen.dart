@@ -7,8 +7,10 @@ import 'package:ludisy/src/ui/settings/settings_controller.dart';
 import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/util/style/theme_provider.dart';
 import 'package:ludisy/src/widgets/quickinfobar.dart';
 import 'package:ludisy/src/util/ui_utils.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
@@ -52,27 +54,32 @@ class _SettingsScreenState
   }
 
   Widget buildBody() {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Material(
         type: MaterialType.transparency,
         child: Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton("Delete all data", AppColors.red, () {})),
+              child: buildButton(
+                  "Delete all data", AppColors.instance.red, () {
+                      themeProvider.setDark();
+                  })),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton("Source code", AppColors.textBlack,
+              child: buildButton("Source code", AppColors.instance.textBlack,
                   () => con.launchURL("https://github.com/akoszsebe/ludisy"))),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: buildButton(
                   "Contact the developer",
-                  AppColors.textBlack,
+                  AppColors.instance.textBlack,
                   () => con.launchURL(
                       "https://www.linkedin.com/in/zsebe-akos-b581b9139"))),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: RoundedContainer(
+                backgroundColor: AppColors.instance.containerColor,
                 height: 180,
                 width: double.infinity,
                 padding:
@@ -87,7 +94,7 @@ class _SettingsScreenState
                       style: GoogleFonts.montserrat(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.textBlack),
+                          color: AppColors.instance.textBlack),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,7 +115,7 @@ class _SettingsScreenState
 
   Widget buildButton(String title, Color color, VoidCallback onTap) {
     return Material(
-        color: AppColors.containerColor,
+        color: AppColors.instance.containerColor,
         borderRadius: BorderRadius.all(const Radius.circular(24.0)),
         elevation: 10,
         child: InkWell(
@@ -157,14 +164,14 @@ class _SettingsScreenState
               style: GoogleFonts.montserrat(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textGray),
+                  color: AppColors.instance.textGray),
             ),
             Text(
               "$cost \$",
               style: GoogleFonts.montserrat(
                   fontSize: 13.0,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.textGray),
+                  color: AppColors.instance.textGray),
             ),
           ]),
       onPressed: () {

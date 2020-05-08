@@ -6,8 +6,11 @@ import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/mvcapp.dart';
+import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/util/style/theme_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +25,11 @@ Future<void> main() async {
       databaseURL: 'https://ludisy-c2af6.firebaseio.com/',
     ),
   );
+  AppColors.createLight();
   setupLocator("${appDocDir.path}/ludisyapp.db", firebaseApp);
   runApp(EasyLocalization(
-    child: MVCApp(),
+    child: ChangeNotifierProvider<ThemeProvider>(
+        create: (_) => ThemeProvider(), child: MVCApp()),
     path: 'lib/resources/langs',
     supportedLocales: [Locale('en', 'US')],
   ));

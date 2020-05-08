@@ -174,8 +174,8 @@ class MeasureLine extends StatelessWidget {
             child: Stack(
               children: [
                 Head(
+                  Colors.transparent,
                   text: text,
-                  color: Colors.transparent,
                   metric: metric,
                 ),
               ],
@@ -200,7 +200,7 @@ class MeasureLine extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
                 boxShadow: [AppContainerBoxShadow()],
-                color: AppColors.containerColor,
+                color: AppColors.instance.containerColor,
                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
           ),
         ),
@@ -218,13 +218,11 @@ class MeasureLine extends StatelessWidget {
 }
 
 class MyPainter extends CustomPainter {
-  MyPainter(
-    animationValue, {
-    this.color = AppColors.blue,
-  })  : activeIndex = animationValue.floor(),
+  MyPainter(animationValue, this.color)
+      : activeIndex = animationValue.floor(),
         unitAnimatingValue = (animationValue * 10 % 10 / 10);
 
-  Color color;
+  final Color color;
   final int activeIndex;
   final double unitAnimatingValue;
 
@@ -430,9 +428,9 @@ class MyIndicator extends StatelessWidget {
         child: Transform.scale(
             scale: 1.3,
             child: Head(
+              AppColors.instance.blue,
               text: title,
               selected: true,
-              color: AppColors.blue,
               metric: metric,
             )),
       ),
@@ -441,11 +439,7 @@ class MyIndicator extends StatelessWidget {
 }
 
 class Head extends StatelessWidget {
-  Head(
-      {this.text = "",
-      this.color = AppColors.containerColor,
-      this.selected = false,
-      this.metric});
+  Head(this.color, {this.text = "", this.selected = false, this.metric});
 
   final String text;
   final Color color;
@@ -477,12 +471,12 @@ class Head extends StatelessWidget {
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.bold : FontWeight.w600,
-                  color: selected ? AppColors.containerColor : Colors.black)),
+                  color: selected ? AppColors.instance.containerColor : Colors.black)),
           Text(metric,
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                  color: selected ? AppColors.containerColor : Colors.black))
+                  color: selected ? AppColors.instance.containerColor : Colors.black))
         ],
       ),
     );

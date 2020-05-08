@@ -5,18 +5,24 @@ import 'package:ludisy/src/util/style/colors.dart';
 class RoundedButton extends StatelessWidget {
   final String tag;
   final VoidCallback onPressed;
-  final Color backgroundColor;
-  final Color iconColor;
+  Color backgroundColor;
+  Color iconColor;
   final String assetName;
   final double scale;
 
   RoundedButton(this.tag, this.assetName, this.onPressed,
-      {this.backgroundColor = AppColors.blue,
-      this.iconColor = AppColors.containerColor,
+      {this.backgroundColor,
+      this.iconColor,
       this.scale = 1.25});
 
   @override
   Widget build(BuildContext context) {
+    if (backgroundColor==null){
+      backgroundColor = AppColors.instance.blue;
+    }
+    if (iconColor == null){
+      iconColor = AppColors.instance.containerColor;
+    }
     return Transform.scale(
         scale: scale,
         child: FloatingActionButton(

@@ -4,13 +4,11 @@ import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/util/assets.dart';
-import 'package:pedometer/pedometer.dart';
 
 class UserState {
   UserState();
 
   final UserDao _userDao = locator<UserDao>();
-  final Pedometer _pedometer = locator<Pedometer>();
   User _userModel = User();
   Map<int, DayQuickInfoModel> _dailyInfoMap = Map();
   final List<int> supportTypes = [0, 1];

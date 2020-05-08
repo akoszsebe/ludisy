@@ -86,6 +86,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
       String avgValue,
       DayModel selectedDay) {
     return RoundedContainer(
+        backgroundColor: AppColors.instance.containerColor,
         radius: 32.0,
         height: 370,
         margin: EdgeInsets.only(left: 16, right: 16, bottom: 24),
@@ -111,7 +112,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                               color: Colors.transparent,
                               child: InkWell(
                                   customBorder: CircleBorder(),
-                                  splashColor: AppColors.blueWithOcupacity50,
+                                  splashColor:
+                                      AppColors.instance.blueWithOcupacity50,
                                   child: Icon(
                                     Icons.chevron_left,
                                     color: Colors.black,
@@ -139,8 +141,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                       customBorder: CircleBorder(),
-                                      splashColor:
-                                          AppColors.blueWithOcupacity50,
+                                      splashColor: AppColors
+                                          .instance.blueWithOcupacity50,
                                       child: Icon(
                                         Icons.chevron_right,
                                         color: Colors.black,
@@ -196,7 +198,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "$totalValue",
                           style: GoogleFonts.montserrat(
-                              color: AppColors.blue,
+                              color: AppColors.instance.blue,
                               fontWeight: FontWeight.w600,
                               fontSize: 17.0),
                         ),
@@ -214,7 +216,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "$avgValue",
                           style: GoogleFonts.montserrat(
-                              color: AppColors.blue,
+                              color: AppColors.instance.blue,
                               fontWeight: FontWeight.w600,
                               fontSize: 17.0),
                         ),
@@ -241,7 +243,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   child: SingleChildScrollViewWithScrollbar(
                       scrollbarColor: selectedDay.workouts.length <= 4
                           ? Colors.transparent
-                          : AppColors.blueWithOcupacity50,
+                          : AppColors.instance.blueWithOcupacity50,
                       scrollbarThickness: 2.0,
                       child: Table(
                         children: [
@@ -268,6 +270,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       child: Stack(children: <Widget>[
                         Center(
                             child: RoundedContainer(
+                          backgroundColor: AppColors.instance.containerColor,
                           height: 50,
                           width: 300,
                           radius: 40.0,
@@ -343,7 +346,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                             child: Center(
                                 child: FloatingActionButton(
                                     heroTag: null,
-                                    backgroundColor: AppColors.blue,
+                                    backgroundColor: AppColors.instance.blue,
                                     elevation: 0,
                                     child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -400,7 +403,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           width: 24,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.blue,
+                            color: AppColors.instance.blue,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
@@ -454,7 +457,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         heightFactor: 1.3,
         child: Text(text,
             style: GoogleFonts.montserrat(
-                color: AppColors.blue,
+                color: AppColors.instance.blue,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.0)));
   }
@@ -477,7 +480,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         res,
                         height: 18,
                         width: 18,
-                        color: AppColors.blue,
+                        color: AppColors.instance.blue,
                         fit: BoxFit.scaleDown,
                       ),
                       SizedBox(
@@ -486,7 +489,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       Text(
                         title,
                         style: GoogleFonts.montserrat(
-                            color: AppColors.blue,
+                            color: AppColors.instance.blue,
                             fontWeight: FontWeight.w400,
                             fontSize: 10.0),
                       ),

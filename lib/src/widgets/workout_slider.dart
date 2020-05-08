@@ -200,7 +200,7 @@ class MeasureLine extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
                 boxShadow: [AppContainerBoxShadow()],
-                color: Colors.white,
+                color: AppColors.containerColor,
                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
           ),
         ),
@@ -443,7 +443,7 @@ class MyIndicator extends StatelessWidget {
 class Head extends StatelessWidget {
   Head(
       {this.text = "",
-      this.color = Colors.white,
+      this.color = AppColors.containerColor,
       this.selected = false,
       this.metric});
 
@@ -477,12 +477,12 @@ class Head extends StatelessWidget {
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.bold : FontWeight.w600,
-                  color: selected ? Colors.white : Colors.black)),
+                  color: selected ? AppColors.containerColor : Colors.black)),
           Text(metric,
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                  color: selected ? Colors.white : Colors.black))
+                  color: selected ? AppColors.containerColor : Colors.black))
         ],
       ),
     );

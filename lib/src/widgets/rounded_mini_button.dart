@@ -10,7 +10,7 @@ class RoundedMiniButton extends StatelessWidget {
   final String assetName;
 
   RoundedMiniButton(this.tag, this.assetName, this.onPressed,
-      {this.backgroundColor = Colors.white, this.iconColor = AppColors.blue});
+      {this.backgroundColor = AppColors.containerColor, this.iconColor = AppColors.blue});
 
   @override
   Widget build(BuildContext context) {

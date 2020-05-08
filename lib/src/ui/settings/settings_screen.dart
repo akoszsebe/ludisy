@@ -72,15 +72,12 @@ class _SettingsScreenState
                       "https://www.linkedin.com/in/zsebe-akos-b581b9139"))),
           Padding(
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: Container(
+              child: RoundedContainer(
                 height: 180,
                 width: double.infinity,
                 padding:
                     EdgeInsets.only(top: 16, left: 38, right: 38, bottom: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.all(const Radius.circular(32.0))),
+                radius: 32.0,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,8 +107,8 @@ class _SettingsScreenState
   }
 
   Widget buildButton(String title, Color color, VoidCallback onTap) {
-    return 
-    Material(
+    return Material(
+        color: AppColors.containerColor,
         borderRadius: BorderRadius.all(const Radius.circular(24.0)),
         elevation: 10,
         child: InkWell(

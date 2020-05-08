@@ -142,8 +142,9 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
           });
           onTap();
         },
-        backgroundColor:
-            selelectedWorkoutIndex != index ? Colors.white : AppColors.blue,
+        backgroundColor: selelectedWorkoutIndex != index
+            ? AppColors.containerColor
+            : AppColors.blue,
         iconColor: selelectedWorkoutIndex == index
             ? Colors.white
             : AppColors.grayIconAsset,

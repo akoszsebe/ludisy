@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/ui/workoutdone/stairing/stairing_workoutdone_controller.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -106,12 +107,9 @@ class _WorkOutDoneScreenState
             ),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 46),
-                child: Container(
+                child: RoundedContainer(
                     height: 48,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            BorderRadius.all(const Radius.circular(40.0))),
+                    radius: 40.0,
                     child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,

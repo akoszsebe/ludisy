@@ -101,7 +101,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
               Transform.scale(
                   scale: 1.2,
                   child: FloatingActionButton(
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.containerColor,
                     child:
                         SvgPicture.asset(AppSVGAssets.googleLogo, height: 30),
                     onPressed: () {

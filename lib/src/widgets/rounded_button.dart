@@ -12,7 +12,7 @@ class RoundedButton extends StatelessWidget {
 
   RoundedButton(this.tag, this.assetName, this.onPressed,
       {this.backgroundColor = AppColors.blue,
-      this.iconColor = Colors.white,
+      this.iconColor = AppColors.containerColor,
       this.scale = 1.25});
 
   @override

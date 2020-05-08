@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_controller.dart';
+import 'package:ludisy/src/util/ui_utils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -16,7 +17,8 @@ class StairingWorkoutScreen extends StatefulWidget {
 
   StairingWorkoutScreen(this.stepPlan, {Key key}) : super(key: key);
   @override
-  _StairingWorkoutScreenState createState() => _StairingWorkoutScreenState(stepPlan);
+  _StairingWorkoutScreenState createState() =>
+      _StairingWorkoutScreenState(stepPlan);
 }
 
 class _StairingWorkoutScreenState
@@ -116,12 +118,9 @@ class _StairingWorkoutScreenState
                 ),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 46),
-                    child: Container(
+                    child: RoundedContainer(
                         height: 48,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(const Radius.circular(40.0))),
+                        radius: 40.0,
                         child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -133,8 +132,12 @@ class _StairingWorkoutScreenState
                                   con.doneWorkout(
                                       (steps, stepsPlaned, cal, duration) {
                                     NavigationModule
-                                        .navigateToStairingWorkoutDoneScreen(context,
-                                            steps, stepsPlaned, cal, duration);
+                                        .navigateToStairingWorkoutDoneScreen(
+                                            context,
+                                            steps,
+                                            stepsPlaned,
+                                            cal,
+                                            duration);
                                   });
                                 },
                               ),

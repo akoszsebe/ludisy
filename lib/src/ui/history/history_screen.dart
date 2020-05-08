@@ -267,21 +267,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       height: 70,
                       child: Stack(children: <Widget>[
                         Center(
-                            child: Container(
+                            child: RoundedContainer(
                           height: 50,
                           width: 300,
-                          decoration: new BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 0),
-                                ),
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                  const Radius.circular(40.0))),
+                          radius: 40.0,
                           child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 26),
                               child: Row(

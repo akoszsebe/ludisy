@@ -78,7 +78,7 @@ class _ProfileScreenState
           height: 310,
           margin: EdgeInsets.only(bottom: 24),
           leading: Hero(
-              tag: "usera",
+              tag: "user",
               child: Container(
                 width: 64.0,
                 height: 64.0,

@@ -190,7 +190,7 @@ class _BikingWorkoutScreenState
                         Padding(
                             padding: EdgeInsets.only(bottom: 24, top: 48),
                             child: RoundedButton(
-                              "pause",
+                              "start_biking",
                               AppSVGAssets.pause,
                               () {},
                             ))

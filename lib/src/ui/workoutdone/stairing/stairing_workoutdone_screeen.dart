@@ -59,12 +59,14 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
                 Text(
                   LocaleKeys.workoutdone_congratulation.tr(),
                   style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w600, fontSize: 22.0),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22.0,
+                      color: AppColors.instance.containerColor),
                 ),
                 Padding(padding: EdgeInsets.only(top: 30)),
                 CircularPercentIndicator(
                   radius: 180.0,
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColors.instance.containerColor,
                   lineWidth: 10.0,
                   animation: false,
                   percent: con.percentageValue,
@@ -75,17 +77,22 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
                       SvgPicture.asset(
                         AppSVGAssets.done,
                         height: 48,
+                        color: AppColors.instance.containerColor,
                       ),
                       Padding(padding: EdgeInsets.only(top: 9)),
                       Text(
                         "${con.steps}",
                         style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold, fontSize: 26.0),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 26.0,
+                            color: AppColors.instance.containerColor),
                       ),
                       Text(
                         "${con.cal.toStringAsFixed(0)} cal",
                         style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500, fontSize: 18.0),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18.0,
+                            color: AppColors.instance.containerColor),
                       )
                     ],
                   ),
@@ -98,7 +105,9 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
                 Text(
                   LocaleKeys.workoutdone_success1.tr(),
                   style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500, fontSize: 19.0),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 19.0,
+                      color: AppColors.instance.containerColor),
                 ),
               ],
             )),
@@ -128,7 +137,7 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
                                 child: Text(
                                     "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(0, 7)}",
                                     style: GoogleFonts.montserrat(
-                                      color: AppColors.instance.textGray,
+                                      color: AppColors.instance.textSecundary,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18.0,
                                     ))),

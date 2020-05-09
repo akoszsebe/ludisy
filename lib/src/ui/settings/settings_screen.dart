@@ -90,7 +90,7 @@ class _SettingsScreenState
                       style: GoogleFonts.montserrat(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.instance.textBlack),
+                          color: AppColors.instance.textPrimary),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -131,7 +131,7 @@ class _SettingsScreenState
                                     style: GoogleFonts.montserrat(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w400,
-                                        color: AppColors.instance.textGray),
+                                        color: AppColors.instance.textSecundary),
                                   ),
                                 ))))
                   ],
@@ -144,7 +144,7 @@ class _SettingsScreenState
                 height: 180,
                 width: double.infinity,
                 padding:
-                    EdgeInsets.only(top: 16, left: 38, right: 38, bottom: 20),
+                    EdgeInsets.only(top: 16, left: 0, right: 8, bottom: 20),
                 radius: 32.0,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -155,10 +155,10 @@ class _SettingsScreenState
                       style: GoogleFonts.montserrat(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.instance.textBlack),
+                          color: AppColors.instance.textPrimary),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         buildInAppPourchaseButton(
                             "Water", "0.99", AppSVGAssets.water, 0),
@@ -202,7 +202,7 @@ class _SettingsScreenState
       String title, String cost, String imageName, int index) {
     return MaterialButton(
       height: 105,
-      minWidth: 64,
+      minWidth: 105,
       padding: EdgeInsets.all(0),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -225,14 +225,14 @@ class _SettingsScreenState
               style: GoogleFonts.montserrat(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textGray),
+                  color: AppColors.instance.textSecundary),
             ),
             Text(
               "$cost \$",
               style: GoogleFonts.montserrat(
                   fontSize: 13.0,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.instance.textGray),
+                  color: AppColors.instance.textSecundary),
             ),
           ]),
       onPressed: () {
@@ -273,7 +273,7 @@ class _SettingsScreenState
               style: GoogleFonts.montserrat(
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.instance.textGray),
+                  color: AppColors.instance.textSecundary),
             ),
             Padding(
               padding: EdgeInsets.only(top: 2),
@@ -283,7 +283,7 @@ class _SettingsScreenState
               style: GoogleFonts.montserrat(
                   fontSize: 12.0,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textGray),
+                  color: AppColors.instance.textSecundary),
             ),
           ],
         ));
@@ -293,19 +293,19 @@ class _SettingsScreenState
     final themeProvider = Provider.of<ThemeProvider>(context);
     switch (themeProvider.themeName) {
       case "LIGHT":
-        return buildButton("Enable Dark Mode", AppColors.instance.textBlack,
+        return buildButton("Enable Dark Mode", AppColors.instance.textPrimary,
             () {
           themeProvider.setDark();
           AppBuilder.of(context).rebuild();
         });
       case "DARK":
-        return buildButton("Enable Light Mode", AppColors.instance.textBlack,
+        return buildButton("Enable Light Mode", AppColors.instance.textPrimary,
             () {
           themeProvider.setLight();
           AppBuilder.of(context).rebuild();
         });
       default:
-        return buildButton("Enable Dark Mode", AppColors.instance.textBlack,
+        return buildButton("Enable Dark Mode", AppColors.instance.textPrimary,
             () {
           themeProvider.setDark();
           AppBuilder.of(context).rebuild();

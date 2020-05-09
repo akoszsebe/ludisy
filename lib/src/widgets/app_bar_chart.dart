@@ -79,7 +79,7 @@ class AppBarChart extends StatelessWidget {
           textStyle: GoogleFonts.montserrat(
               fontSize: 11,
               fontWeight: FontWeight.w400,
-              color: AppColors.instance.textBlack),
+              color: AppColors.instance.textPrimary),
           margin: 16,
           getTitles: (double value) {
             return dataset[value.toInt()].title;

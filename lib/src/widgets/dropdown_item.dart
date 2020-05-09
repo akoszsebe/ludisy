@@ -15,12 +15,14 @@ class DropDownItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         width: 120,
         child: Theme(
             data: Theme.of(context).copyWith(
+              canvasColor: AppColors.instance.containerColor,
               buttonTheme: ButtonTheme.of(context).copyWith(
                 padding: EdgeInsets.all(0),
+                splashColor: Colors.black,
                 alignedDropdown: true,
               ),
             ),
@@ -35,7 +37,7 @@ class DropDownItem extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.instance.textBlack),
+                      color: AppColors.instance.textPrimary),
                   textAlign: TextAlign.center,
                 ),
                 value: value,
@@ -49,7 +51,7 @@ class DropDownItem extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: AppColors.instance.textBlack),
+                              color: AppColors.instance.textPrimary),
                           textAlign: TextAlign.center,
                         )
                       ],

@@ -127,7 +127,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                       AppColors.instance.primaryWithOcupacity50,
                                   child: Icon(
                                     Icons.chevron_left,
-                                    color: Colors.black,
+                                    color: AppColors.instance.iconPrimary,
                                     size: 30,
                                   ),
                                   onTap: () {
@@ -138,7 +138,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       Text(
                         "${DateFormat('yyyy.MM.dd').format(startDate)} - ${DateFormat('yyyy.MM.dd').format(endDate)}",
                         style: GoogleFonts.montserrat(
-                            color: Colors.black,
+                            color: AppColors.instance.textPrimary,
                             fontWeight: FontWeight.w400,
                             fontSize: 15.0),
                       ),
@@ -156,7 +156,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                           .instance.primaryWithOcupacity50,
                                       child: Icon(
                                         Icons.chevron_right,
-                                        color: Colors.black,
+                                        color: AppColors.instance.iconPrimary,
                                         size: 30,
                                       ),
                                       onTap: () {
@@ -202,7 +202,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "Total $totalTitle:",
                           style: GoogleFonts.montserrat(
-                              color: Colors.black,
+                              color: AppColors.instance.textPrimary,
                               fontWeight: FontWeight.w500,
                               fontSize: 15.0),
                         ),
@@ -220,7 +220,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         Text(
                           "Avg $totalTitle:",
                           style: GoogleFonts.montserrat(
-                              color: Colors.black,
+                              color: AppColors.instance.textPrimary,
                               fontWeight: FontWeight.w500,
                               fontSize: 15.0),
                         ),
@@ -458,7 +458,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
     return Center(
         child: Text(title,
             style: GoogleFonts.montserrat(
-                color: Colors.black,
+                color: AppColors.instance.textPrimary,
                 fontWeight: FontWeight.w600,
                 fontSize: 14.0)));
   }

@@ -471,12 +471,12 @@ class Head extends StatelessWidget {
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.bold : FontWeight.w600,
-                  color: selected ? AppColors.instance.containerColor : Colors.black)),
+                  color: selected ? AppColors.instance.containerColor : AppColors.instance.textPrimary)),
           Text(metric,
               style: GoogleFonts.montserrat(
                   fontSize: selected ? 11.2 : 12.0,
                   fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                  color: selected ? AppColors.instance.containerColor : Colors.black))
+                  color: selected ? AppColors.instance.containerColor : AppColors.instance.textPrimary))
         ],
       ),
     );

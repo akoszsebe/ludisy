@@ -57,4 +57,6 @@ class AppSVGAssets {
   static const String stairing = "lib/resources/images_svg/stairing.svg";
 
   static const String biking = "lib/resources/images_svg/biking.svg";
+
+  static const String cancel = "lib/resources/images_svg/cancel.svg";
 }

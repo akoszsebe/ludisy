@@ -80,7 +80,7 @@ class _StairingWorkoutScreenState
                   children: <Widget>[
                     CircularPercentIndicator(
                       radius: 180.0,
-                      backgroundColor: Colors.white,
+                      backgroundColor: AppColors.instance.containerColor,
                       lineWidth: 10.0,
                       animation: false,
                       percent: con.percentageValue,
@@ -91,18 +91,19 @@ class _StairingWorkoutScreenState
                           SvgPicture.asset(
                             AppSVGAssets.step,
                             height: 64,
+                            color: AppColors.instance.containerColor,
                           ),
                           Padding(padding: EdgeInsets.only(top: 9)),
                           Text(
                             "${con.stepCountValue}",
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold, fontSize: 26.0,
-                                color: Colors.white),
+                                color: AppColors.instance.containerColor),
                           ),
                           Text(
                             "${con.calCounterValue.toStringAsFixed(1)} cal",
                             style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500, fontSize: 18.0,color: Colors.white),
+                                fontWeight: FontWeight.w500, fontSize: 18.0,color: AppColors.instance.containerColor),
                           )
                         ],
                       ),
@@ -150,7 +151,7 @@ class _StairingWorkoutScreenState
                                     child: Text(
                                         "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(0, 7)}",
                                         style: GoogleFonts.montserrat(
-                                          color: AppColors.instance.textGray,
+                                          color: AppColors.instance.textSecundary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 18.0,
                                         ))),

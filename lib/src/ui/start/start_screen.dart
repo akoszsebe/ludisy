@@ -170,7 +170,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                   style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.instance.textBlack),
+                      color: AppColors.instance.textPrimary),
                   textAlign: TextAlign.center,
                 )),
                 Padding(padding: EdgeInsets.only(top: 30)),
@@ -209,7 +209,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               style: GoogleFonts.montserrat(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textBlack),
+                  color: AppColors.instance.textPrimary),
               textAlign: TextAlign.center,
             )),
             Padding(padding: EdgeInsets.only(top: 30)),

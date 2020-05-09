@@ -93,6 +93,7 @@ flutter:
     - lib/resources/images_svg/workout_info.svg
     - lib/resources/images_svg/stairing.svg
     - lib/resources/images_svg/biking.svg
+    - lib/resources/images_svg/cancel.svg
   # map
     - lib/resources/map/map_style_light.json
     - lib/resources/map/map_style_dark.json

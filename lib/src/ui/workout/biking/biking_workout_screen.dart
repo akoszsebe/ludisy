@@ -7,6 +7,7 @@ import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/util/style/theme_provider.dart';
+import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
@@ -103,6 +104,26 @@ class _BikingWorkoutScreenState
                             ),
                           ],
                         )),
+                    Column(
+                      children: <Widget>[
+                        Stack(
+                          children: <Widget>[
+                            Container(
+                              color: Colors.red,
+                              height: 40,
+                              width: 100,
+                            )
+                          ],
+                        ),
+                        Padding(
+                            padding: EdgeInsets.all(24),
+                            child: RoundedButton(
+                              "pause",
+                              AppSVGAssets.pause,
+                              () {},
+                            ))
+                      ],
+                    ),
                   ],
                 )
               ],

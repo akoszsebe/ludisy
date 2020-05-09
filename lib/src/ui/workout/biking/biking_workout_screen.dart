@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/ui/workout/biking/biking_workout_controller.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
+import 'package:ludisy/src/util/style/map_style.dart';
 import 'package:ludisy/src/util/style/theme_provider.dart';
 import 'package:ludisy/src/util/ui_utils.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
-import 'dart:async';
-import 'package:flutter/services.dart' show rootBundle;
+
 import 'package:ludisy/src/widgets/workout_active_container.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class _BikingWorkoutScreenState
 
   GoogleMapController _controller;
   bool isMapCreated = false;
+  AppMapStyle _appMapStyle = locator<AppMapStyle>();
   static final LatLng myLocation = LatLng(46.769933, 23.586294);
 
   @override
@@ -41,32 +43,18 @@ class _BikingWorkoutScreenState
     zoom: 12.4746,
   );
 
-  changeMapMode(String themeName) {
-    switch (themeName) {
-      case "LIGHT":
-        getJsonFile("lib/resources/map/map_style_light.json").then(setMapStyle);
-        break;
-      case "DARK":
-        getJsonFile("lib/resources/map/map_style_dark.json").then(setMapStyle);
-        break;
-      default:
-    }
+  changeMapMode() {
+    setMapStyle(_appMapStyle.mapStyle);
   }
 
   void setMapStyle(String mapStyle) {
     _controller.setMapStyle(mapStyle);
   }
 
-  Future<String> getJsonFile(String path) async {
-    return await rootBundle.loadString(path);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
     if (isMapCreated) {
-      changeMapMode(themeProvider.themeName);
+      changeMapMode();
     }
     return WillPopScope(
         onWillPop: () async {
@@ -85,7 +73,7 @@ class _BikingWorkoutScreenState
                   onMapCreated: (GoogleMapController controller) {
                     _controller = controller;
                     isMapCreated = true;
-                    changeMapMode(themeProvider.themeName);
+                    changeMapMode();
                     setState(() {});
                   },
                 ),
@@ -182,8 +170,7 @@ class _BikingWorkoutScreenState
                                 children: <Widget>[
                                   buildIconTextPair(
                                       "425 m", AppSVGAssets.altitude),
-                                  buildIconTextPair(
-                                      "432 cal", AppSVGAssets.cal)
+                                  buildIconTextPair("432 cal", AppSVGAssets.cal)
                                 ],
                               ),
                             )),

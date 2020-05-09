@@ -179,7 +179,7 @@ class QuickInfoBar extends StatelessWidget {
           style: GoogleFonts.montserrat(
               fontSize: 18.0,
               fontWeight: FontWeight.w400,
-              color: AppColors.instance.textSecundary),
+              color: AppColors.instance.textPrimary),
         ),
       ],
     );

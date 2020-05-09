@@ -58,5 +58,5 @@ class _AppColorsDark extends AppColors {
   Color iconPrimary = const Color(0xfff1f1f1);
   Color iconSecundary = const Color(0xffA2A2A2);
   Color grayIconAsset = const Color(0xff7e7e7e);
-  Color containerColor = const Color(0xff525252);
+  Color containerColor = const Color(0xff424242);
 }

@@ -59,4 +59,12 @@ class AppSVGAssets {
   static const String biking = "lib/resources/images_svg/biking.svg";
 
   static const String cancel = "lib/resources/images_svg/cancel.svg";
+
+  static const String distance = "lib/resources/images_svg/distance.svg";
+
+  static const String altitude = "lib/resources/images_svg/altitude.svg";
+
+  static const String speed = "lib/resources/images_svg/speed.svg";
+
+  static const String stopper = "lib/resources/images_svg/stopper.svg";
 }

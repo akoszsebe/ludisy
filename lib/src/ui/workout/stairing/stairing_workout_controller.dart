@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:ludisy/src/util/app_forground_service.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
@@ -28,14 +29,15 @@ class StairingWorkoutController extends ControllerMVC {
   int _startime = 0;
 
   Future<void> init() async {
+    _startime = DateTime.now().millisecondsSinceEpoch;
     _offset = await _pedometer.pedometerStream.first;
     print("start from = $_offset");
     startListening();
   }
 
   Future<void> startListening() async {
-    _startime = DateTime.now().millisecondsSinceEpoch;
     startTimer();
+    StairingForegroundService.startFGS(durationSeconds, _offset);
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
     isWorkoutStarted = true;
@@ -48,6 +50,7 @@ class StairingWorkoutController extends ControllerMVC {
         (DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       durationSeconds++;
+      print("timer  $durationSeconds");
       refresh();
     });
   }
@@ -81,14 +84,16 @@ class StairingWorkoutController extends ControllerMVC {
     }
   }
 
-  void stopListening() {
-    isWorkoutStarted = false;
+  void stopListening() async {
     if (_subscription != null) {
       _subscription.cancel();
     }
     if (_timer != null) {
       _timer.cancel();
     }
+    isWorkoutStarted = false;
+    var result = await StairingForegroundService.stopFGS();
+    print("result -------------- $result");
     refresh();
   }
 
@@ -145,6 +150,7 @@ class StairingWorkoutController extends ControllerMVC {
     await _workOutDao.insertWorkOut(workout);
     userState.addWorkout(workout);
     callback(stepCountValue, targetSteps, calCounterValue, durationSeconds);
+    stopWorkout();
   }
 
   void paused() {
@@ -157,5 +163,10 @@ class StairingWorkoutController extends ControllerMVC {
       var data = await _pedometer.pedometerStream.first;
       _onData(data);
     }
+  }
+
+  void stopWorkout() {
+    isWorkoutStarted = false;
+    stopListening();
   }
 }

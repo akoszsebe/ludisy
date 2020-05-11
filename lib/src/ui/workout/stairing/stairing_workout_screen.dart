@@ -49,7 +49,7 @@ class _StairingWorkoutScreenState
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          con.stopListening();
+          con.stopWorkout();
           print("object");
           return true;
         },
@@ -69,7 +69,7 @@ class _StairingWorkoutScreenState
                           "back",
                           AppSVGAssets.back,
                           () {
-                            con.stopListening();
+                            con.stopWorkout();
                             NavigationModule.pop(context);
                           },
                         ),

@@ -1,6 +1,6 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-class StairingWorkoutDoneController extends ControllerMVC {
+class StairingWorkoutSummaryController extends ControllerMVC {
   int steps = 0;
   int stepsPlaned = 0;
   double cal = 0;

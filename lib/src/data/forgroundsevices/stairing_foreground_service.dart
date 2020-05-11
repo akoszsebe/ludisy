@@ -16,13 +16,14 @@ class StairingForegroundService {
     print("Duration  ${servicDuration.minute} sec");
     AppForegroundService.updateNotification(
         "Duration ${servicDuration.minute}");
-    // Pedometer pedometer = Pedometer();
-    var pedometer = Random();
+    Pedometer pedometer = Pedometer();
+    // var pedometer = Random();
     Directory appDocDir = await getApplicationDocumentsDirectory();
     var db = ObjectDB("${appDocDir.path}/$dbName");
 
     if (pedometer != null) {
-      var t = pedometer.nextInt(1000) + 100; //await pedometer.pedometerStream.first;
+      // var t = pedometer.nextInt(1000) + 100; 
+      var t = await pedometer.pedometerStream.first;
       var toInsert = StairingObj(count: t, whenSec: servicDuration.millisecondsSinceEpoch);
       print("mesured - stairing : ${toInsert.toJson()}");
       db.open();

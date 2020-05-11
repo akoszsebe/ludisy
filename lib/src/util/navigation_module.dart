@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/ui/history/history_screen.dart';
 import 'package:ludisy/src/ui/login/login_screen.dart';
 import 'package:ludisy/src/ui/profile/profile_screen.dart';
@@ -6,7 +7,7 @@ import 'package:ludisy/src/ui/settings/settings_screen.dart';
 import 'package:ludisy/src/ui/start/start_screen.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_screen.dart';
 import 'package:ludisy/src/ui/workout/biking/biking_workout_screen.dart';
-import 'package:ludisy/src/ui/workoutdone/stairing/stairing_workoutdone_screeen.dart';
+import 'package:ludisy/src/ui/workoutsummary/stairing/stairing_workoutsummary_screen.dart';
 
 class NavigationModule {
   static void navigateToStartScreen(BuildContext context) {
@@ -29,9 +30,9 @@ class NavigationModule {
         .pushReplacement(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
   }
 
-  static void navigateToStairingWorkoutDoneScreen(BuildContext context) {
+  static void navigateToStairingWorkoutSummaryScreen(BuildContext context,WorkOut savedWorkout) {
     Navigator.of(context)
-        .pushReplacement(AppRoute(page: StairingWorkoutDoneScreen()));
+        .pushReplacement(AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
   }
 
   static void pop(BuildContext context) {

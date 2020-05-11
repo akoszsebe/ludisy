@@ -20,6 +20,7 @@ class StairingWorkoutController extends ControllerMVC {
   int targetSteps = 0;
   double percentageValue = 0;
   int durationSeconds = 0;
+  WorkOut savedWorkout;
 
   StreamSubscription<int> _subscription;
   int _offset = 0;
@@ -28,8 +29,7 @@ class StairingWorkoutController extends ControllerMVC {
 
   Future<void> init() async {
     _startime = DateTime.now().millisecondsSinceEpoch;
-    //_offset = await _pedometer.pedometerStream.first;
-    _offset = 100;
+    _offset = await _pedometer.pedometerStream.first;
     print("start from = $_offset");
     startListening();
   }
@@ -135,15 +135,15 @@ class StairingWorkoutController extends ControllerMVC {
     durationSeconds =
         ((DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000).toInt();
     var snapShots = await stopWorkout();
-    var workout = WorkOut(
+    savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,
         timeStamp: DateTime.now().millisecondsSinceEpoch,
         cal: calCounterValue,
         type: 0,
         data: Stairs(stairsCount: stepCountValue, snapShots: snapShots));
-    await _workOutDao.insertWorkOut(workout);
-    userState.addWorkout(workout);
+   // await _workOutDao.insertWorkOut(savedWorkout);
+   // userState.addWorkout(savedWorkout);
   }
 
   void paused() {

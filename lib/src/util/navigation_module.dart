@@ -19,10 +19,8 @@ class NavigationModule {
         .push(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
   }
 
-  static void navigateToBikingWorkoutScreen(
-      BuildContext context) {
-    Navigator.of(context)
-        .push(AppRoute(page: BikingWorkoutScreen()));
+  static void navigateToBikingWorkoutScreen(BuildContext context) {
+    Navigator.of(context).push(AppRoute(page: BikingWorkoutScreen()));
   }
 
   static void navigateAndReplaceToStairingWorkoutScreen(
@@ -31,11 +29,9 @@ class NavigationModule {
         .pushReplacement(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
   }
 
-  static void navigateToStairingWorkoutDoneScreen(BuildContext context,
-      int steps, int stepsPlaned, double cal, int durationSeconds) {
-    Navigator.of(context).pushReplacement(AppRoute(
-        page: StairingWorkoutDoneScreen(
-            steps, stepsPlaned, cal, durationSeconds)));
+  static void navigateToStairingWorkoutDoneScreen(BuildContext context) {
+    Navigator.of(context)
+        .pushReplacement(AppRoute(page: StairingWorkoutDoneScreen()));
   }
 
   static void pop(BuildContext context) {

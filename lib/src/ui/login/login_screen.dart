@@ -42,7 +42,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
         right: 0,
         left: 0,
         child: Container(
-            height: 260.0,
+            height: 270.0,
             child: ScrollablePositionedList.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemScrollController: itemScrollController,

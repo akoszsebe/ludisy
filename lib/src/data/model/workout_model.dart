@@ -62,19 +62,46 @@ class WorkOut {
   }
 }
 
+// Stiring
+
 class Stairs {
   int stairsCount;
+  List<StairingObj> snapShots = [];
 
-  Stairs({this.stairsCount});
+  Stairs({this.stairsCount, this.snapShots});
 
   factory Stairs.fromJson(Map<String, dynamic> json) => Stairs(
-        stairsCount: json["stairsCount"] == null ? null : json["stairsCount"],
-      );
+      stairsCount: json["stairsCount"] == null ? null : json["stairsCount"],
+      snapShots: json["snapShots"] == null
+          ? []
+          : List<StairingObj>.from(json["snapShots"]
+              .map((i) => StairingObj.fromJson(i.cast<String, dynamic>()))
+              .toList()));
 
   Map<String, dynamic> toJson() => {
         "stairsCount": stairsCount == null ? null : stairsCount,
+        "snapShots": List<dynamic>.from(snapShots.map((x) => x.toJson())),
       };
 }
+
+class StairingObj {
+  int count;
+  int whenSec;
+
+  StairingObj({this.count, this.whenSec});
+
+  factory StairingObj.fromJson(Map<String, dynamic> json) => StairingObj(
+        count: json["count"],
+        whenSec: json["whenSec"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "count": count,
+        "whenSec": whenSec,
+      };
+}
+
+//End Stiring
 
 class Biking {
   double avgSpeed;

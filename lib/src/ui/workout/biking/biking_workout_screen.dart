@@ -10,13 +10,11 @@ import 'package:ludisy/src/util/assets.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/util/style/map_style.dart';
-import 'package:ludisy/src/util/style/theme_provider.dart';
 import 'package:ludisy/src/util/ui_utils.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 
 import 'package:ludisy/src/widgets/workout_active_container.dart';
-import 'package:provider/provider.dart';
 
 class BikingWorkoutScreen extends StatefulWidget {
   BikingWorkoutScreen({Key key}) : super(key: key);

@@ -6,12 +6,14 @@ class WorkoutActiveContainer extends StatelessWidget {
   final Widget leftChild;
   final Widget centerChild;
   final Widget rightChild;
+  final double centerDiameter;
 
   const WorkoutActiveContainer(
       {Key key,
       @required this.leftChild,
       @required this.centerChild,
-      @required this.rightChild})
+      @required this.rightChild,
+      this.centerDiameter = 96})
       : super(key: key);
 
   @override
@@ -32,9 +34,9 @@ class WorkoutActiveContainer extends StatelessWidget {
         ),
         RoundedContainer(
           backgroundColor: AppColors.instance.containerColor,
-          radius: 48.0,
-          height: 96,
-          width: 96,
+          radius: centerDiameter / 2,
+          height: centerDiameter,
+          width: centerDiameter,
           child: centerChild,
         ),
       ],

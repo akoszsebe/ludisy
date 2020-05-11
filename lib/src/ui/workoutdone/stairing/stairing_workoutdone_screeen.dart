@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/ui/workoutdone/stairing/stairing_workoutdone_controller.dart';
 import 'package:ludisy/src/util/ui_utils.dart';
+import 'package:ludisy/src/widgets/container_with_action.dart';
+import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
@@ -14,27 +16,14 @@ import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class StairingWorkoutDoneScreen extends StatefulWidget {
-  final int steps;
-  final int stepsPlaned;
-  final double cal;
-  final int durationSeconds;
-
-  StairingWorkoutDoneScreen(
-      this.steps, this.stepsPlaned, this.cal, this.durationSeconds,
-      {Key key})
-      : super(key: key);
+  StairingWorkoutDoneScreen({Key key}) : super(key: key);
   @override
-  _WorkOutDoneScreenState createState() =>
-      _WorkOutDoneScreenState(steps, stepsPlaned, cal, durationSeconds);
+  _WorkOutDoneScreenState createState() => _WorkOutDoneScreenState();
 }
 
 class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
     StairingWorkoutDoneController> {
-  _WorkOutDoneScreenState(
-      int steps, int stepsPlaned, double cal, int durationSeconds)
-      : super() {
-    con.setUpValues(steps, stepsPlaned, cal, durationSeconds);
-  }
+  _WorkOutDoneScreenState() : super();
 
   @override
   void initState() {
@@ -47,110 +36,55 @@ class _WorkOutDoneScreenState extends BaseScreenState<StairingWorkoutDoneScreen,
         bacgroundColor: AppColors.instance.primaryWithOcupacity50,
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(left: 12, top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    RoundedMiniButton(
+                      "back",
+                      AppSVGAssets.back,
+                      () {
+                        NavigationModule.pop(context);
+                      },
+                    ),
+                  ],
+                )),
             SizedBox(
               height: 50,
             ),
-            Center(
-                child: Column(
-              children: <Widget>[
-                Text(
-                  LocaleKeys.workoutdone_congratulation.tr(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 22.0,
-                      color: AppColors.instance.containerColor),
-                ),
-                Padding(padding: EdgeInsets.only(top: 30)),
-                CircularPercentIndicator(
-                  radius: 180.0,
-                  backgroundColor: AppColors.instance.containerColor,
-                  lineWidth: 10.0,
-                  animation: false,
-                  percent: con.percentageValue,
-                  center: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        AppSVGAssets.done,
-                        height: 48,
-                        color: AppColors.instance.containerColor,
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 9)),
-                      Text(
-                        "${con.steps}",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26.0,
-                            color: AppColors.instance.containerColor),
-                      ),
-                      Text(
-                        "${con.cal.toStringAsFixed(0)} cal",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
-                            color: AppColors.instance.containerColor),
-                      )
-                    ],
+            ContainerWithActionAndLeading(
+                leading: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.instance.containerColor,
+                    borderRadius: BorderRadius.all(Radius.circular(32)),
                   ),
-                  circularStrokeCap: CircularStrokeCap.round,
-                  progressColor: AppColors.instance.primary,
+                  width: 64.0,
+                  height: 64.0,
+                  child: SvgPicture.asset(
+                    AppSVGAssets.stairing,
+                    color: AppColors.instance.iconPrimary,
+                    height: 17,
+                    width: 17,
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                ),
-                Text(
-                  LocaleKeys.workoutdone_success1.tr(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 19.0,
-                      color: AppColors.instance.containerColor),
-                ),
-              ],
-            )),
-            Padding(
-              padding: EdgeInsets.only(top: 60),
-            ),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 46),
+                height: 400,
+                margin: EdgeInsets.only(bottom: 24),
                 child: RoundedContainer(
-                    backgroundColor: AppColors.instance.containerColor,
-                    height: 48,
-                    radius: 40.0,
-                    child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          RoundedButton(
-                              "reload",
-                              AppSVGAssets.reload,
-                              () => NavigationModule
-                                  .navigateAndReplaceToStairingWorkoutScreen(
-                                      context, con.stepsPlaned)),
-                          Padding(
-                            padding: EdgeInsets.only(left: 24, right: 24),
-                            child: Container(
-                                width: 72,
-                                child: Text(
-                                    "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(0, 7)}",
-                                    style: GoogleFonts.montserrat(
-                                      color: AppColors.instance.textSecundary,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18.0,
-                                    ))),
-                          ),
-                          RoundedButton(
-                            "done",
-                            AppSVGAssets.done,
-                            () => NavigationModule.pop(context),
-                          )
-                        ]))),
-            Padding(
-              padding: EdgeInsets.only(top: 100),
-            ),
+                  height: 400,
+                  backgroundColor: AppColors.instance.containerColor,
+                  radius: 32.0,
+                  margin:
+                      EdgeInsets.only(top: 32, left: 16, right: 16, bottom: 24),
+                ),
+                action: RoundedButton(
+                  "done",
+                  AppSVGAssets.done,
+                  () => NavigationModule.pop(context),
+                )),
           ],
         ));
   }

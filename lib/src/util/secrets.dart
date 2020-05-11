@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'dart:convert' show json;

@@ -2,7 +2,6 @@ import 'package:ludisy/src/data/model/user_model.dart';
 
 class CaloriCalculator {
   static double calculeteCalories(User userData, int duration, int steps) {
-    print("${userData.toJsonWithoutUserId()}");
     return calculateEnergyExpenditure(
         userData.height.toDouble(),
         userData.bithDate,

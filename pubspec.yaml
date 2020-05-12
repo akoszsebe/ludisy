@@ -75,6 +75,7 @@ flutter:
     - lib/resources/images/bike.png
     - lib/resources/images/akos.png
     - lib/resources/images/tibold.jpg
+    - lib/resources/images/bikingmarker.png
 #   svg 
     - lib/resources/images_svg/back.svg
     - lib/resources/images_svg/logout.svg

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,15 +28,23 @@ class _BikingWorkoutScreenState
     extends BaseScreenState<BikingWorkoutScreen, BikingWorkoutController> {
   _BikingWorkoutScreenState() : super();
 
-  GoogleMapController _controller;
   bool isMapCreated = false;
   AppMapStyle _appMapStyle = locator<AppMapStyle>();
+
   static final LatLng myLocation = LatLng(46.769933, 23.586294);
+  final Set<Polyline> _polyline = {};
 
   @override
   void initState() {
     super.initState();
     con.init();
+    _polyline.add(Polyline(
+      polylineId: PolylineId(con.durationSeconds.toString()),
+      visible: true,
+      points: con.latlng,
+      color: AppColors.instance.primary,
+    ));
+    con.setCustomMapPin();
   }
 
   @override
@@ -47,24 +57,8 @@ class _BikingWorkoutScreenState
     }
   }
 
-  final CameraPosition _kGooglePlex = CameraPosition(
-    target: myLocation,
-    zoom: 12.4746,
-  );
-
-  changeMapMode() {
-    setMapStyle(_appMapStyle.mapStyle);
-  }
-
-  void setMapStyle(String mapStyle) {
-    _controller.setMapStyle(mapStyle);
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (isMapCreated) {
-      changeMapMode();
-    }
     return WillPopScope(
         onWillPop: () async {
           con.stopWorkout();
@@ -77,13 +71,18 @@ class _BikingWorkoutScreenState
                 GoogleMap(
                   mapType: MapType.normal,
                   zoomGesturesEnabled: true,
+                  compassEnabled: false,
                   myLocationButtonEnabled: false,
-                  myLocationEnabled: true,
-                  initialCameraPosition: _kGooglePlex,
+                  myLocationEnabled: false,
+                  polylines: _polyline,
+                  markers: con.markers,
+                  initialCameraPosition: CameraPosition(
+                    target: myLocation,
+                    zoom: 12.4746,
+                  ),
                   onMapCreated: (GoogleMapController controller) {
-                    _controller = controller;
-                    isMapCreated = true;
-                    changeMapMode();
+                    controller.setMapStyle(_appMapStyle.mapStyle);
+                    con.mapController.complete(controller);
                     setState(() {});
                   },
                 ),
@@ -168,7 +167,7 @@ class _BikingWorkoutScreenState
                                 ]))
                               ]),
                           rightChild: buildIconTextPair(
-                              "7.3 km", AppSVGAssets.distance),
+                              "${con.distance.toStringAsFixed(1)} km", AppSVGAssets.distance),
                         ),
                         Padding(
                             padding: EdgeInsets.only(top: 24),
@@ -181,8 +180,8 @@ class _BikingWorkoutScreenState
                               child: Row(
                                 children: <Widget>[
                                   buildIconTextPair(
-                                      "425 m", AppSVGAssets.altitude),
-                                  buildIconTextPair("432 cal", AppSVGAssets.cal)
+                                      "${con.altitude} m", AppSVGAssets.altitude),
+                                  buildIconTextPair("${con.calCounterValue} cal", AppSVGAssets.cal)
                                 ],
                               ),
                             )),

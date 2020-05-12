@@ -15,6 +15,8 @@ class AppAssets {
 
   static const AssetImage designer_image =
       const AssetImage("lib/resources/images/tibold.jpg");
+
+  static String biking_marker = "lib/resources/images/bikingmarker.png";
 }
 
 class AppSVGAssets {

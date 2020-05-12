@@ -77,7 +77,7 @@ class _BikingWorkoutScreenState
                 GoogleMap(
                   mapType: MapType.normal,
                   zoomGesturesEnabled: true,
-                  myLocationButtonEnabled: true,
+                  myLocationButtonEnabled: false,
                   myLocationEnabled: true,
                   initialCameraPosition: _kGooglePlex,
                   onMapCreated: (GoogleMapController controller) {
@@ -127,7 +127,7 @@ class _BikingWorkoutScreenState
                                   padding: EdgeInsets.only(top: 2),
                                 ),
                                 Text(
-                                  "32",
+                                  "${con.speed}",
                                   style: GoogleFonts.montserrat(
                                       fontSize: 13.0,
                                       fontWeight: FontWeight.w500,

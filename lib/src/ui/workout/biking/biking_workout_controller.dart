@@ -17,6 +17,7 @@ class BikingWorkoutController extends ControllerMVC {
   double calCounterValue = 0;
   WorkoutState workoutState = WorkoutState.paused;
   int durationSeconds = 0;
+  int speed = 0;
   WorkOut savedWorkout;
 
   Timer _timer;
@@ -68,13 +69,17 @@ class BikingWorkoutController extends ControllerMVC {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       durationSeconds++;
       print("timer  $durationSeconds");
-      getLocation();
+      if (durationSeconds % 10 == 0) {
+        getLocation();
+      }
       refresh();
     });
   }
 
   getLocation() async {
     LocationData _locationData = await location.getLocation();
+    speed = _locationData.speed.toInt();
+    refresh();
     print("${_locationData.toString()}  ${_locationData.speed}");
   }
 

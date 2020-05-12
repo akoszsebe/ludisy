@@ -34,6 +34,17 @@ class _BikingWorkoutScreenState
   @override
   void initState() {
     super.initState();
+    con.init();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      con.paused();
+    } else if (state == AppLifecycleState.resumed) {
+      con.resume();
+    }
   }
 
   final CameraPosition _kGooglePlex = CameraPosition(
@@ -56,6 +67,7 @@ class _BikingWorkoutScreenState
     }
     return WillPopScope(
         onWillPop: () async {
+          con.stopWorkout();
           return true;
         },
         child: BaseView(
@@ -89,6 +101,7 @@ class _BikingWorkoutScreenState
                               "back",
                               AppSVGAssets.back,
                               () {
+                                con.stopWorkout();
                                 NavigationModule.pop(context);
                               },
                             ),
@@ -98,7 +111,8 @@ class _BikingWorkoutScreenState
                       children: <Widget>[
                         WorkoutActiveContainer(
                           leftChild: buildIconTextPair(
-                              "1:42:25", AppSVGAssets.stopper),
+                              "${Duration(seconds: con.durationSeconds).toString().split('.').first.substring(0, 7)}",
+                              AppSVGAssets.stopper),
                           centerChild: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,

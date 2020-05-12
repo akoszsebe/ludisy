@@ -1,0 +1,1 @@
+enum WorkoutState { running, paused, finised }

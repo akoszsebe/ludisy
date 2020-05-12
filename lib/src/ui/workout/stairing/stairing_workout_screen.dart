@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
+import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_controller.dart';
 import 'package:ludisy/src/widgets/workout_active_container.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

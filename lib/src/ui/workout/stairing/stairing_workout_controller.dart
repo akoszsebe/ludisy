@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ludisy/src/data/forgroundsevices/stairing_foreground_service.dart';
+import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
@@ -34,14 +35,33 @@ class StairingWorkoutController extends ControllerMVC {
     startListening();
   }
 
+  void setupTargetSteps(int stepPlan) {
+    targetSteps = stepPlan;
+    durationSeconds = 0;
+    percentageValue = 0;
+    stepCountValue = 0;
+    calCounterValue = 0;
+  }
+
   Future<void> startListening() async {
     startTimer();
-     StairingForegroundService.startFGS();
+    StairingForegroundService.startFGS();
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
     workoutState = WorkoutState.running;
     refresh();
-  //  mock();
+    //  mock();
+  }
+
+  void stopListening() async {
+    if (_subscription != null) {
+      _subscription.cancel();
+    }
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    workoutState = WorkoutState.paused;
+    refresh();
   }
 
   void startTimer() {
@@ -81,17 +101,6 @@ class StairingWorkoutController extends ControllerMVC {
     // }
   }
 
-  void stopListening() async {
-    if (_subscription != null) {
-      _subscription.cancel();
-    }
-    if (_timer != null) {
-      _timer.cancel();
-    }
-    workoutState = WorkoutState.paused;
-    refresh();
-  }
-
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - _offset}");
     var cal = CaloriCalculator.calculeteCalories(
@@ -108,22 +117,6 @@ class StairingWorkoutController extends ControllerMVC {
   void _onDone() => print("Finished pedometer tracking");
 
   void _onError(error) => print("Flutter Pedometer Error: $error");
-
-  void setupTargetSteps(int stepPlan) {
-    targetSteps = stepPlan;
-    durationSeconds = 0;
-    percentageValue = 0;
-    stepCountValue = 0;
-    calCounterValue = 0;
-  }
-
-  void replanWorkOut(VoidCallback callback) {
-    stopListening();
-    durationSeconds = 0;
-    stepCountValue = 0;
-    calCounterValue = 0;
-    callback();
-  }
 
   Future<void> doneWorkout() async {
     if (_subscription != null) {
@@ -142,8 +135,8 @@ class StairingWorkoutController extends ControllerMVC {
         cal: calCounterValue,
         type: 0,
         data: Stairs(stairsCount: stepCountValue, snapShots: snapShots));
-   await _workOutDao.insertWorkOut(savedWorkout);
-   userState.addWorkout(savedWorkout);
+    await _workOutDao.insertWorkOut(savedWorkout);
+    userState.addWorkout(savedWorkout);
   }
 
   void paused() {
@@ -170,5 +163,3 @@ class StairingWorkoutController extends ControllerMVC {
     return result;
   }
 }
-
-enum WorkoutState { running, paused, finised }

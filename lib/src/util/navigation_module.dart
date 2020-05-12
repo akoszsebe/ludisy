@@ -30,9 +30,16 @@ class NavigationModule {
         .pushReplacement(AppRoute(page: StairingWorkoutScreen(stepsPlaned)));
   }
 
-  static void navigateToStairingWorkoutSummaryScreen(BuildContext context,WorkOut savedWorkout) {
-    Navigator.of(context)
-        .pushReplacement(AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
+  static void navigateToStairingWorkoutSummaryScreen(
+      BuildContext context, WorkOut savedWorkout) {
+    Navigator.of(context).push(
+        AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
+  }
+
+  static void navigateAndReplacToStairingWorkoutSummaryScreen(
+      BuildContext context, WorkOut savedWorkout) {
+    Navigator.of(context).pushReplacement(
+        AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
   }
 
   static void pop(BuildContext context) {

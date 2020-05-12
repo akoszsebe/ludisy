@@ -3,7 +3,8 @@
     "steps": "Steps",
     "time": "Time",
     "calories": "Calories",
-    "clock": "Clock"
+    "clock": "Clock",
+    "duration": "Duration"
   },
   "login": {
     "wellcome": "Do you need a cool \n sport app?",

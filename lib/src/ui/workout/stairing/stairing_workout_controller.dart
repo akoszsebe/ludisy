@@ -142,8 +142,8 @@ class StairingWorkoutController extends ControllerMVC {
         cal: calCounterValue,
         type: 0,
         data: Stairs(stairsCount: stepCountValue, snapShots: snapShots));
-   // await _workOutDao.insertWorkOut(savedWorkout);
-   // userState.addWorkout(savedWorkout);
+   await _workOutDao.insertWorkOut(savedWorkout);
+   userState.addWorkout(savedWorkout);
   }
 
   void paused() {

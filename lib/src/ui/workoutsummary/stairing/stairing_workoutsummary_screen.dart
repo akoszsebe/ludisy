@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,8 +23,8 @@ class StairingWorkoutSummaryScreen extends StatefulWidget {
   _WorkoutSummaryScreenState createState() => _WorkoutSummaryScreenState();
 }
 
-class _WorkoutSummaryScreenState extends BaseScreenState<StairingWorkoutSummaryScreen,
-    StairingWorkoutSummaryController> {
+class _WorkoutSummaryScreenState extends BaseScreenState<
+    StairingWorkoutSummaryScreen, StairingWorkoutSummaryController> {
   _WorkoutSummaryScreenState() : super();
 
   final dateformat = new DateFormat('dd-MM-yyyy hh:mm');
@@ -105,7 +106,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<StairingWorkoutSummaryS
                                 fontWeight: FontWeight.normal,
                                 color: AppColors.instance.textPrimary),
                           ),
-                          SizedBox(height:16),
+                          SizedBox(height: 16),
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -133,7 +134,18 @@ class _WorkoutSummaryScreenState extends BaseScreenState<StairingWorkoutSummaryS
                                   "${(widget.workout.data as Stairs).stairsCount} stp",
                                   AppSVGAssets.step)
                             ],
-                          )
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 40, top: 40),
+                              child: LineChart(
+                                lineChartData(),
+                                swapAnimationDuration:
+                                    const Duration(milliseconds: 250),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     )),
@@ -180,5 +192,95 @@ class _WorkoutSummaryScreenState extends BaseScreenState<StairingWorkoutSummaryS
             ],
           )
         ]));
+  }
+
+  LineChartData lineChartData() {
+    return LineChartData(
+      lineTouchData: LineTouchData(
+        enabled: false,
+      ),
+      gridData: FlGridData(
+        show: false,
+      ),
+      titlesData: FlTitlesData(
+        bottomTitles: SideTitles(
+          showTitles: true,
+          textStyle: GoogleFonts.montserrat(
+              fontSize: 11,
+              fontWeight: FontWeight.w400,
+              color: AppColors.instance.textPrimary),
+          margin: 16,
+          getTitles: (double value) {
+            return ""; // titles[value];
+          },
+        ),
+        leftTitles: SideTitles(
+          showTitles: false,
+        ),
+      ),
+      borderData: FlBorderData(
+          show: false,
+          border: const Border(
+            bottom: BorderSide(
+              color: Color(0xff4e4965),
+              width: 1,
+            ),
+            left: BorderSide(
+              color: Colors.transparent,
+            ),
+            right: BorderSide(
+              color: Colors.transparent,
+            ),
+            top: BorderSide(
+              color: Colors.transparent,
+            ),
+          )),
+      lineBarsData: linesBarData2(),
+    );
+  }
+
+  Map<double, String> titles = Map();
+
+  List<FlSpot> getSpots() {
+    List<FlSpot> spots = List();
+    var prev = 0;
+    (widget.workout.data as Stairs).snapShots.forEach((element) {
+      var steps = (element.count - prev).toDouble();
+      if (steps < 0) steps = 0.0;
+      spots.add(FlSpot(element.whenSec.toDouble(), steps));
+      prev = element.count;
+      titles[steps] = element.whenSec.toString();
+    });
+    if (spots.isEmpty) {
+      spots.add(FlSpot(0, 0));
+    }
+    return spots;
+  }
+
+  List<LineChartBarData> linesBarData2() {
+    return [
+      LineChartBarData(
+        spots: getSpots(),
+        isCurved: true,
+        colors: const [
+          Color(0xCC34A853),
+        ],
+        barWidth: 2,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        belowBarData: BarAreaData(
+          show: true,
+          colors: [
+            Color(0xCC34A853).withOpacity(0.3),
+            Color(0xCC34A853).withOpacity(0.0)
+          ],
+          gradientColorStops: [0.4, 1.0],
+          gradientFrom: const Offset(0, 0),
+          gradientTo: const Offset(0, 1),
+        ),
+      ),
+    ];
   }
 }

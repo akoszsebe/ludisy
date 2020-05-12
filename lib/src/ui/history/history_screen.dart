@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
+import 'package:ludisy/src/widgets/rounded_button.dart';
+import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/day_model.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -29,10 +31,6 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
     con = controller;
   }
   HistoryController con;
-  double translateOffset = 0;
-  String tabImage = AppSVGAssets.step;
-  String tabName = "";
-  int selectedTab = 1;
   int touchedIndex = 6;
   static final int oneHour = 3600;
 
@@ -44,9 +42,6 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (tabName.isEmpty) {
-      tabName = tr(LocaleKeys.history_steps);
-    }
     return WillPopScope(
         onWillPop: () async {
           NavigationModule.navigateToStartScreen(context);
@@ -60,7 +55,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 children: <Widget>[
               Padding(
                   padding:
-                      EdgeInsets.only(left: 12, top: 20, bottom: 40, right: 16),
+                      EdgeInsets.only(left: 12, top: 20, bottom: 30, right: 16),
                   child: QuickInfoBar(
                       con.userState.getUserData().displayName != null
                           ? con.userState
@@ -84,7 +79,47 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       tag: "history",
                       child: Material(
                           type: MaterialType.transparency,
-                          child: buildSelectedTab(selectedTab)))),
+                          child: buildDataSection(
+                              con.itemsSteps,
+                              con.firstDay,
+                              con.lastDay,
+                              con.selectedDay.totalSteps.toString(),
+                              LocaleKeys.history_steps.tr(),
+                              (con.selectedDay.totalSteps /
+                                      (con.selectedDay.workouts.length == 0
+                                          ? 1
+                                          : con.selectedDay.workouts.length))
+                                  .toStringAsFixed(0),
+                              con.selectedDay)))),
+              Center(
+                  child: Container(
+                      height: 60.0,
+                      margin: EdgeInsets.only(bottom: 16),
+                      width: (70 * 2).toDouble(),
+                      child: ListView(
+                        shrinkWrap: true,
+                        itemExtent: 70,
+                        semanticChildCount: 20,
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          buildWorkoutSelectButton(0, AppSVGAssets.stairing,
+                              onTap: () {
+                            // setState(() {
+                            //   _uiState.changeBackgroundImage(
+                            //       AppAssets.background_stair);
+                            //   // scrollTo(con.selelectedWorkoutIndex);
+                            // });
+                          }),
+                          buildWorkoutSelectButton(1, AppSVGAssets.biking,
+                              onTap: () {
+                            // setState(() {
+                            //   _uiState.changeBackgroundImage(
+                            //       AppAssets.background_bike);
+                            //   // scrollTo(con.selelectedWorkoutIndex);
+                            // });
+                          }),
+                        ],
+                      ))),
             ])));
   }
 
@@ -136,11 +171,11 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                         .subtract(Duration(days: 1)));
                                   }))),
                       Text(
-                        "${DateFormat('yyyy.MM.dd').format(startDate)} - ${DateFormat('yyyy.MM.dd').format(endDate)}",
+                        "${DateFormat('yyyy.MM.dd').format(startDate)}  -  ${DateFormat('yyyy.MM.dd').format(endDate)}",
                         style: GoogleFonts.montserrat(
                             color: AppColors.instance.textPrimary,
                             fontWeight: FontWeight.w400,
-                            fontSize: 15.0),
+                            fontSize: 14.0),
                       ),
                       Container(
                           width: 50,
@@ -204,14 +239,14 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           style: GoogleFonts.montserrat(
                               color: AppColors.instance.textPrimary,
                               fontWeight: FontWeight.w500,
-                              fontSize: 15.0),
+                              fontSize: 14.0),
                         ),
                         Text(
                           "$totalValue",
                           style: GoogleFonts.montserrat(
                               color: AppColors.instance.primary,
                               fontWeight: FontWeight.w600,
-                              fontSize: 17.0),
+                              fontSize: 16.0),
                         ),
                       ],
                     ),
@@ -222,14 +257,14 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           style: GoogleFonts.montserrat(
                               color: AppColors.instance.textPrimary,
                               fontWeight: FontWeight.w500,
-                              fontSize: 15.0),
+                              fontSize: 14.0),
                         ),
                         Text(
                           "$avgValue",
                           style: GoogleFonts.montserrat(
                               color: AppColors.instance.primary,
                               fontWeight: FontWeight.w600,
-                              fontSize: 17.0),
+                              fontSize: 16.0),
                         ),
                       ],
                     )
@@ -249,7 +284,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 height: 1,
               ),
               Container(
-                  height: 100.0,
+                  height: 120.0,
                   padding: EdgeInsets.only(left: 28, right: 28, top: 5),
                   child: SingleChildScrollViewWithScrollbar(
                       scrollbarColor: selectedDay.workouts.length <= 4
@@ -271,119 +306,13 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                     "${selectedDay.workouts[i].duration >= oneHour ? Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(0, 7) : Duration(seconds: selectedDay.workouts[i].duration).toString().split('.').first.substring(2, 7)}"),
                                 buildRowItem(
                                     "${DateFormat('hh:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedDay.workouts[i].timeStamp))}"),
+                                buildRowButtonItem(selectedDay.workouts[i]),
                               ]),
                         ],
                       ))),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 6, top: 8),
-                  child: Container(
-                      height: 70,
-                      child: Stack(children: <Widget>[
-                        Center(
-                            child: RoundedContainer(
-                          backgroundColor: AppColors.instance.containerColor,
-                          height: 50,
-                          width: 300,
-                          radius: 40.0,
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 26),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  buildBottomNavButton(
-                                      selectedTab != 0,
-                                      AppSVGAssets.time,
-                                      LocaleKeys.history_time.tr(), () {
-                                    setState(() {
-                                      translateOffset = -96;
-                                      tabName = LocaleKeys.history_time.tr();
-                                      tabImage = AppSVGAssets.time;
-                                      selectedTab = 0;
-                                    });
-                                  }),
-                                  buildBottomNavButton(
-                                      selectedTab != 1,
-                                      AppSVGAssets.step,
-                                      LocaleKeys.history_steps.tr(), () {
-                                    setState(() {
-                                      translateOffset = 0;
-                                      tabName = LocaleKeys.history_steps.tr();
-                                      tabImage = AppSVGAssets.step;
-                                      selectedTab = 1;
-                                    });
-                                  }),
-                                  buildBottomNavButton(
-                                      selectedTab != 2,
-                                      AppSVGAssets.cal,
-                                      LocaleKeys.history_calories.tr(), () {
-                                    setState(() {
-                                      translateOffset = 96;
-                                      tabName =
-                                          LocaleKeys.history_calories.tr();
-                                      tabImage = AppSVGAssets.cal;
-                                      selectedTab = 2;
-                                    });
-                                  }),
-                                ],
-                              )),
-                        )),
-                        Transform.translate(
-                            offset: Offset(translateOffset, -25),
-                            child: Center(
-                                child: ClipPath(
-                              clipper: CustomHalfCircleClipper(),
-                              child: Container(
-                                height: 71.0,
-                                width: 55.0,
-                                margin: EdgeInsets.only(
-                                    bottom: 3, left: 3, right: 3),
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.3),
-                                        spreadRadius: 2,
-                                        blurRadius: 2,
-                                        offset: Offset(0, 0),
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(150.0)),
-                              ),
-                            ))),
-                        Transform.translate(
-                            offset: Offset(translateOffset, -20),
-                            child: Center(
-                                child: FloatingActionButton(
-                                    heroTag: null,
-                                    backgroundColor: AppColors.instance.primary,
-                                    elevation: 0,
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          SvgPicture.asset(
-                                            tabImage,
-                                            height: 18,
-                                            width: 18,
-                                            color: Colors.white,
-                                            fit: BoxFit.scaleDown,
-                                          ),
-                                          SizedBox(
-                                            height: 2,
-                                          ),
-                                          Text(
-                                            "$tabName",
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 10.0),
-                                          ),
-                                        ]),
-                                    onPressed: null))),
-                      ])))
+              SizedBox(
+                height: 8,
+              ),
             ]));
   }
 
@@ -448,8 +377,9 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
       TableRow(children: [
         buildTitleRowItem(LocaleKeys.history_steps.tr()),
         buildTitleRowItem(LocaleKeys.history_calories.tr()),
+        buildTitleRowItem(LocaleKeys.history_duration.tr()),
         buildTitleRowItem(LocaleKeys.history_time.tr()),
-        buildTitleRowItem(LocaleKeys.history_clock.tr()),
+        buildTitleRowItem("Open"),
       ])
     ]);
   }
@@ -460,17 +390,53 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
             style: GoogleFonts.montserrat(
                 color: AppColors.instance.textPrimary,
                 fontWeight: FontWeight.w600,
-                fontSize: 14.0)));
+                fontSize: 12.0)));
   }
 
   Widget buildRowItem(String text) {
     return Center(
-        heightFactor: 1.3,
-        child: Text(text,
-            style: GoogleFonts.montserrat(
-                color: AppColors.instance.primary,
-                fontWeight: FontWeight.w500,
-                fontSize: 14.0)));
+        heightFactor: 1.6,
+        child: Container(
+            height: 24,
+            alignment: Alignment.center,
+            child: Text(text,
+                style: GoogleFonts.montserrat(
+                    color: AppColors.instance.primary,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.0))));
+  }
+
+  Widget buildRowButtonItem(WorkOut workout) {
+    return Center(
+        heightFactor: 1.6,
+        child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: AppColors.instance.containerColor,
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 0),
+                )
+              ],
+            ),
+            child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                    customBorder: CircleBorder(),
+                    splashColor: AppColors.instance.primaryDarkWithOcupacity50,
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: AppColors.instance.iconPrimary,
+                      size: 18,
+                    ),
+                    onTap: () {
+                      NavigationModule.navigateToStairingWorkoutSummaryScreen(context, workout);
+                    }))));
   }
 
   Widget buildBottomNavButton(
@@ -508,69 +474,28 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 onPressed: onPressed)));
   }
 
-  Widget buildSelectedTab(selectedTab) {
-    var avgTime = con.selectedDay.totalTimes ~/
-        (con.selectedDay.workouts.length == 0
-            ? 1
-            : con.selectedDay.workouts.length);
-    switch (selectedTab) {
-      case 0:
-        return buildDataSection(
-            con.itemsTimes,
-            con.firstDay,
-            con.lastDay,
-            con.selectedDay.totalTimes >= oneHour
-                ? Duration(seconds: con.selectedDay.totalTimes)
-                    .toString()
-                    .split('.')
-                    .first
-                    .substring(0, 7)
-                : Duration(seconds: con.selectedDay.totalTimes)
-                    .toString()
-                    .split('.')
-                    .first
-                    .substring(2, 7),
-            LocaleKeys.history_time.tr(),
-            avgTime >= oneHour
-                ? Duration(seconds: avgTime)
-                    .toString()
-                    .split('.')
-                    .first
-                    .substring(0, 7)
-                : Duration(seconds: avgTime)
-                    .toString()
-                    .split('.')
-                    .first
-                    .substring(2, 7),
-            con.selectedDay);
-      case 1:
-        return buildDataSection(
-            con.itemsSteps,
-            con.firstDay,
-            con.lastDay,
-            con.selectedDay.totalSteps.toString(),
-            LocaleKeys.history_steps.tr(),
-            (con.selectedDay.totalSteps /
-                    (con.selectedDay.workouts.length == 0
-                        ? 1
-                        : con.selectedDay.workouts.length))
-                .toStringAsFixed(0),
-            con.selectedDay);
-      case 2:
-        return buildDataSection(
-            con.itemsCals,
-            con.firstDay,
-            con.lastDay,
-            con.selectedDay.totalCals.toInt().toString(),
-            LocaleKeys.history_calories.tr(),
-            (con.selectedDay.totalCals.toInt() /
-                    (con.selectedDay.workouts.length == 0
-                        ? 1
-                        : con.selectedDay.workouts.length))
-                .toStringAsFixed(0),
-            con.selectedDay);
-    }
-    return Container();
+  Widget buildWorkoutSelectButton(int index, String imageName,
+      {VoidCallback onTap}) {
+    return Container(
+      width: 40,
+      height: 40,
+      child: RoundedButton(
+        null,
+        imageName,
+        () {
+          // con.setSelelectedWorkoutIndex(index);
+          onTap();
+        },
+        backgroundColor: con.selelectedWorkoutIndex != index
+            ? AppColors.instance.containerColor
+            : AppColors.instance.primary,
+        iconColor: con.selelectedWorkoutIndex == index
+            ? Colors.white
+            : AppColors.instance.grayIconAsset,
+        scale: 1,
+      ),
+      margin: EdgeInsets.only(left: 8, right: 8),
+    );
   }
 }
 

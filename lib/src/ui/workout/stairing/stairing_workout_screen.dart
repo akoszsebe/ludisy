@@ -211,7 +211,7 @@ class _StairingWorkoutScreenState
       return RoundedButton(
         "done",
         AppSVGAssets.done,
-        () => NavigationModule.navigateToStairingWorkoutSummaryScreen(
+        () => NavigationModule.navigateAndReplacToStairingWorkoutSummaryScreen(
             context, con.savedWorkout),
       );
     }

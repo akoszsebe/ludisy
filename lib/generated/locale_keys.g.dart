@@ -5,6 +5,7 @@ abstract class  LocaleKeys {
   static const history_time = 'history.time';
   static const history_calories = 'history.calories';
   static const history_clock = 'history.clock';
+  static const history_duration = 'history.duration';
   static const history = 'history';
   static const login_wellcome = 'login.wellcome';
   static const login_sign_in = 'login.sign_in';

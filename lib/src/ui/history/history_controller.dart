@@ -12,6 +12,8 @@ class HistoryController extends ControllerMVC {
   final WorkOutDao _workoutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
+
+  int selelectedWorkoutIndex = 0;
   List<DayModel> dataset = List();
   DateTime lastDay = DateTime.now();
   DateTime firstDay = DateTime.now();

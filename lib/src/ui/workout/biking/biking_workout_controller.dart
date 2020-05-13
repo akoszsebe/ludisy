@@ -95,10 +95,10 @@ class BikingWorkoutController extends ControllerMVC {
     altitude = _locationData.altitude.toInt();
     if (currentPosition.latitude != 0 && currentPosition.longitude != 0) {
       distance += calculateDistance(
-              currentPosition.latitude,
-              currentPosition.longitude,
-              _locationData.latitude,
-              _locationData.longitude);
+          currentPosition.latitude,
+          currentPosition.longitude,
+          _locationData.latitude,
+          _locationData.longitude);
     }
     currentPosition = LatLng(_locationData.latitude, _locationData.longitude);
     latlng.add(currentPosition);
@@ -113,6 +113,7 @@ class BikingWorkoutController extends ControllerMVC {
     markers.add(Marker(
         markerId: MarkerId("marker"),
         position: currentPosition,
+        anchor: Offset(0.5, 0.5),
         icon: pinLocationIcon));
     refresh();
     print("${_locationData.toString()}  ${_locationData.speed}");

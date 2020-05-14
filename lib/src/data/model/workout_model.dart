@@ -33,6 +33,8 @@ class WorkOut {
     switch (type) {
       case 0:
         return (data as Stairs).toJson();
+      case 1:
+        return (data as Biking).toJson();
     }
     return {};
   }
@@ -41,6 +43,8 @@ class WorkOut {
     switch (type) {
       case 0:
         return Stairs.fromJson(data.cast<String, dynamic>());
+      case 1:
+        return Biking.fromJson(data.cast<String, dynamic>());
     }
     return {};
   }
@@ -103,21 +107,60 @@ class StairingObj {
 
 //End Stiring
 
+// Biking
+
 class Biking {
-  double avgSpeed;
-  List<Cordinate> cordinates;
+  double distance;
+  List<BikingObj> snapShots;
+
+  Biking({this.distance, this.snapShots});
+
+  factory Biking.fromJson(Map<String, dynamic> json) => Biking(
+      distance: json["distance"] == null ? null : json["distance"],
+      snapShots: json["snapShots"] == null
+          ? []
+          : List<BikingObj>.from(json["snapShots"]
+              .map((i) => BikingObj.fromJson(i.cast<String, dynamic>()))
+              .toList()));
+
+  Map<String, dynamic> toJson() => {
+        "distance": distance == null ? null : distance,
+        "snapShots": List<dynamic>.from(snapShots.map((x) => x.toJson())),
+      };
 }
 
-class Runs {
-  double avgSpeed;
-  List<Cordinate> cordinates;
-}
-
-class Cordinate {
+class BikingObj {
   double longitude;
   double latitude;
   double altitude;
   double speed;
+  int whenSec;
+
+  BikingObj(
+      {this.latitude, this.longitude, this.altitude, this.speed, this.whenSec});
+
+  factory BikingObj.fromJson(Map<String, dynamic> json) => BikingObj(
+        longitude: json["longitude"],
+        latitude: json["latitude"],
+        altitude: json["altitude"],
+        speed: json["speed"],
+        whenSec: json["whenSec"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "longitude": longitude,
+        "latitude": latitude,
+        "altitude": altitude,
+        "speed": speed,
+        "whenSec": whenSec,
+      };
+}
+
+// End Biking
+
+class Runs {
+  double avgSpeed;
+  List<BikingObj> snapShots;
 }
 
 enum WorkoutType {

@@ -54,7 +54,11 @@ class UserState {
           .where((element) => element.type == type)
           .forEach((element) {
         size++;
-        quickInfoModel.value += (element.data as Stairs).stairsCount;
+        if (type == 0) {
+          quickInfoModel.value += (element.data as Stairs).stairsCount;
+        } else if (type == 1) {
+          quickInfoModel.value += (element.data as Biking).distance;
+        }
         quickInfoModel.durationSec += element.duration;
       });
       if (size != -1) {
@@ -89,11 +93,11 @@ class UserState {
     _userModel = User();
   }
 
-  void setSelelectedWorkoutIndex(int index){
+  void setSelelectedWorkoutIndex(int index) {
     _selelectedWorkoutIndex = index;
   }
 
-  int getSelelectedWorkoutIndex(){
+  int getSelelectedWorkoutIndex() {
     return _selelectedWorkoutIndex;
   }
 }

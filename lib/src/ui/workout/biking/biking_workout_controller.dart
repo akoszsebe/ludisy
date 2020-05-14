@@ -7,11 +7,11 @@ import 'package:location/location.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:ludisy/src/util/assets.dart';
-import 'package:ludisy/src/util/style/colors.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
+import 'package:ludisy/src/data/forgroundsevices/bikin_foreground_dervice.dart';
 
 class BikingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
@@ -26,7 +26,11 @@ class BikingWorkoutController extends ControllerMVC {
   int speed = 0;
   int altitude = 0;
   double distance = 0;
+  double avgSpeed = 0;
   WorkOut savedWorkout;
+
+  int sampleCount = 0;
+  int summSpeed = 0;
 
   Timer _timer;
   int _startime = 0;
@@ -61,13 +65,13 @@ class BikingWorkoutController extends ControllerMVC {
 
   Future<void> startListening() async {
     startTimer();
-    // BikingForegroundService.startFGS();
+    BikingForegroundService.startFGS();
     workoutState = WorkoutState.running;
     refresh();
-    //  mock();
   }
 
   void stopListening() async {
+    await BikingForegroundService.stopFGS();
     if (_timer != null) {
       _timer.cancel();
     }
@@ -91,14 +95,17 @@ class BikingWorkoutController extends ControllerMVC {
 
   getLocation() async {
     LocationData _locationData = await location.getLocation();
-    speed = _locationData.speed.toInt();
+    speed = (_locationData.speed * 3.6).toInt();
+    summSpeed += speed;
+    sampleCount++;
+    avgSpeed = summSpeed / sampleCount;
     altitude = _locationData.altitude.toInt();
     if (currentPosition.latitude != 0 && currentPosition.longitude != 0) {
       distance += calculateDistance(
-              currentPosition.latitude,
-              currentPosition.longitude,
-              _locationData.latitude,
-              _locationData.longitude);
+          currentPosition.latitude,
+          currentPosition.longitude,
+          _locationData.latitude,
+          _locationData.longitude);
     }
     currentPosition = LatLng(_locationData.latitude, _locationData.longitude);
     latlng.add(currentPosition);
@@ -119,7 +126,28 @@ class BikingWorkoutController extends ControllerMVC {
   }
 
   Future<void> resume() async {
+    sampleCount = 0;
+    summSpeed = 0;
     if (workoutState == WorkoutState.running) {
+      var savedData = await BikingForegroundService.getSavedData();
+      latlng.clear();
+      LatLng prew;
+      savedData.forEach((element) {
+        if (prew != null) {
+          distance += calculateDistance(prew.latitude, prew.longitude,
+              element.latitude, element.longitude);
+        }
+        currentPosition = LatLng(element.latitude, element.longitude);
+        latlng.add(currentPosition);
+        speed = (element.speed * 3.6).toInt();
+        altitude = element.altitude.toInt();
+        prew = currentPosition;
+        summSpeed += speed;
+        sampleCount++;
+        avgSpeed = summSpeed / sampleCount;
+      });
+      print("result -------------- $savedData");
+      refresh();
       startTimer();
     }
   }
@@ -128,9 +156,46 @@ class BikingWorkoutController extends ControllerMVC {
     _timer.cancel();
   }
 
-  void stopWorkout() {
+  Future<void> stopWorkout() async {
     stopListening();
+    var removed = await BikingForegroundService.removeSavedData();
+    print("--- removed $removed");
     workoutState = WorkoutState.finised;
+  }
+
+  Future<void> doneWorkout() async {
+    stopListening();
+    var savedData = await BikingForegroundService.getSavedData();
+    workoutState = WorkoutState.finised;
+    latlng.clear();
+    LatLng prew;
+    savedData.forEach((element) {
+      if (prew != null) {
+        distance += calculateDistance(
+            prew.latitude, prew.longitude, element.latitude, element.longitude);
+      }
+      currentPosition = LatLng(element.latitude, element.longitude);
+      latlng.add(currentPosition);
+      element.speed = (element.speed * 3.6);
+      speed = element.speed.toInt();
+      altitude = element.altitude.toInt();
+      prew = currentPosition;
+      summSpeed += speed;
+      sampleCount++;
+      avgSpeed = summSpeed / sampleCount;
+      element.whenSec = (element.whenSec - _startime) ~/ 1000;
+    });
+    print("result -------------- $savedData");
+    refresh();
+    savedWorkout = WorkOut(
+        id: null,
+        duration: durationSeconds,
+        timeStamp: DateTime.now().millisecondsSinceEpoch,
+        cal: calCounterValue,
+        type: 1,
+        data: Biking(distance: distance, snapShots: savedData));
+    await _workOutDao.insertWorkOut(savedWorkout);
+    userState.addWorkout(savedWorkout);
   }
 
   void setCustomMapPin() async {

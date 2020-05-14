@@ -15,6 +15,7 @@ import 'package:ludisy/src/util/style/map_style.dart';
 import 'package:ludisy/src/util/ui_utils.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
+import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 
 import 'package:ludisy/src/widgets/workout_active_container.dart';
 
@@ -61,7 +62,7 @@ class _BikingWorkoutScreenState
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          con.stopWorkout();
+          await con.stopWorkout();
           return true;
         },
         child: BaseView(
@@ -99,8 +100,8 @@ class _BikingWorkoutScreenState
                             RoundedMiniButton(
                               "back",
                               AppSVGAssets.back,
-                              () {
-                                con.stopWorkout();
+                              () async {
+                                await con.stopWorkout();
                                 NavigationModule.pop(context);
                               },
                             ),
@@ -149,7 +150,7 @@ class _BikingWorkoutScreenState
                                 RichText(
                                     text: TextSpan(children: <TextSpan>[
                                   TextSpan(
-                                    text: '10.5',
+                                    text: '${con.avgSpeed.toStringAsFixed(1)}',
                                     style: GoogleFonts.montserrat(
                                         fontSize: 11.0,
                                         fontWeight: FontWeight.w500,
@@ -187,17 +188,58 @@ class _BikingWorkoutScreenState
                             )),
                         Padding(
                             padding: EdgeInsets.only(bottom: 24, top: 48),
-                            child: RoundedButton(
-                              "start_biking",
-                              AppSVGAssets.pause,
-                              () {},
-                            ))
+                            child: buildWorkoutButton())
                       ],
                     ),
                   ],
                 )
               ],
             )));
+  }
+
+
+  buildWorkoutButton() {
+    if (con.workoutState == WorkoutState.running) {
+      return RoundedButton(
+        "pause",
+        AppSVGAssets.pause,
+        () {
+          con.stopListening();
+        },
+      );
+    } else if (con.workoutState == WorkoutState.paused) {
+      return Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RoundedButton(
+              "stop",
+              AppSVGAssets.stop,
+              () {
+                con.doneWorkout();
+              },
+            ),
+            SizedBox(
+              width: 90,
+            ),
+            RoundedButton(
+              "start_stairing",
+              AppSVGAssets.start,
+              () {
+                con.startListening();
+              },
+            )
+          ]);
+    } else {
+      return RoundedButton(
+        "done",
+        AppSVGAssets.done,
+        () => 
+        NavigationModule.pop(context) 
+        // NavigationModule.navigateAndReplacToBikingWorkoutSummaryScreen(
+        //     context, con.savedWorkout),
+      );
+    }
   }
 
   Widget buildIconTextPair(String text, String iconName) {

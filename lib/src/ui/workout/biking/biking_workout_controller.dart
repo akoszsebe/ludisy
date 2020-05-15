@@ -148,8 +148,8 @@ class BikingWorkoutController extends ControllerMVC {
         avgSpeed = summSpeed / sampleCount;
       });
       print("result -------------- $savedData");
-      refresh();
       startTimer();
+      refresh();
     }
   }
 

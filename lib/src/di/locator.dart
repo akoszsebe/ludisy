@@ -60,6 +60,6 @@ DatabaseReference provideUserRef() {
 FirebaseDatabase provideFirebase(FirebaseApp firebaseApp) {
   var database = FirebaseDatabase(app: firebaseApp);
   database.setPersistenceEnabled(true);
-  database.setPersistenceCacheSizeBytes(40000000);
+  database.setPersistenceCacheSizeBytes(80000000);
   return database;
 }

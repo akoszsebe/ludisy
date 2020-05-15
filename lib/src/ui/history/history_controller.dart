@@ -12,7 +12,6 @@ class HistoryController extends ControllerMVC {
   final WorkOutDao _workoutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
-
   int selelectedWorkoutIndex = 0;
   List<DayModel> dataset = List();
   DateTime lastDay = DateTime.now();
@@ -65,6 +64,7 @@ class HistoryController extends ControllerMVC {
         .where((x) =>
             x.timeStamp >= morrning.millisecondsSinceEpoch &&
             x.timeStamp <= night)
+        .where((element) => element.type == 0)
         .toList();
     workoutsForCurrentDay.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
     var d = DayModel();

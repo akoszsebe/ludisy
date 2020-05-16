@@ -7,6 +7,7 @@ import 'package:ludisy/src/ui/settings/settings_screen.dart';
 import 'package:ludisy/src/ui/start/start_screen.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_screen.dart';
 import 'package:ludisy/src/ui/workout/biking/biking_workout_screen.dart';
+import 'package:ludisy/src/ui/workoutsummary/biking/biking_workoutsummary_screen.dart';
 import 'package:ludisy/src/ui/workoutsummary/stairing/stairing_workoutsummary_screen.dart';
 
 class NavigationModule {
@@ -32,14 +33,26 @@ class NavigationModule {
 
   static void navigateToStairingWorkoutSummaryScreen(
       BuildContext context, WorkOut savedWorkout) {
-    Navigator.of(context).push(
-        AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
+    Navigator.of(context)
+        .push(AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
   }
 
   static void navigateAndReplacToStairingWorkoutSummaryScreen(
       BuildContext context, WorkOut savedWorkout) {
     Navigator.of(context).pushReplacement(
         AppRoute(page: StairingWorkoutSummaryScreen(savedWorkout)));
+  }
+
+  static void navigateToBikingWorkoutSummaryScreen(
+      BuildContext context, WorkOut savedWorkout) {
+    Navigator.of(context)
+        .push(AppRoute(page: BikingWorkoutSummaryScreen(savedWorkout)));
+  }
+
+  static void navigateAndReplacToBikingWorkoutSummaryScreen(
+      BuildContext context, WorkOut savedWorkout) {
+    Navigator.of(context).pushReplacement(
+        AppRoute(page: BikingWorkoutSummaryScreen(savedWorkout)));
   }
 
   static void pop(BuildContext context) {

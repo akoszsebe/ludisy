@@ -82,6 +82,9 @@ class BikingWorkoutController extends ControllerMVC {
   void startTimer() {
     durationSeconds =
         (DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000;
+     if (_timer != null) {
+      _timer.cancel();
+    }
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       durationSeconds++;
       print("timer  $durationSeconds");
@@ -154,7 +157,9 @@ class BikingWorkoutController extends ControllerMVC {
   }
 
   void paused() {
-    _timer.cancel();
+    if (_timer != null) {
+      _timer.cancel();
+    }
   }
 
   Future<void> stopWorkout() async {
@@ -167,6 +172,7 @@ class BikingWorkoutController extends ControllerMVC {
   Future<void> doneWorkout() async {
     stopListening();
     var savedData = await BikingForegroundService.getSavedData();
+    await BikingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
     latlng.clear();
     LatLng prew;

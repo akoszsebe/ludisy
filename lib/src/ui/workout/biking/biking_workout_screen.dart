@@ -168,7 +168,8 @@ class _BikingWorkoutScreenState
                                 ]))
                               ]),
                           rightChild: buildIconTextPair(
-                              "${con.distance.toStringAsFixed(1)} km", AppSVGAssets.distance),
+                              "${con.distance.toStringAsFixed(1)} km",
+                              AppSVGAssets.distance),
                         ),
                         Padding(
                             padding: EdgeInsets.only(top: 24),
@@ -180,9 +181,11 @@ class _BikingWorkoutScreenState
                               width: 160,
                               child: Row(
                                 children: <Widget>[
+                                  buildIconTextPair("${con.altitude} m",
+                                      AppSVGAssets.altitude),
                                   buildIconTextPair(
-                                      "${con.altitude} m", AppSVGAssets.altitude),
-                                  buildIconTextPair("${con.calCounterValue} cal", AppSVGAssets.cal)
+                                      "${con.calCounterValue} cal",
+                                      AppSVGAssets.cal)
                                 ],
                               ),
                             )),
@@ -196,7 +199,6 @@ class _BikingWorkoutScreenState
               ],
             )));
   }
-
 
   buildWorkoutButton() {
     if (con.workoutState == WorkoutState.running) {
@@ -234,10 +236,8 @@ class _BikingWorkoutScreenState
       return RoundedButton(
         "done",
         AppSVGAssets.done,
-        () => 
-        NavigationModule.pop(context) 
-        // NavigationModule.navigateAndReplacToBikingWorkoutSummaryScreen(
-        //     context, con.savedWorkout),
+        () => NavigationModule.navigateAndReplacToBikingWorkoutSummaryScreen(
+            context, con.savedWorkout),
       );
     }
   }

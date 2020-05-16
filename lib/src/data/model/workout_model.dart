@@ -24,7 +24,7 @@ class WorkOut {
         "id": id,
         "duration": duration,
         "timeStamp": timeStamp,
-        "cal": cal,
+        "cal": cal.toDouble(),
         "type": type,
         "data": toJsonByType(type, data),
       };
@@ -54,12 +54,17 @@ class WorkOut {
     if (snapshot.value != null) {
       try {
         snapshot.value.forEach((k, v) =>
-            {result.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
-      } catch (Exeption) {
+            {
+              result.add(WorkOut.fromJson(v.cast<String, dynamic>()))
+              });
+      } catch (ex) {
+        print(ex);
         try {
           snapshot.value.forEach(
               (v) => {result.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
-        } catch (Exeption) {}
+        } catch (ex) {
+          print(ex);
+        }
       }
     }
     return result;
@@ -116,7 +121,7 @@ class Biking {
   Biking({this.distance, this.snapShots});
 
   factory Biking.fromJson(Map<String, dynamic> json) => Biking(
-      distance: json["distance"] == null ? null : json["distance"],
+      distance: json["distance"] == null ? null : json["distance"].toDouble(),
       snapShots: json["snapShots"] == null
           ? []
           : List<BikingObj>.from(json["snapShots"]
@@ -140,10 +145,10 @@ class BikingObj {
       {this.latitude, this.longitude, this.altitude, this.speed, this.whenSec});
 
   factory BikingObj.fromJson(Map<String, dynamic> json) => BikingObj(
-        longitude: json["longitude"],
-        latitude: json["latitude"],
-        altitude: json["altitude"],
-        speed: json["speed"],
+        longitude: json["longitude"].toDouble(),
+        latitude: json["latitude"].toDouble(),
+        altitude: json["altitude"].toDouble(),
+        speed: json["speed"].toDouble(),
         whenSec: json["whenSec"],
       );
 

@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
-import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/model/day_model.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -78,19 +77,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   child: Hero(
                       tag: "history",
                       child: Material(
-                          type: MaterialType.transparency,
-                          child: buildDataSection(
-                              con.itemsSteps,
-                              con.firstDay,
-                              con.lastDay,
-                              con.selectedDay.totalSteps.toString(),
-                              LocaleKeys.history_steps.tr(),
-                              (con.selectedDay.totalSteps /
-                                      (con.selectedDay.workouts.length == 0
-                                          ? 1
-                                          : con.selectedDay.workouts.length))
-                                  .toStringAsFixed(0),
-                              con.selectedDay)))),
+                        type: MaterialType.transparency,
+                        child:
+                            getForSelectedWorkout(con.selelectedWorkoutIndex),
+                      ))),
               Center(
                   child: Container(
                       height: 60.0,
@@ -103,21 +93,9 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                         scrollDirection: Axis.horizontal,
                         children: <Widget>[
                           buildWorkoutSelectButton(0, AppSVGAssets.stairing,
-                              onTap: () {
-                            // setState(() {
-                            //   _uiState.changeBackgroundImage(
-                            //       AppAssets.background_stair);
-                            //   // scrollTo(con.selelectedWorkoutIndex);
-                            // });
-                          }),
+                              onTap: () {}),
                           buildWorkoutSelectButton(1, AppSVGAssets.biking,
-                              onTap: () {
-                            // setState(() {
-                            //   _uiState.changeBackgroundImage(
-                            //       AppAssets.background_bike);
-                            //   // scrollTo(con.selelectedWorkoutIndex);
-                            // });
-                          }),
+                              onTap: () {}),
                         ],
                       ))),
             ])));
@@ -130,6 +108,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
       String totalValue,
       String totalTitle,
       String avgValue,
+      List<String> firstColumnValues,
       DayModel selectedDay) {
     return RoundedContainer(
         backgroundColor: AppColors.instance.containerColor,
@@ -274,7 +253,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
               Padding(
                 padding:
                     EdgeInsets.only(left: 28, right: 28, top: 16, bottom: 3),
-                child: buildTableHeaders(),
+                child: buildTableHeaders(totalTitle),
               ),
               SizedBox(
                 child: Container(
@@ -298,8 +277,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                                 i < selectedDay.workouts.length;
                                 i++)
                               TableRow(children: [
-                                buildRowItem(
-                                    "${(selectedDay.workouts[i].data as Stairs).stairsCount}"),
+                                buildRowItem("${firstColumnValues[i]}"),
                                 buildRowItem(
                                     "${selectedDay.workouts[i].cal.toStringAsFixed(0)} cal"),
                                 buildRowItem(
@@ -372,10 +350,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         ));
   }
 
-  Widget buildTableHeaders() {
+  Widget buildTableHeaders(String first) {
     return Table(children: [
       TableRow(children: [
-        buildTitleRowItem(LocaleKeys.history_steps.tr()),
+        buildTitleRowItem(first),
         buildTitleRowItem(LocaleKeys.history_calories.tr()),
         buildTitleRowItem(LocaleKeys.history_duration.tr()),
         buildTitleRowItem(LocaleKeys.history_time.tr()),
@@ -435,7 +413,18 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       size: 18,
                     ),
                     onTap: () {
-                      NavigationModule.navigateToStairingWorkoutSummaryScreen(context, workout);
+                      switch (workout.type) {
+                        case 0:
+                          NavigationModule
+                              .navigateToStairingWorkoutSummaryScreen(
+                                  context, workout);
+                          break;
+                        case 1:
+                          NavigationModule.navigateToBikingWorkoutSummaryScreen(
+                              context, workout);
+                          break;
+                        default:
+                      }
                     }))));
   }
 
@@ -483,7 +472,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
         null,
         imageName,
         () {
-          // con.setSelelectedWorkoutIndex(index);
+          con.setSelelectedWorkoutIndex(index);
           onTap();
         },
         backgroundColor: con.selelectedWorkoutIndex != index
@@ -496,6 +485,58 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
       ),
       margin: EdgeInsets.only(left: 8, right: 8),
     );
+  }
+
+  Widget getForSelectedWorkout(int selelectedWorkoutIndex) {
+    switch (selelectedWorkoutIndex) {
+      case 0:
+        return buildDataSection(
+            con.itemsStairings,
+            con.firstDay,
+            con.lastDay,
+            con.selectedDayStairing.totalSteps.toString(),
+            LocaleKeys.history_steps.tr(),
+            (con.selectedDayStairing.totalSteps /
+                    (con.selectedDayStairing.workouts.length == 0
+                        ? 1
+                        : con.selectedDayStairing.workouts.length))
+                .toStringAsFixed(0),
+            getFirstColumnValuesStairing(con.selectedDayStairing.workouts),
+            con.selectedDayStairing);
+      case 1:
+        return buildDataSection(
+            con.itemsBikings,
+            con.firstDay,
+            con.lastDay,
+            con.selectedDayBiking.totalDistance.toStringAsFixed(1) + " km",
+            "Distance",
+            (con.selectedDayBiking.totalDistance /
+                        (con.selectedDayBiking.workouts.length == 0
+                            ? 1
+                            : con.selectedDayBiking.workouts.length))
+                    .toStringAsFixed(0) +
+                " km",
+            getFirstColumnValuesBiking(con.selectedDayBiking.workouts),
+            con.selectedDayBiking);
+      default:
+        return Container();
+    }
+  }
+
+  List<String> getFirstColumnValuesStairing(List<WorkOut> workouts) {
+    List<String> result = List();
+    workouts.forEach((element) {
+      result.add((element.data as Stairs).stairsCount.toString());
+    });
+    return result;
+  }
+
+  List<String> getFirstColumnValuesBiking(List<WorkOut> workouts) {
+    List<String> result = List();
+    workouts.forEach((element) {
+      result.add((element.data as Biking).distance.toStringAsFixed(1));
+    });
+    return result;
   }
 }
 

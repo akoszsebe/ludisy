@@ -69,7 +69,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                   width: 64.0,
                   height: 64.0,
                   child: SvgPicture.asset(
-                    AppSVGAssets.stairing,
+                    AppSVGAssets.biking,
                     color: AppColors.instance.primary,
                     height: 17,
                     width: 17,

@@ -13,13 +13,14 @@ class HistoryController extends ControllerMVC {
   final UserState userState = locator<UserState>();
 
   int selelectedWorkoutIndex = 0;
-  List<DayModel> dataset = List();
+  List<DayModel> datasetStairing = List();
+  List<DayModel> datasetBiking = List();
   DateTime lastDay = DateTime.now();
   DateTime firstDay = DateTime.now();
-  DayModel selectedDay = DayModel();
-  List<ChartItem> itemsSteps = List();
-  List<ChartItem> itemsTimes = List();
-  List<ChartItem> itemsCals = List();
+  DayModel selectedDayStairing = DayModel();
+  DayModel selectedDayBiking = DayModel();
+  List<ChartItem> itemsStairings = List();
+  List<ChartItem> itemsBikings = List();
 
   Future<void> init() async {
     var today = DateTime.now();
@@ -27,10 +28,9 @@ class HistoryController extends ControllerMVC {
   }
 
   Future<void> fillForWeek(DateTime lastDayFromThatWeek) async {
-    dataset = List();
-    itemsSteps = List();
-    itemsTimes = List();
-    itemsCals = List();
+    datasetStairing = List();
+    itemsStairings = List();
+    itemsBikings = List();
     lastDay = lastDayFromThatWeek;
     firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
     var workoutsForaWeek = await _workoutDao.findWorkOutBetween(
@@ -51,38 +51,57 @@ class HistoryController extends ControllerMVC {
     await addDay(
         lastDayFromThatWeek.subtract(Duration(days: 1)), workoutsForaWeek);
     await addDay(lastDayFromThatWeek, workoutsForaWeek);
-    selectedDay = dataset[dataset.length - 1];
+    selectedDayStairing = datasetStairing[datasetStairing.length - 1];
+    selectedDayBiking = datasetBiking[datasetBiking.length - 1];
     refresh();
   }
 
   Future<void> addDay(DateTime dateTime, List<WorkOut> workoutsForaWeek) async {
-    var morrning = DateTime(dateTime.year, dateTime.month, dateTime.day);
+    var morning = DateTime(dateTime.year, dateTime.month, dateTime.day);
     var night =
         DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59)
             .millisecondsSinceEpoch;
-    var workoutsForCurrentDay = workoutsForaWeek
-        .where((x) =>
-            x.timeStamp >= morrning.millisecondsSinceEpoch &&
-            x.timeStamp <= night)
-        .where((element) => element.type == 0)
-        .toList();
-    workoutsForCurrentDay.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
-    var d = DayModel();
-    d.date = morrning.day;
-    for (var l in workoutsForCurrentDay) {
-      d.totalSteps += (l.data as Stairs).stairsCount;
-      d.totalTimes += l.duration;
-      d.totalCals += l.cal;
-      d.workouts.add(l);
-    }
-    dataset.add(d);
-    itemsSteps.add(ChartItem(d.totalSteps, d.date.toString()));
-    itemsTimes.add(ChartItem(d.totalTimes, d.date.toString()));
-    itemsCals.add(ChartItem(d.totalCals.toInt(), d.date.toString()));
+    workoutsForaWeek.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
+    var workoutsForCurrentDay = workoutsForaWeek.where((x) =>
+        x.timeStamp >= morning.millisecondsSinceEpoch && x.timeStamp <= night);
+    fillForStairing(
+        workoutsForCurrentDay.where((element) => element.type == 0).toList(),
+        morning);
+    fillForBiking(
+        workoutsForCurrentDay.where((element) => element.type == 1).toList(),
+        morning);
   }
 
   void changeSelected(int index) {
-    selectedDay = dataset[index];
+    selectedDayStairing = datasetStairing[index];
+    selectedDayBiking = datasetBiking[index];
+    refresh();
+  }
+
+  void fillForStairing(List<WorkOut> workoutsForCurrentDay, DateTime morning) {
+    var d = DayModel();
+    d.date = morning.day;
+    for (var l in workoutsForCurrentDay) {
+      d.totalSteps += (l.data as Stairs).stairsCount;
+      d.workouts.add(l);
+    }
+    datasetStairing.add(d);
+    itemsStairings.add(ChartItem(d.totalSteps, d.date.toString()));
+  }
+
+  void fillForBiking(List<WorkOut> workoutsForCurrentDay, DateTime morning) {
+    var d = DayModel();
+    d.date = morning.day;
+    for (var l in workoutsForCurrentDay) {
+      d.totalDistance += (l.data as Biking).distance;
+      d.workouts.add(l);
+    }
+    datasetBiking.add(d);
+    itemsBikings.add(ChartItem(d.totalDistance.toInt(), d.date.toString()));
+  }
+
+  void setSelelectedWorkoutIndex(int index) {
+    selelectedWorkoutIndex = index;
     refresh();
   }
 }

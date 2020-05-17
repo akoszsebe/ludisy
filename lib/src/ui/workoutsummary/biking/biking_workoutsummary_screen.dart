@@ -50,6 +50,8 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     con.initMap(widget.workout);
   }
 
+  Color containerColor = AppColors.instance.containerColor;
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -62,6 +64,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
             myLocationButtonEnabled: false,
             myLocationEnabled: false,
             polylines: _polyline,
+            markers: con.markers,
             initialCameraPosition: CameraPosition(
               target: myLocation,
               zoom: 12.4746,
@@ -97,7 +100,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
               ContainerWithActionAndLeading(
                   leading: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.instance.containerColor,
+                      color: containerColor,
                       borderRadius: BorderRadius.all(Radius.circular(32)),
                     ),
                     width: 64.0,
@@ -115,7 +118,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                   child: RoundedContainer(
                       height: 400,
                       width: double.infinity,
-                      backgroundColor: AppColors.instance.containerColor,
+                      backgroundColor: containerColor,
                       radius: 32.0,
                       margin: EdgeInsets.only(
                           top: 32, left: 16, right: 16, bottom: 24),
@@ -182,11 +185,13 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                 children: <Widget>[
                                   buildColorCircleTextValue3Pair(
                                       "Speed",
-                                      con.selected.speed.toStringAsFixed(0) + " km/h",
+                                      con.selected.speed.toStringAsFixed(0) +
+                                          " km/h",
                                       Color(0xCC34A853)),
                                   buildColorCircleTextValue3Pair(
                                       "Altitude",
-                                      con.selected.altitude.toStringAsFixed(0) + " m",
+                                      con.selected.altitude.toStringAsFixed(0) +
+                                          " m",
                                       Color(0xCC475993))
                                 ],
                               ),
@@ -224,6 +229,18 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                                         1)
                                                     .toDouble(),
                                             value: con.index.toDouble(),
+                                            onChangeStart: (value) {
+                                              setState(() {
+                                                containerColor = containerColor
+                                                    .withOpacity(0.3);
+                                              });
+                                            },
+                                            onChangeEnd: (value) {
+                                              setState(() {
+                                                containerColor = containerColor
+                                                    .withOpacity(1);
+                                              });
+                                            },
                                             onChanged: (value) {
                                               setState(() {
                                                 con.changePosition(

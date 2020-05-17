@@ -70,7 +70,7 @@ class BikingWorkoutController extends ControllerMVC {
     refresh();
   }
 
-  void stopListening() async {
+  Future<void> stopListening() async {
     await BikingForegroundService.stopFGS();
     if (_timer != null) {
       _timer.cancel();
@@ -163,17 +163,18 @@ class BikingWorkoutController extends ControllerMVC {
   }
 
   Future<void> stopWorkout() async {
-    stopListening();
+    await stopListening();
     var removed = await BikingForegroundService.removeSavedData();
     print("--- removed $removed");
     workoutState = WorkoutState.finised;
   }
 
   Future<void> doneWorkout() async {
-    stopListening();
+    await stopListening();
     var savedData = await BikingForegroundService.getSavedData();
     await BikingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
+    refresh();
     latlng.clear();
     LatLng prew;
     savedData.forEach((element) {

@@ -14,6 +14,7 @@ import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ludisy/src/ui/workoutsummary/stairing/stairing_workoutsummary_controller.dart';
+import 'package:ludisy/src/widgets/app_wigdet_functions.dart';
 
 class StairingWorkoutSummaryScreen extends StatefulWidget {
   final WorkOut workout;
@@ -106,44 +107,91 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                 fontWeight: FontWeight.normal,
                                 color: AppColors.instance.textPrimary),
                           ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              buildIconTextValue3Pair(
-                                  "Duration",
-                                  Duration(seconds: widget.workout.duration)
-                                      .toString()
-                                      .split('.')
-                                      .first
-                                      .substring(0, 7),
-                                  AppSVGAssets.stopper),
-                              buildIconTextValue3Pair(
-                                  "Calories",
-                                  "${widget.workout.cal.toStringAsFixed(0)} cal",
-                                  AppSVGAssets.cal),
-                              buildIconTextValue3Pair(
-                                  "Avg. Stairs",
-                                  widget.workout.duration <= 60
-                                      ? "-  stp/min"
-                                      : "${((widget.workout.data as Stairs).stairsCount / (widget.workout.duration / 60)).toStringAsFixed(0)} stp/min",
-                                  AppSVGAssets.step),
-                              buildIconTextValue3Pair(
-                                  "Stairs",
-                                  "${(widget.workout.data as Stairs).stairsCount} stp",
-                                  AppSVGAssets.step)
-                            ],
+                          Padding(
+                              padding:
+                                  EdgeInsets.only(left: 16, right: 16, top: 16),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  buildIconTextValue3Pair(
+                                      "Duration",
+                                      Duration(seconds: widget.workout.duration)
+                                          .toString()
+                                          .split('.')
+                                          .first
+                                          .substring(0, 7),
+                                      AppSVGAssets.stopper),
+                                  buildIconTextValue3Pair(
+                                      "Calories",
+                                      "${widget.workout.cal.toStringAsFixed(0)} cal",
+                                      AppSVGAssets.cal),
+                                  buildIconTextValue3Pair(
+                                      "Avg. Stairs",
+                                      widget.workout.duration <= 60
+                                          ? "-  stp/min"
+                                          : "${((widget.workout.data as Stairs).stairsCount / (widget.workout.duration / 60)).toStringAsFixed(0)} stp/min",
+                                      AppSVGAssets.step),
+                                  buildIconTextValue3Pair(
+                                      "Stairs",
+                                      "${(widget.workout.data as Stairs).stairsCount} stp",
+                                      AppSVGAssets.step)
+                                ],
+                              )),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 32, right: 32, top: 24),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                buildColorCircleTextValue3Pair(
+                                    "Steps",
+                                    con.selected.count.toString() + " steps/min",
+                                    Color(0xCC34A853)),
+                              ],
+                            ),
                           ),
                           Expanded(
                             child: Padding(
                               padding:
-                                  const EdgeInsets.only(bottom: 40, top: 40),
-                              child: LineChart(
-                                lineChartData(),
-                                swapAnimationDuration:
-                                    const Duration(milliseconds: 250),
-                              ),
+                                  const EdgeInsets.only(bottom: 40, top: 24),
+                              child: Stack(children: <Widget>[
+                                Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 24),
+                                    width: double.infinity,
+                                    child: LineChart(
+                                      lineChartData(),
+                                      swapAnimationDuration:
+                                          const Duration(milliseconds: 250),
+                                    )),
+                                Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                        height: 60,
+                                        width: double.infinity,
+                                        child: Slider(
+                                          activeColor:
+                                              AppColors.instance.primary,
+                                          inactiveColor: AppColors
+                                              .instance.primaryWithOcupacity50,
+                                          min: 0,
+                                          max: ((widget.workout.data as Stairs)
+                                                      .snapShots
+                                                      .length -
+                                                  1)
+                                              .toDouble(),
+                                          value: con.index.toDouble(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              con.changePosition(widget.workout,
+                                                  value.toInt());
+                                            });
+                                          },
+                                        ))),
+                              ]),
                             ),
                           ),
                         ],
@@ -156,42 +204,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                 )),
           ],
         ));
-  }
-
-  Widget buildIconTextValue3Pair(String text, String value, String iconName) {
-    return Container(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-          SvgPicture.asset(
-            iconName,
-            color: AppColors.instance.iconSecundary,
-            height: 23,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 2),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                text,
-                style: GoogleFonts.montserrat(
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.instance.textPrimary),
-              ),
-              Text(
-                value,
-                style: GoogleFonts.montserrat(
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.instance.primary),
-              ),
-            ],
-          )
-        ]));
   }
 
   LineChartData lineChartData() {

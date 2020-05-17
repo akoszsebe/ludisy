@@ -9,10 +9,14 @@ import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
 import 'package:ludisy/src/ui/base/base_view.dart';
 import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
+import 'package:ludisy/src/util/style/map_style.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ludisy/src/widgets/app_wigdet_functions.dart';
 import 'package:ludisy/src/ui/workoutsummary/biking/biking_workoutsummary_controller.dart';
 
 class BikingWorkoutSummaryScreen extends StatefulWidget {
@@ -28,165 +32,217 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
   _WorkoutSummaryScreenState() : super();
 
   final dateformat = new DateFormat('dd-MM-yyyy hh:mm');
+  bool isMapCreated = false;
+  AppMapStyle _appMapStyle = locator<AppMapStyle>();
+
+  static final LatLng myLocation = LatLng(46.769933, 23.586294);
+  final Set<Polyline> _polyline = {};
 
   @override
   void initState() {
     super.initState();
+    _polyline.add(Polyline(
+      polylineId: PolylineId("id"),
+      visible: true,
+      points: con.latlng,
+      color: AppColors.instance.primary,
+    ));
+    con.initMap(widget.workout);
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseView(
         bacgroundColor: AppColors.instance.primaryWithOcupacity50,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(left: 12, top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    RoundedMiniButton(
-                      "back",
-                      AppSVGAssets.back,
-                      () {
-                        NavigationModule.pop(context);
-                      },
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 50,
+        child: Stack(children: <Widget>[
+          GoogleMap(
+            mapType: MapType.normal,
+            zoomGesturesEnabled: true,
+            compassEnabled: false,
+            myLocationButtonEnabled: false,
+            myLocationEnabled: false,
+            polylines: _polyline,
+            initialCameraPosition: CameraPosition(
+              target: myLocation,
+              zoom: 12.4746,
             ),
-            ContainerWithActionAndLeading(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.instance.containerColor,
-                    borderRadius: BorderRadius.all(Radius.circular(32)),
-                  ),
-                  width: 64.0,
-                  height: 64.0,
-                  child: SvgPicture.asset(
-                    AppSVGAssets.biking,
-                    color: AppColors.instance.primary,
-                    height: 17,
-                    width: 17,
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-                height: 400,
-                margin: EdgeInsets.only(bottom: 24),
-                child: RoundedContainer(
-                    height: 400,
-                    width: double.infinity,
-                    backgroundColor: AppColors.instance.containerColor,
-                    radius: 32.0,
-                    margin: EdgeInsets.only(
-                        top: 32, left: 16, right: 16, bottom: 24),
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 25),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Text(
-                            "Summary",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.instance.textPrimary),
-                          ),
-                          Text(
-                            dateformat.format(
-                                DateTime.fromMillisecondsSinceEpoch(
-                                    widget.workout.timeStamp)),
-                            style: GoogleFonts.montserrat(
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.normal,
-                                color: AppColors.instance.textPrimary),
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              buildIconTextValue3Pair(
-                                  "Duration",
-                                  Duration(seconds: widget.workout.duration)
-                                      .toString()
-                                      .split('.')
-                                      .first
-                                      .substring(0, 7),
-                                  AppSVGAssets.stopper),
-                              buildIconTextValue3Pair(
-                                  "Calories",
-                                  "${widget.workout.cal.toStringAsFixed(0)} cal",
-                                  AppSVGAssets.cal),
-                              buildIconTextValue3Pair(
-                                  "Avg. Speed",
-                                  "${getAvgSpeed((widget.workout.data as Biking).snapShots).toStringAsFixed(0)} km/h",
-                                  AppSVGAssets.step),
-                              buildIconTextValue3Pair(
-                                  "Distance",
-                                  "${(widget.workout.data as Biking).distance.toStringAsFixed(1)} km",
-                                  AppSVGAssets.step)
-                            ],
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 40, top: 40),
-                              child: LineChart(
-                                lineChartData(),
-                                swapAnimationDuration:
-                                    const Duration(milliseconds: 250),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
-                action: RoundedButton(
-                  "done",
-                  AppSVGAssets.done,
-                  () => NavigationModule.pop(context),
-                )),
-          ],
-        ));
-  }
-
-  Widget buildIconTextValue3Pair(String text, String value, String iconName) {
-    return Container(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-          SvgPicture.asset(
-            iconName,
-            color: AppColors.instance.iconSecundary,
-            height: 23,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 2),
+            onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(_appMapStyle.mapStyle);
+              con.mapController.complete(controller);
+              setState(() {});
+            },
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
-                text,
-                style: GoogleFonts.montserrat(
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.instance.textPrimary),
+              Padding(
+                  padding: EdgeInsets.only(left: 12, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      RoundedMiniButton(
+                        "back",
+                        AppSVGAssets.back,
+                        () {
+                          NavigationModule.pop(context);
+                        },
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 50,
               ),
-              Text(
-                value,
-                style: GoogleFonts.montserrat(
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.instance.primary),
-              ),
+              ContainerWithActionAndLeading(
+                  leading: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.instance.containerColor,
+                      borderRadius: BorderRadius.all(Radius.circular(32)),
+                    ),
+                    width: 64.0,
+                    height: 64.0,
+                    child: SvgPicture.asset(
+                      AppSVGAssets.biking,
+                      color: AppColors.instance.primary,
+                      height: 17,
+                      width: 17,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  height: 400,
+                  margin: EdgeInsets.only(bottom: 24),
+                  child: RoundedContainer(
+                      height: 400,
+                      width: double.infinity,
+                      backgroundColor: AppColors.instance.containerColor,
+                      radius: 32.0,
+                      margin: EdgeInsets.only(
+                          top: 32, left: 16, right: 16, bottom: 24),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 25),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Text(
+                              "Summary",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.instance.textPrimary),
+                            ),
+                            Text(
+                              dateformat.format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      widget.workout.timeStamp)),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.instance.textPrimary),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 16, right: 16, top: 16),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    buildIconTextValue3Pair(
+                                        "Duration",
+                                        Duration(
+                                                seconds:
+                                                    widget.workout.duration)
+                                            .toString()
+                                            .split('.')
+                                            .first
+                                            .substring(0, 7),
+                                        AppSVGAssets.stopper),
+                                    buildIconTextValue3Pair(
+                                        "Calories",
+                                        "${widget.workout.cal.toStringAsFixed(0)} cal",
+                                        AppSVGAssets.cal),
+                                    buildIconTextValue3Pair(
+                                        "Avg. Speed",
+                                        "${getAvgSpeed((widget.workout.data as Biking).snapShots).toStringAsFixed(0)} km/h",
+                                        AppSVGAssets.step),
+                                    buildIconTextValue3Pair(
+                                        "Distance",
+                                        "${(widget.workout.data as Biking).distance.toStringAsFixed(1)} km",
+                                        AppSVGAssets.step)
+                                  ],
+                                )),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(left: 32, right: 32, top: 24),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  buildColorCircleTextValue3Pair(
+                                      "Speed",
+                                      con.selected.speed.toStringAsFixed(0) + " km/h",
+                                      Color(0xCC34A853)),
+                                  buildColorCircleTextValue3Pair(
+                                      "Altitude",
+                                      con.selected.altitude.toStringAsFixed(0) + " m",
+                                      Color(0xCC475993))
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 40, top: 24, left: 10, right: 10),
+                                child: Stack(children: <Widget>[
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    width: double.infinity,
+                                    child: LineChart(
+                                      lineChartData(),
+                                      swapAnimationDuration:
+                                          const Duration(milliseconds: 250),
+                                    ),
+                                  ),
+                                  Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                          height: 60,
+                                          width: double.infinity,
+                                          child: Slider(
+                                            activeColor:
+                                                AppColors.instance.primary,
+                                            inactiveColor: AppColors.instance
+                                                .primaryWithOcupacity50,
+                                            min: 0,
+                                            max:
+                                                ((widget.workout.data as Biking)
+                                                            .snapShots
+                                                            .length -
+                                                        1)
+                                                    .toDouble(),
+                                            value: con.index.toDouble(),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                con.changePosition(
+                                                    widget.workout,
+                                                    value.toInt());
+                                              });
+                                            },
+                                          ))),
+                                ]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                  action: RoundedButton(
+                    "done",
+                    AppSVGAssets.done,
+                    () => NavigationModule.pop(context),
+                  )),
             ],
           )
         ]));
@@ -258,8 +314,8 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     if (avgAlt != 0.0 && avgSpeed != 0.0) {
       var scaleFactor = avgAlt / avgSpeed;
       (widget.workout.data as Biking).snapShots.forEach((element) {
-        spots.add(FlSpot(element.whenSec.toDouble(),
-            (element.altitude) / scaleFactor));
+        spots.add(FlSpot(
+            element.whenSec.toDouble(), (element.altitude) / scaleFactor));
         titles[element.speed] = element.whenSec.toString();
       });
     } else {

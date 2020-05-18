@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
@@ -7,8 +6,6 @@ import 'package:ludisy/src/data/model/workout_model.dart';
 const platform = const MethodChannel('com.app.ludisy/workout');
 
 class BikingForegroundService {
-  static final int serviceRepeateTime = 10; // in seconds
-  static String dbName = "ludisy_Biking.db";
 
   static Future<void> startFGS() async {
     try {

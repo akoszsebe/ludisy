@@ -1,6 +1,6 @@
 package com.ludisy.app
 
-import androidx.annotation.NonNull;
+import androidx.annotation.NonNull
 import androidx.room.Room
 import com.google.gson.Gson
 import com.ludisy.app.plugin.ForegroundService
@@ -14,6 +14,9 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import org.json.JSONObject
+
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "com.app.ludisy/workout"
@@ -38,7 +41,7 @@ class MainActivity : FlutterActivity() {
                                 .subscribeOn(Schedulers.io())
                                 .subscribe({ resultList ->
                                     val toJson = Gson().toJson(resultList)
-                                    println("Android nativ print " + toJson);
+                                    println("Android nativ print " + toJson)
                                     result.success(toJson)
                                 }, {
                                     println("Android nativ print " + it);

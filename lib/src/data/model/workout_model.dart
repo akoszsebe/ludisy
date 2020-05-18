@@ -54,9 +54,7 @@ class WorkOut {
     if (snapshot.value != null) {
       try {
         snapshot.value.forEach((k, v) =>
-            {
-              result.add(WorkOut.fromJson(v.cast<String, dynamic>()))
-              });
+            {result.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
       } catch (ex) {
         print(ex);
         try {
@@ -145,11 +143,12 @@ class BikingObj {
       {this.latitude, this.longitude, this.altitude, this.speed, this.whenSec});
 
   factory BikingObj.fromJson(Map<String, dynamic> json) => BikingObj(
-        longitude: json["longitude"].toDouble(),
-        latitude: json["latitude"].toDouble(),
-        altitude: json["altitude"].toDouble(),
-        speed: json["speed"].toDouble(),
-        whenSec: json["whenSec"],
+        longitude:
+            json["longitude"] != null ? json["longitude"].toDouble() : 0.0,
+        latitude: json["latitude"] != null ? json["latitude"].toDouble() : 0.0,
+        altitude: json["altitude"] != null ? json["altitude"].toDouble() : 0.0,
+        speed: json["speed"] != null ? json["speed"].toDouble() : 0.0,
+        whenSec: json["whenSec"] != null ? json["whenSec"] : 0,
       );
 
   Map<String, dynamic> toJson() => {

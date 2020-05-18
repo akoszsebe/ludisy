@@ -215,8 +215,8 @@ class _BikingWorkoutScreenState
             RoundedButton(
               "stop",
               AppSVGAssets.stop,
-              () {
-                con.doneWorkout();
+              () async {
+                await con.doneWorkout();
               },
             ),
             SizedBox(

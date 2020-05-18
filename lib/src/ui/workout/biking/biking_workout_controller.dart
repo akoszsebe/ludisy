@@ -170,11 +170,12 @@ class BikingWorkoutController extends ControllerMVC {
   }
 
   Future<void> doneWorkout() async {
-    await stopListening();
+    if (_timer != null) {
+      _timer.cancel();
+    }
     var savedData = await BikingForegroundService.getSavedData();
     await BikingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
-    refresh();
     latlng.clear();
     LatLng prew;
     savedData.forEach((element) {
@@ -194,7 +195,6 @@ class BikingWorkoutController extends ControllerMVC {
       element.whenSec = (element.whenSec - _startime) ~/ 1000;
     });
     print("result -------------- $savedData");
-    refresh();
     savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,
@@ -204,6 +204,7 @@ class BikingWorkoutController extends ControllerMVC {
         data: Biking(distance: distance, snapShots: savedData));
     await _workOutDao.insertWorkOut(savedWorkout);
     userState.addWorkout(savedWorkout);
+    refresh();
   }
 
   void setCustomMapPin() async {

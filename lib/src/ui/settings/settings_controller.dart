@@ -6,6 +6,7 @@ import 'package:ludisy/src/data/model/user_model.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info/package_info.dart';
 
 class SettingsController extends ControllerMVC {
   final UserState userState = locator<UserState>();
@@ -14,12 +15,16 @@ class SettingsController extends ControllerMVC {
 
   bool available = true;
 
+  String versionName = "";
+
 
   /// Consumable credits the user can buy
   int credits = 0;
 
   Future<void> init() async {
     userData = userState.getUserData();
+    var packageInfo = await PackageInfo.fromPlatform();
+    versionName = "${packageInfo.appName} v${packageInfo.version}";
     refresh();
   }
 

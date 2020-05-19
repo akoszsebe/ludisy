@@ -115,7 +115,8 @@ class BikingWorkoutController extends ControllerMVC {
     mapController.future
         .then((value) => value.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(
-                target: currentPosition,
+                target: LatLng((currentPosition.latitude - 0.004),
+                    currentPosition.longitude),
                 zoom: 14.4746,
               ),
             )));
@@ -126,10 +127,10 @@ class BikingWorkoutController extends ControllerMVC {
         anchor: Offset(0.5, 0.5),
         icon: pinLocationIcon));
     refresh();
-    print("${_locationData.toString()}  ${_locationData.speed}");
   }
 
   Future<void> resume() async {
+    distance = 0;
     sampleCount = 0;
     summSpeed = 0;
     if (workoutState == WorkoutState.running) {
@@ -150,7 +151,6 @@ class BikingWorkoutController extends ControllerMVC {
         sampleCount++;
         avgSpeed = summSpeed / sampleCount;
       });
-      print("result -------------- $savedData");
       startTimer();
       refresh();
     }
@@ -164,12 +164,14 @@ class BikingWorkoutController extends ControllerMVC {
 
   Future<void> stopWorkout() async {
     await stopListening();
-    var removed = await BikingForegroundService.removeSavedData();
-    print("--- removed $removed");
+    await BikingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
   }
 
   Future<void> doneWorkout() async {
+    distance = 0;
+    sampleCount = 0;
+    summSpeed = 0;
     if (_timer != null) {
       _timer.cancel();
     }
@@ -194,7 +196,6 @@ class BikingWorkoutController extends ControllerMVC {
       avgSpeed = summSpeed / sampleCount;
       element.whenSec = (element.whenSec - _startime) ~/ 1000;
     });
-    print("result -------------- $savedData");
     savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,

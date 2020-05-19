@@ -36,7 +36,8 @@ class BikingWorkoutSummaryController extends ControllerMVC {
     mapController.future
         .then((value) => value.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(
-                target: currentPosition,
+                target: LatLng((currentPosition.latitude - 0.004),
+                    currentPosition.longitude),
                 zoom: 15.4746,
               ),
             )));
@@ -52,13 +53,15 @@ class BikingWorkoutSummaryController extends ControllerMVC {
         position: currentPosition,
         anchor: Offset(0.5, 0.5),
         icon: pinLocationIcon));
-    mapController.future
-        .then((value) => value.animateCamera(CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: currentPosition,
-                zoom: 15.4746,
-              ),
-            )));
+    mapController.future.then((value) {
+      value.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+              (currentPosition.latitude - 0.004), currentPosition.longitude),
+          zoom: 15.4746,
+        ),
+      ));
+    });
     index = _index;
   }
 }

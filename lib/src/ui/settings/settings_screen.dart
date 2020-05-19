@@ -131,7 +131,8 @@ class _SettingsScreenState
                                     style: GoogleFonts.montserrat(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w400,
-                                        color: AppColors.instance.textSecundary),
+                                        color:
+                                            AppColors.instance.textSecundary),
                                   ),
                                 ))))
                   ],
@@ -170,7 +171,11 @@ class _SettingsScreenState
                     )
                   ],
                 ),
-              ))
+              )),
+          Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: buildButton(
+                  "${con.versionName}", AppColors.instance.textPrimary, () {})),
         ])));
   }
 

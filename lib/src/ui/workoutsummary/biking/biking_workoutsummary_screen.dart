@@ -232,7 +232,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                             onChangeStart: (value) {
                                               setState(() {
                                                 containerColor = containerColor
-                                                    .withOpacity(0.3);
+                                                    .withOpacity(0.6);
                                               });
                                             },
                                             onChangeEnd: (value) {

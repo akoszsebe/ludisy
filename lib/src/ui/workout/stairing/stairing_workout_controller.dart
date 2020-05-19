@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:ludisy/src/data/forgroundsevices/stairing_foreground_service.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:pedometer/pedometer.dart';

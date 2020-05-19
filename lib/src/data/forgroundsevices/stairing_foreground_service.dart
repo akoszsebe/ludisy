@@ -37,10 +37,6 @@ class StairingForegroundService {
         serviceRepeateTime, foregroundServiceFunction);
   }
 
-  static Future<List<BikingObj>> pauseFGS() async {
-    AppForegroundService.stopFGS();
-  }
-
   static Future<List<StairingObj>> stopFGS() async {
     AppForegroundService.stopFGS();
     Directory appDocDir = await getApplicationDocumentsDirectory();

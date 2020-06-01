@@ -2,24 +2,21 @@ package com.ludisy.app
 
 import androidx.annotation.NonNull
 import androidx.room.Room
-import com.google.gson.Gson
-import com.ludisy.app.plugin.ForegroundService
+import com.ludisy.app.plugin.biking.BikingMethods
 import com.ludisy.app.plugin.data.AppDatabase
-import com.ludisy.app.plugin.data.model.BikingObj
+import com.ludisy.app.plugin.rollerskating.RollerSkatingMethods
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
-import io.reactivex.Single
-import io.reactivex.SingleEmitter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.json.JSONArray
-import org.json.JSONObject
 
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "com.app.ludisy/workout"
+
+    private val biking = BikingMethods(this)
+    private val rollerSkating = RollerSkatingMethods(this)
+
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine)
@@ -29,58 +26,13 @@ class MainActivity : FlutterActivity() {
         ).build()
         MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
                 .setMethodCallHandler { call, result ->
-                    if (call.method.equals("startBiking")) {
-                        ForegroundService.startService(this, "Have fun")
-                        result.success(true)
-                    } else if (call.method.equals("stopBiking")) {
-                        ForegroundService.stopService(this)
-                        result.success(true)
-                    } else if (call.method.equals("getBikingdata")) {
-                        getBikingDataAll(appDatabase)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeOn(Schedulers.io())
-                                .subscribe({ resultList ->
-                                    val toJson = Gson().toJson(resultList)
-                                    println("Android nativ print " + toJson)
-                                    result.success(toJson)
-                                }, {
-                                    println("Android nativ print " + it);
-                                    result.success(null);
-                                })
-                    } else if (call.method.equals("removeBikingdata")) {
-                        removeBikingDataAll(appDatabase)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeOn(Schedulers.io())
-                                .subscribe({ resultList ->
-                                    result.success(true)
-                                }, {
-                                    println("Android nativ print " + it);
-                                    result.success(false)
-                                })
-
+                    if (call.method.startsWith("biking")) {
+                        biking.checkMethodCalls(appDatabase, call, result)
+                    } else if (call.method.startsWith("rollerskating")) {
+                        rollerSkating.checkMethodCalls(appDatabase, call, result)
                     }
                 }
     }
 
-    fun getBikingDataAll(appDatabase: AppDatabase): Single<List<BikingObj>> {
-        return Single.create<List<BikingObj>> { emitter: SingleEmitter<List<BikingObj>> ->
-            try {
-                var bikingObjList = appDatabase?.bikingDao()?.getAll()
-                emitter.onSuccess(bikingObjList)
-            } catch (e: Exception) {
-                emitter.onError(e)
-            }
-        }
-    }
 
-    fun removeBikingDataAll(appDatabase: AppDatabase): Single<Unit> {
-        return Single.create<Unit> { emitter: SingleEmitter<Unit> ->
-            try {
-                appDatabase?.bikingDao()?.deleteAll()
-                emitter.onSuccess(Unit)
-            } catch (e: Exception) {
-                emitter.onError(e)
-            }
-        }
-    }
 }

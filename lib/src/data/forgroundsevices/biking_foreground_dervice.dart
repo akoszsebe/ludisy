@@ -9,7 +9,7 @@ class BikingForegroundService {
 
   static Future<void> startFGS() async {
     try {
-      await platform.invokeMethod('startBiking');
+      await platform.invokeMethod('biking/start');
     } on PlatformException catch (e) {
       print(e);
     }
@@ -17,7 +17,7 @@ class BikingForegroundService {
 
   static Future<void> stopFGS() async {
     try {
-      await platform.invokeMethod('stopBiking');
+      await platform.invokeMethod('biking/stop');
     } on PlatformException catch (e) {
       print("-- mmak ---" + e.details);
     }
@@ -25,7 +25,7 @@ class BikingForegroundService {
 
   static Future<List<BikingObj>> getSavedData() async {
     try {
-      var result = await platform.invokeMethod('getBikingdata');
+      var result = await platform.invokeMethod('biking/getdata');
       if (result != null) {
         return List<BikingObj>.from(jsonDecode(result)
             .map((i) => BikingObj.fromJson(i.cast<String, dynamic>()))
@@ -39,7 +39,7 @@ class BikingForegroundService {
 
   static Future<bool> removeSavedData() async {
     try {
-      var result = await platform.invokeMethod('removeBikingdata');
+      var result = await platform.invokeMethod('biking/removedata');
       return result;
     } on Exception catch (e) {
       print("-- mmak ---" + e.toString());

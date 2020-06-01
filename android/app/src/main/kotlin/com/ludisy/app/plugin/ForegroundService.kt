@@ -26,21 +26,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.NullPointerException
 
-class ForegroundService : Service() {
-    private val CHANNEL_ID = "ForegroundService Kotlin"
-
-    companion object {
-        fun startService(context: Context, message: String) {
-            val startIntent = Intent(context, ForegroundService::class.java)
-            startIntent.putExtra("inputExtra", message)
-            ContextCompat.startForegroundService(context, startIntent)
-        }
-
-        fun stopService(context: Context) {
-            val stopIntent = Intent(context, ForegroundService::class.java)
-            context.stopService(stopIntent)
-        }
-    }
+abstract class ForegroundService : Service() {
+    val CHANNEL_ID = "Ludicy"
 
     var mHandler: Handler = Handler()
 
@@ -49,9 +36,11 @@ class ForegroundService : Service() {
     val NOTIFY_INTERVAL = 10 * 1000 // 10 seconds
             .toLong()
 
-    private var appDatabase: AppDatabase? = null
+    var appDatabase: AppDatabase? = null
 
-    private lateinit var disposable: Disposable
+    open lateinit var locationCallback:LocationCallback
+
+    lateinit var disposable: Disposable
     // timer handling
     override fun onCreate() { // cancel if already existed
         appDatabase = Room.databaseBuilder(
@@ -60,6 +49,8 @@ class ForegroundService : Service() {
         ).build()
 
     }
+
+    abstract fun getNotificationName():String
 
     override fun onDestroy() {
         super.onDestroy()
@@ -87,7 +78,7 @@ class ForegroundService : Service() {
                 0, notificationIntent, 0
         )
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Foreground Service Kotlin Example")
+                .setContentTitle(getNotificationName())
                 .setContentText(input)
                 .setSmallIcon(R.drawable.appstore)
                 .setContentIntent(pendingIntent)
@@ -102,7 +93,7 @@ class ForegroundService : Service() {
         return null
     }
 
-    private fun createNotificationChannel() {
+    fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
                     CHANNEL_ID, "Foreground Service Channel",
@@ -126,37 +117,5 @@ class ForegroundService : Service() {
         }
     }
 
-    val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            if (locationResult.lastLocation != null) {
-                locationHelper.stopLocationUpdates(this)
-                println(locationResult.toString())
-                var bikingObj = BikingObj(
-                        null,
-                        locationResult.lastLocation.longitude,
-                        locationResult.lastLocation.latitude,
-                        locationResult.lastLocation.altitude,
-                        locationResult.lastLocation.speed,
-                        System.currentTimeMillis()
-                )
-                disposable = saveData(bikingObj).subscribeOn(Schedulers.io())
-                        .subscribe()
-            }
-        }
 
-        fun saveData(bikingObj: BikingObj): Single<Unit> {
-            return Single.create<Unit> { emitter: SingleEmitter<Unit> ->
-                try {
-                    var id = appDatabase?.bikingDao()?.insert(bikingObj)
-                    if (id!=null){
-                        emitter.onSuccess(Unit);
-                    } else{
-                        emitter.onError(NullPointerException())
-                    }
-                } catch (e: Exception){
-                    emitter.onError(e)
-                }
-            }
-        }
-    }
 }

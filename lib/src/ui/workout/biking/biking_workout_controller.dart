@@ -11,7 +11,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
-import 'package:ludisy/src/data/forgroundsevices/bikin_foreground_dervice.dart';
+import 'package:ludisy/src/data/forgroundsevices/biking_foreground_dervice.dart';
 
 class BikingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();

@@ -35,6 +35,8 @@ class WorkOut {
         return (data as Stairs).toJson();
       case 1:
         return (data as Biking).toJson();
+      case 2:
+        return (data as RollerSkating).toJson();
     }
     return {};
   }
@@ -45,6 +47,8 @@ class WorkOut {
         return Stairs.fromJson(data.cast<String, dynamic>());
       case 1:
         return Biking.fromJson(data.cast<String, dynamic>());
+      case 2:
+        return RollerSkating.fromJson(data.cast<String, dynamic>());
     }
     return {};
   }
@@ -161,6 +165,54 @@ class BikingObj {
 }
 
 // End Biking
+
+// Roller Skating
+class RollerSkating {
+  double distance;
+  List<RollerSkatingObj> snapShots;
+
+  RollerSkating({this.distance, this.snapShots});
+
+  factory RollerSkating.fromJson(Map<String, dynamic> json) => RollerSkating(
+      distance: json["distance"] == null ? null : json["distance"].toDouble(),
+      snapShots: json["snapShots"] == null
+          ? []
+          : List<RollerSkatingObj>.from(json["snapShots"]
+              .map((i) => RollerSkatingObj.fromJson(i.cast<String, dynamic>()))
+              .toList()));
+
+  Map<String, dynamic> toJson() => {
+        "distance": distance == null ? null : distance,
+        "snapShots": List<dynamic>.from(snapShots.map((x) => x.toJson())),
+      };
+}
+
+class RollerSkatingObj {
+  double longitude;
+  double latitude;
+  double speed;
+  int whenSec;
+
+  RollerSkatingObj({this.latitude, this.longitude, this.speed, this.whenSec});
+
+  factory RollerSkatingObj.fromJson(Map<String, dynamic> json) =>
+      RollerSkatingObj(
+        longitude:
+            json["longitude"] != null ? json["longitude"].toDouble() : 0.0,
+        latitude: json["latitude"] != null ? json["latitude"].toDouble() : 0.0,
+        speed: json["speed"] != null ? json["speed"].toDouble() : 0.0,
+        whenSec: json["whenSec"] != null ? json["whenSec"] : 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "longitude": longitude,
+        "latitude": latitude,
+        "speed": speed,
+        "whenSec": whenSec,
+      };
+}
+
+// End Roller Skating
 
 class Runs {
   double avgSpeed;

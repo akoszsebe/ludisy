@@ -7,6 +7,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.ludisy.app.plugin.ForegroundService
 import com.ludisy.app.plugin.data.model.BikingObj
+import com.ludisy.app.plugin.data.model.RollerSkatingObj
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import io.reactivex.schedulers.Schedulers
@@ -26,7 +27,7 @@ class RollerSkatingForegroundService : ForegroundService() {
     }
 
     override fun getNotificationName(): String {
-        return "Ludicy Roller Skating"
+        return "Ludisy Roller Skating"
     }
 
     override var locationCallback = object : LocationCallback() {
@@ -34,23 +35,22 @@ class RollerSkatingForegroundService : ForegroundService() {
             if (locationResult.lastLocation != null) {
                 locationHelper.stopLocationUpdates(this)
                 println(locationResult.toString())
-                var bikingObj = BikingObj(
+                var rollerSkatingObj = RollerSkatingObj(
                         null,
                         locationResult.lastLocation.longitude,
                         locationResult.lastLocation.latitude,
-                        locationResult.lastLocation.altitude,
                         locationResult.lastLocation.speed,
                         System.currentTimeMillis()
                 )
-                disposable = saveData(bikingObj).subscribeOn(Schedulers.io())
+                disposable = saveData(rollerSkatingObj).subscribeOn(Schedulers.io())
                         .subscribe()
             }
         }
 
-        fun saveData(bikingObj: BikingObj): Single<Unit> {
+        fun saveData(rollerSkatingObj: RollerSkatingObj): Single<Unit> {
             return Single.create<Unit> { emitter: SingleEmitter<Unit> ->
                 try {
-                    var id = appDatabase?.bikingDao()?.insert(bikingObj)
+                    var id = appDatabase?.rollerSkatingDao()?.insert(rollerSkatingObj)
                     if (id!=null){
                         emitter.onSuccess(Unit);
                     } else{

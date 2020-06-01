@@ -13,9 +13,11 @@ import 'package:ludisy/src/ui/profile/profile_controller.dart';
 import 'package:ludisy/src/ui/settings/settings_controller.dart';
 import 'package:ludisy/src/ui/splash/splash_controller.dart';
 import 'package:ludisy/src/ui/start/start_controller.dart';
+import 'package:ludisy/src/ui/workout/rollerskating/rollerskating_workout_controller.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_controller.dart';
 import 'package:ludisy/src/ui/workout/biking/biking_workout_controller.dart';
 import 'package:ludisy/src/ui/workoutsummary/biking/biking_workoutsummary_controller.dart';
+import 'package:ludisy/src/ui/workoutsummary/rollerskating/rollerskating_workoutsummary_controller.dart';
 import 'package:ludisy/src/ui/workoutsummary/stairing/stairing_workoutsummary_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ludisy/src/util/style/map_style.dart';
@@ -51,6 +53,8 @@ void setupLocator(FirebaseApp firebaseApp) {
   locator.registerFactory(() => BikingWorkoutController());
   locator.registerFactory(() => BikingWorkoutSummaryController());
   locator.registerFactory(() => SplashController());
+  locator.registerFactory(() => RollerSkatingWorkoutController());
+  locator.registerFactory(() => RollerSkatingWorkoutSummaryController());
 }
 
 DatabaseReference provideUserRef() {

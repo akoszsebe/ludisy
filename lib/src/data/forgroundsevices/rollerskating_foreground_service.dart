@@ -4,16 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:ludisy/src/data/forgroundsevices/base_forground_service.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 
-class BikingForegroundService extends BaseForegroundService{
+class RollerSkatingForegroundService extends BaseForegroundService{
 
-  static String channelName = "biking";
+static String channelName = "rollerskating";
 
-  static Future<List<BikingObj>> getSavedData() async {
+static Future<List<RollerSkatingObj>> getSavedData() async {
     try {
-      var result = await platform.invokeMethod('biking/getdata');
+      var result = await platform.invokeMethod('$channelName/getdata');
       if (result != null) {
-        return List<BikingObj>.from(jsonDecode(result)
-            .map((i) => BikingObj.fromJson(i.cast<String, dynamic>()))
+        return List<RollerSkatingObj>.from(jsonDecode(result)
+            .map((i) => RollerSkatingObj.fromJson(i.cast<String, dynamic>()))
             .toList());
       }
     } on Exception catch (e) {

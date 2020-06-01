@@ -11,7 +11,7 @@ class UserState {
   final UserDao _userDao = locator<UserDao>();
   User _userModel = User();
   Map<int, DayQuickInfoModel> _dailyInfoMap = Map();
-  final List<int> supportTypes = [0, 1];
+  final List<int> supportTypes = [0, 1, 2];
   int _selelectedWorkoutIndex = 0;
 
   Future<void> initState(String userId) async {
@@ -48,6 +48,10 @@ class UserState {
           quickInfoModel = DayQuickInfoModel("km");
           quickInfoModel.imageName = AppSVGAssets.biking;
           break;
+        case 2:
+          quickInfoModel = DayQuickInfoModel("km");
+          quickInfoModel.imageName = AppSVGAssets.rollerSkates;
+          break;
       }
       var size = -1;
       workoutsForCurrentDay
@@ -58,6 +62,8 @@ class UserState {
           quickInfoModel.value += (element.data as Stairs).stairsCount;
         } else if (type == 1) {
           quickInfoModel.value += (element.data as Biking).distance;
+        } else if (type == 2) {
+          quickInfoModel.value += (element.data as RollerSkating).distance;
         }
         quickInfoModel.durationSec += element.duration;
       });

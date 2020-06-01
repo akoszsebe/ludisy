@@ -85,7 +85,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                   child: Container(
                       height: 60.0,
                       margin: EdgeInsets.only(bottom: 16),
-                      width: (70 * 2).toDouble(),
+                      width: (70 * 3).toDouble(),
                       child: ListView(
                         shrinkWrap: true,
                         itemExtent: 70,
@@ -95,6 +95,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           buildWorkoutSelectButton(0, AppSVGAssets.stairing,
                               onTap: () {}),
                           buildWorkoutSelectButton(1, AppSVGAssets.biking,
+                              onTap: () {}),
+                          buildWorkoutSelectButton(2, AppSVGAssets.rollerSkates,
                               onTap: () {}),
                         ],
                       ))),
@@ -423,6 +425,10 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                           NavigationModule.navigateToBikingWorkoutSummaryScreen(
                               context, workout);
                           break;
+                        case 2:
+                          NavigationModule.navigateToRollerSkatingWorkoutSummaryScreen(
+                              context, workout);
+                          break;
                         default:
                       }
                     }))));
@@ -518,6 +524,23 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                 " km",
             getFirstColumnValuesBiking(con.selectedDayBiking.workouts),
             con.selectedDayBiking);
+      case 2:
+        return buildDataSection(
+            con.itemsRollerSkatings,
+            con.firstDay,
+            con.lastDay,
+            con.selectedDayRollerSkating.totalDistance.toStringAsFixed(1) +
+                " km",
+            "Distance",
+            (con.selectedDayRollerSkating.totalDistance /
+                        (con.selectedDayRollerSkating.workouts.length == 0
+                            ? 1
+                            : con.selectedDayRollerSkating.workouts.length))
+                    .toStringAsFixed(0) +
+                " km",
+            getFirstColumnValuesRollerSkating(
+                con.selectedDayRollerSkating.workouts),
+            con.selectedDayRollerSkating);
       default:
         return Container();
     }
@@ -535,6 +558,14 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
     List<String> result = List();
     workouts.forEach((element) {
       result.add((element.data as Biking).distance.toStringAsFixed(1));
+    });
+    return result;
+  }
+
+  List<String> getFirstColumnValuesRollerSkating(List<WorkOut> workouts) {
+    List<String> result = List();
+    workouts.forEach((element) {
+      result.add((element.data as RollerSkating).distance.toStringAsFixed(1));
     });
     return result;
   }

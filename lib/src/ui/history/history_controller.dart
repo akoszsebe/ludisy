@@ -15,12 +15,15 @@ class HistoryController extends ControllerMVC {
   int selelectedWorkoutIndex = 0;
   List<DayModel> datasetStairing = List();
   List<DayModel> datasetBiking = List();
+  List<DayModel> datasetRollerSkating = List();
   DateTime lastDay = DateTime.now();
   DateTime firstDay = DateTime.now();
   DayModel selectedDayStairing = DayModel();
   DayModel selectedDayBiking = DayModel();
+  DayModel selectedDayRollerSkating = DayModel();
   List<ChartItem> itemsStairings = List();
   List<ChartItem> itemsBikings = List();
+  List<ChartItem> itemsRollerSkatings = List();
 
   Future<void> init() async {
     var today = DateTime.now();
@@ -31,6 +34,7 @@ class HistoryController extends ControllerMVC {
     datasetStairing = List();
     itemsStairings = List();
     itemsBikings = List();
+    itemsRollerSkatings = List();
     lastDay = lastDayFromThatWeek;
     firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
     var workoutsForaWeek = await _workoutDao.findWorkOutBetween(
@@ -53,6 +57,7 @@ class HistoryController extends ControllerMVC {
     await addDay(lastDayFromThatWeek, workoutsForaWeek);
     selectedDayStairing = datasetStairing[datasetStairing.length - 1];
     selectedDayBiking = datasetBiking[datasetBiking.length - 1];
+    selectedDayRollerSkating = datasetRollerSkating[datasetRollerSkating.length - 1];
     refresh();
   }
 
@@ -70,11 +75,15 @@ class HistoryController extends ControllerMVC {
     fillForBiking(
         workoutsForCurrentDay.where((element) => element.type == 1).toList(),
         morning);
+    fillForRollerSkating(
+        workoutsForCurrentDay.where((element) => element.type == 2).toList(),
+        morning);
   }
 
   void changeSelected(int index) {
     selectedDayStairing = datasetStairing[index];
     selectedDayBiking = datasetBiking[index];
+    selectedDayRollerSkating = datasetRollerSkating[index];
     refresh();
   }
 
@@ -98,6 +107,19 @@ class HistoryController extends ControllerMVC {
     }
     datasetBiking.add(d);
     itemsBikings.add(ChartItem(d.totalDistance.toInt(), d.date.toString()));
+  }
+
+  void fillForRollerSkating(
+      List<WorkOut> workoutsForCurrentDay, DateTime morning) {
+    var d = DayModel();
+    d.date = morning.day;
+    for (var l in workoutsForCurrentDay) {
+      d.totalDistance += (l.data as RollerSkating).distance;
+      d.workouts.add(l);
+    }
+    datasetRollerSkating.add(d);
+    itemsRollerSkatings
+        .add(ChartItem(d.totalDistance.toInt(), d.date.toString()));
   }
 
   void setSelelectedWorkoutIndex(int index) {

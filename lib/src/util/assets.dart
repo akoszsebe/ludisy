@@ -6,6 +6,9 @@ class AppAssets {
 
   static const AssetImage background_bike =
       const AssetImage("lib/resources/images/bike.png");
+  
+  static const AssetImage background_rollerscate =
+      const AssetImage("lib/resources/images/rollers.png");
 
   static const AssetImage splash_icon =
       const AssetImage("lib/resources/images/splash_icon.png");
@@ -17,6 +20,8 @@ class AppAssets {
       const AssetImage("lib/resources/images/tibold.jpg");
 
   static const String biking_marker = "lib/resources/images/bikingmarker.png";
+
+  static const String rollerskating_marker = "lib/resources/images/rollerskatemarker.png";
 }
 
 class AppSVGAssets {
@@ -69,4 +74,7 @@ class AppSVGAssets {
   static const String speed = "lib/resources/images_svg/speed.svg";
 
   static const String stopper = "lib/resources/images_svg/stopper.svg";
+
+  static const String rollerSkates =
+      "lib/resources/images_svg/rollerskates.svg";
 }

@@ -35,7 +35,7 @@ class BikingMethods(private val context:Context) : WorkoutMethodCalls<BikingObj>
             removeAllData(appDatabase)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe({ resultList ->
+                    .subscribe({
                         result.success(true)
                     }, {
                         result.success(false)

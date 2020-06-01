@@ -3,7 +3,7 @@ package com.ludisy.app.plugin.rollerskating
 import android.content.Context
 import com.google.gson.Gson
 import com.ludisy.app.plugin.WorkoutMethodCalls
-import com.ludisy.app.plugin.biking.BikingForegroundService
+import com.ludisy.app.plugin.rollerskating.RollerSkatingForegroundService
 import com.ludisy.app.plugin.data.AppDatabase
 import com.ludisy.app.plugin.data.model.RollerSkatingObj
 import io.flutter.plugin.common.MethodCall
@@ -16,10 +16,10 @@ import io.reactivex.schedulers.Schedulers
 class RollerSkatingMethods(private val context: Context) : WorkoutMethodCalls<RollerSkatingObj>{
     override fun checkMethodCalls(appDatabase: AppDatabase, call: MethodCall, result: MethodChannel.Result) {
         if (call.method.equals("rollerskating/start")) {
-            BikingForegroundService.startService(context, "Have fun")
+            RollerSkatingForegroundService.startService(context, "Have fun")
             result.success(true)
         } else if (call.method.equals("rollerskating/stop")) {
-            BikingForegroundService.stopService(context)
+            RollerSkatingForegroundService.stopService(context)
             result.success(true)
         } else if (call.method.equals("rollerskating/getdata")) {
             getAllData(appDatabase)
@@ -35,7 +35,7 @@ class RollerSkatingMethods(private val context: Context) : WorkoutMethodCalls<Ro
             removeAllData(appDatabase)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe({ resultList ->
+                    .subscribe({
                         result.success(true)
                     }, {
                         result.success(false)

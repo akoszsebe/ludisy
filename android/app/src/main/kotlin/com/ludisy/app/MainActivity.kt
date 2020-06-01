@@ -23,8 +23,8 @@ class MainActivity : FlutterActivity() {
         val appDatabase = Room.databaseBuilder(
                 applicationContext,
                 AppDatabase::class.java, "workout_database"
-        ).build()
-        MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
+        ).fallbackToDestructiveMigration().build()
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
                 .setMethodCallHandler { call, result ->
                     if (call.method.startsWith("biking")) {
                         biking.checkMethodCalls(appDatabase, call, result)

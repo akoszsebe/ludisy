@@ -77,6 +77,8 @@ flutter:
     - lib/resources/images/akos.png
     - lib/resources/images/tibold.jpg
     - lib/resources/images/bikingmarker.png
+    - lib/resources/images/rollers.png
+    - lib/resources/images/rollerskatemarker.png
 #   svg 
     - lib/resources/images_svg/back.svg
     - lib/resources/images_svg/logout.svg
@@ -103,6 +105,7 @@ flutter:
     - lib/resources/images_svg/altitude.svg
     - lib/resources/images_svg/speed.svg
     - lib/resources/images_svg/stopper.svg
+    - lib/resources/images_svg/rollerskates.svg
   # map
     - lib/resources/map/map_style_light.json
     - lib/resources/map/map_style_dark.json

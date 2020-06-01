@@ -27,7 +27,7 @@ class BikingForegroundService : ForegroundService() {
     }
 
     override fun getNotificationName(): String {
-       return "Ludicy Biking"
+       return "Ludisy Biking"
     }
 
     override var locationCallback = object : LocationCallback() {

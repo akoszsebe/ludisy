@@ -1,0 +1,88 @@
+Data structure : 
+
+    User  
+        displayName - String 
+        photoUrl    - String
+        userId      - String 
+        gender      - String 
+        weight      - int
+        bithDate    - String (stored as Iso8601String)
+        height      - int
+        workOuts    - List<WorkOut> 
+
+    Workout 
+        id          - String //autgenerated
+        duration    - int
+        timeStamp   - int 
+        cal         - double
+        type        - int
+        data        - Object
+
+    Stairing 
+        stairsCount - int
+        snapShots   - List<StairingObj>
+
+    Biking 
+        distance    - double
+        snapShots   - List<BikingObj> 
+
+    RollerSkating 
+        distance    - double
+        snapShots   - List<RollerSkatingObj>
+
+    StairingObj 
+        count       - int
+        whenSec     - int
+
+    BikingObj 
+        longitude   - double
+        latitude    - double
+        altitude    - double
+        speed       - double
+        whenSec     - int
+
+    RollerSkatingObj 
+        longitude   - double
+        latitude    - double
+        speed       - double
+        whenSec     - int
+
+
+Api requests 
+
+    GET : 
+        - get data for X days
+            params :
+                starting day
+                ending day 
+                userId
+            
+            return : 
+                List<WorkOut>
+        - get user data
+            params : 
+                userId
+            
+            return 
+                User
+
+    POST :
+        - save workout 
+            params :
+                workout
+                userId
+        - save user 
+            params : 
+                user
+
+    PUT : 
+        - update user
+            params : 
+                user
+
+    DELETE : 
+        - deleta all data 
+            params : 
+                userId
+    
+    

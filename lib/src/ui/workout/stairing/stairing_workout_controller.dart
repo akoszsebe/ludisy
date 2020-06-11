@@ -133,7 +133,7 @@ class StairingWorkoutController extends ControllerMVC {
         timeStamp: DateTime.now().millisecondsSinceEpoch,
         cal: calCounterValue,
         type: 0,
-        data: Stairs(stairsCount: stepCountValue, snapShots: snapShots));
+        data: Stairing(stairsCount: stepCountValue, snapShots: snapShots));
     await _workOutDao.insertWorkOut(savedWorkout);
     userState.addWorkout(savedWorkout);
   }

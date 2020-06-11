@@ -549,7 +549,7 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
   List<String> getFirstColumnValuesStairing(List<WorkOut> workouts) {
     List<String> result = List();
     workouts.forEach((element) {
-      result.add((element.data as Stairs).stairsCount.toString());
+      result.add((element.data as Stairing).stairsCount.toString());
     });
     return result;
   }

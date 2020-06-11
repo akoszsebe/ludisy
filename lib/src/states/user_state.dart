@@ -59,7 +59,7 @@ class UserState {
           .forEach((element) {
         size++;
         if (type == 0) {
-          quickInfoModel.value += (element.data as Stairs).stairsCount;
+          quickInfoModel.value += (element.data as Stairing).stairsCount;
         } else if (type == 1) {
           quickInfoModel.value += (element.data as Biking).distance;
         } else if (type == 2) {

@@ -199,7 +199,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen, LoginController> {
                             (v) {
                               con.heightChange(v);
                             },
-                            hint: "Heigh",
+                            hint: "Height",
                             hintColor: con.field4
                                 ? AppColors.instance.textPrimary
                                 : AppColors.instance.secundary,

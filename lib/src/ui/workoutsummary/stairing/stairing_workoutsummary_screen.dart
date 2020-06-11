@@ -131,11 +131,11 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                       "Avg. Stairs",
                                       widget.workout.duration <= 60
                                           ? "-  stp/min"
-                                          : "${((widget.workout.data as Stairs).stairsCount / (widget.workout.duration / 60)).toStringAsFixed(0)} stp/min",
+                                          : "${((widget.workout.data as Stairing).stairsCount / (widget.workout.duration / 60)).toStringAsFixed(0)} stp/min",
                                       AppSVGAssets.step),
                                   buildIconTextValue3Pair(
                                       "Stairs",
-                                      "${(widget.workout.data as Stairs).stairsCount} stp",
+                                      "${(widget.workout.data as Stairing).stairsCount} stp",
                                       AppSVGAssets.step)
                                 ],
                               )),
@@ -178,7 +178,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                           inactiveColor: AppColors
                                               .instance.primaryWithOcupacity50,
                                           min: 0,
-                                          max: ((widget.workout.data as Stairs)
+                                          max: ((widget.workout.data as Stairing)
                                                       .snapShots
                                                       .length -
                                                   1)
@@ -256,7 +256,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
   List<FlSpot> getSpots() {
     List<FlSpot> spots = List();
     var prev = 0;
-    (widget.workout.data as Stairs).snapShots.forEach((element) {
+    (widget.workout.data as Stairing).snapShots.forEach((element) {
       var steps = (element.count - prev).toDouble();
       if (steps < 0) steps = 0.0;
       spots.add(FlSpot(element.whenSec.toDouble(), steps));

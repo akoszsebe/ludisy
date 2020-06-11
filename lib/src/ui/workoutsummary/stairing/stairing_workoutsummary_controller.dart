@@ -6,7 +6,7 @@ class StairingWorkoutSummaryController extends ControllerMVC {
   StairingObj selected = StairingObj(count: 0, whenSec: 0);
 
   void changePosition(WorkOut workout, int _index) {
-    selected = (workout.data as Stairs).snapShots[index];
+    selected = (workout.data as Stairing).snapShots[index];
     index = _index;
   }
 }

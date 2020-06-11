@@ -32,7 +32,7 @@ class WorkOut {
   static Map<String, dynamic> toJsonByType(int type, Object data) {
     switch (type) {
       case 0:
-        return (data as Stairs).toJson();
+        return (data as Stairing).toJson();
       case 1:
         return (data as Biking).toJson();
       case 2:
@@ -44,7 +44,7 @@ class WorkOut {
   static Object fromJsonByType(int type, dynamic data) {
     switch (type) {
       case 0:
-        return Stairs.fromJson(data.cast<String, dynamic>());
+        return Stairing.fromJson(data.cast<String, dynamic>());
       case 1:
         return Biking.fromJson(data.cast<String, dynamic>());
       case 2:
@@ -75,13 +75,13 @@ class WorkOut {
 
 // Stiring
 
-class Stairs {
+class Stairing {
   int stairsCount;
   List<StairingObj> snapShots = [];
 
-  Stairs({this.stairsCount, this.snapShots});
+  Stairing({this.stairsCount, this.snapShots});
 
-  factory Stairs.fromJson(Map<String, dynamic> json) => Stairs(
+  factory Stairing.fromJson(Map<String, dynamic> json) => Stairing(
       stairsCount: json["stairsCount"] == null ? null : json["stairsCount"],
       snapShots: json["snapShots"] == null
           ? []
@@ -220,7 +220,7 @@ class Runs {
 }
 
 enum WorkoutType {
-  stairs,
-  run,
-  bike,
+  stairing,
+  running,
+  biking,
 }

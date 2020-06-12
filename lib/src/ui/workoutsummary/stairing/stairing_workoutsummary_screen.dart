@@ -148,7 +148,8 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                               children: <Widget>[
                                 buildColorCircleTextValue3Pair(
                                     "Steps",
-                                    con.selected.count.toString() + " steps/min",
+                                    con.selected.count.toString() +
+                                        " steps/min",
                                     Color(0xCC34A853)),
                               ],
                             ),
@@ -161,6 +162,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                 Container(
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 24),
+                                    padding: EdgeInsets.only(bottom: 40),
                                     width: double.infinity,
                                     child: LineChart(
                                       lineChartData(),
@@ -178,11 +180,12 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                           inactiveColor: AppColors
                                               .instance.primaryWithOcupacity50,
                                           min: 0,
-                                          max: ((widget.workout.data as Stairing)
-                                                      .snapShots
-                                                      .length -
-                                                  1)
-                                              .toDouble(),
+                                          max:
+                                              ((widget.workout.data as Stairing)
+                                                          .snapShots
+                                                          .length -
+                                                      1)
+                                                  .toDouble(),
                                           value: con.index.toDouble(),
                                           onChanged: (value) {
                                             setState(() {
@@ -216,15 +219,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       ),
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
-          showTitles: true,
-          textStyle: GoogleFonts.montserrat(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: AppColors.instance.textPrimary),
-          margin: 16,
-          getTitles: (double value) {
-            return ""; // titles[value];
-          },
+          showTitles: false,
         ),
         leftTitles: SideTitles(
           showTitles: false,

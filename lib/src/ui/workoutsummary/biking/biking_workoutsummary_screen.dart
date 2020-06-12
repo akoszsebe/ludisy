@@ -204,6 +204,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                   Container(
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.only(bottom: 40),
                                     width: double.infinity,
                                     child: LineChart(
                                       lineChartData(),
@@ -275,15 +276,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       ),
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
-          showTitles: true,
-          textStyle: GoogleFonts.montserrat(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: AppColors.instance.textPrimary),
-          margin: 16,
-          getTitles: (double value) {
-            return ""; // titles[value];
-          },
+          showTitles: false,
         ),
         leftTitles: SideTitles(
           showTitles: false,

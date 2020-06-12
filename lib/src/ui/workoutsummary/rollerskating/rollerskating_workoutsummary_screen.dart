@@ -24,7 +24,8 @@ class RollerSkatingWorkoutSummaryScreen extends StatefulWidget {
 
   RollerSkatingWorkoutSummaryScreen(this.workout, {Key key}) : super(key: key);
   @override
-  _RollerSkatingWorkoutSummaryScreenState createState() => _RollerSkatingWorkoutSummaryScreenState();
+  _RollerSkatingWorkoutSummaryScreenState createState() =>
+      _RollerSkatingWorkoutSummaryScreenState();
 }
 
 class _RollerSkatingWorkoutSummaryScreenState extends BaseScreenState<
@@ -199,6 +200,7 @@ class _RollerSkatingWorkoutSummaryScreenState extends BaseScreenState<
                                   Container(
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.only(bottom: 40),
                                     width: double.infinity,
                                     child: LineChart(
                                       lineChartData(),
@@ -217,12 +219,12 @@ class _RollerSkatingWorkoutSummaryScreenState extends BaseScreenState<
                                             inactiveColor: AppColors.instance
                                                 .primaryWithOcupacity50,
                                             min: 0,
-                                            max:
-                                                ((widget.workout.data as RollerSkating)
-                                                            .snapShots
-                                                            .length -
-                                                        1)
-                                                    .toDouble(),
+                                            max: ((widget.workout.data
+                                                            as RollerSkating)
+                                                        .snapShots
+                                                        .length -
+                                                    1)
+                                                .toDouble(),
                                             value: con.index.toDouble(),
                                             onChangeStart: (value) {
                                               setState(() {
@@ -270,15 +272,7 @@ class _RollerSkatingWorkoutSummaryScreenState extends BaseScreenState<
       ),
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
-          showTitles: true,
-          textStyle: GoogleFonts.montserrat(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: AppColors.instance.textPrimary),
-          margin: 16,
-          getTitles: (double value) {
-            return ""; // titles[value];
-          },
+          showTitles: false,
         ),
         leftTitles: SideTitles(
           showTitles: false,

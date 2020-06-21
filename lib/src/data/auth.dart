@@ -12,6 +12,11 @@ class Auth {
     googleUser = await _googleSignIn.signIn();
     var googleAuth = await googleUser.authentication;
 
+    String authCode = googleAuth.serverAuthCode;
+
+    print("auth  ${googleAuth.toString()}");
+    print("serverAuthCode  $authCode");
+
     var credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,

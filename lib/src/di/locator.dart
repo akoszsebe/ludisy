@@ -28,7 +28,7 @@ final GetIt locator = GetIt.instance;
 
 void setupLocator(FirebaseApp firebaseApp) {
   // Services
-  locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email']));
+  locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email'],clientId: "695310395817-7vh52k28n8ppchk48rqhj1hduliape69.apps.googleusercontent.com",));
   locator.registerLazySingleton(() => FirebaseAuth.fromApp(firebaseApp));
   locator.registerLazySingleton(() => Auth());
   locator.registerLazySingleton(() => provideFirebase(firebaseApp));

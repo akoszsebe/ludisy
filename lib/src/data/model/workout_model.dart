@@ -37,6 +37,8 @@ class WorkOut {
         return (data as Biking).toJson();
       case 2:
         return (data as RollerSkating).toJson();
+      case 3:
+        return (data as Running).toJson();
     }
     return {};
   }
@@ -49,6 +51,8 @@ class WorkOut {
         return Biking.fromJson(data.cast<String, dynamic>());
       case 2:
         return RollerSkating.fromJson(data.cast<String, dynamic>());
+      case 3:
+        return Running.fromJson(data.cast<String, dynamic>());
     }
     return {};
   }
@@ -214,13 +218,67 @@ class RollerSkatingObj {
 
 // End Roller Skating
 
-class Runs {
-  double avgSpeed;
-  List<BikingObj> snapShots;
+//  Running
+class Running {
+  double distance;
+  double elevation;
+  int steps;
+  List<RunningObj> snapShots;
+
+  Running({this.distance, this.elevation, this.snapShots, this.steps});
+
+  factory Running.fromJson(Map<String, dynamic> json) => Running(
+      distance: json["distance"] == null ? null : json["distance"].toDouble(),
+      elevation:
+          json["elevation"] == null ? null : json["elevation"].toDouble(),
+      steps: json["steps"] == null ? null : json["steps"],
+      snapShots: json["snapShots"] == null
+          ? []
+          : List<RunningObj>.from(json["snapShots"]
+              .map((i) => RunningObj.fromJson(i.cast<String, dynamic>()))
+              .toList()));
+
+  Map<String, dynamic> toJson() => {
+        "distance": distance == null ? null : distance,
+        "elevation": elevation == null ? null : elevation,
+        "steps": steps == null ? null : steps,
+        "snapShots": List<dynamic>.from(snapShots.map((x) => x.toJson())),
+      };
 }
+
+class RunningObj {
+  double longitude;
+  double latitude;
+  double speed;
+  int steps;
+  int whenSec;
+
+  RunningObj(
+      {this.latitude, this.longitude, this.speed, this.steps, this.whenSec});
+
+  factory RunningObj.fromJson(Map<String, dynamic> json) => RunningObj(
+        longitude:
+            json["longitude"] != null ? json["longitude"].toDouble() : 0.0,
+        latitude: json["latitude"] != null ? json["latitude"].toDouble() : 0.0,
+        speed: json["speed"] != null ? json["speed"].toDouble() : 0.0,
+        steps: json["steps"] != null ? json["steps"] : 0,
+        whenSec: json["whenSec"] != null ? json["whenSec"] : 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "longitude": longitude,
+        "latitude": latitude,
+        "speed": speed,
+        "steps": steps,
+        "whenSec": whenSec,
+      };
+}
+
+// End Running
 
 enum WorkoutType {
   stairing,
-  running,
   biking,
+  rollerSkating,
+  running,
 }

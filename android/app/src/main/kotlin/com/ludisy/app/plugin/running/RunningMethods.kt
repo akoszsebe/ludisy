@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.ludisy.app.plugin.WorkoutMethodCalls
 import com.ludisy.app.plugin.data.AppDatabase
 import com.ludisy.app.plugin.data.model.RunningObj
-import com.ludisy.app.plugin.rollerskating.RollerSkatingForegroundService
+import com.ludisy.app.plugin.running.RunningForegroundService
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.reactivex.Single
@@ -16,10 +16,10 @@ import io.reactivex.schedulers.Schedulers
 class RunningMethods(private val context: Context) : WorkoutMethodCalls<RunningObj> {
     override fun checkMethodCalls(appDatabase: AppDatabase, call: MethodCall, result: MethodChannel.Result) {
         if (call.method.equals("running/start")) {
-            RollerSkatingForegroundService.startService(context, "Have fun")
+            RunningForegroundService.startService(context, "Have fun")
             result.success(true)
         } else if (call.method.equals("running/stop")) {
-            RollerSkatingForegroundService.stopService(context)
+            RunningForegroundService.stopService(context)
             result.success(true)
         } else if (call.method.equals("running/getdata")) {
             getAllData(appDatabase)

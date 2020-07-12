@@ -296,10 +296,8 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
             RoundedButton(
                 "start_running",
                 AppSVGAssets.start,
-                () => {
-                      NavigationModule.navigateToRollerSkatingWorkoutScreen(
-                          context)
-                    }),
+                () =>
+                    {NavigationModule.navigateToRunningWorkoutScreen(context)}),
           ])),
     );
   }

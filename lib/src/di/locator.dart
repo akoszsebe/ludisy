@@ -14,6 +14,7 @@ import 'package:ludisy/src/ui/settings/settings_controller.dart';
 import 'package:ludisy/src/ui/splash/splash_controller.dart';
 import 'package:ludisy/src/ui/start/start_controller.dart';
 import 'package:ludisy/src/ui/workout/rollerskating/rollerskating_workout_controller.dart';
+import 'package:ludisy/src/ui/workout/running/running_workout_controller.dart';
 import 'package:ludisy/src/ui/workout/stairing/stairing_workout_controller.dart';
 import 'package:ludisy/src/ui/workout/biking/biking_workout_controller.dart';
 import 'package:ludisy/src/ui/workoutsummary/biking/biking_workoutsummary_controller.dart';
@@ -28,7 +29,11 @@ final GetIt locator = GetIt.instance;
 
 void setupLocator(FirebaseApp firebaseApp) {
   // Services
-  locator.registerLazySingleton(() => GoogleSignIn(scopes: ['email'],clientId: "695310395817-7vh52k28n8ppchk48rqhj1hduliape69.apps.googleusercontent.com",));
+  locator.registerLazySingleton(() => GoogleSignIn(
+        scopes: ['email'],
+        clientId:
+            "695310395817-7vh52k28n8ppchk48rqhj1hduliape69.apps.googleusercontent.com",
+      ));
   locator.registerLazySingleton(() => FirebaseAuth.fromApp(firebaseApp));
   locator.registerLazySingleton(() => Auth());
   locator.registerLazySingleton(() => provideFirebase(firebaseApp));
@@ -55,6 +60,7 @@ void setupLocator(FirebaseApp firebaseApp) {
   locator.registerFactory(() => SplashController());
   locator.registerFactory(() => RollerSkatingWorkoutController());
   locator.registerFactory(() => RollerSkatingWorkoutSummaryController());
+  locator.registerFactory(() => RunningWorkoutController());
 }
 
 DatabaseReference provideUserRef() {

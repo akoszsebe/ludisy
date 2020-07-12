@@ -6,7 +6,7 @@ class AppAssets {
 
   static const AssetImage background_bike =
       const AssetImage("lib/resources/images/bike.png");
-  
+
   static const AssetImage background_rollerscate =
       const AssetImage("lib/resources/images/rollers.png");
 
@@ -21,7 +21,10 @@ class AppAssets {
 
   static const String biking_marker = "lib/resources/images/bikingmarker.png";
 
-  static const String rollerskating_marker = "lib/resources/images/rollerskatemarker.png";
+  static const String rollerskating_marker =
+      "lib/resources/images/rollerskatemarker.png";
+
+  static const String running_marker = "lib/resources/images/runningmarker.png";
 }
 
 class AppSVGAssets {
@@ -64,6 +67,8 @@ class AppSVGAssets {
   static const String stairing = "lib/resources/images_svg/stairing.svg";
 
   static const String biking = "lib/resources/images_svg/biking.svg";
+
+  static const String running = "lib/resources/images_svg/running.svg";
 
   static const String cancel = "lib/resources/images_svg/cancel.svg";
 

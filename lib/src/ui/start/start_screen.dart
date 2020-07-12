@@ -82,7 +82,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                 itemScrollController: itemScrollController,
                 itemPositionsListener: itemPositionsListener,
                 scrollDirection: Axis.horizontal,
-                itemCount: 3,
+                itemCount: 4,
                 initialScrollIndex: con.selelectedWorkoutIndex,
                 itemBuilder: (_, index) {
                   switch (index) {
@@ -92,6 +92,8 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                       return builBikingWorkoutComponent();
                     case 2:
                       return builRollerSkatingWorkoutComponent();
+                    case 3:
+                      return builRunningWorkoutComponent();
                   }
                   return Container();
                 },
@@ -100,7 +102,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               child: Container(
                   height: 60.0,
                   margin: EdgeInsets.only(bottom: 16),
-                  width: (70 * 3).toDouble(),
+                  width: (70 * 4).toDouble(),
                   child: ListView(
                     shrinkWrap: true,
                     itemExtent: 70,
@@ -124,6 +126,14 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                         });
                       }),
                       buildWorkoutSelectButton(2, AppSVGAssets.rollerSkates,
+                          onTap: () {
+                        setState(() {
+                          _uiState.changeBackgroundImage(
+                              AppAssets.background_rollerscate);
+                          scrollTo(con.selelectedWorkoutIndex);
+                        });
+                      }),
+                      buildWorkoutSelectButton(3, AppSVGAssets.running,
                           onTap: () {
                         setState(() {
                           _uiState.changeBackgroundImage(
@@ -254,6 +264,37 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
             Padding(padding: EdgeInsets.only(top: 30)),
             RoundedButton(
                 "start_rollerskating",
+                AppSVGAssets.start,
+                () => {
+                      NavigationModule.navigateToRollerSkatingWorkoutScreen(
+                          context)
+                    }),
+          ])),
+    );
+  }
+
+  Widget builRunningWorkoutComponent() {
+    return RoundedContainer(
+      backgroundColor: AppColors.instance.containerColor,
+      width: MediaQuery.of(context).size.width - 32,
+      margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
+      radius: 32.0,
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          child: Column(children: <Widget>[
+            Padding(padding: EdgeInsets.only(top: 20)),
+            Center(
+                child: Text(
+              "Are you ready for running",
+              style: GoogleFonts.montserrat(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.instance.textPrimary),
+              textAlign: TextAlign.center,
+            )),
+            Padding(padding: EdgeInsets.only(top: 30)),
+            RoundedButton(
+                "start_running",
                 AppSVGAssets.start,
                 () => {
                       NavigationModule.navigateToRollerSkatingWorkoutScreen(

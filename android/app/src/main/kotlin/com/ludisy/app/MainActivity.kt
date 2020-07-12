@@ -30,6 +30,8 @@ class MainActivity : FlutterActivity() {
                         biking.checkMethodCalls(appDatabase, call, result)
                     } else if (call.method.startsWith("rollerskating")) {
                         rollerSkating.checkMethodCalls(appDatabase, call, result)
+                    } else if (call.method.startsWith("running")) {
+                        rollerSkating.checkMethodCalls(appDatabase, call, result)
                     }
                 }
     }

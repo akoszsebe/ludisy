@@ -181,9 +181,9 @@ class _RunningWorkoutScreenState
                                   buildIconTextPair("${con.calCounterValue}",
                                       AppSVGAssets.cal,
                                       secondaryText: " cal"),
-                                  buildIconTextPair(
-                                      "${con.stepsMin}", AppSVGAssets.step,
-                                      secondaryText: " stp/min"),
+                                  buildIconTextPair("${con.stepCountValue}",
+                                      AppSVGAssets.step,
+                                      secondaryText: " steps"),
                                 ]))),
                         Padding(
                             padding: EdgeInsets.only(bottom: 24, top: 48),

@@ -12,11 +12,13 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
+import 'package:pedometer/pedometer.dart';
 
 class RunningWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Location location = locator<Location>();
+  final Pedometer _pedometer = locator<Pedometer>();
 
   final Completer<GoogleMapController> mapController = Completer();
   final Set<Marker> markers = {};
@@ -29,14 +31,17 @@ class RunningWorkoutController extends ControllerMVC {
   double avgPace = 0;
   WorkOut savedWorkout;
   int stepsMin = 0;
+  int stepCountValue = 0;
 
   int sampleCount = 0;
   int summSpeed = 0;
 
+  int _stepOffset = 0;
   Timer _timer;
   int _startime = 0;
   List<LatLng> latlng = List();
   LatLng currentPosition = LatLng(0, 0);
+  StreamSubscription<int> _subscription;
 
   BitmapDescriptor pinLocationIcon;
 
@@ -61,6 +66,8 @@ class RunningWorkoutController extends ControllerMVC {
     }
 
     _startime = DateTime.now().millisecondsSinceEpoch;
+    _stepOffset = await _pedometer.pedometerStream.first;
+    print("start from = $_stepOffset");
     startListening();
   }
 
@@ -68,6 +75,8 @@ class RunningWorkoutController extends ControllerMVC {
     startTimer();
     RunningForegroundService.startFGS();
     workoutState = WorkoutState.running;
+    _subscription = _pedometer.pedometerStream.listen(_onData,
+        onError: _onError, onDone: _onDone, cancelOnError: true);
     refresh();
   }
 
@@ -79,6 +88,16 @@ class RunningWorkoutController extends ControllerMVC {
     workoutState = WorkoutState.paused;
     refresh();
   }
+
+  void _onData(int stepCountValue) async {
+    print("OnData pedometer tracking ${stepCountValue - _stepOffset}");
+    this.stepCountValue = stepCountValue - _stepOffset;
+    refresh();
+  }
+
+  void _onDone() => print("Finished pedometer tracking");
+
+  void _onError(error) => print("Flutter Pedometer Error: $error");
 
   void startTimer() {
     durationSeconds =
@@ -199,7 +218,7 @@ class RunningWorkoutController extends ControllerMVC {
         duration: durationSeconds,
         timeStamp: DateTime.now().millisecondsSinceEpoch,
         cal: calCounterValue,
-        type: 2,
+        type: 3,
         data: Running(distance: distance, snapShots: savedData));
     await _workOutDao.insertWorkOut(savedWorkout);
     userState.addWorkout(savedWorkout);

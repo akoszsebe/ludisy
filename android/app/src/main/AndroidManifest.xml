@@ -14,6 +14,8 @@
     <application android:name="io.flutter.app.FlutterApplication" android:label="Ludisy" android:usesCleartextTraffic="true" android:icon="@mipmap/ic_launcher">
         <service android:name=".plugin.biking.BikingForegroundService">
         </service>
+        <service android:name=".plugin.running.RunningForegroundService">
+        </service>
         <service android:name=".plugin.rollerskating.RollerSkatingForegroundService">
         </service>
         <meta-data android:name="com.google.android.geo.API_KEY"

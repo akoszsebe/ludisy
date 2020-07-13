@@ -16,14 +16,17 @@ class HistoryController extends ControllerMVC {
   List<DayModel> datasetStairing = List();
   List<DayModel> datasetBiking = List();
   List<DayModel> datasetRollerSkating = List();
+  List<DayModel> datasetRunning = List();
   DateTime lastDay = DateTime.now();
   DateTime firstDay = DateTime.now();
   DayModel selectedDayStairing = DayModel();
   DayModel selectedDayBiking = DayModel();
   DayModel selectedDayRollerSkating = DayModel();
+  DayModel selectedDayRunning = DayModel();
   List<ChartItem> itemsStairings = List();
   List<ChartItem> itemsBikings = List();
   List<ChartItem> itemsRollerSkatings = List();
+  List<ChartItem> itemsRunnings = List();
 
   Future<void> init() async {
     var today = DateTime.now();
@@ -34,9 +37,11 @@ class HistoryController extends ControllerMVC {
     itemsStairings = List();
     itemsBikings = List();
     itemsRollerSkatings = List();
+    itemsRunnings = List();
     datasetStairing = List();
     datasetBiking = List();
     datasetRollerSkating = List();
+    datasetRunning = List();
     lastDay = lastDayFromThatWeek;
     firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
     var workoutsForaWeek = await _workoutDao.findWorkOutBetween(
@@ -61,6 +66,7 @@ class HistoryController extends ControllerMVC {
     selectedDayBiking = datasetBiking[datasetBiking.length - 1];
     selectedDayRollerSkating =
         datasetRollerSkating[datasetRollerSkating.length - 1];
+    selectedDayRunning = datasetRunning[datasetRunning.length - 1];
     refresh();
   }
 
@@ -81,12 +87,16 @@ class HistoryController extends ControllerMVC {
     fillForRollerSkating(
         workoutsForCurrentDay.where((element) => element.type == 2).toList(),
         morning);
+    fillForRunning(
+        workoutsForCurrentDay.where((element) => element.type == 3).toList(),
+        morning);
   }
 
   void changeSelected(int index) {
     selectedDayStairing = datasetStairing[index];
     selectedDayBiking = datasetBiking[index];
     selectedDayRollerSkating = datasetRollerSkating[index];
+    selectedDayRunning = datasetRunning[index];
     refresh();
   }
 
@@ -123,6 +133,17 @@ class HistoryController extends ControllerMVC {
     datasetRollerSkating.add(d);
     itemsRollerSkatings
         .add(ChartItem(d.totalDistance.toInt(), d.date.toString()));
+  }
+
+  void fillForRunning(List<WorkOut> workoutsForCurrentDay, DateTime morning) {
+    var d = DayModel();
+    d.date = morning.day;
+    for (var l in workoutsForCurrentDay) {
+      d.totalDistance += (l.data as Running).distance;
+      d.workouts.add(l);
+    }
+    datasetRunning.add(d);
+    itemsRunnings.add(ChartItem(d.totalDistance.toInt(), d.date.toString()));
   }
 
   void setSelelectedWorkoutIndex(int index) {

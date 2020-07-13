@@ -24,6 +24,7 @@ import 'package:ludisy/src/ui/workout/biking/biking_workout_controller.dart';
 import 'package:ludisy/src/ui/workoutsummary/biking/biking_workoutsummary_controller.dart';
 import 'package:ludisy/src/ui/workoutsummary/rollerskating/rollerskating_workoutsummary_controller.dart';
 import 'package:ludisy/src/ui/workoutsummary/stairing/stairing_workoutsummary_controller.dart';
+import 'package:ludisy/src/ui/workoutsummary/running/running_workoutsummary_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ludisy/src/util/style/map_style.dart';
 import 'package:pedometer/pedometer.dart';
@@ -65,6 +66,7 @@ void setupLocator(FirebaseApp firebaseApp) {
   locator.registerFactory(() => RollerSkatingWorkoutController());
   locator.registerFactory(() => RollerSkatingWorkoutSummaryController());
   locator.registerFactory(() => RunningWorkoutController());
+  locator.registerFactory(() => RunningWorkoutSummaryController());
   // Foreground Services
   locator.registerLazySingleton<BikingForegroundService>(
       () => BikingForegroundService());

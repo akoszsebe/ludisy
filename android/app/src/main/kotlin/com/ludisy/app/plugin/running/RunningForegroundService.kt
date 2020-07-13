@@ -81,6 +81,7 @@ class RunningForegroundService : ForegroundService(), SensorEventListener {
                         null,
                         locationResult.lastLocation.longitude,
                         locationResult.lastLocation.latitude,
+                        locationResult.lastLocation.altitude,
                         locationResult.lastLocation.speed,
                         steps,
                         System.currentTimeMillis()

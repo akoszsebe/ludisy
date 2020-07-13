@@ -249,17 +249,24 @@ class Running {
 class RunningObj {
   double longitude;
   double latitude;
+  double altitude;
   double speed;
   int steps;
   int whenSec;
 
   RunningObj(
-      {this.latitude, this.longitude, this.speed, this.steps, this.whenSec});
+      {this.latitude,
+      this.longitude,
+      this.altitude,
+      this.speed,
+      this.steps,
+      this.whenSec});
 
   factory RunningObj.fromJson(Map<String, dynamic> json) => RunningObj(
         longitude:
             json["longitude"] != null ? json["longitude"].toDouble() : 0.0,
         latitude: json["latitude"] != null ? json["latitude"].toDouble() : 0.0,
+        altitude: json["altitude"] != null ? json["altitude"].toDouble() : 0.0,
         speed: json["speed"] != null ? json["speed"].toDouble() : 0.0,
         steps: json["steps"] != null ? json["steps"] : 0,
         whenSec: json["whenSec"] != null ? json["whenSec"] : 0,
@@ -270,6 +277,7 @@ class RunningObj {
         "latitude": latitude,
         "speed": speed,
         "steps": steps,
+        "altitude": altitude,
         "whenSec": whenSec,
       };
 }

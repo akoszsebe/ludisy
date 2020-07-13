@@ -232,9 +232,8 @@ class _RunningWorkoutScreenState
       return RoundedButton(
         "done",
         AppSVGAssets.done,
-        () => NavigationModule
-            .navigateAndReplacToRollerSkatingWorkoutSummaryScreen(
-                context, con.savedWorkout),
+        () => NavigationModule.navigateAndReplacToRunningWorkoutSummaryScreen(
+            context, con.savedWorkout),
       );
     }
   }

@@ -45,6 +45,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       polylineId: PolylineId("id"),
       visible: true,
       points: con.latlng,
+      width: 4,
       color: AppColors.instance.primary,
     ));
     con.initMap(widget.workout);

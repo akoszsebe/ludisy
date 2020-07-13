@@ -31,10 +31,12 @@ class HistoryController extends ControllerMVC {
   }
 
   Future<void> fillForWeek(DateTime lastDayFromThatWeek) async {
-    datasetStairing = List();
     itemsStairings = List();
     itemsBikings = List();
     itemsRollerSkatings = List();
+    datasetStairing = List();
+    datasetBiking = List();
+    datasetRollerSkating = List();
     lastDay = lastDayFromThatWeek;
     firstDay = lastDayFromThatWeek.subtract(Duration(days: 6));
     var workoutsForaWeek = await _workoutDao.findWorkOutBetween(
@@ -57,7 +59,8 @@ class HistoryController extends ControllerMVC {
     await addDay(lastDayFromThatWeek, workoutsForaWeek);
     selectedDayStairing = datasetStairing[datasetStairing.length - 1];
     selectedDayBiking = datasetBiking[datasetBiking.length - 1];
-    selectedDayRollerSkating = datasetRollerSkating[datasetRollerSkating.length - 1];
+    selectedDayRollerSkating =
+        datasetRollerSkating[datasetRollerSkating.length - 1];
     refresh();
   }
 

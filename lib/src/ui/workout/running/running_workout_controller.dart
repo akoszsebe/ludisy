@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,12 +12,15 @@ import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:ludisy/src/util/logic_utils.dart';
 
 class RunningWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Location location = locator<Location>();
   final Pedometer _pedometer = locator<Pedometer>();
+  final RunningForegroundService _runningForegroundService =
+      locator<RunningForegroundService>();
 
   final Completer<GoogleMapController> mapController = Completer();
   final Set<Marker> markers = {};
@@ -73,7 +75,7 @@ class RunningWorkoutController extends ControllerMVC {
 
   Future<void> startListening() async {
     startTimer();
-    RunningForegroundService.startFGS();
+    _runningForegroundService.startFGS();
     workoutState = WorkoutState.running;
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
@@ -81,7 +83,7 @@ class RunningWorkoutController extends ControllerMVC {
   }
 
   Future<void> stopListening() async {
-    await RunningForegroundService.stopFGS();
+    await _runningForegroundService.stopFGS();
     if (_subscription != null) {
       _subscription.cancel();
     }
@@ -126,7 +128,7 @@ class RunningWorkoutController extends ControllerMVC {
     sampleCount++;
     avgSpeed = summSpeed / sampleCount;
     if (currentPosition.latitude != 0 && currentPosition.longitude != 0) {
-      distance += calculateDistance(
+      distance += LogicUtils.calculateDistance(
           currentPosition.latitude,
           currentPosition.longitude,
           _locationData.latitude,
@@ -156,13 +158,13 @@ class RunningWorkoutController extends ControllerMVC {
     sampleCount = 0;
     summSpeed = 0;
     if (workoutState == WorkoutState.running) {
-      var savedData = await RunningForegroundService.getSavedData();
+      var savedData = await _runningForegroundService.getSavedData();
       latlng.clear();
       LatLng prew;
       savedData.forEach((element) {
         if (prew != null) {
-          distance += calculateDistance(prew.latitude, prew.longitude,
-              element.latitude, element.longitude);
+          distance += LogicUtils.calculateDistance(prew.latitude,
+              prew.longitude, element.latitude, element.longitude);
         }
         currentPosition = LatLng(element.latitude, element.longitude);
         latlng.add(currentPosition);
@@ -185,7 +187,7 @@ class RunningWorkoutController extends ControllerMVC {
 
   Future<void> stopWorkout() async {
     await stopListening();
-    await RunningForegroundService.removeSavedData();
+    await _runningForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
   }
 
@@ -196,14 +198,14 @@ class RunningWorkoutController extends ControllerMVC {
     if (_timer != null) {
       _timer.cancel();
     }
-    var savedData = await RunningForegroundService.getSavedData();
-    await RunningForegroundService.removeSavedData();
+    var savedData = await _runningForegroundService.getSavedData();
+    await _runningForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
     latlng.clear();
     LatLng prew;
     savedData.forEach((element) {
       if (prew != null) {
-        distance += calculateDistance(
+        distance += LogicUtils.calculateDistance(
             prew.latitude, prew.longitude, element.latitude, element.longitude);
       }
       currentPosition = LatLng(element.latitude, element.longitude);
@@ -231,14 +233,5 @@ class RunningWorkoutController extends ControllerMVC {
   void setCustomMapPin() async {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), AppAssets.running_marker);
-  }
-
-  double calculateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742.0 * asin(sqrt(a));
   }
 }

@@ -13,6 +13,8 @@ class StairingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Pedometer _pedometer = locator<Pedometer>();
+  final StairingForegroundService _stairingForegroundService =
+      locator<StairingForegroundService>();
 
   int stepCountValue = 0;
   double calCounterValue = 0;
@@ -44,16 +46,15 @@ class StairingWorkoutController extends ControllerMVC {
 
   Future<void> startListening() async {
     startTimer();
-    StairingForegroundService.startFGS();
+    _stairingForegroundService.startFGS();
     _subscription = _pedometer.pedometerStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
     workoutState = WorkoutState.running;
     refresh();
-    //  mock();
   }
 
   Future<void> stopListening() async {
-    await StairingForegroundService.stopFGS();
+    await _stairingForegroundService.stopFGS();
     if (_subscription != null) {
       _subscription.cancel();
     }
@@ -74,31 +75,10 @@ class StairingWorkoutController extends ControllerMVC {
     });
   }
 
-  Future<void> mock() async {
-    print("target = $targetSteps");
-    for (var i = 0; i < targetSteps + 10; i += 10) {
-      calCounterValue = CaloriCalculator.calculeteCalories(
-          userState.getUserData(), durationSeconds, stepCountValue);
-      stepCountValue = i;
-      percentageValue = stepCountValue / targetSteps;
-      checkPercentage();
-      refresh();
-      if (workoutState != WorkoutState.running) {
-        break;
-      }
-      await Future.delayed(Duration(milliseconds: 2000));
-    }
-  }
-
   void checkPercentage() {
     if (percentageValue > 1) {
       percentageValue = 1;
     }
-    // if (percentageValue == 1) {
-    //   FlutterRingtonePlayer.playNotification();
-    //   workoutState = WorkoutState.finised;
-    //   refresh();
-    // }
   }
 
   void _onData(int stepCountValue) async {
@@ -154,12 +134,12 @@ class StairingWorkoutController extends ControllerMVC {
   Future<List<StairingObj>> stopWorkout() async {
     await stopListening();
     workoutState = WorkoutState.finised;
-    var result = await StairingForegroundService.getSavedData();
+    var result = await _stairingForegroundService.getSavedData();
     result.forEach((e) {
       e.whenSec = (e.whenSec - _startime) ~/ 1000;
     });
     print("result -------------- $result");
-    await StairingForegroundService.removeSavedData();
+    await _stairingForegroundService.removeSavedData();
     refresh();
     return result;
   }

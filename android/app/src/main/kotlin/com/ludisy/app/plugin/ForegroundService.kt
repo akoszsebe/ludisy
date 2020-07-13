@@ -55,8 +55,10 @@ abstract class ForegroundService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         mHandler.removeCallbacks(runnableCode);
-        if (!disposable.isDisposed) {
-            disposable.dispose()
+        if (disposable != null) {
+            if (!disposable.isDisposed) {
+                disposable.dispose()
+            }
         }
     }
 

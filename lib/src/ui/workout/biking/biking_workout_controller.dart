@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -12,11 +10,14 @@ import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
 import 'package:ludisy/src/data/forgroundsevices/biking_foreground_dervice.dart';
+import 'package:ludisy/src/util/logic_utils.dart';
 
 class BikingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Location location = locator<Location>();
+  final BikingForegroundService _bikingForegroundService =
+      locator<BikingForegroundService>();
 
   final Completer<GoogleMapController> mapController = Completer();
   final Set<Marker> markers = {};
@@ -65,13 +66,13 @@ class BikingWorkoutController extends ControllerMVC {
 
   Future<void> startListening() async {
     startTimer();
-    BikingForegroundService.startFGS();
+    _bikingForegroundService.startFGS();
     workoutState = WorkoutState.running;
     refresh();
   }
 
   Future<void> stopListening() async {
-    await BikingForegroundService.stopFGS();
+    await _bikingForegroundService.stopFGS();
     if (_timer != null) {
       _timer.cancel();
     }
@@ -82,7 +83,7 @@ class BikingWorkoutController extends ControllerMVC {
   void startTimer() {
     durationSeconds =
         (DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000;
-     if (_timer != null) {
+    if (_timer != null) {
       _timer.cancel();
     }
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -104,7 +105,7 @@ class BikingWorkoutController extends ControllerMVC {
     avgSpeed = summSpeed / sampleCount;
     altitude = _locationData.altitude.toInt();
     if (currentPosition.latitude != 0 && currentPosition.longitude != 0) {
-      distance += calculateDistance(
+      distance += LogicUtils.calculateDistance(
           currentPosition.latitude,
           currentPosition.longitude,
           _locationData.latitude,
@@ -134,13 +135,13 @@ class BikingWorkoutController extends ControllerMVC {
     sampleCount = 0;
     summSpeed = 0;
     if (workoutState == WorkoutState.running) {
-      var savedData = await BikingForegroundService.getSavedData();
+      var savedData = await _bikingForegroundService.getSavedData();
       latlng.clear();
       LatLng prew;
       savedData.forEach((element) {
         if (prew != null) {
-          distance += calculateDistance(prew.latitude, prew.longitude,
-              element.latitude, element.longitude);
+          distance += LogicUtils.calculateDistance(prew.latitude,
+              prew.longitude, element.latitude, element.longitude);
         }
         currentPosition = LatLng(element.latitude, element.longitude);
         latlng.add(currentPosition);
@@ -164,7 +165,7 @@ class BikingWorkoutController extends ControllerMVC {
 
   Future<void> stopWorkout() async {
     await stopListening();
-    await BikingForegroundService.removeSavedData();
+    await _bikingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
   }
 
@@ -175,14 +176,14 @@ class BikingWorkoutController extends ControllerMVC {
     if (_timer != null) {
       _timer.cancel();
     }
-    var savedData = await BikingForegroundService.getSavedData();
-    await BikingForegroundService.removeSavedData();
+    var savedData = await _bikingForegroundService.getSavedData();
+    await _bikingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
     latlng.clear();
     LatLng prew;
     savedData.forEach((element) {
       if (prew != null) {
-        distance += calculateDistance(
+        distance += LogicUtils.calculateDistance(
             prew.latitude, prew.longitude, element.latitude, element.longitude);
       }
       currentPosition = LatLng(element.latitude, element.longitude);
@@ -211,14 +212,5 @@ class BikingWorkoutController extends ControllerMVC {
   void setCustomMapPin() async {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), AppAssets.biking_marker);
-  }
-
-  double calculateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742.0 * asin(sqrt(a));
   }
 }

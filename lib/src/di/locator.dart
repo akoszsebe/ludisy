@@ -3,6 +3,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ludisy/src/data/auth.dart';
+import 'package:ludisy/src/data/forgroundsevices/biking_foreground_dervice.dart';
+import 'package:ludisy/src/data/forgroundsevices/rollerskating_foreground_service.dart';
+import 'package:ludisy/src/data/forgroundsevices/running_foreground_service.dart';
+import 'package:ludisy/src/data/forgroundsevices/stairing_foreground_service.dart';
 import 'package:ludisy/src/data/persitance/dao/user_dao.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/states/ui_state.dart';
@@ -61,6 +65,15 @@ void setupLocator(FirebaseApp firebaseApp) {
   locator.registerFactory(() => RollerSkatingWorkoutController());
   locator.registerFactory(() => RollerSkatingWorkoutSummaryController());
   locator.registerFactory(() => RunningWorkoutController());
+  // Foreground Services
+  locator.registerLazySingleton<BikingForegroundService>(
+      () => BikingForegroundService());
+  locator.registerLazySingleton<RollerSkatingForegroundService>(
+      () => RollerSkatingForegroundService());
+  locator.registerLazySingleton<RunningForegroundService>(
+      () => RunningForegroundService());
+  locator.registerLazySingleton<StairingForegroundService>(
+      () => StairingForegroundService());
 }
 
 DatabaseReference provideUserRef() {

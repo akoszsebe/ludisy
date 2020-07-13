@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,11 +11,14 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/user_state.dart';
+import 'package:ludisy/src/util/logic_utils.dart';
 
 class RollerSkatingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Location location = locator<Location>();
+  final RollerSkatingForegroundService _rollerSkatingForegroundService =
+      locator<RollerSkatingForegroundService>();
 
   final Completer<GoogleMapController> mapController = Completer();
   final Set<Marker> markers = {};
@@ -64,13 +66,13 @@ class RollerSkatingWorkoutController extends ControllerMVC {
 
   Future<void> startListening() async {
     startTimer();
-    RollerSkatingForegroundService.startFGS();
+    _rollerSkatingForegroundService.startFGS();
     workoutState = WorkoutState.running;
     refresh();
   }
 
   Future<void> stopListening() async {
-    await RollerSkatingForegroundService.stopFGS();
+    await _rollerSkatingForegroundService.stopFGS();
     if (_timer != null) {
       _timer.cancel();
     }
@@ -81,7 +83,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
   void startTimer() {
     durationSeconds =
         (DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000;
-     if (_timer != null) {
+    if (_timer != null) {
       _timer.cancel();
     }
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -102,7 +104,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
     sampleCount++;
     avgSpeed = summSpeed / sampleCount;
     if (currentPosition.latitude != 0 && currentPosition.longitude != 0) {
-      distance += calculateDistance(
+      distance += LogicUtils.calculateDistance(
           currentPosition.latitude,
           currentPosition.longitude,
           _locationData.latitude,
@@ -132,13 +134,13 @@ class RollerSkatingWorkoutController extends ControllerMVC {
     sampleCount = 0;
     summSpeed = 0;
     if (workoutState == WorkoutState.running) {
-      var savedData = await RollerSkatingForegroundService.getSavedData();
+      var savedData = await _rollerSkatingForegroundService.getSavedData();
       latlng.clear();
       LatLng prew;
       savedData.forEach((element) {
         if (prew != null) {
-          distance += calculateDistance(prew.latitude, prew.longitude,
-              element.latitude, element.longitude);
+          distance += LogicUtils.calculateDistance(prew.latitude,
+              prew.longitude, element.latitude, element.longitude);
         }
         currentPosition = LatLng(element.latitude, element.longitude);
         latlng.add(currentPosition);
@@ -161,7 +163,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
 
   Future<void> stopWorkout() async {
     await stopListening();
-    await RollerSkatingForegroundService.removeSavedData();
+    await _rollerSkatingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
   }
 
@@ -172,14 +174,14 @@ class RollerSkatingWorkoutController extends ControllerMVC {
     if (_timer != null) {
       _timer.cancel();
     }
-    var savedData = await RollerSkatingForegroundService.getSavedData();
-    await RollerSkatingForegroundService.removeSavedData();
+    var savedData = await _rollerSkatingForegroundService.getSavedData();
+    await _rollerSkatingForegroundService.removeSavedData();
     workoutState = WorkoutState.finised;
     latlng.clear();
     LatLng prew;
     savedData.forEach((element) {
       if (prew != null) {
-        distance += calculateDistance(
+        distance += LogicUtils.calculateDistance(
             prew.latitude, prew.longitude, element.latitude, element.longitude);
       }
       currentPosition = LatLng(element.latitude, element.longitude);
@@ -206,15 +208,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
 
   void setCustomMapPin() async {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), AppAssets.rollerskating_marker);
-  }
-
-  double calculateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742.0 * asin(sqrt(a));
+        ImageConfiguration(devicePixelRatio: 2.5),
+        AppAssets.rollerskating_marker);
   }
 }

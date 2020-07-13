@@ -52,7 +52,8 @@ class StairingWorkoutController extends ControllerMVC {
     //  mock();
   }
 
-  void stopListening() async {
+  Future<void> stopListening() async {
+    await StairingForegroundService.stopFGS();
     if (_subscription != null) {
       _subscription.cancel();
     }
@@ -151,14 +152,15 @@ class StairingWorkoutController extends ControllerMVC {
   }
 
   Future<List<StairingObj>> stopWorkout() async {
-    stopListening();
+    await stopListening();
     workoutState = WorkoutState.finised;
-    var result = await StairingForegroundService.stopFGS();
+    var result = await StairingForegroundService.getSavedData();
     result.forEach((e) {
-      e.count -= _offset;
       e.whenSec = (e.whenSec - _startime) ~/ 1000;
     });
     print("result -------------- $result");
+    await StairingForegroundService.removeSavedData();
+    refresh();
     return result;
   }
 }

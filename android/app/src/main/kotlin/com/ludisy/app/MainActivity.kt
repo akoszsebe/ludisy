@@ -6,6 +6,7 @@ import com.ludisy.app.plugin.biking.BikingMethods
 import com.ludisy.app.plugin.running.RunningMethods
 import com.ludisy.app.plugin.data.AppDatabase
 import com.ludisy.app.plugin.rollerskating.RollerSkatingMethods
+import com.ludisy.app.plugin.stairing.StairingMethods
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -18,6 +19,7 @@ class MainActivity : FlutterActivity() {
     private val biking = BikingMethods(this)
     private val rollerSkating = RollerSkatingMethods(this)
     private val running = RunningMethods(this)
+    private val stairing = StairingMethods(this)
 
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
@@ -34,6 +36,8 @@ class MainActivity : FlutterActivity() {
                         rollerSkating.checkMethodCalls(appDatabase, call, result)
                     } else if (call.method.startsWith("running")) {
                         running.checkMethodCalls(appDatabase, call, result)
+                    } else if (call.method.startsWith("stairing")) {
+                        stairing.checkMethodCalls(appDatabase, call, result)
                     }
                 }
     }

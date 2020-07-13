@@ -65,6 +65,11 @@ class RunningForegroundService : ForegroundService(), SensorEventListener {
         steps = event.values[0].toInt() - offset
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        sensorManager?.unregisterListener(this)
+    }
+
     override var locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             if (locationResult.lastLocation != null) {

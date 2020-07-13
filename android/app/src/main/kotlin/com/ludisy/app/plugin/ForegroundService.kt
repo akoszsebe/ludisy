@@ -60,7 +60,7 @@ abstract class ForegroundService : Service() {
         }
     }
 
-    private val runnableCode: Runnable = object : Runnable {
+    open val runnableCode: Runnable = object : Runnable {
         override fun run() { // Do something here on the main thread
             getLocation()
             mHandler.postDelayed(this, NOTIFY_INTERVAL)

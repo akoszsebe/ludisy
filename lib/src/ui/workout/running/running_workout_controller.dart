@@ -82,6 +82,9 @@ class RunningWorkoutController extends ControllerMVC {
 
   Future<void> stopListening() async {
     await RunningForegroundService.stopFGS();
+    if (_subscription != null) {
+      _subscription.cancel();
+    }
     if (_timer != null) {
       _timer.cancel();
     }

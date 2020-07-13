@@ -41,8 +41,6 @@ dependencies:
   shared_preferences: 0.5.8
   flutter_svg: 0.17.4
   google_maps_flutter: 0.5.28+1
-  foreground_service: 2.0.1+1
-  objectdb: 1.0.9+1
   location: ^3.0.2
   package_info: 0.4.1
 

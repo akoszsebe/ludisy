@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application android:name="io.flutter.app.FlutterApplication" android:label="Ludisy" android:usesCleartextTraffic="true" android:icon="@mipmap/ic_launcher">
         <service android:name=".plugin.biking.BikingForegroundService">
@@ -17,6 +18,8 @@
         <service android:name=".plugin.running.RunningForegroundService">
         </service>
         <service android:name=".plugin.rollerskating.RollerSkatingForegroundService">
+        </service>
+        <service android:name=".plugin.stairing.StairingForegroundService">
         </service>
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="@string/google_maps_key"/>

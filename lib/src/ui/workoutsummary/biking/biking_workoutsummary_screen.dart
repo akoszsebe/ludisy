@@ -304,13 +304,10 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     );
   }
 
-  Map<double, String> titles = Map();
-
   List<FlSpot> getSpeedSpots() {
     List<FlSpot> spots = List();
     (widget.workout.data as Biking).snapShots.forEach((element) {
       spots.add(FlSpot(element.whenSec.toDouble(), element.speed));
-      titles[element.speed] = element.whenSec.toString();
     });
     if (spots.isEmpty) {
       spots.add(FlSpot(0, 0));
@@ -327,12 +324,10 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       (widget.workout.data as Biking).snapShots.forEach((element) {
         spots.add(FlSpot(
             element.whenSec.toDouble(), (element.altitude) / scaleFactor));
-        titles[element.speed] = element.whenSec.toString();
       });
     } else {
       (widget.workout.data as Biking).snapShots.forEach((element) {
         spots.add(FlSpot(element.whenSec.toDouble(), element.altitude));
-        titles[element.speed] = element.whenSec.toString();
       });
     }
     if (spots.isEmpty) {

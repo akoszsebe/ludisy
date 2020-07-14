@@ -167,12 +167,38 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                         "${widget.workout.cal.toStringAsFixed(0)} cal",
                                         AppSVGAssets.cal),
                                     buildIconTextValue3Pair(
-                                        "Avg. Speed",
-                                        "${getAvgSpeed((widget.workout.data as Running).snapShots).toStringAsFixed(0)} km/h",
-                                        AppSVGAssets.step),
+                                        "Elevation",
+                                        "${(widget.workout.data as Running).elevation.toStringAsFixed(0)} m",
+                                        AppSVGAssets.altitude),
                                     buildIconTextValue3Pair(
                                         "Distance",
                                         "${(widget.workout.data as Running).distance.toStringAsFixed(1)} km",
+                                        AppSVGAssets.distance)
+                                  ],
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 16, right: 16, top: 16),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    buildIconTextValue3Pair(
+                                        "Avg Speed",
+                                        "${(widget.workout.data as Running).avgSpeed.toStringAsFixed(1)} km/h",
+                                        AppSVGAssets.speed),
+                                    buildIconTextValue3Pair(
+                                        "Avg. Pace",
+                                        "${((widget.workout.data as Running).distance / (widget.workout.duration / 60)).toStringAsFixed(1)} km",
+                                        AppSVGAssets.stopper),
+                                    buildIconTextValue3Pair(
+                                        "Avg. cadene",
+                                        "${((widget.workout.data as Running).steps / (widget.workout.duration / 60)).toStringAsFixed(1)} stp/min",
+                                        AppSVGAssets.step),
+                                    buildIconTextValue3Pair(
+                                        "Total",
+                                        "${(widget.workout.data as Running).steps} stp",
                                         AppSVGAssets.step)
                                   ],
                                 )),
@@ -189,6 +215,11 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                       con.selected.speed.toStringAsFixed(0) +
                                           " km/h",
                                       Color(0xCC34A853)),
+                                  buildColorCircleTextValue3Pair(
+                                      "Steps",
+                                      con.selected.steps.toStringAsFixed(0) +
+                                          " steps",
+                                      Color(0xCCa83434)),
                                   buildColorCircleTextValue3Pair(
                                       "Altitude",
                                       con.selected.altitude.toStringAsFixed(0) +
@@ -306,6 +337,25 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
 
   Map<double, String> titles = Map();
 
+  List<FlSpot> getStepsSpots() {
+    List<FlSpot> spots = List();
+    var prev = null;
+    (widget.workout.data as Running).snapShots.forEach((element) {
+      if (prev != null) {
+        spots.add(FlSpot(
+            element.whenSec.toDouble(), (element.steps - prev).toDouble()));
+      } else {
+        spots.add(FlSpot(element.whenSec.toDouble(), element.steps.toDouble()));
+      }
+      prev = element.steps;
+      titles[element.speed] = element.whenSec.toString();
+    });
+    if (spots.isEmpty) {
+      spots.add(FlSpot(0, 0));
+    }
+    return spots;
+  }
+
   List<FlSpot> getSpeedSpots() {
     List<FlSpot> spots = List();
     (widget.workout.data as Running).snapShots.forEach((element) {
@@ -379,8 +429,30 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
         belowBarData: BarAreaData(
           show: true,
           colors: [
-            Color(0xCC475993).withOpacity(0.3),
-            Color(0xCC475993).withOpacity(0.0)
+            Color(0xCCa83434).withOpacity(0.3),
+            Color(0xCCa83434).withOpacity(0.0)
+          ],
+          gradientColorStops: [0.4, 1.0],
+          gradientFrom: const Offset(0, 0),
+          gradientTo: const Offset(0, 1),
+        ),
+      ),
+      LineChartBarData(
+        spots: getStepsSpots(),
+        isCurved: true,
+        colors: const [
+          Color(0xCCa83434),
+        ],
+        barWidth: 2,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        belowBarData: BarAreaData(
+          show: true,
+          colors: [
+            Color(0xCCa83434).withOpacity(0.3),
+            Color(0xCCa83434).withOpacity(0.0)
           ],
           gradientColorStops: [0.4, 1.0],
           gradientFrom: const Offset(0, 0),

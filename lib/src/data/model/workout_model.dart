@@ -223,12 +223,19 @@ class Running {
   double distance;
   double elevation;
   int steps;
+  double avgSpeed;
   List<RunningObj> snapShots;
 
-  Running({this.distance, this.elevation, this.snapShots, this.steps});
+  Running(
+      {this.distance,
+      this.avgSpeed,
+      this.elevation,
+      this.snapShots,
+      this.steps});
 
   factory Running.fromJson(Map<String, dynamic> json) => Running(
       distance: json["distance"] == null ? null : json["distance"].toDouble(),
+      avgSpeed: json["avgSpeed"] == null ? null : json["avgSpeed"].toDouble(),
       elevation:
           json["elevation"] == null ? null : json["elevation"].toDouble(),
       steps: json["steps"] == null ? null : json["steps"],
@@ -240,6 +247,7 @@ class Running {
 
   Map<String, dynamic> toJson() => {
         "distance": distance == null ? null : distance,
+        "avgSpeed": avgSpeed == null ? null : avgSpeed,
         "elevation": elevation == null ? null : elevation,
         "steps": steps == null ? null : steps,
         "snapShots": List<dynamic>.from(snapShots.map((x) => x.toJson())),

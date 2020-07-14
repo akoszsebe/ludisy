@@ -43,6 +43,7 @@ class _RollerSkatingWorkoutScreenState extends BaseScreenState<
       visible: true,
       points: con.latlng,
       color: AppColors.instance.primary,
+      width: 4,
     ));
     con.setCustomMapPin();
   }
@@ -230,8 +231,9 @@ class _RollerSkatingWorkoutScreenState extends BaseScreenState<
       return RoundedButton(
         "done",
         AppSVGAssets.done,
-        () => NavigationModule.navigateAndReplacToRollerSkatingWorkoutSummaryScreen(
-            context, con.savedWorkout),
+        () => NavigationModule
+            .navigateAndReplacToRollerSkatingWorkoutSummaryScreen(
+                context, con.savedWorkout),
       );
     }
   }

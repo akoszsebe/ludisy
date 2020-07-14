@@ -41,6 +41,7 @@ class _BikingWorkoutScreenState
       polylineId: PolylineId(con.durationSeconds.toString()),
       visible: true,
       points: con.latlng,
+      width: 4,
       color: AppColors.instance.primary,
     ));
     con.setCustomMapPin();

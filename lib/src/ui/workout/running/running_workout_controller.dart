@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -203,6 +204,8 @@ class RunningWorkoutController extends ControllerMVC {
     workoutState = WorkoutState.finised;
     latlng.clear();
     LatLng prew;
+    var maxElevation = double.minPositive;
+    var minElevation = double.maxFinite;
     savedData.forEach((element) {
       if (prew != null) {
         distance += LogicUtils.calculateDistance(
@@ -217,6 +220,12 @@ class RunningWorkoutController extends ControllerMVC {
       sampleCount++;
       avgSpeed = summSpeed / sampleCount;
       element.whenSec = (element.whenSec - _startime) ~/ 1000;
+      if (element.altitude < minElevation) {
+        minElevation = element.altitude;
+      }
+      if (element.altitude > maxElevation) {
+        maxElevation = element.altitude;
+      }
     });
     savedWorkout = WorkOut(
         id: null,
@@ -224,7 +233,12 @@ class RunningWorkoutController extends ControllerMVC {
         timeStamp: DateTime.now().millisecondsSinceEpoch,
         cal: calCounterValue,
         type: 3,
-        data: Running(distance: distance, snapShots: savedData));
+        data: Running(
+            steps: savedData.last.steps,
+            distance: distance,
+            avgSpeed: avgSpeed,
+            elevation: maxElevation - minElevation,
+            snapShots: savedData));
     await _workOutDao.insertWorkOut(savedWorkout);
     userState.addWorkout(savedWorkout);
     refresh();

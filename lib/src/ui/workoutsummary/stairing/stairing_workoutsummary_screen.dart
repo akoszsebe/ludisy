@@ -246,8 +246,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     );
   }
 
-  Map<double, String> titles = Map();
-
   List<FlSpot> getSpots() {
     List<FlSpot> spots = List();
     var prev = 0;
@@ -256,7 +254,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       if (steps < 0) steps = 0.0;
       spots.add(FlSpot(element.whenSec.toDouble(), steps));
       prev = element.count;
-      titles[steps] = element.whenSec.toString();
     });
     if (spots.isEmpty) {
       spots.add(FlSpot(0, 0));

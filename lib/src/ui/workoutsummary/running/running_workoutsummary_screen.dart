@@ -335,8 +335,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     );
   }
 
-  Map<double, String> titles = Map();
-
   List<FlSpot> getStepsSpots() {
     List<FlSpot> spots = List();
     var prev = null;
@@ -348,7 +346,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
         spots.add(FlSpot(element.whenSec.toDouble(), element.steps.toDouble()));
       }
       prev = element.steps;
-      titles[element.speed] = element.whenSec.toString();
     });
     if (spots.isEmpty) {
       spots.add(FlSpot(0, 0));
@@ -360,7 +357,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     List<FlSpot> spots = List();
     (widget.workout.data as Running).snapShots.forEach((element) {
       spots.add(FlSpot(element.whenSec.toDouble(), element.speed));
-      titles[element.speed] = element.whenSec.toString();
     });
     if (spots.isEmpty) {
       spots.add(FlSpot(0, 0));
@@ -377,12 +373,10 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       (widget.workout.data as Running).snapShots.forEach((element) {
         spots.add(FlSpot(
             element.whenSec.toDouble(), (element.altitude) / scaleFactor));
-        titles[element.speed] = element.whenSec.toString();
       });
     } else {
       (widget.workout.data as Running).snapShots.forEach((element) {
         spots.add(FlSpot(element.whenSec.toDouble(), element.altitude));
-        titles[element.speed] = element.whenSec.toString();
       });
     }
     if (spots.isEmpty) {

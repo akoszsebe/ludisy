@@ -69,15 +69,16 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/resources/langs/en-US.json 
-    - lib/resources/images/stairs1.png
+    - lib/resources/images/stairsbackground.png
     - lib/resources/images/splash_icon.png
-    - lib/resources/images/bike.png
+    - lib/resources/images/bikebackground.png
     - lib/resources/images/akos.png
     - lib/resources/images/tibold.jpg
     - lib/resources/images/bikingmarker.png
-    - lib/resources/images/rollers.png
+    - lib/resources/images/rollerbackground.png
     - lib/resources/images/rollerskatemarker.png
     - lib/resources/images/runningmarker.png
+    - lib/resources/images/runningbackground.png
 #   svg 
     - lib/resources/images_svg/back.svg
     - lib/resources/images_svg/logout.svg

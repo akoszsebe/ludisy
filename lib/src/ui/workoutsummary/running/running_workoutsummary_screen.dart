@@ -239,7 +239,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                     padding: EdgeInsets.only(bottom: 40),
                                     width: double.infinity,
                                     child: LineChart(
-                                      lineChartData(),
+                                      AppChart.lineChartData(linesBarData()),
                                       swapAnimationDuration:
                                           const Duration(milliseconds: 250),
                                     ),
@@ -298,43 +298,6 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
         ]));
   }
 
-  LineChartData lineChartData() {
-    return LineChartData(
-      lineTouchData: LineTouchData(
-        enabled: false,
-      ),
-      gridData: FlGridData(
-        show: false,
-      ),
-      titlesData: FlTitlesData(
-        bottomTitles: SideTitles(
-          showTitles: false,
-        ),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
-      ),
-      borderData: FlBorderData(
-          show: false,
-          border: const Border(
-            bottom: BorderSide(
-              color: Color(0xff4e4965),
-              width: 1,
-            ),
-            left: BorderSide(
-              color: Colors.transparent,
-            ),
-            right: BorderSide(
-              color: Colors.transparent,
-            ),
-            top: BorderSide(
-              color: Colors.transparent,
-            ),
-          )),
-      lineBarsData: linesBarDataSpeed(),
-    );
-  }
-
   List<FlSpot> getStepsSpots() {
     List<FlSpot> spots = List();
     var prev = null;
@@ -385,74 +348,11 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
     return spots;
   }
 
-  List<LineChartBarData> linesBarDataSpeed() {
+  List<LineChartBarData> linesBarData() {
     return [
-      LineChartBarData(
-        spots: getSpeedSpots(),
-        isCurved: true,
-        colors: const [
-          Color(0xCC34A853),
-        ],
-        barWidth: 2,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: true,
-          colors: [
-            Color(0xCC34A853).withOpacity(0.3),
-            Color(0xCC34A853).withOpacity(0.0)
-          ],
-          gradientColorStops: [0.4, 1.0],
-          gradientFrom: const Offset(0, 0),
-          gradientTo: const Offset(0, 1),
-        ),
-      ),
-      LineChartBarData(
-        spots: getAltitudeSpots(),
-        isCurved: true,
-        colors: const [
-          Color(0xCC475993),
-        ],
-        barWidth: 2,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: true,
-          colors: [
-            Color(0xCCa83434).withOpacity(0.3),
-            Color(0xCCa83434).withOpacity(0.0)
-          ],
-          gradientColorStops: [0.4, 1.0],
-          gradientFrom: const Offset(0, 0),
-          gradientTo: const Offset(0, 1),
-        ),
-      ),
-      LineChartBarData(
-        spots: getStepsSpots(),
-        isCurved: true,
-        colors: const [
-          Color(0xCCa83434),
-        ],
-        barWidth: 2,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: true,
-          colors: [
-            Color(0xCCa83434).withOpacity(0.3),
-            Color(0xCCa83434).withOpacity(0.0)
-          ],
-          gradientColorStops: [0.4, 1.0],
-          gradientFrom: const Offset(0, 0),
-          gradientTo: const Offset(0, 1),
-        ),
-      ),
+      AppChart.buildLineChartBarData(getSpeedSpots(), Color(0xCC34A853)),
+      AppChart.buildLineChartBarData(getAltitudeSpots(), Color(0xCC475993)),
+      AppChart.buildLineChartBarData(getStepsSpots(), Color(0xCCa83434)),
     ];
   }
 }

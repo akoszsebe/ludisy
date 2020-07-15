@@ -18,7 +18,7 @@ class RunningWorkoutSummaryController extends ControllerMVC {
 
   Future<void> initMap(WorkOut workout) async {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), AppAssets.biking_marker);
+        ImageConfiguration(devicePixelRatio: 2.5), AppAssets.running_marker);
     (workout.data as Running).snapShots.forEach((element) {
       latlng.add(LatLng(element.latitude, element.longitude));
     });

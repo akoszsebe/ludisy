@@ -206,11 +206,13 @@ class RunningWorkoutController extends ControllerMVC {
     LatLng prew;
     var maxElevation = double.minPositive;
     var minElevation = double.maxFinite;
+    var totalSteps = 0;
     savedData.forEach((element) {
       if (prew != null) {
         distance += LogicUtils.calculateDistance(
             prew.latitude, prew.longitude, element.latitude, element.longitude);
       }
+      totalSteps += element.steps;
       currentPosition = LatLng(element.latitude, element.longitude);
       latlng.add(currentPosition);
       element.speed = (element.speed * 3.6);
@@ -234,9 +236,11 @@ class RunningWorkoutController extends ControllerMVC {
         cal: calCounterValue,
         type: 3,
         data: Running(
-            steps: savedData.last.steps,
+            steps: totalSteps,
             distance: distance,
             avgSpeed: avgSpeed,
+            avgPace: distance / (durationSeconds / 60),
+            avgCadence: totalSteps / (durationSeconds / 60),
             elevation: maxElevation - minElevation,
             snapShots: savedData));
     await _workOutDao.insertWorkOut(savedWorkout);

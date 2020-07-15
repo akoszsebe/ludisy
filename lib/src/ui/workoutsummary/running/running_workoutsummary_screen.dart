@@ -62,6 +62,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
             mapType: MapType.normal,
             zoomGesturesEnabled: true,
             compassEnabled: false,
+            zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             myLocationEnabled: false,
             polylines: _polyline,
@@ -190,11 +191,11 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
                                         AppSVGAssets.speed),
                                     buildIconTextValue3Pair(
                                         "Avg. Pace",
-                                        "${((widget.workout.data as Running).distance / (widget.workout.duration / 60)).toStringAsFixed(1)} km",
+                                        "${(widget.workout.data as Running).avgPace.toStringAsFixed(1)} km",
                                         AppSVGAssets.stopper),
                                     buildIconTextValue3Pair(
                                         "Avg. cadene",
-                                        "${((widget.workout.data as Running).steps / (widget.workout.duration / 60)).toStringAsFixed(1)} stp/min",
+                                        "${(widget.workout.data as Running).avgCadence.toStringAsFixed(1)} stp/min",
                                         AppSVGAssets.step),
                                     buildIconTextValue3Pair(
                                         "Total",
@@ -300,15 +301,8 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
 
   List<FlSpot> getStepsSpots() {
     List<FlSpot> spots = List();
-    var prev = null;
     (widget.workout.data as Running).snapShots.forEach((element) {
-      if (prev != null) {
-        spots.add(FlSpot(
-            element.whenSec.toDouble(), (element.steps - prev).toDouble()));
-      } else {
-        spots.add(FlSpot(element.whenSec.toDouble(), element.steps.toDouble()));
-      }
-      prev = element.steps;
+      spots.add(FlSpot(element.whenSec.toDouble(), element.steps.toDouble()));
     });
     if (spots.isEmpty) {
       spots.add(FlSpot(0, 0));
@@ -329,7 +323,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
 
   List<FlSpot> getAltitudeSpots() {
     List<FlSpot> spots = List();
-    var avgSpeed = getAvgSpeed((widget.workout.data as Running).snapShots);
+    var avgSpeed = (widget.workout.data as Running).avgSpeed;
     var avgAlt = getAvgAltitude((widget.workout.data as Running).snapShots);
     if (avgAlt != 0.0 && avgSpeed != 0.0) {
       var scaleFactor = avgAlt / avgSpeed;
@@ -355,26 +349,15 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
       AppChart.buildLineChartBarData(getStepsSpots(), Color(0xCCa83434)),
     ];
   }
-}
 
-double getAvgSpeed(List<RunningObj> snapShots) {
-  double avg = 0;
-  snapShots.forEach((element) {
-    avg += element.speed;
-  });
-  if (snapShots.isNotEmpty) {
-    return avg / snapShots.length;
+  double getAvgAltitude(List<RunningObj> snapShots) {
+    double avg = 0;
+    snapShots.forEach((element) {
+      avg += element.altitude;
+    });
+    if (snapShots.isNotEmpty) {
+      return avg / snapShots.length;
+    }
+    return 0.0;
   }
-  return 0.0;
-}
-
-double getAvgAltitude(List<RunningObj> snapShots) {
-  double avg = 0;
-  snapShots.forEach((element) {
-    avg += element.altitude;
-  });
-  if (snapShots.isNotEmpty) {
-    return avg / snapShots.length;
-  }
-  return 0.0;
 }

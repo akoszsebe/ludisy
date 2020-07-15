@@ -21,6 +21,7 @@ class RunningForegroundService : ForegroundService(), SensorEventListener {
     var sensorManager: SensorManager? = null
 
     var steps = 0
+    var prevSteps = 0
 
     private var offset = 0
 
@@ -83,9 +84,10 @@ class RunningForegroundService : ForegroundService(), SensorEventListener {
                         locationResult.lastLocation.latitude,
                         locationResult.lastLocation.altitude,
                         locationResult.lastLocation.speed,
-                        steps,
+                        steps - prevSteps,
                         System.currentTimeMillis()
                 )
+                prevSteps = steps
                 disposable = saveData(runningObj).subscribeOn(Schedulers.io())
                         .subscribe()
             }

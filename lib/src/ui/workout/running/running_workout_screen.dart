@@ -74,6 +74,7 @@ class _RunningWorkoutScreenState
                   compassEnabled: false,
                   myLocationButtonEnabled: false,
                   myLocationEnabled: false,
+                  zoomControlsEnabled: false,
                   polylines: _polyline,
                   markers: con.markers,
                   initialCameraPosition: CameraPosition(

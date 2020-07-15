@@ -224,11 +224,15 @@ class Running {
   double elevation;
   int steps;
   double avgSpeed;
+  double avgCadence;
+  double avgPace;
   List<RunningObj> snapShots;
 
   Running(
       {this.distance,
       this.avgSpeed,
+      this.avgPace,
+      this.avgCadence,
       this.elevation,
       this.snapShots,
       this.steps});
@@ -236,6 +240,9 @@ class Running {
   factory Running.fromJson(Map<String, dynamic> json) => Running(
       distance: json["distance"] == null ? null : json["distance"].toDouble(),
       avgSpeed: json["avgSpeed"] == null ? null : json["avgSpeed"].toDouble(),
+      avgPace: json["avgPace"] == null ? null : json["avgPace"].toDouble(),
+      avgCadence:
+          json["avgCadence"] == null ? null : json["avgCadence"].toDouble(),
       elevation:
           json["elevation"] == null ? null : json["elevation"].toDouble(),
       steps: json["steps"] == null ? null : json["steps"],
@@ -248,6 +255,8 @@ class Running {
   Map<String, dynamic> toJson() => {
         "distance": distance == null ? null : distance,
         "avgSpeed": avgSpeed == null ? null : avgSpeed,
+        "avgPace": avgPace == null ? null : avgPace,
+        "avgCadence": avgCadence == null ? null : avgCadence,
         "elevation": elevation == null ? null : elevation,
         "steps": steps == null ? null : steps,
         "snapShots": List<dynamic>.from(snapShots.map((x) => x.toJson())),

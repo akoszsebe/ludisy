@@ -64,6 +64,7 @@ class _WorkoutSummaryScreenState extends BaseScreenState<
             compassEnabled: false,
             myLocationButtonEnabled: false,
             myLocationEnabled: false,
+            zoomControlsEnabled: false,
             polylines: _polyline,
             markers: con.markers,
             initialCameraPosition: CameraPosition(

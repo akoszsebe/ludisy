@@ -83,8 +83,8 @@ class _HistoryScreenState extends StateMVC<HistoryScreen> {
                       ))),
               Center(
                   child: Container(
-                      height: 60.0,
-                      margin: EdgeInsets.only(bottom: 16),
+                      height: 76.0,
+                      margin: EdgeInsets.only(bottom: 6),
                       width: (70 * 4).toDouble(),
                       child: ListView(
                         shrinkWrap: true,

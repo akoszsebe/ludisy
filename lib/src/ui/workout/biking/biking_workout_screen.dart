@@ -184,7 +184,7 @@ class _BikingWorkoutScreenState
                                   buildIconTextPair("${con.altitude} m",
                                       AppSVGAssets.altitude),
                                   buildIconTextPair(
-                                      "${con.calCounterValue} cal",
+                                      "${con.calCounterValue.toStringAsFixed(1)} cal",
                                       AppSVGAssets.cal)
                                 ],
                               ),

@@ -83,11 +83,7 @@ class StairingWorkoutController extends ControllerMVC {
 
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - _offset}");
-    var cal = CaloriCalculator.calculeteCalories(
-        userState.getUserData(), durationSeconds, stepCountValue);
-    if (cal > 0) {
-      calCounterValue = cal;
-    }
+    calculateCalories();
     this.stepCountValue = stepCountValue - _offset;
     percentageValue = this.stepCountValue / targetSteps;
     checkPercentage();
@@ -108,6 +104,7 @@ class StairingWorkoutController extends ControllerMVC {
     durationSeconds =
         ((DateTime.now().millisecondsSinceEpoch - _startime) ~/ 1000).toInt();
     var snapShots = await stopWorkout();
+    calculateCalories();
     savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,
@@ -142,5 +139,13 @@ class StairingWorkoutController extends ControllerMVC {
     await _stairingForegroundService.removeSavedData();
     refresh();
     return result;
+  }
+
+  void calculateCalories() {
+    var cal = CaloriCalculator.calculeteCaloriesStairing(
+        userState.getUserData(), durationSeconds, stepCountValue);
+    if (cal > 0) {
+      calCounterValue = cal;
+    }
   }
 }

@@ -180,7 +180,8 @@ class _RunningWorkoutScreenState
                                 height: 48,
                                 width: 200,
                                 child: Row(children: <Widget>[
-                                  buildIconTextPair("${con.calCounterValue}",
+                                  buildIconTextPair(
+                                      "${con.calCounterValue.toStringAsFixed(1)}",
                                       AppSVGAssets.cal,
                                       secondaryText: " cal"),
                                   buildIconTextPair("${con.stepCountValue}",

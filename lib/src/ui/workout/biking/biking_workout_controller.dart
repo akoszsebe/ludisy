@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -121,6 +122,7 @@ class BikingWorkoutController extends ControllerMVC {
                 zoom: 14.4746,
               ),
             )));
+    calculateCalories();
     markers.clear();
     markers.add(Marker(
         markerId: MarkerId("marker"),
@@ -152,6 +154,7 @@ class BikingWorkoutController extends ControllerMVC {
         sampleCount++;
         avgSpeed = summSpeed / sampleCount;
       });
+      calculateCalories();
       startTimer();
       refresh();
     }
@@ -197,6 +200,7 @@ class BikingWorkoutController extends ControllerMVC {
       avgSpeed = summSpeed / sampleCount;
       element.whenSec = (element.whenSec - _startime) ~/ 1000;
     });
+    calculateCalories();
     savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,
@@ -212,5 +216,13 @@ class BikingWorkoutController extends ControllerMVC {
   void setCustomMapPin() async {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), AppAssets.biking_marker);
+  }
+
+  void calculateCalories() {
+    var cal = CaloriCalculator.calculeteCaloriesBiking(
+        userState.getUserData(), durationSeconds, distance);
+    if (cal > 0) {
+      calCounterValue = cal;
+    }
   }
 }

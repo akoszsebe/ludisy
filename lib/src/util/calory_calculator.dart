@@ -1,8 +1,43 @@
 import 'package:ludisy/src/data/model/user_model.dart';
 
 class CaloriCalculator {
-  static double calculeteCalories(User userData, int duration, int steps) {
-    return calculateEnergyExpenditure(
+  static double calculeteCaloriesBiking(
+      User userData, int duration, double distance) {
+    return _calculateEnergyExpenditureDisance(
+        userData.height.toDouble(),
+        userData.bithDate,
+        userData.weight.toDouble(),
+        userData.gender == "Male" ? 0 : 1,
+        duration,
+        distance);
+  }
+
+  static double calculeteCaloriesRollerscating(
+      User userData, int duration, double distance) {
+    return _calculateEnergyExpenditureDisance(
+        userData.height.toDouble(),
+        userData.bithDate,
+        userData.weight.toDouble(),
+        userData.gender == "Male" ? 0 : 1,
+        duration,
+        distance);
+  }
+
+  static double calculeteCaloriesRunning(
+      User userData, int duration, int steps) {
+    return _calculateEnergyExpenditureSteps(
+        userData.height.toDouble(),
+        userData.bithDate,
+        userData.weight.toDouble(),
+        userData.gender == "Male" ? 0 : 1,
+        duration,
+        steps,
+        0.6);
+  }
+
+  static double calculeteCaloriesStairing(
+      User userData, int duration, int steps) {
+    return _calculateEnergyExpenditureSteps(
         userData.height.toDouble(),
         userData.bithDate,
         userData.weight.toDouble(),
@@ -24,7 +59,24 @@ class CaloriCalculator {
   /// @param strideLengthInMetres The stride length of the user
   /// @return The number of calories burnt (kCal)
   ///
-  static double calculateEnergyExpenditure(
+  static double _calculateEnergyExpenditureDisance(double height, DateTime age,
+      double weight, int gender, int durationInSeconds, double distance) {
+    var ageCalculated = _getAgeFromDateOfBirth(age);
+
+    var harrisBenedictRmR = _convertKilocaloriesToMlKmin(
+        _harrisBenedictRmr(gender, weight, ageCalculated, height), weight);
+
+    var hours = durationInSeconds / 3600;
+    var speedInMph = _kmphTOmph(distance) / hours;
+    var metValue = _getMetForActivity(speedInMph);
+
+    var constant = 3.5;
+
+    var correctedMets = metValue * (constant / harrisBenedictRmR);
+    return correctedMets * hours * weight;
+  }
+
+  static double _calculateEnergyExpenditureSteps(
       double height,
       DateTime age,
       double weight,

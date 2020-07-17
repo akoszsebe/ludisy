@@ -182,7 +182,7 @@ class _RollerSkatingWorkoutScreenState extends BaseScreenState<
                               width: 80,
                               child: Center(
                                   child: buildIconTextPair(
-                                      "${con.calCounterValue} cal",
+                                      "${con.calCounterValue.toStringAsFixed(1)} cal",
                                       AppSVGAssets.cal)),
                             )),
                         Padding(

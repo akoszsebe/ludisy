@@ -7,6 +7,7 @@ import 'package:ludisy/src/data/forgroundsevices/rollerskating_foreground_servic
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -120,6 +121,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
                 zoom: 14.4746,
               ),
             )));
+    calculateCalories();
     markers.clear();
     markers.add(Marker(
         markerId: MarkerId("marker"),
@@ -150,6 +152,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
         sampleCount++;
         avgSpeed = summSpeed / sampleCount;
       });
+      calculateCalories();
       startTimer();
       refresh();
     }
@@ -194,6 +197,7 @@ class RollerSkatingWorkoutController extends ControllerMVC {
       avgSpeed = summSpeed / sampleCount;
       element.whenSec = (element.whenSec - _startime) ~/ 1000;
     });
+    calculateCalories();
     savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,
@@ -210,5 +214,13 @@ class RollerSkatingWorkoutController extends ControllerMVC {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         AppAssets.rollerskating_marker);
+  }
+
+  void calculateCalories() {
+    var cal = CaloriCalculator.calculeteCaloriesRollerscating(
+        userState.getUserData(), durationSeconds, distance);
+    if (cal > 0) {
+      calCounterValue = cal;
+    }
   }
 }

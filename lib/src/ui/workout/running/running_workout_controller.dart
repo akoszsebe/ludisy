@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:ludisy/src/data/forgroundsevices/running_foreground_service.dart
 import 'package:ludisy/src/data/model/workout_model.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:ludisy/src/util/assets.dart';
+import 'package:ludisy/src/util/calory_calculator.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ludisy/src/data/persitance/dao/workout_dao.dart';
 import 'package:ludisy/src/di/locator.dart';
@@ -98,6 +98,7 @@ class RunningWorkoutController extends ControllerMVC {
   void _onData(int stepCountValue) async {
     print("OnData pedometer tracking ${stepCountValue - _stepOffset}");
     this.stepCountValue = stepCountValue - _stepOffset;
+    calculateCalories();
     refresh();
   }
 
@@ -175,6 +176,7 @@ class RunningWorkoutController extends ControllerMVC {
         sampleCount++;
         avgSpeed = summSpeed / sampleCount;
       });
+      calculateCalories();
       startTimer();
       refresh();
     }
@@ -229,6 +231,7 @@ class RunningWorkoutController extends ControllerMVC {
         maxElevation = element.altitude;
       }
     });
+    calculateCalories();
     savedWorkout = WorkOut(
         id: null,
         duration: durationSeconds,
@@ -251,5 +254,13 @@ class RunningWorkoutController extends ControllerMVC {
   void setCustomMapPin() async {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), AppAssets.running_marker);
+  }
+
+  void calculateCalories() {
+    var cal = CaloriCalculator.calculeteCaloriesStairing(
+        userState.getUserData(), durationSeconds, stepCountValue);
+    if (cal > 0) {
+      calCounterValue = cal;
+    }
   }
 }

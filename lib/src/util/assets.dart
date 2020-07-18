@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 
 class AppAssets {
   static const AssetImage background_stair =
-      const AssetImage("lib/resources/images/stairsbackground.png");
+      const AssetImage("lib/resources/images/stairsbackground.jpg");
 
   static const AssetImage background_bike =
-      const AssetImage("lib/resources/images/bikebackground.png");
+      const AssetImage("lib/resources/images/bikebackground.jpg");
 
   static const AssetImage background_rollerscate =
-      const AssetImage("lib/resources/images/rollerbackground.png");
+      const AssetImage("lib/resources/images/rollerbackground.jpg");
 
   static const AssetImage background_runnung =
-      const AssetImage("lib/resources/images/runningbackground.png");
+      const AssetImage("lib/resources/images/runningbackground.jpg");
 
   static const AssetImage splash_icon =
       const AssetImage("lib/resources/images/splash_icon.png");

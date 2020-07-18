@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -76,72 +77,6 @@ class _SettingsScreenState
               padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: RoundedContainer(
                 backgroundColor: AppColors.instance.containerColor,
-                height: 170,
-                width: double.infinity,
-                padding:
-                    EdgeInsets.only(top: 16, left: 38, right: 38, bottom: 12),
-                radius: 32.0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Contact the developer",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.instance.textPrimary),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        createPersonInfo(
-                            "Developed by", "Akos", AppAssets.developer_image,
-                            () {
-                          con.launchURL(
-                              "https://www.linkedin.com/in/zsebe-akos-b581b9139");
-                        }),
-                        createPersonInfo(
-                            "Designed by", "Tibold", AppAssets.designer_image,
-                            () {
-                          con.launchURL(
-                              "https://www.linkedin.com/in/jozsa-tibold");
-                        })
-                      ],
-                    ),
-                    Material(
-                        color: AppColors.instance.containerColor,
-                        borderRadius:
-                            BorderRadius.all(const Radius.circular(24.0)),
-                        elevation: 0,
-                        child: InkWell(
-                            onTap: () {
-                              con.launchURL(
-                                  "https://github.com/akoszsebe/ludisy");
-                            },
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(24.0),
-                            ),
-                            child: Container(
-                                height: 28,
-                                width: double.infinity,
-                                child: Center(
-                                  child: Text(
-                                    "Source code",
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color:
-                                            AppColors.instance.textSecundary),
-                                  ),
-                                ))))
-                  ],
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: RoundedContainer(
-                backgroundColor: AppColors.instance.containerColor,
                 height: 180,
                 width: double.infinity,
                 padding:
@@ -169,6 +104,33 @@ class _SettingsScreenState
                             "Lunch", "2.99", AppSVGAssets.lunch, 2)
                       ],
                     )
+                  ],
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: RoundedContainer(
+                backgroundColor: AppColors.instance.containerColor,
+                height: 200,
+                width: double.infinity,
+                padding:
+                    EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 16),
+                radius: 32.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Contact the developer",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.instance.textPrimary),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: renderDeveloperList(),
+                    ),
                   ],
                 ),
               )),
@@ -230,14 +192,14 @@ class _SettingsScreenState
               style: GoogleFonts.montserrat(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textSecundary),
+                  color: AppColors.instance.textSecondary),
             ),
             Text(
               "$cost \$",
               style: GoogleFonts.montserrat(
                   fontSize: 13.0,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.instance.textSecundary),
+                  color: AppColors.instance.textSecondary),
             ),
           ]),
       onPressed: () {
@@ -251,47 +213,63 @@ class _SettingsScreenState
   Widget createPersonInfo(String role, String name, AssetImage pic, onPressed) {
     return MaterialButton(
         onPressed: onPressed,
+        height: 130,
         shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0)),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 32.0,
-              height: 32.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: pic,
-                  fit: BoxFit.cover,
+            borderRadius: new BorderRadius.circular(32.0)),
+        child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: 40.0,
+                  height: 40.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: pic,
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    border: Border.all(
+                      color: AppColors.instance.primary,
+                      width: 2.0,
+                    ),
+                  ),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                border: Border.all(
-                  color: AppColors.instance.primary,
-                  width: 2.0,
+                Padding(
+                  padding: EdgeInsets.only(top: 2),
                 ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-            ),
-            Text(
-              role,
-              style: GoogleFonts.montserrat(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.instance.textSecundary),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 2),
-            ),
-            Text(
-              name,
-              style: GoogleFonts.montserrat(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textSecundary),
-            ),
-          ],
-        ));
+                Text(
+                  name,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.instance.textSecondary),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                ),
+                Text(
+                  role,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.instance.textSecondary),
+                ),
+              ],
+            )));
+  }
+
+  List<Flexible> renderDeveloperList() {
+    return this.con.loadDevelopers().map((developer) {
+      return new Flexible(
+          flex: 1,
+          fit: FlexFit.tight,
+          child: createPersonInfo(
+              developer.role, developer.name, developer.photo, () {
+            this.con.launchURL(developer.url);
+          }));
+    }).toList();
   }
 
   Widget buildTemeSwitcher() {

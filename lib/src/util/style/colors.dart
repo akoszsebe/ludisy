@@ -23,7 +23,7 @@ class AppColors {
   Color primaryDarkWithOcupacity50 = const Color(0xffffffff);
   Color secundary = const Color(0xffffffff);
   Color textPrimary = const Color(0xffffffff);
-  Color textSecundary = const Color(0xffffffff);
+  Color textSecondary = const Color(0xffffffff);
   Color iconPrimary = const Color(0xffffffff);
   Color iconSecundary = const Color(0xffffffff);
   Color grayIconAsset = const Color(0xffffffff);
@@ -39,7 +39,7 @@ class _AppColorsLight extends AppColors {
   Color primaryDarkWithOcupacity50 = const Color(0x80607abf);
   Color secundary = const Color(0xffEA4335);
   Color textPrimary = const Color(0xff010101);
-  Color textSecundary = const Color(0xff010101);
+  Color textSecondary = const Color(0xff010101);
   Color iconPrimary = const Color(0xff010101);
   Color iconSecundary = const Color(0xff010101);
   Color grayIconAsset = const Color(0xff525252);
@@ -54,7 +54,7 @@ class _AppColorsDark extends AppColors {
   Color primaryDarkWithOcupacity50 = const Color(0x802a2a2a);
   Color secundary = const Color(0xffEA4335);
   Color textPrimary = const Color(0xfff1f1f1);
-  Color textSecundary = const Color(0xffA2A2A2);
+  Color textSecondary = const Color(0xffA2A2A2);
   Color iconPrimary = const Color(0xfff1f1f1);
   Color iconSecundary = const Color(0xffA2A2A2);
   Color grayIconAsset = const Color(0xff7e7e7e);

@@ -129,7 +129,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                           onTap: () {
                         setState(() {
                           _uiState.changeBackgroundImage(
-                              AppAssets.background_rollerscate);
+                              AppAssets.background_bike);
                           scrollTo(con.selelectedWorkoutIndex);
                         });
                       }),

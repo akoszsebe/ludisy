@@ -145,7 +145,7 @@ class _RunningWorkoutScreenState
                                   style: GoogleFonts.montserrat(
                                       fontSize: 10.0,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.instance.textSecundary),
+                                      color: AppColors.instance.textSecondary),
                                 ),
                                 RichText(
                                     text: TextSpan(children: <TextSpan>[
@@ -155,7 +155,7 @@ class _RunningWorkoutScreenState
                                         fontSize: 11.0,
                                         fontWeight: FontWeight.bold,
                                         color:
-                                            AppColors.instance.textSecundary),
+                                            AppColors.instance.textSecondary),
                                   ),
                                   TextSpan(
                                     text: '',
@@ -163,7 +163,7 @@ class _RunningWorkoutScreenState
                                         fontSize: 10.0,
                                         fontWeight: FontWeight.w400,
                                         color:
-                                            AppColors.instance.textSecundary),
+                                            AppColors.instance.textSecondary),
                                   ),
                                 ]))
                               ]),

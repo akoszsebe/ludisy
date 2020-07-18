@@ -137,7 +137,7 @@ class _StairingWorkoutScreenState
                                   style: GoogleFonts.montserrat(
                                       fontSize: 10.0,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.instance.textSecundary),
+                                      color: AppColors.instance.textSecondary),
                                 ),
                                 RichText(
                                     text: TextSpan(children: <TextSpan>[
@@ -149,7 +149,7 @@ class _StairingWorkoutScreenState
                                         fontSize: 11.0,
                                         fontWeight: FontWeight.w500,
                                         color:
-                                            AppColors.instance.textSecundary),
+                                            AppColors.instance.textSecondary),
                                   ),
                                   TextSpan(
                                     text: ' stair/min',
@@ -157,7 +157,7 @@ class _StairingWorkoutScreenState
                                         fontSize: 10.0,
                                         fontWeight: FontWeight.w400,
                                         color:
-                                            AppColors.instance.textSecundary),
+                                            AppColors.instance.textSecondary),
                                   ),
                                 ])),
                                 Padding(

@@ -22,6 +22,9 @@ class AppAssets {
   static const AssetImage designer_image =
       const AssetImage("lib/resources/images/tibold.jpg");
 
+  static const AssetImage be_developer_image =
+  const AssetImage("lib/resources/images/feco.jpg");
+
   static const String biking_marker = "lib/resources/images/bikingmarker.png";
 
   static const String rollerskating_marker =

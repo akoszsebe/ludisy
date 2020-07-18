@@ -146,7 +146,7 @@ class _RollerSkatingWorkoutScreenState extends BaseScreenState<
                                   style: GoogleFonts.montserrat(
                                       fontSize: 10.0,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.instance.textSecundary),
+                                      color: AppColors.instance.textSecondary),
                                 ),
                                 RichText(
                                     text: TextSpan(children: <TextSpan>[
@@ -156,7 +156,7 @@ class _RollerSkatingWorkoutScreenState extends BaseScreenState<
                                         fontSize: 11.0,
                                         fontWeight: FontWeight.w500,
                                         color:
-                                            AppColors.instance.textSecundary),
+                                            AppColors.instance.textSecondary),
                                   ),
                                   TextSpan(
                                     text: ' km/h',
@@ -164,7 +164,7 @@ class _RollerSkatingWorkoutScreenState extends BaseScreenState<
                                         fontSize: 10.0,
                                         fontWeight: FontWeight.w400,
                                         color:
-                                            AppColors.instance.textSecundary),
+                                            AppColors.instance.textSecondary),
                                   ),
                                 ]))
                               ]),

@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "695310395817-m3gs448hqnjelirmfpv1bvgfluq8d3mj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ludisy.app",
+            "certificate_hash": "a532e79f7c20b1e283f8b0691b4823be16edbbcb"
+          }
+        },
+        {
+          "client_id": "695310395817-24r9a2g4mpaqi8ht712aqv1f7hgqrii9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ludisy.app",
+            "certificate_hash": "a43100765f466313318f920a2d7a6e34f7815457"
+          }
+        },
+        {
           "client_id": "695310395817-9lhljnj0hvnuteojgriodam1vn92nu32.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

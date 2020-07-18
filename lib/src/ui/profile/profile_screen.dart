@@ -38,38 +38,7 @@ class _ProfileScreenState
           top: 0,
           right: 0,
           left: 0,
-          child: Padding(
-              padding: EdgeInsets.only(left: 12, right: 12, top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RoundedMiniButton(
-                    null,
-                    AppSVGAssets.back,
-                    () {
-                      NavigationModule.pop(context);
-                    },
-                  ),
-                  buildButton("Delete all data", AppColors.instance.secundary,
-                      () {
-                    showConfirmDialog(
-                        context,
-                        "Are you sure you want to delete all your data ?",
-                        () {});
-                  }),
-                  RoundedMiniButton(
-                    null,
-                    AppSVGAssets.logout,
-                    () {
-                      con.logout(() {
-                        NavigationModule.navigateToLoginScreenAndRemove(
-                            context);
-                      });
-                    },
-                    iconColor: AppColors.instance.secundary,
-                  ),
-                ],
-              ))),
+          child: profileHeader()),
       Positioned(
         bottom: 0,
         right: 0,
@@ -145,7 +114,7 @@ class _ProfileScreenState
                                   con.genderChange(v);
                                 },
                                 hint: "Gender",
-                                hintColor: AppColors.instance.textSecundary,
+                                hintColor: AppColors.instance.textSecondary,
                               ),
                               DropDownItem(
                                 con.userData.weight == null
@@ -158,7 +127,7 @@ class _ProfileScreenState
                                   con.weightChange(v);
                                 },
                                 hint: "Weight",
-                                hintColor: AppColors.instance.textSecundary,
+                                hintColor: AppColors.instance.textSecondary,
                               ),
                             ]),
                             Column(
@@ -184,8 +153,8 @@ class _ProfileScreenState
                                   (v) {
                                     con.heightChange(v);
                                   },
-                                  hint: "Heigh",
-                                  hintColor: AppColors.instance.textSecundary,
+                                  hint: "Height",
+                                  hintColor: AppColors.instance.textSecondary,
                                 ),
                               ],
                             )
@@ -228,5 +197,40 @@ class _ProfileScreenState
                         color: color),
                   ),
                 ))));
+  }
+
+  Widget profileHeader() {
+    return Padding(
+        padding: EdgeInsets.only(left: 12, right: 12, top: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            RoundedMiniButton(
+              null,
+              AppSVGAssets.back,
+                  () {
+                NavigationModule.pop(context);
+              },
+            ),
+            buildButton("Delete all data", AppColors.instance.secundary,
+                    () {
+                  showConfirmDialog(
+                      context,
+                      "Are you sure you want to delete all your data ?",
+                          () {});
+                }),
+            RoundedMiniButton(
+              null,
+              AppSVGAssets.logout,
+                  () {
+                con.logout(() {
+                  NavigationModule.navigateToLoginScreenAndRemove(
+                      context);
+                });
+              },
+              iconColor: AppColors.instance.secundary,
+            ),
+          ],
+        ));
   }
 }

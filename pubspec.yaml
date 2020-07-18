@@ -73,6 +73,7 @@ flutter:
     - lib/resources/images/splash_icon.png
     - lib/resources/images/bikebackground.png
     - lib/resources/images/akos.png
+    - lib/resources/images/feco.jpg
     - lib/resources/images/tibold.jpg
     - lib/resources/images/bikingmarker.png
     - lib/resources/images/rollerbackground.png

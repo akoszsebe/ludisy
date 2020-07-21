@@ -11,6 +11,7 @@ import 'package:ludisy/src/util/navigation_module.dart';
 import 'package:ludisy/src/util/style/colors.dart';
 import 'package:ludisy/src/util/style/map_style.dart';
 import 'package:ludisy/src/util/ui_utils.dart';
+import 'package:ludisy/src/widgets/count_down_widget.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/rounded_mini_button.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
@@ -194,7 +195,11 @@ class _RunningWorkoutScreenState
                       ],
                     ),
                   ],
-                )
+                ),
+                if (con.showCounterView)
+                  CountdownWidget(() {
+                    con.countDownFinished();
+                  })
               ],
             )));
   }

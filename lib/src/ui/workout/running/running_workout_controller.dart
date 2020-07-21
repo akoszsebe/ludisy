@@ -25,6 +25,7 @@ class RunningWorkoutController extends ControllerMVC {
 
   final Completer<GoogleMapController> mapController = Completer();
   final Set<Marker> markers = {};
+  bool showCounterView = true;
   double calCounterValue = 0;
   WorkoutState workoutState = WorkoutState.paused;
   int durationSeconds = 0;
@@ -68,9 +69,13 @@ class RunningWorkoutController extends ControllerMVC {
       }
     }
 
-    _startime = DateTime.now().millisecondsSinceEpoch;
     _stepOffset = await _pedometer.pedometerStream.first;
     print("start from = $_stepOffset");
+  }
+
+  Future<void> countDownFinished() async {
+    showCounterView = false;
+    _startime = DateTime.now().millisecondsSinceEpoch;
     startListening();
   }
 

@@ -22,6 +22,7 @@ class BikingWorkoutController extends ControllerMVC {
 
   final Completer<GoogleMapController> mapController = Completer();
   final Set<Marker> markers = {};
+  bool showCounterView = true;
   double calCounterValue = 0;
   WorkoutState workoutState = WorkoutState.paused;
   int durationSeconds = 0;
@@ -60,15 +61,16 @@ class BikingWorkoutController extends ControllerMVC {
         return;
       }
     }
+  }
 
-    Timer(Duration(seconds: 5), () {
-      print("Yeah, this line is printed after 3 seconds");
-      _startime = DateTime.now().millisecondsSinceEpoch;
-      startListening();
-    });
+  Future<void> countDownFinished() async {
+    showCounterView = false;
+    _startime = DateTime.now().millisecondsSinceEpoch;
+    startListening();
   }
 
   Future<void> startListening() async {
+    showCounterView = false;
     startTimer();
     _bikingForegroundService.startFGS();
     workoutState = WorkoutState.running;

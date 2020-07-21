@@ -185,10 +185,13 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
             ),
             Padding(padding: EdgeInsets.only(top: 70)),
             RoundedButton(
-                "start_biking",
+                "start_stairing",
                 AppSVGAssets.start,
-                () =>
-                    {NavigationModule.navigateToBikingWorkoutScreen(context)}),
+                () => {
+                      con.setUpStairing((stepPlan) =>
+                          NavigationModule.navigateToStairingWorkoutScreen(
+                              context, stepPlan))
+                    }),
           ],
         )),
         Positioned(
@@ -266,12 +269,8 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               info.imageName),
         ),
         Padding(padding: EdgeInsets.only(top: 70)),
-        RoundedButton(
-            "start_running",
-            AppSVGAssets.start,
-            () => {
-                  NavigationModule.navigateToRollerSkatingWorkoutScreen(context)
-                }),
+        RoundedButton("start_running", AppSVGAssets.start,
+            () => {NavigationModule.navigateToRunningWorkoutScreen(context)}),
       ],
     );
   }

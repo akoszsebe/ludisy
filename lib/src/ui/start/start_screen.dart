@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ludisy/generated/locale_keys.g.dart';
@@ -39,8 +41,6 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
 
   @override
   Widget build(BuildContext context) {
-    var info =
-        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
     return BaseView(
         child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -63,20 +63,13 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
               onSettingsPressed: () =>
                   NavigationModule.navigateAndReplaceToSettingsScreen(context),
             )),
-        WorkoutQuickInfoBar(
-            getTimeFormatedFrom(info.durationSec),
-            info.value.toInt().toString(),
-            info.avgValue.toInt().toString(),
-            info.metric,
-            info.durationSec >= 3600 ? "hour" : "min",
-            info.imageName),
         SizedBox(
           height: 10,
         ),
         Container(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           Container(
-              height: 260.0,
+              height: 280.0,
               child: ScrollablePositionedList.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemScrollController: itemScrollController,
@@ -173,37 +166,33 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget buildStaringWorkoutComponent() {
+    var info =
+        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
     return Stack(
       children: <Widget>[
-        RoundedContainer(
-          backgroundColor: AppColors.instance.containerColor,
-          width: MediaQuery.of(context).size.width - 32,
-          margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-          radius: 32.0,
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              child: Column(children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Center(
-                    child: Text(
-                  LocaleKeys.start_start_staring.tr(),
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.instance.textPrimary),
-                  textAlign: TextAlign.center,
-                )),
-                Padding(padding: EdgeInsets.only(top: 30)),
-                RoundedButton(
-                    "start_stairing",
-                    AppSVGAssets.start,
-                    () => con.setUpStairing((stepPlan) =>
-                        NavigationModule.navigateToStairingWorkoutScreen(
-                            context, stepPlan))),
-              ])),
-        ),
+        Container(
+            child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: WorkoutQuickInfoBar(
+                  getTimeFormatedFrom(info.durationSec),
+                  info.value.toInt().toString(),
+                  info.avgValue.toInt().toString(),
+                  info.metric,
+                  info.durationSec >= 3600 ? "hour" : "min",
+                  info.imageName),
+            ),
+            Padding(padding: EdgeInsets.only(top: 70)),
+            RoundedButton(
+                "start_biking",
+                AppSVGAssets.start,
+                () =>
+                    {NavigationModule.navigateToBikingWorkoutScreen(context)}),
+          ],
+        )),
         Positioned(
-            top: 0,
+            top: 90,
             left: 45,
             child: WorkoutSlider((value) {
               con.setDificulty(value);
@@ -214,91 +203,76 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget builBikingWorkoutComponent() {
-    return RoundedContainer(
-      backgroundColor: AppColors.instance.containerColor,
-      width: MediaQuery.of(context).size.width - 32,
-      margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-      radius: 32.0,
-      child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          child: Column(children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Center(
-                child: Text(
-              LocaleKeys.start_start_biking.tr(),
-              style: GoogleFonts.montserrat(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textPrimary),
-              textAlign: TextAlign.center,
-            )),
-            Padding(padding: EdgeInsets.only(top: 30)),
-            RoundedButton(
-                "start_biking",
-                AppSVGAssets.start,
-                () =>
-                    {NavigationModule.navigateToBikingWorkoutScreen(context)}),
-          ])),
+    var info =
+        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    return Column(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: WorkoutQuickInfoBar(
+              getTimeFormatedFrom(info.durationSec),
+              info.value.toInt().toString(),
+              info.avgValue.toInt().toString(),
+              info.metric,
+              info.durationSec >= 3600 ? "hour" : "min",
+              info.imageName),
+        ),
+        Padding(padding: EdgeInsets.only(top: 70)),
+        RoundedButton("start_biking", AppSVGAssets.start,
+            () => {NavigationModule.navigateToBikingWorkoutScreen(context)}),
+      ],
     );
   }
 
   Widget builRollerSkatingWorkoutComponent() {
-    return RoundedContainer(
-      backgroundColor: AppColors.instance.containerColor,
-      width: MediaQuery.of(context).size.width - 32,
-      margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-      radius: 32.0,
-      child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          child: Column(children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Center(
-                child: Text(
-              "Are you ready for some \nroller skating tricks?",
-              style: GoogleFonts.montserrat(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textPrimary),
-              textAlign: TextAlign.center,
-            )),
-            Padding(padding: EdgeInsets.only(top: 30)),
-            RoundedButton(
-                "start_rollerskating",
-                AppSVGAssets.start,
-                () => {
-                      NavigationModule.navigateToRollerSkatingWorkoutScreen(
-                          context)
-                    }),
-          ])),
+    var info =
+        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    return Column(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: WorkoutQuickInfoBar(
+              getTimeFormatedFrom(info.durationSec),
+              info.value.toInt().toString(),
+              info.avgValue.toInt().toString(),
+              info.metric,
+              info.durationSec >= 3600 ? "hour" : "min",
+              info.imageName),
+        ),
+        Padding(padding: EdgeInsets.only(top: 70)),
+        RoundedButton(
+            "start_rollerskating",
+            AppSVGAssets.start,
+            () => {
+                  NavigationModule.navigateToRollerSkatingWorkoutScreen(context)
+                }),
+      ],
     );
   }
 
   Widget builRunningWorkoutComponent() {
-    return RoundedContainer(
-      backgroundColor: AppColors.instance.containerColor,
-      width: MediaQuery.of(context).size.width - 32,
-      margin: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-      radius: 32.0,
-      child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          child: Column(children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Center(
-                child: Text(
-              "Are you ready for running",
-              style: GoogleFonts.montserrat(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.instance.textPrimary),
-              textAlign: TextAlign.center,
-            )),
-            Padding(padding: EdgeInsets.only(top: 30)),
-            RoundedButton(
-                "start_running",
-                AppSVGAssets.start,
-                () =>
-                    {NavigationModule.navigateToRunningWorkoutScreen(context)}),
-          ])),
+    var info =
+        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    return Column(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: WorkoutQuickInfoBar(
+              getTimeFormatedFrom(info.durationSec),
+              info.value.toInt().toString(),
+              info.avgValue.toInt().toString(),
+              info.metric,
+              info.durationSec >= 3600 ? "hour" : "min",
+              info.imageName),
+        ),
+        Padding(padding: EdgeInsets.only(top: 70)),
+        RoundedButton(
+            "start_running",
+            AppSVGAssets.start,
+            () => {
+                  NavigationModule.navigateToRollerSkatingWorkoutScreen(context)
+                }),
+      ],
     );
   }
 

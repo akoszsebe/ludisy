@@ -61,8 +61,11 @@ class BikingWorkoutController extends ControllerMVC {
       }
     }
 
-    _startime = DateTime.now().millisecondsSinceEpoch;
-    startListening();
+    Timer(Duration(seconds: 5), () {
+      print("Yeah, this line is printed after 3 seconds");
+      _startime = DateTime.now().millisecondsSinceEpoch;
+      startListening();
+    });
   }
 
   Future<void> startListening() async {

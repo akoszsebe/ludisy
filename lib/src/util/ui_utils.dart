@@ -11,6 +11,7 @@ class AppContainerBoxShadow extends BoxShadow {
         );
 }
 
+// ignore: must_be_immutable
 class RoundedContainer extends Container {
   final double height;
   final double width;
@@ -18,7 +19,10 @@ class RoundedContainer extends Container {
   final EdgeInsetsGeometry margin;
   final Color backgroundColor;
   final Widget child;
-  final double radius;
+
+  double radius;
+  BorderRadius borderRadius;
+  BoxShadow boxShadow;
 
   RoundedContainer(
       {this.height,
@@ -39,6 +43,26 @@ class RoundedContainer extends Container {
               borderRadius: BorderRadius.all(Radius.circular(radius)),
               boxShadow: [AppContainerBoxShadow()],
             ));
+
+  RoundedContainer.withCustomBorderRadius(
+      {this.height,
+      this.width,
+      this.padding,
+      this.margin,
+      this.backgroundColor,
+      this.child,
+      this.borderRadius,
+      this.boxShadow})
+      : super(
+            child: child,
+            height: height,
+            width: width,
+            margin: margin,
+            padding: padding,
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: borderRadius,
+                boxShadow: [boxShadow]));
 }
 
 class AppChart {

@@ -16,6 +16,7 @@ class StairingWorkoutController extends ControllerMVC {
   final StairingForegroundService _stairingForegroundService =
       locator<StairingForegroundService>();
 
+  bool showCounterView = true;
   int stepCountValue = 0;
   double calCounterValue = 0;
   WorkoutState workoutState = WorkoutState.paused;
@@ -30,9 +31,13 @@ class StairingWorkoutController extends ControllerMVC {
   int _startime = 0;
 
   Future<void> init() async {
-    _startime = DateTime.now().millisecondsSinceEpoch;
     _offset = await _pedometer.pedometerStream.first;
     print("start from = $_offset");
+  }
+
+  Future<void> countDownFinished() async {
+    showCounterView = false;
+    _startime = DateTime.now().millisecondsSinceEpoch;
     startListening();
   }
 

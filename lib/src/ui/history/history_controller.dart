@@ -12,7 +12,7 @@ class HistoryController extends ControllerMVC {
   final WorkOutDao _workoutDao = locator<WorkOutDao>();
   final UserState userState = locator<UserState>();
 
-  int selelectedWorkoutIndex = 0;
+  int selelectedWorkoutIndex = 3;
   List<DayModel> datasetStairing = List();
   List<DayModel> datasetBiking = List();
   List<DayModel> datasetRollerSkating = List();

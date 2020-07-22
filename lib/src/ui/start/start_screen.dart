@@ -80,13 +80,13 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                 itemBuilder: (_, index) {
                   switch (index) {
                     case 0:
-                      return buildStaringWorkoutComponent();
+                      return builRunningWorkoutComponent();
                     case 1:
                       return builBikingWorkoutComponent();
                     case 2:
-                      return builRollerSkatingWorkoutComponent();
+                      return buildStaringWorkoutComponent();
                     case 3:
-                      return builRunningWorkoutComponent();
+                      return builRollerSkatingWorkoutComponent();
                   }
                   return Container();
                 },
@@ -102,12 +102,12 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                     semanticChildCount: 20,
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
-                      buildWorkoutSelectButton(0, AppSVGAssets.stairing,
+                      buildWorkoutSelectButton(3, AppSVGAssets.running,
                           onTap: () {
                         setState(() {
                           _uiState.changeBackgroundImage(
-                              AppAssets.background_stair);
-                          scrollTo(con.selelectedWorkoutIndex);
+                              AppAssets.background_runnung);
+                          scrollTo(0);
                         });
                       }),
                       buildWorkoutSelectButton(1, AppSVGAssets.biking,
@@ -115,7 +115,15 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                         setState(() {
                           _uiState
                               .changeBackgroundImage(AppAssets.background_bike);
-                          scrollTo(con.selelectedWorkoutIndex);
+                          scrollTo(1);
+                        });
+                      }),
+                      buildWorkoutSelectButton(0, AppSVGAssets.stairing,
+                          onTap: () {
+                        setState(() {
+                          _uiState.changeBackgroundImage(
+                              AppAssets.background_stair);
+                          scrollTo(2);
                         });
                       }),
                       buildWorkoutSelectButton(2, AppSVGAssets.rollerSkates,
@@ -123,15 +131,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                         setState(() {
                           _uiState.changeBackgroundImage(
                               AppAssets.background_rollerscate);
-                          scrollTo(con.selelectedWorkoutIndex);
-                        });
-                      }),
-                      buildWorkoutSelectButton(3, AppSVGAssets.running,
-                          onTap: () {
-                        setState(() {
-                          _uiState.changeBackgroundImage(
-                              AppAssets.background_runnung);
-                          scrollTo(con.selelectedWorkoutIndex);
+                          scrollTo(3);
                         });
                       }),
                     ],
@@ -166,8 +166,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget buildStaringWorkoutComponent() {
-    var info =
-        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    var info = con.userState.getDayQuickInfoModelForType(0);
     return Stack(
       children: <Widget>[
         Container(
@@ -206,8 +205,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget builBikingWorkoutComponent() {
-    var info =
-        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    var info = con.userState.getDayQuickInfoModelForType(1);
     return Column(
       children: <Widget>[
         Container(
@@ -228,8 +226,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget builRollerSkatingWorkoutComponent() {
-    var info =
-        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    var info = con.userState.getDayQuickInfoModelForType(2);
     return Column(
       children: <Widget>[
         Container(
@@ -254,8 +251,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
   }
 
   Widget builRunningWorkoutComponent() {
-    var info =
-        con.userState.getDayQuickInfoModelForType(con.selelectedWorkoutIndex);
+    var info = con.userState.getDayQuickInfoModelForType(3);
     return Column(
       children: <Widget>[
         Container(

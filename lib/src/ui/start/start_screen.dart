@@ -1,8 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:ludisy/generated/locale_keys.g.dart';
 import 'package:ludisy/src/di/locator.dart';
 import 'package:ludisy/src/states/ui_state.dart';
 import 'package:ludisy/src/ui/base/base_screen_state.dart';
@@ -15,9 +11,7 @@ import 'package:ludisy/src/widgets/quickinfobar.dart';
 import 'package:ludisy/src/widgets/rounded_button.dart';
 import 'package:ludisy/src/widgets/workout_quick_info.dart';
 import 'package:ludisy/src/widgets/workout_slider.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:ludisy/src/util/ui_utils.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -76,7 +70,7 @@ class _StartScreenState extends BaseScreenState<StartScreen, StartController> {
                 itemPositionsListener: itemPositionsListener,
                 scrollDirection: Axis.horizontal,
                 itemCount: 4,
-                initialScrollIndex: con.selelectedWorkoutIndex,
+                initialScrollIndex: 0,
                 itemBuilder: (_, index) {
                   switch (index) {
                     case 0:

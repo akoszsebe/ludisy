@@ -32,7 +32,9 @@ class _SettingsScreenState
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          NavigationModule.navigateToStartScreen(context);
+          await con.saveChanges(() {
+            NavigationModule.navigateToStartScreen(context);
+          });
           return false;
         },
         child: BaseView(
@@ -50,8 +52,10 @@ class _SettingsScreenState
                       : "",
                   con.userData.photoUrl,
                   canGoBack: true,
-                  onBackPressed: () {
-                    NavigationModule.navigateToStartScreen(context);
+                  onBackPressed: () async {
+                    await con.saveChanges(() {
+                      NavigationModule.navigateToStartScreen(context);
+                    });
                   },
                   onProfilePressed: () =>
                       NavigationModule.navigateToProfileScreen(context),
@@ -66,79 +70,84 @@ class _SettingsScreenState
   }
 
   Widget buildBody() {
-    return Material(
-        type: MaterialType.transparency,
-        child: Center(
-            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildTemeSwitcher()),
-          Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: RoundedContainer(
-                backgroundColor: AppColors.instance.containerColor,
-                height: 180,
-                width: double.infinity,
-                padding:
-                    EdgeInsets.only(top: 16, left: 0, right: 8, bottom: 20),
-                radius: 32.0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Support the development",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.instance.textPrimary),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+        child: Material(
+            type: MaterialType.transparency,
+            child: Center(
+                child:
+                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  child: buildCountDownSetter()),
+              Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  child: buildTemeSwitcher()),
+              Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  child: RoundedContainer(
+                    backgroundColor: AppColors.instance.containerColor,
+                    height: 180,
+                    width: double.infinity,
+                    padding:
+                        EdgeInsets.only(top: 16, left: 0, right: 8, bottom: 20),
+                    radius: 32.0,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        buildInAppPourchaseButton(
-                            "Water", "0.99", AppSVGAssets.water, 0),
-                        buildInAppPourchaseButton(
-                            "Coffee", "1.99", AppSVGAssets.coffee, 1),
-                        buildInAppPourchaseButton(
-                            "Lunch", "2.99", AppSVGAssets.lunch, 2)
+                        Text(
+                          "Support the development",
+                          style: GoogleFonts.montserrat(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.instance.textPrimary),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            buildInAppPourchaseButton(
+                                "Water", "0.99", AppSVGAssets.water, 0),
+                            buildInAppPourchaseButton(
+                                "Coffee", "1.99", AppSVGAssets.coffee, 1),
+                            buildInAppPourchaseButton(
+                                "Lunch", "2.99", AppSVGAssets.lunch, 2)
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: RoundedContainer(
-                backgroundColor: AppColors.instance.containerColor,
-                height: 200,
-                width: double.infinity,
-                padding:
-                    EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 16),
-                radius: 32.0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Contact the developer",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.instance.textPrimary),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: renderDeveloperList(),
+                  )),
+              Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  child: RoundedContainer(
+                    backgroundColor: AppColors.instance.containerColor,
+                    height: 200,
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                        top: 16, left: 16, right: 16, bottom: 16),
+                    radius: 32.0,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Contact the developer",
+                          style: GoogleFonts.montserrat(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.instance.textPrimary),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: renderDeveloperList(),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: buildButton(
-                  "${con.versionName}", AppColors.instance.textPrimary, () {})),
-        ])));
+                  )),
+              Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  child: buildButton("${con.versionName}",
+                      AppColors.instance.textPrimary, () {})),
+            ]))));
   }
 
   Widget buildButton(String title, Color color, VoidCallback onTap) {
@@ -270,6 +279,77 @@ class _SettingsScreenState
             this.con.launchURL(developer.url);
           }));
     }).toList();
+  }
+
+  Widget buildCountDownSetter() {
+    return RoundedContainer(
+      backgroundColor: AppColors.instance.containerColor,
+      radius: 24,
+      height: 48,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          SizedBox(
+            width: 110,
+          ),
+          Text(
+            "Counter time",
+            style: GoogleFonts.montserrat(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w400,
+                color: AppColors.instance.textPrimary),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                  width: 50,
+                  height: 40,
+                  child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          customBorder: CircleBorder(),
+                          splashColor:
+                              AppColors.instance.primaryWithOcupacity50,
+                          child: Icon(
+                            Icons.chevron_left,
+                            color: AppColors.instance.iconPrimary,
+                            size: 30,
+                          ),
+                          onTap: () {
+                            con.setCounterUpp();
+                          }))),
+              Text(
+                con.userData.coundDownSec.toString(),
+                style: GoogleFonts.montserrat(
+                    color: AppColors.instance.textPrimary,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16.0),
+              ),
+              Container(
+                  width: 50,
+                  height: 40,
+                  child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          customBorder: CircleBorder(),
+                          splashColor:
+                              AppColors.instance.primaryWithOcupacity50,
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: AppColors.instance.iconPrimary,
+                            size: 30,
+                          ),
+                          onTap: () {
+                            con.setCounterDown();
+                          }))),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   Widget buildTemeSwitcher() {

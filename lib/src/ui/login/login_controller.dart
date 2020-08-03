@@ -34,6 +34,7 @@ class LoginController extends ControllerMVC {
         userData.height = userFromFirebase.height;
         userData.bithDate = userFromFirebase.bithDate;
         userData.gender = userFromFirebase.gender;
+        userData.coundDownSec = userFromFirebase.coundDownSec;
         userData.workOuts = userFromFirebase.workOuts;
         refresh();
       }

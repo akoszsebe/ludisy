@@ -10,6 +10,7 @@ class User {
   DateTime bithDate;
   int height;
   List<WorkOut> workOuts;
+  int coundDownSec;
 
   User(
       {this.displayName,
@@ -19,7 +20,8 @@ class User {
       this.weight,
       this.bithDate,
       this.height,
-      this.workOuts});
+      this.workOuts,
+      this.coundDownSec});
 
   factory User.fromJson(Map<String, dynamic> json) => User(
       displayName: json["displayName"],
@@ -27,6 +29,7 @@ class User {
       userId: json["user_id"],
       gender: json["gender"],
       weight: json["weight"],
+      coundDownSec: json["coundDownSec"] == null ? 3 : json["coundDownSec"],
       bithDate:
           json["bithDate"] == null ? null : DateTime.parse(json["bithDate"]),
       height: json["height"],
@@ -43,6 +46,7 @@ class User {
       "user_id": userId,
       "gender": gender,
       "weight": weight,
+      "coundDownSec": coundDownSec,
       "bithDate": bithDate.toIso8601String(),
       "height": height,
       "workOuts": List<dynamic>.from(workOuts.map((x) => x.toJson())),
@@ -57,6 +61,7 @@ class User {
         "user_id": userId,
         "gender": gender,
         "weight": weight,
+        "coundDownSec": coundDownSec,
         "bithDate": bithDate.toIso8601String(),
         "height": height
       };
@@ -75,8 +80,8 @@ class User {
           {workouts.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
     } catch (Exeption) {
       try {
-        snapshot.value["workOuts"].forEach((v) =>
-            {workouts.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
+        snapshot.value["workOuts"].forEach(
+            (v) => {workouts.add(WorkOut.fromJson(v.cast<String, dynamic>()))});
       } catch (Exeption) {}
     }
     return User(
@@ -85,6 +90,9 @@ class User {
         userId: snapshot.value["user_id"],
         gender: snapshot.value["gender"],
         weight: snapshot.value["weight"],
+        coundDownSec: snapshot.value["coundDownSec"] == null
+            ? 3
+            : snapshot.value["coundDownSec"],
         bithDate: snapshot.value["bithDate"] == null
             ? null
             : DateTime.parse(snapshot.value["bithDate"]),

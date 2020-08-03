@@ -29,7 +29,7 @@
 .pub-cache/
 .pub/
 /build/
-/lib/resources/keys/secrets.json
+# /lib/resources/keys/secrets.json
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -38,4 +38,4 @@ lib/generated_plugin_registrant.dart
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 
-android/key.properties
+# android/key.properties

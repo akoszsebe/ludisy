@@ -202,7 +202,11 @@ class _StairingWorkoutScreenState
               "stop",
               AppSVGAssets.stop,
               () {
-                con.doneWorkout();
+                con.doneWorkout(() {
+                  NavigationModule
+                      .navigateAndReplacToStairingWorkoutSummaryScreen(
+                          context, con.savedWorkout);
+                });
               },
             ),
             SizedBox(
@@ -216,13 +220,6 @@ class _StairingWorkoutScreenState
               },
             )
           ]);
-    } else {
-      return RoundedButton(
-        "done",
-        AppSVGAssets.done,
-        () => NavigationModule.navigateAndReplacToStairingWorkoutSummaryScreen(
-            context, con.savedWorkout),
-      );
     }
   }
 

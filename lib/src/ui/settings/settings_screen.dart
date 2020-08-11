@@ -290,16 +290,15 @@ class _SettingsScreenState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          SizedBox(
-            width: 110,
-          ),
-          Text(
-            "Counter time",
-            style: GoogleFonts.montserrat(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w400,
-                color: AppColors.instance.textPrimary),
-          ),
+          Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Text(
+                "Counter time",
+                style: GoogleFonts.montserrat(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.instance.textPrimary),
+              )),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,

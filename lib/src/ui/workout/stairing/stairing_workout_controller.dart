@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:ludisy/src/data/forgroundsevices/stairing_foreground_service.dart';
 import 'package:ludisy/src/ui/workout/enum_workout_state.dart';
 import 'package:pedometer/pedometer.dart';
@@ -12,7 +13,6 @@ import 'package:ludisy/src/util/calory_calculator.dart';
 class StairingWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
-  final Pedometer _pedometer = locator<Pedometer>();
   final StairingForegroundService _stairingForegroundService =
       locator<StairingForegroundService>();
 
@@ -26,13 +26,12 @@ class StairingWorkoutController extends ControllerMVC {
   WorkOut savedWorkout;
 
   StreamSubscription<int> _subscription;
-  int _offset = 0;
+  int _offset = -1;
   Timer _timer;
   int _startime = 0;
   Stream<StepCount> _stepCountStream;
 
   Future<void> init() async {
-    //_offset = await _pedometer.pedometerStream.first;
     _stepCountStream = await Pedometer.stepCountStream;
     print("start from = $_offset");
   }
@@ -90,6 +89,9 @@ class StairingWorkoutController extends ControllerMVC {
   }
 
   void _onData(int stepCountValue) async {
+    if (_offset == -1) {
+      _offset = stepCountValue;
+    }
     print("OnData pedometer tracking ${stepCountValue - _offset}");
     calculateCalories();
     this.stepCountValue = stepCountValue - _offset;
@@ -108,7 +110,7 @@ class StairingWorkoutController extends ControllerMVC {
     print("Flutter Pedometer Error: $error");
   }
 
-  Future<void> doneWorkout() async {
+  Future<void> doneWorkout(VoidCallback callback) async {
     if (_subscription != null) {
       _subscription.cancel();
     }
@@ -128,6 +130,7 @@ class StairingWorkoutController extends ControllerMVC {
         data: Stairing(stairsCount: stepCountValue, snapShots: snapShots));
     await _workOutDao.insertWorkOut(savedWorkout);
     userState.addWorkout(savedWorkout);
+    callback();
   }
 
   void paused() {
@@ -149,6 +152,7 @@ class StairingWorkoutController extends ControllerMVC {
     });
     print("result -------------- $result");
     await _stairingForegroundService.removeSavedData();
+    _stepCountStream = null;
     refresh();
     return result;
   }

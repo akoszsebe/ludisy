@@ -19,7 +19,6 @@ class RunningWorkoutController extends ControllerMVC {
   final UserState userState = locator<UserState>();
   final WorkOutDao _workOutDao = locator<WorkOutDao>();
   final Location location = locator<Location>();
-  final Pedometer _pedometer = locator<Pedometer>();
   final RunningForegroundService _runningForegroundService =
       locator<RunningForegroundService>();
 
@@ -40,7 +39,8 @@ class RunningWorkoutController extends ControllerMVC {
   int sampleCount = 0;
   int summSpeed = 0;
 
-  int _stepOffset = 0;
+  int _stepOffset = -1;
+  Stream<StepCount> _stepCountStream;
   Timer _timer;
   int _startime = 0;
   List<LatLng> latlng = List();
@@ -69,7 +69,7 @@ class RunningWorkoutController extends ControllerMVC {
       }
     }
 
-    //_stepOffset = await _pedometer.pedometerStream.first;
+    _stepCountStream = await Pedometer.stepCountStream;
     print("start from = $_stepOffset");
   }
 
@@ -83,9 +83,18 @@ class RunningWorkoutController extends ControllerMVC {
     startTimer();
     _runningForegroundService.startFGS();
     workoutState = WorkoutState.running;
-    // _subscription = _pedometer.pedometerStream.listen(_onData,
-    //     onError: _onError, onDone: _onDone, cancelOnError: true);
+    _stepCountStream.listen(onStepCount).onError(onStepCountError);
     refresh();
+  }
+
+  void onStepCount(StepCount event) {
+    /// Handle step count changed
+    int steps = event.steps;
+    _onData(steps);
+  }
+
+  void onStepCountError(error) {
+    print("Flutter Pedometer Error: $error");
   }
 
   Future<void> stopListening() async {
@@ -101,15 +110,14 @@ class RunningWorkoutController extends ControllerMVC {
   }
 
   void _onData(int stepCountValue) async {
+    if (_stepOffset == -1) {
+      _stepOffset = stepCountValue;
+    }
     print("OnData pedometer tracking ${stepCountValue - _stepOffset}");
     this.stepCountValue = stepCountValue - _stepOffset;
     calculateCalories();
     refresh();
   }
-
-  void _onDone() => print("Finished pedometer tracking");
-
-  void _onError(error) => print("Flutter Pedometer Error: $error");
 
   void startTimer() {
     durationSeconds =
@@ -196,6 +204,7 @@ class RunningWorkoutController extends ControllerMVC {
   Future<void> stopWorkout() async {
     await stopListening();
     await _runningForegroundService.removeSavedData();
+    _stepCountStream = null;
     workoutState = WorkoutState.finised;
   }
 

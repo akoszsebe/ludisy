@@ -27,7 +27,6 @@ import 'package:ludisy/src/ui/workoutsummary/stairing/stairing_workoutsummary_co
 import 'package:ludisy/src/ui/workoutsummary/running/running_workoutsummary_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ludisy/src/util/style/map_style.dart';
-import 'package:pedometer/pedometer.dart';
 import 'package:location/location.dart';
 
 final GetIt locator = GetIt.instance;
@@ -46,7 +45,6 @@ void setupLocator(FirebaseApp firebaseApp) {
       instanceName: "userFirebaseDao");
   locator.registerLazySingleton<UserDao>(() => UserDaoImpl());
   locator.registerLazySingleton<WorkOutDao>(() => WorkOutDaoImpl());
-  locator.registerLazySingleton(() => Pedometer());
   locator.registerLazySingleton(() => Location());
   locator.registerLazySingleton(() => AppMapStyle());
   // States

@@ -7,7 +7,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.core.content.ContextCompat
-import cachet.plugins.pedometer.PedometerPlugin
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.ludisy.app.plugin.ForegroundService

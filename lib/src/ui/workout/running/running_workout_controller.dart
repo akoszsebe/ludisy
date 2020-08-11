@@ -69,7 +69,7 @@ class RunningWorkoutController extends ControllerMVC {
       }
     }
 
-    _stepOffset = await _pedometer.pedometerStream.first;
+    //_stepOffset = await _pedometer.pedometerStream.first;
     print("start from = $_stepOffset");
   }
 
@@ -83,8 +83,8 @@ class RunningWorkoutController extends ControllerMVC {
     startTimer();
     _runningForegroundService.startFGS();
     workoutState = WorkoutState.running;
-    _subscription = _pedometer.pedometerStream.listen(_onData,
-        onError: _onError, onDone: _onDone, cancelOnError: true);
+    // _subscription = _pedometer.pedometerStream.listen(_onData,
+    //     onError: _onError, onDone: _onDone, cancelOnError: true);
     refresh();
   }
 

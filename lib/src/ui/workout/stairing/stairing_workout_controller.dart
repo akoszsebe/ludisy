@@ -29,9 +29,11 @@ class StairingWorkoutController extends ControllerMVC {
   int _offset = 0;
   Timer _timer;
   int _startime = 0;
+  Stream<StepCount> _stepCountStream;
 
   Future<void> init() async {
-    _offset = await _pedometer.pedometerStream.first;
+    //_offset = await _pedometer.pedometerStream.first;
+    _stepCountStream = await Pedometer.stepCountStream;
     print("start from = $_offset");
   }
 
@@ -52,8 +54,9 @@ class StairingWorkoutController extends ControllerMVC {
   Future<void> startListening() async {
     startTimer();
     _stairingForegroundService.startFGS();
-    _subscription = _pedometer.pedometerStream.listen(_onData,
-        onError: _onError, onDone: _onDone, cancelOnError: true);
+
+    /// Listen to streams and handle errors
+    _stepCountStream.listen(onStepCount).onError(onStepCountError);
     workoutState = WorkoutState.running;
     refresh();
   }
@@ -95,9 +98,15 @@ class StairingWorkoutController extends ControllerMVC {
     refresh();
   }
 
-  void _onDone() => print("Finished pedometer tracking");
+  void onStepCount(StepCount event) {
+    /// Handle step count changed
+    int steps = event.steps;
+    _onData(steps);
+  }
 
-  void _onError(error) => print("Flutter Pedometer Error: $error");
+  void onStepCountError(error) {
+    print("Flutter Pedometer Error: $error");
+  }
 
   Future<void> doneWorkout() async {
     if (_subscription != null) {
@@ -128,8 +137,6 @@ class StairingWorkoutController extends ControllerMVC {
   Future<void> resume() async {
     if (workoutState == WorkoutState.running) {
       startTimer();
-      var data = await _pedometer.pedometerStream.first;
-      _onData(data);
     }
   }
 
